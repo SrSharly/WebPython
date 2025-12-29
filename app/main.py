@@ -29,7 +29,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.lesson_base import Lesson
-from app.registry import discover_lessons
+from app.registry import discover_lessons, get_load_errors
 from app.utils.code_runner import SnippetRunner
 from app.utils.ui_helpers import badge, copy_to_clipboard
 
@@ -59,6 +59,13 @@ class MainWindow(QMainWindow):
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Buscar por título, tags o contenido...")
         self.search_input.textChanged.connect(self._apply_filter)
+
+        self.load_errors_box = QGroupBox("Errores de carga")
+        self.load_errors_label = QLabel()
+        self.load_errors_label.setWordWrap(True)
+        load_errors_layout = QVBoxLayout(self.load_errors_box)
+        load_errors_layout.addWidget(self.load_errors_label)
+        self.load_errors_box.setVisible(False)
 
         self.tree = QTreeWidget()
         self.tree.setHeaderHidden(True)
@@ -107,6 +114,7 @@ class MainWindow(QMainWindow):
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)
         left_layout.addWidget(self.search_input)
+        left_layout.addWidget(self.load_errors_box)
         left_layout.addWidget(self.tree)
 
         self.badge_row = QWidget()
@@ -175,6 +183,17 @@ class MainWindow(QMainWindow):
             sub_item.addChild(lesson_item)
 
         self.tree.expandAll()
+        self._update_load_errors()
+
+    def _update_load_errors(self) -> None:
+        errors = get_load_errors()
+        if not errors:
+            self.load_errors_box.setVisible(False)
+            self.load_errors_label.clear()
+            return
+        details = "\n".join(f"{module}: {error}" for module, error in errors)
+        self.load_errors_label.setText(details)
+        self.load_errors_box.setVisible(True)
 
     def _select_first(self) -> None:
         first_item = self.tree.topLevelItem(0)

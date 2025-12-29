@@ -1187,101 +1187,491 @@ GLOSSARY = {
     },
     "python": {
         "tooltip": "Lenguaje de programación interpretado y multiplataforma.",
-        "definition": (
-            "Python es un lenguaje de programación de alto nivel con una sintaxis "
-            "clara que prioriza la legibilidad. Se usa en automatización, desarrollo "
-            "web, ciencia de datos, scripting, IA y aplicaciones de escritorio. "
-            "Incluye paradigmas imperativo, orientado a objetos y funcional. "
-            "Ejemplo: print('Hola') imprime texto en la consola, o usar pandas para "
-            "analizar un CSV. "
-            "Matiz: su ecosistema de paquetes (pip) y su comunidad facilitan resolver "
-            "problemas comunes rápidamente, aunque el rendimiento puede requerir "
-            "optimizaciones o extensiones en C."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Python es un lenguaje de alto nivel con una sintaxis clara que "
+                "prioriza la legibilidad y la productividad."
+            ),
+            "para_que": (
+                "Se usa en automatización, desarrollo web, ciencia de datos, scripting, "
+                "IA y aplicaciones de escritorio, combinando paradigmas imperativo, "
+                "orientado a objetos y funcional."
+            ),
+            "ejemplo": (
+                "print('Hola') imprime texto en consola, y con pandas se puede leer "
+                "un CSV y generar un análisis rápido."
+            ),
+            "matiz": (
+                "El ecosistema de paquetes (pip) y la comunidad facilitan soluciones "
+                "rápidas, aunque el rendimiento puede requerir optimizaciones o "
+                "extensiones en C."
+            ),
+        },
+    },
+    "pandas": {
+        "tooltip": "Librería de Python para análisis de datos tabulares.",
+        "definition_parts": {
+            "que_es": (
+                "Pandas es una librería de Python para manipular datos estructurados "
+                "con DataFrames y Series."
+            ),
+            "para_que": (
+                "Se usa para limpiar, transformar, combinar y analizar datos en tablas, "
+                "facilitando operaciones de análisis exploratorio."
+            ),
+            "ejemplo": (
+                "Leer un CSV con pandas.read_csv(), filtrar filas y calcular métricas "
+                "por categoría."
+            ),
+            "matiz": (
+                "Funciona en memoria; para volúmenes muy grandes conviene usar "
+                "herramientas distribuidas."
+            ),
+        },
+    },
+    "numpy": {
+        "tooltip": "Librería base de Python para cálculo numérico.",
+        "definition_parts": {
+            "que_es": (
+                "NumPy proporciona arrays n-dimensionales y operaciones vectorizadas "
+                "para cálculo científico."
+            ),
+            "para_que": (
+                "Se usa para álgebra lineal, estadísticas básicas, simulaciones y "
+                "preprocesamiento numérico eficiente."
+            ),
+            "ejemplo": (
+                "Crear un array con numpy.array([1, 2, 3]) y aplicar operaciones "
+                "vectorizadas."
+            ),
+            "matiz": (
+                "Muchas librerías científicas dependen de NumPy, por lo que dominar sus "
+                "arrays mejora el rendimiento del código."
+            ),
+        },
+    },
+    "jupyter": {
+        "tooltip": "Entorno de notebooks interactivos para código y texto.",
+        "definition_parts": {
+            "que_es": (
+                "Jupyter es un entorno interactivo que permite combinar código, texto, "
+                "gráficas y resultados en un mismo documento."
+            ),
+            "para_que": (
+                "Se usa para exploración de datos, prototipos rápidos, docencia y "
+                "comunicación de análisis reproducibles."
+            ),
+            "ejemplo": (
+                "Ejecutar un notebook .ipynb para analizar datos y visualizar gráficos "
+                "paso a paso."
+            ),
+            "matiz": (
+                "Para producción, conviene convertir notebooks en scripts o pipelines "
+                "versionados."
+            ),
+        },
+    },
+    "scikit-learn": {
+        "tooltip": "Librería de machine learning clásica en Python.",
+        "definition_parts": {
+            "que_es": (
+                "Scikit-learn es una librería de Python con algoritmos de ML "
+                "supervisado y no supervisado."
+            ),
+            "para_que": (
+                "Se usa para entrenar modelos como regresión, clasificación y clustering, "
+                "además de pipelines de preprocesamiento."
+            ),
+            "ejemplo": (
+                "Entrenar un modelo de regresión lineal con train_test_split y evaluar "
+                "su error."
+            ),
+            "matiz": (
+                "Es ideal para datasets medianos y prototipos; para deep learning se usan "
+                "otras librerías."
+            ),
+        },
+    },
+    "tensorflow": {
+        "tooltip": "Framework de deep learning de Google.",
+        "definition_parts": {
+            "que_es": (
+                "TensorFlow es un framework para construir y entrenar redes neuronales "
+                "y modelos de deep learning."
+            ),
+            "para_que": (
+                "Se usa en visión por computador, NLP y sistemas de recomendación con "
+                "aceleración por GPU/TPU."
+            ),
+            "ejemplo": (
+                "Entrenar una red neuronal con Keras para clasificar imágenes."
+            ),
+            "matiz": (
+                "Tiene un ecosistema amplio, pero su curva de aprendizaje puede ser "
+                "mayor que en librerías más ligeras."
+            ),
+        },
+    },
+    "pytorch": {
+        "tooltip": "Framework de deep learning con enfoque dinámico.",
+        "definition_parts": {
+            "que_es": (
+                "PyTorch es un framework de deep learning con grafos dinámicos y una "
+                "API flexible para investigación."
+            ),
+            "para_que": (
+                "Se usa para prototipar y entrenar modelos de redes neuronales con "
+                "gran control sobre el entrenamiento."
+            ),
+            "ejemplo": (
+                "Definir un modelo con torch.nn.Module y entrenarlo con un loop "
+                "personalizado."
+            ),
+            "matiz": (
+                "Su flexibilidad facilita la investigación, pero requiere disciplina "
+                "para mantener código consistente en producción."
+            ),
+        },
     },
     "ciencia de datos": {
         "tooltip": "Disciplina que extrae valor de datos con estadística y programación.",
-        "definition": (
-            "La ciencia de datos combina estadística, programación y conocimiento del "
-            "dominio para obtener conclusiones a partir de datos. Se usa para analizar "
-            "tendencias, construir modelos predictivos y apoyar decisiones. "
-            "Incluye etapas como recolección, limpieza, exploración, modelado y "
-            "comunicación. "
-            "Ejemplo: usar pandas y matplotlib para explorar un dataset de ventas y "
-            "generar un reporte de KPIs. "
-            "Matiz: requiere limpieza de datos, validación de resultados y comunicación "
-            "clara de los hallazgos."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "La ciencia de datos combina estadística, programación y conocimiento del "
+                "dominio para transformar datos en conocimiento accionable."
+            ),
+            "para_que": (
+                "Se usa para analizar tendencias, construir modelos predictivos, "
+                "segmentar clientes y apoyar decisiones estratégicas."
+            ),
+            "ejemplo": (
+                "Explorar un dataset de ventas con pandas y matplotlib para generar "
+                "KPIs, detectar estacionalidad y proponer mejoras."
+            ),
+            "matiz": (
+                "La limpieza, validación y comunicación de resultados son tan importantes "
+                "como el modelo en sí."
+            ),
+        },
     },
     "data science": {
         "tooltip": "Nombre en inglés de ciencia de datos.",
-        "definition": (
-            "Data science aplica estadística, programación y comunicación para "
-            "extraer conocimiento de datos. Se usa para entender fenómenos, detectar "
-            "patrones, construir modelos y comunicar insights a negocio. "
-            "Incluye desde análisis exploratorio hasta despliegue de modelos. "
-            "Ejemplo: analizar el churn de clientes, entrenar un modelo y proponer "
-            "acciones para reducirlo. "
-            "Matiz: la limpieza y la calidad de los datos son el punto de partida del "
-            "valor generado."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Data science es la disciplina que combina análisis estadístico, "
+                "programación y narrativa para extraer insights de los datos."
+            ),
+            "para_que": (
+                "Se usa para entender fenómenos, detectar patrones, construir modelos "
+                "predictivos y comunicar hallazgos al negocio."
+            ),
+            "ejemplo": (
+                "Analizar churn de clientes, entrenar un modelo de clasificación y "
+                "proponer acciones para reducir la pérdida."
+            ),
+            "matiz": (
+                "La calidad de datos y el contexto del negocio determinan el valor real "
+                "de los resultados."
+            ),
+        },
     },
     "data cience": {
         "tooltip": "Variante común con error de escritura de data science.",
-        "definition": (
-            "Data cience es una escritura incorrecta de data science (ciencia de datos). "
-            "Se usa en búsquedas o conversaciones informales, pero el término correcto "
-            "es data science. Ejemplo: preparar datos, analizar tendencias y crear modelos. "
-            "Matiz: conviene corregirlo en documentación y presentaciones formales para "
-            "evitar confusiones."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Data cience es una escritura incorrecta de data science (ciencia de datos)."
+            ),
+            "para_que": (
+                "Aparece en búsquedas o conversaciones informales, pero el término correcto "
+                "es data science."
+            ),
+            "ejemplo": (
+                "Escribir \"data cience\" al buscar cursos de ciencia de datos en la web."
+            ),
+            "matiz": (
+                "Conviene corregirlo en documentación y presentaciones formales para evitar "
+                "confusiones."
+            ),
+        },
     },
     "machine learning": {
         "tooltip": "Rama de la IA que aprende patrones desde datos.",
-        "definition": (
-            "Machine learning es una rama de la inteligencia artificial que aprende "
-            "patrones desde datos para predecir, clasificar o recomendar. "
-            "Se usa en motores de recomendación, detección de fraude, visión y NLP. "
-            "Ejemplo: un modelo que predice el precio de una casa a partir de variables "
-            "como metros cuadrados y ubicación. "
-            "Matiz: requiere datos representativos, métricas claras, prevención de "
-            "sobreajuste y control de sesgos."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Machine learning es una rama de la inteligencia artificial que aprende "
+                "patrones desde datos para predecir, clasificar o recomendar."
+            ),
+            "para_que": (
+                "Se usa en motores de recomendación, detección de fraude, visión por "
+                "computador, NLP y pronósticos."
+            ),
+            "ejemplo": (
+                "Un modelo que predice el precio de una casa a partir de metros cuadrados, "
+                "ubicación y antigüedad."
+            ),
+            "matiz": (
+                "Requiere datos representativos, métricas claras, prevención de sobreajuste "
+                "y control de sesgos."
+            ),
+        },
     },
     "full stack": {
         "tooltip": "Desarrollo que cubre frontend y backend.",
-        "definition": (
-            "Full stack describe a quien desarrolla toda la aplicación: interfaz "
-            "(frontend), servidor (backend) y base de datos. Se usa cuando se necesita "
-            "entregar un producto end-to-end en equipos pequeños o proyectos ágiles. "
-            "También implica integrar autenticación, APIs, despliegue y monitoreo. "
-            "Ejemplo: una SPA con React, una API con Python y una base en PostgreSQL. "
-            "Matiz: exige entender integración, seguridad, rendimiento, UX y despliegue."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Full stack describe el desarrollo integral de una aplicación: interfaz "
+                "(frontend), servidor (backend) y base de datos."
+            ),
+            "para_que": (
+                "Se usa cuando se necesita entregar productos end-to-end en equipos pequeños "
+                "o proyectos ágiles, integrando autenticación, APIs y despliegues."
+            ),
+            "ejemplo": (
+                "Una SPA con React, una API en Python y una base PostgreSQL, todo "
+                "desplegado en la nube."
+            ),
+            "matiz": (
+                "Exige comprender integración, seguridad, rendimiento, UX y despliegue, "
+                "no solo escribir código."
+            ),
+        },
+    },
+    "fastapi": {
+        "tooltip": "Framework moderno de APIs en Python.",
+        "definition_parts": {
+            "que_es": (
+                "FastAPI es un framework de Python para construir APIs rápidas con "
+                "tipado estático y validación automática."
+            ),
+            "para_que": (
+                "Se usa para crear servicios RESTful con documentación interactiva "
+                "y alto rendimiento."
+            ),
+            "ejemplo": (
+                "Definir un endpoint con @app.get('/usuarios') y obtener datos en JSON."
+            ),
+            "matiz": (
+                "Aprovecha Pydantic para validación, por lo que un buen diseño de "
+                "modelos mejora la calidad de la API."
+            ),
+        },
+    },
+    "django": {
+        "tooltip": "Framework web completo para Python.",
+        "definition_parts": {
+            "que_es": (
+                "Django es un framework web que incluye ORM, autenticación, panel "
+                "de administración y herramientas de seguridad."
+            ),
+            "para_que": (
+                "Se usa para construir aplicaciones web robustas con desarrollo rápido "
+                "y buenas prácticas integradas."
+            ),
+            "ejemplo": (
+                "Crear un modelo de base de datos con Django ORM y exponerlo en el admin."
+            ),
+            "matiz": (
+                "Su estructura es opinionada, lo cual acelera proyectos pero puede "
+                "limitar personalizaciones profundas."
+            ),
+        },
+    },
+    "flask": {
+        "tooltip": "Microframework web flexible en Python.",
+        "definition_parts": {
+            "que_es": (
+                "Flask es un microframework para construir aplicaciones web ligeras "
+                "y extensibles."
+            ),
+            "para_que": (
+                "Se usa para APIs o apps pequeñas donde se requiere control total "
+                "sobre la arquitectura."
+            ),
+            "ejemplo": (
+                "Definir un endpoint con @app.route('/') y devolver HTML simple."
+            ),
+            "matiz": (
+                "Al ser minimalista, muchas funcionalidades se agregan con extensiones."
+            ),
+        },
+    },
+    "rest": {
+        "tooltip": "Estilo de arquitectura para APIs basadas en HTTP.",
+        "definition_parts": {
+            "que_es": (
+                "REST (Representational State Transfer) define principios para diseñar "
+                "APIs basadas en recursos y operaciones HTTP."
+            ),
+            "para_que": (
+                "Se usa para estandarizar endpoints, cachés y códigos de estado en APIs."
+            ),
+            "ejemplo": (
+                "GET /productos obtiene recursos, POST /productos crea uno nuevo."
+            ),
+            "matiz": (
+                "REST no es un protocolo; es un estilo de diseño que puede aplicarse "
+                "con distintos niveles de rigor."
+            ),
+        },
+    },
+    "graphql": {
+        "tooltip": "Lenguaje de consultas para APIs.",
+        "definition_parts": {
+            "que_es": (
+                "GraphQL es un lenguaje de consultas y runtime para APIs que permite "
+                "pedir exactamente los datos necesarios."
+            ),
+            "para_que": (
+                "Se usa para reducir over-fetching y unificar múltiples fuentes de datos "
+                "en una sola API."
+            ),
+            "ejemplo": (
+                "Consultar usuarios { id, nombre, pedidos { total } } en una sola petición."
+            ),
+            "matiz": (
+                "Requiere diseño cuidadoso de esquemas y control de consultas complejas."
+            ),
+        },
     },
     "pyside": {
         "tooltip": "Bindings de Qt para crear interfaces gráficas en Python.",
-        "definition": (
-            "PySide es el conjunto oficial de bindings de Qt para Python. "
-            "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
-            "tablas y componentes interactivos. "
-            "Ejemplo: PySide6 para construir una GUI multiplataforma con Qt Designer "
-            "y cargar una interfaz .ui. "
-            "Matiz: usa señales y slots para comunicar widgets de forma desacoplada, "
-            "y permite integrar estilos y recursos de Qt."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "PySide es el conjunto oficial de bindings de Qt para Python, "
+                "incluyendo PySide6 para Qt 6."
+            ),
+            "para_que": (
+                "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
+                "tablas y componentes interactivos multiplataforma."
+            ),
+            "ejemplo": (
+                "Diseñar una UI en Qt Designer y cargar el archivo .ui en una app "
+                "PySide6."
+            ),
+            "matiz": (
+                "Utiliza señales y slots para comunicar widgets de forma desacoplada y "
+                "permite integrar temas y recursos del ecosistema Qt."
+            ),
+        },
     },
     "aws": {
         "tooltip": "Plataforma cloud de Amazon con múltiples servicios.",
-        "definition": (
-            "AWS (Amazon Web Services) es la plataforma cloud de Amazon con servicios "
-            "de cómputo, almacenamiento, redes, datos e IA. Se usa para desplegar apps, "
-            "escalar sistemas y operar infraestructuras globales. "
-            "Ejemplo: EC2 para servidores, S3 para almacenamiento, RDS para bases y "
-            "CloudFront para distribución de contenido. "
-            "Matiz: el costo es bajo demanda y depende de región, uso, arquitectura "
-            "y políticas de optimización."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "AWS (Amazon Web Services) es la plataforma cloud de Amazon con servicios "
+                "de cómputo, almacenamiento, redes, datos e IA."
+            ),
+            "para_que": (
+                "Se usa para desplegar aplicaciones, escalar sistemas y operar "
+                "infraestructura global con herramientas administradas."
+            ),
+            "ejemplo": (
+                "EC2 para servidores, S3 para almacenamiento, RDS para bases de datos y "
+                "CloudFront para distribución de contenido."
+            ),
+            "matiz": (
+                "El costo es bajo demanda y depende de región, uso, arquitectura y "
+                "políticas de optimización."
+            ),
+        },
+    },
+    "cloudwatch": {
+        "tooltip": "Servicio de monitoreo y métricas en AWS.",
+        "definition_parts": {
+            "que_es": (
+                "Amazon CloudWatch es un servicio de observabilidad que recopila métricas, "
+                "logs y eventos de recursos en AWS."
+            ),
+            "para_que": (
+                "Se usa para monitorear rendimiento, crear alarmas y visualizar dashboards "
+                "de infraestructura y aplicaciones."
+            ),
+            "ejemplo": (
+                "Configurar una alarma cuando la CPU de una instancia EC2 supera el 80%."
+            ),
+            "matiz": (
+                "Los costos dependen del volumen de métricas y logs, por lo que conviene "
+                "definir retención y filtros."
+            ),
+        },
+    },
+    "ecs": {
+        "tooltip": "Servicio de orquestación de contenedores en AWS.",
+        "definition_parts": {
+            "que_es": (
+                "Amazon ECS (Elastic Container Service) es un orquestador de contenedores "
+                "administrado por AWS."
+            ),
+            "para_que": (
+                "Se usa para desplegar y escalar contenedores con integración a servicios "
+                "como ALB, IAM y CloudWatch."
+            ),
+            "ejemplo": (
+                "Ejecutar microservicios en contenedores usando Fargate sin administrar "
+                "servidores."
+            ),
+            "matiz": (
+                "Ofrece modelos con EC2 o Fargate; la elección impacta costos y control "
+                "operativo."
+            ),
+        },
+    },
+    "ecr": {
+        "tooltip": "Registro de contenedores administrado en AWS.",
+        "definition_parts": {
+            "que_es": (
+                "Amazon ECR (Elastic Container Registry) almacena imágenes de contenedores "
+                "privadas o públicas."
+            ),
+            "para_que": (
+                "Se usa para versionar y distribuir imágenes Docker dentro de AWS."
+            ),
+            "ejemplo": (
+                "Publicar una imagen y luego desplegarla en ECS o EKS."
+            ),
+            "matiz": (
+                "Conviene automatizar el escaneo de vulnerabilidades y la rotación "
+                "de versiones."
+            ),
+        },
+    },
+    "cloudformation": {
+        "tooltip": "Infraestructura como código en AWS.",
+        "definition_parts": {
+            "que_es": (
+                "AWS CloudFormation permite definir infraestructura con plantillas "
+                "YAML/JSON."
+            ),
+            "para_que": (
+                "Se usa para crear, actualizar y versionar recursos de forma reproducible."
+            ),
+            "ejemplo": (
+                "Provisionar una VPC con subredes y una instancia EC2 desde una plantilla."
+            ),
+            "matiz": (
+                "Las plantillas pueden volverse complejas, por lo que modularizar ayuda "
+                "a mantenerlas."
+            ),
+        },
+    },
+    "route 53": {
+        "tooltip": "Servicio DNS administrado de AWS.",
+        "definition_parts": {
+            "que_es": (
+                "Amazon Route 53 es un servicio de DNS y enrutamiento de tráfico global."
+            ),
+            "para_que": (
+                "Se usa para gestionar dominios, balancear tráfico y hacer failover "
+                "entre regiones."
+            ),
+            "ejemplo": (
+                "Configurar registros A y CNAME para apuntar un dominio a un balanceador."
+            ),
+            "matiz": (
+                "Incluye políticas de routing avanzadas que requieren pruebas antes de "
+                "producción."
+            ),
+        },
     },
     "s3": {
         "tooltip": "Servicio de almacenamiento de objetos en AWS.",
@@ -1447,6 +1837,26 @@ GLOSSARY = {
             "Matiz: integra servicios como Active Directory y herramientas de Microsoft."
         ),
     },
+    "azure devops": {
+        "tooltip": "Suite de herramientas DevOps de Microsoft.",
+        "definition_parts": {
+            "que_es": (
+                "Azure DevOps es una plataforma que integra repositorios, pipelines, "
+                "tableros y gestión de artefactos."
+            ),
+            "para_que": (
+                "Se usa para automatizar CI/CD, planificar trabajo y coordinar equipos "
+                "de desarrollo."
+            ),
+            "ejemplo": (
+                "Configurar un pipeline que ejecute tests y despliegue a Azure App Service."
+            ),
+            "matiz": (
+                "Puede integrarse con GitHub, pero requiere definir bien permisos y "
+                "flujos de aprobación."
+            ),
+        },
+    },
     "azure functions": {
         "tooltip": "Servicio serverless de Azure para ejecutar funciones.",
         "definition": (
@@ -1483,6 +1893,85 @@ GLOSSARY = {
             "Ejemplo: BigQuery para análisis y Cloud Run para contenedores. "
             "Matiz: destaca por sus herramientas de datos y analítica."
         ),
+    },
+    "cloudflare": {
+        "tooltip": "Plataforma de CDN y seguridad para aplicaciones web.",
+        "definition_parts": {
+            "que_es": (
+                "Cloudflare es una plataforma de CDN, DNS y seguridad que protege "
+                "y acelera sitios web."
+            ),
+            "para_que": (
+                "Se usa para reducir latencia, mitigar ataques DDoS y gestionar "
+                "reglas de firewall en el borde."
+            ),
+            "ejemplo": (
+                "Activar caché global y WAF para un sitio que recibe tráfico internacional."
+            ),
+            "matiz": (
+                "El rendimiento depende de una correcta configuración de caché y "
+                "políticas de seguridad."
+            ),
+        },
+    },
+    "vercel": {
+        "tooltip": "Plataforma cloud para frontends y deployments rápidos.",
+        "definition_parts": {
+            "que_es": (
+                "Vercel es una plataforma que despliega aplicaciones frontend y "
+                "serverless con enfoque en frameworks como Next.js."
+            ),
+            "para_que": (
+                "Se usa para publicar sitios estáticos y apps web con CI/CD automático "
+                "y previews por cada rama."
+            ),
+            "ejemplo": (
+                "Desplegar una app Next.js con preview URLs por pull request."
+            ),
+            "matiz": (
+                "Es muy cómoda para frontends, pero para backends complejos se suele "
+                "combinar con otros servicios."
+            ),
+        },
+    },
+    "netlify": {
+        "tooltip": "Plataforma cloud para sitios estáticos y funciones.",
+        "definition_parts": {
+            "que_es": (
+                "Netlify es una plataforma para desplegar sitios estáticos y funciones "
+                "serverless con integración a Git."
+            ),
+            "para_que": (
+                "Se usa para publicar landing pages, documentación y SPAs con "
+                "despliegues automáticos."
+            ),
+            "ejemplo": (
+                "Conectar un repositorio y desplegar automáticamente cada commit."
+            ),
+            "matiz": (
+                "Las funciones serverless tienen límites de ejecución que hay que "
+                "considerar en apps más complejas."
+            ),
+        },
+    },
+    "digitalocean": {
+        "tooltip": "Proveedor cloud con enfoque simple para desarrolladores.",
+        "definition_parts": {
+            "que_es": (
+                "DigitalOcean ofrece infraestructura cloud con un enfoque sencillo y "
+                "planes predecibles."
+            ),
+            "para_que": (
+                "Se usa para desplegar VPS, bases de datos administradas y "
+                "contenedores con baja complejidad."
+            ),
+            "ejemplo": (
+                "Crear un droplet para alojar una API con Docker y Nginx."
+            ),
+            "matiz": (
+                "Es más simple que hiperescalares, pero tiene menos servicios avanzados."
+            ),
+        },
     },
     "cloud storage": {
         "tooltip": "Almacenamiento de objetos en Google Cloud.",
@@ -1645,9 +2134,23 @@ def definition_text(data: dict[str, object]) -> str:
             return " ".join(str(item).strip() for item in value if str(item).strip())
         return str(value).strip()
 
-    ordered_keys = ["que_es", "para_que", "ejemplo", "error_tipico", "ver_tambien"]
-    texts = [_flatten(parts.get(key)) for key in ordered_keys if parts.get(key)]
-    return " ".join(texts).strip()
+    labels = {
+        "que_es": "Qué es:",
+        "para_que": "Para qué:",
+        "ejemplo": "Ejemplo:",
+        "matiz": "Matiz:",
+        "error_tipico": "Error típico:",
+        "ver_tambien": "Ver también:",
+    }
+    ordered_keys = ["que_es", "para_que", "ejemplo", "matiz", "error_tipico", "ver_tambien"]
+    lines = []
+    for key in ordered_keys:
+        value = parts.get(key)
+        if value:
+            text = _flatten(value)
+            if text:
+                lines.append(f"{labels.get(key, key)} {text}")
+    return "\n".join(lines).strip()
 
 
 TERMS = {term: definition_text(data) for term, data in GLOSSARY.items()}

@@ -6,13 +6,11 @@ from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
     QLabel,
+    QPlainTextEdit,
     QPushButton,
-    QTextEdit,
     QVBoxLayout,
     QWidget,
 )
-
-from app.utils.ui_helpers import copy_to_clipboard
 
 
 class CalloutBox(QFrame):
@@ -44,7 +42,7 @@ class CodeCard(QFrame):
         code: str,
         parent: QWidget | None = None,
         show_run: bool = False,
-        run_callback: Callable[[str, QTextEdit | None, QTextEdit], None] | None = None,
+        run_callback: Callable[[str, QPlainTextEdit | None, QPlainTextEdit], None] | None = None,
     ) -> None:
         super().__init__(parent)
         self.setObjectName("CodeCard")
@@ -54,18 +52,20 @@ class CodeCard(QFrame):
         header.setObjectName("SectionTitle")
         layout.addWidget(header)
 
-        self.code_view = QTextEdit()
+        code_box = QFrame()
+        code_box.setObjectName("CodeBox")
+        code_box_layout = QVBoxLayout(code_box)
+        code_box_layout.setContentsMargins(8, 8, 8, 8)
+
+        self.code_view = QPlainTextEdit()
         self.code_view.setObjectName("CodeBlock")
         self.code_view.setPlainText(code)
         self.code_view.setReadOnly(True)
         self.code_view.setMinimumHeight(120)
-        layout.addWidget(self.code_view)
+        code_box_layout.addWidget(self.code_view)
+        layout.addWidget(code_box)
 
         actions = QHBoxLayout()
-        copy_btn = QPushButton("Copiar")
-        copy_btn.setProperty("secondary", True)
-        copy_btn.clicked.connect(lambda: copy_to_clipboard(code, self))
-        actions.addWidget(copy_btn)
 
         self.run_button = None
         self.output_view = None
@@ -77,7 +77,7 @@ class CodeCard(QFrame):
                 run_btn.clicked.connect(lambda: run_callback(code, self.output_view, self.code_view))
             actions.addWidget(run_btn)
             self.run_button = run_btn
-            self.output_view = QTextEdit()
+            self.output_view = QPlainTextEdit()
             self.output_view.setReadOnly(True)
             self.output_view.setPlaceholderText("Salida...")
             self.output_view.setMaximumHeight(120)

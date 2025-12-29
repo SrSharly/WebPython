@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QMainWindow,
+    QPlainTextEdit,
     QPushButton,
     QScrollArea,
     QSizePolicy,
@@ -35,7 +36,7 @@ from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
 from app.utils.code_runner import SnippetRunner
-from app.utils.glossary import GLOSSARY
+from app.utils.glossary import GLOSSARY, definition_text
 from app.utils.theme import apply_theme, toggle_theme
 from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
@@ -462,9 +463,8 @@ class MainWindow(QMainWindow):
                 "<div class=\"card-header\">"
                 "<span class=\"card-icon\">💻</span>"
                 "<span class=\"card-title\">Código</span>"
-                "<span class=\"copy-btn\">Copiar</span>"
                 "</div>"
-                f"<pre class=\"code-block\"><code>{html.escape(code)}</code></pre>"
+                f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
                 "</div>"
             )
 
@@ -578,9 +578,8 @@ class MainWindow(QMainWindow):
                 "<div class=\"card-header\">"
                 "<span class=\"card-icon\">💻</span>"
                 "<span class=\"card-title\">Código</span>"
-                "<span class=\"copy-btn\">Copiar</span>"
                 "</div>"
-                f"<pre class=\"code-block\"><code>{html.escape(code)}</code></pre>"
+                f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
                 "</div>"
                 for title, code in resumen
             )
@@ -651,16 +650,8 @@ class MainWindow(QMainWindow):
             .card-icon {{
                 font-size: 14px;
             }}
-            .copy-btn {{
-                margin-left: auto;
-                padding: 4px 10px;
-                border-radius: 8px;
-                border: 1px solid {card_border};
-                background: transparent;
-                font-size: 12px;
-            }}
             .code-card {{
-                background: {code_background};
+                background: transparent;
                 border-left: 4px solid {accent_code};
             }}
             .callout.best {{
@@ -679,7 +670,7 @@ class MainWindow(QMainWindow):
                 background: {bg_definition};
                 border-left: 4px solid {accent_note};
             }}
-            .code-block {{
+            .codebox {{
                 background: {code_background};
                 color: {code_text};
                 padding: 12px;
@@ -746,7 +737,9 @@ class MainWindow(QMainWindow):
 
         self.examples_layout.addStretch()
 
-    def _run_snippet(self, code: str, output_view: QTextEdit | None, _code_view: QTextEdit) -> None:
+    def _run_snippet(
+        self, code: str, output_view: QPlainTextEdit | None, _code_view: QPlainTextEdit
+    ) -> None:
         if output_view is None:
             return
         result = self.runner.run(code)
@@ -821,21 +814,24 @@ class MainWindow(QMainWindow):
         self._update_theme_toggle()
         if hasattr(self, "current_entry"):
             self._render_guide(self.current_entry.instance)
+        if self._pinned_term:
+            data = GLOSSARY.get(self._pinned_term)
+            if data:
+                self.definition_body.setHtml(self._definition_html(self._pinned_term, data))
 
     def _on_term_pinned(self, term_id: str) -> None:
         data = GLOSSARY.get(term_id)
         if not data:
             return
         self._pinned_term = term_id
-        self.definition_term.setText(term_id)
-        self.definition_term.setVisible(True)
-        self.definition_body.setPlainText(data["definition"])
+        self.definition_term.setVisible(False)
+        self.definition_body.setHtml(self._definition_html(term_id, data))
 
     def _clear_definition_panel(self) -> None:
         self._pinned_term = None
         self.definition_term.clear()
         self.definition_term.setVisible(False)
-        self.definition_body.setPlainText("Haz clic en una palabra resaltada para fijar su definición.")
+        self.definition_body.setHtml(self._definition_empty_html())
 
     def _copy_definition(self) -> None:
         if not self._pinned_term:
@@ -843,7 +839,204 @@ class MainWindow(QMainWindow):
         data = GLOSSARY.get(self._pinned_term)
         if not data:
             return
-        QGuiApplication.clipboard().setText(data["definition"])
+        QGuiApplication.clipboard().setText(definition_text(data))
+
+    def _definition_empty_html(self) -> str:
+        return self._definition_html(
+            "Definición",
+            {"definition": "Haz clic en una palabra resaltada para fijar su definición."},
+        )
+
+    def _definition_html(self, term_id: str, data: dict[str, object]) -> str:
+        if self.current_theme == "dark":
+            text_color = "#e6e6e6"
+            muted_text = "#c9c9c9"
+            card_bg = "#262626"
+            card_border = "#3a3a3a"
+            chip_bg = "#2e2e2e"
+            chip_text = "#f7f2e4"
+            separator = "#3a3a3a"
+            code_bg = "#0b1220"
+            code_border = "#1f2937"
+        else:
+            text_color = "#1f2937"
+            muted_text = "#4b5563"
+            card_bg = "#f8f9fc"
+            card_border = "#e1e5ef"
+            chip_bg = "#eef1f7"
+            chip_text = "#1f2937"
+            separator = "#e2e8f0"
+            code_bg = "#0b1220"
+            code_border = "#111827"
+
+        definition_parts = data.get("definition_parts")
+        if not isinstance(definition_parts, dict):
+            definition_parts = self._parse_legacy_definition(str(data.get("definition", "")).strip())
+
+        sections_html = ""
+        if definition_parts:
+            sections_html = self._render_definition_sections(definition_parts)
+        else:
+            definition_text_raw = str(data.get("definition", "")).strip()
+            sections_html = self._render_definition_paragraphs(definition_text_raw)
+
+        return f"""
+        <html>
+        <head>
+        <style>
+            body {{ font-family: 'Segoe UI'; color: {text_color}; }}
+            .definition-card {{
+                background: {card_bg};
+                border: 1px solid {card_border};
+                border-radius: 14px;
+                padding: 14px;
+            }}
+            .def-chip {{
+                display: inline-block;
+                background: {chip_bg};
+                color: {chip_text};
+                padding: 4px 12px;
+                border-radius: 999px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }}
+            .def-section {{
+                margin-top: 12px;
+            }}
+            .def-section h3 {{
+                margin: 0 0 6px;
+                font-size: 14px;
+            }}
+            .def-section p {{
+                margin: 0 0 8px;
+                color: {text_color};
+            }}
+            .def-list {{
+                margin: 0 0 8px 18px;
+                color: {text_color};
+            }}
+            .def-separator {{
+                border: none;
+                border-top: 1px solid {separator};
+                margin: 10px 0;
+            }}
+            .def-muted {{
+                color: {muted_text};
+            }}
+            .codebox {{
+                background: {code_bg};
+                color: #e2e8f0;
+                padding: 10px;
+                border-radius: 10px;
+                border: 1px solid {code_border};
+                font-family: "Consolas";
+                font-size: 12px;
+                margin: 0;
+                white-space: pre-wrap;
+            }}
+        </style>
+        </head>
+        <body>
+            <div class="definition-card">
+                <div class="def-chip">{html.escape(term_id)}</div>
+                {sections_html}
+            </div>
+        </body>
+        </html>
+        """
+
+    def _render_definition_paragraphs(self, text: str) -> str:
+        if not text:
+            return "<p class=\"def-muted\">Sin contenido disponible.</p>"
+        paragraphs = [html.escape(part.strip()) for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
+        return "".join(f"<p>{para}</p>" for para in paragraphs)
+
+    def _parse_legacy_definition(self, text: str) -> dict[str, object] | None:
+        if not text:
+            return None
+        sentences = re.split(r"(?<=[.!?])\s+", text)
+        parts: dict[str, object] = {}
+        que_es: list[str] = []
+        para_que: list[str] = []
+        ver_tambien: list[str] = []
+        ejemplo = ""
+        error_tipico = ""
+
+        for sentence in sentences:
+            cleaned = sentence.strip()
+            if not cleaned:
+                continue
+            lowered = cleaned.lower()
+            if lowered.startswith(("se usa", "se utiliza", "se emplea", "sirve para")):
+                para_que.append(cleaned)
+                continue
+            if lowered.startswith("ejemplo"):
+                ejemplo = re.sub(r"^ejemplo:?\s*", "", cleaned, flags=re.IGNORECASE)
+                continue
+            if lowered.startswith("error típico") or lowered.startswith("error tipico"):
+                error_tipico = re.sub(r"^error típico:?\s*", "", cleaned, flags=re.IGNORECASE)
+                error_tipico = re.sub(r"^error tipico:?\s*", "", error_tipico, flags=re.IGNORECASE)
+                continue
+            if lowered.startswith("ver también") or lowered.startswith("ver tambien"):
+                raw = re.sub(r"^ver también:?\s*", "", cleaned, flags=re.IGNORECASE)
+                raw = re.sub(r"^ver tambien:?\s*", "", raw, flags=re.IGNORECASE)
+                ver_tambien.extend([item.strip() for item in raw.split(",") if item.strip()])
+                continue
+            que_es.append(cleaned)
+
+        if not any([que_es, para_que, ejemplo, error_tipico, ver_tambien]):
+            return None
+
+        if que_es:
+            parts["que_es"] = " ".join(que_es)
+        if para_que:
+            parts["para_que"] = para_que
+        if ejemplo:
+            parts["ejemplo"] = ejemplo
+        if error_tipico:
+            parts["error_tipico"] = error_tipico
+        if ver_tambien:
+            parts["ver_tambien"] = ver_tambien
+        return parts
+
+    def _render_definition_sections(self, parts: dict[str, object]) -> str:
+        section_titles = {
+            "que_es": "Qué es",
+            "para_que": "Para qué sirve",
+            "ejemplo": "Ejemplo",
+            "error_tipico": "Error típico",
+            "ver_tambien": "Ver también",
+        }
+        order = ["que_es", "para_que", "ejemplo", "error_tipico", "ver_tambien"]
+        sections: list[str] = []
+
+        for key in order:
+            if key not in parts:
+                continue
+            content = parts[key]
+            body_html = self._definition_section_body_html(key, content)
+            sections.append(
+                f"<div class=\"def-section\"><h3>{section_titles[key]}</h3>{body_html}</div>"
+            )
+
+        if not sections:
+            return f"<p class=\"def-muted\">Sin contenido disponible.</p>"
+
+        return "<hr class=\"def-separator\"/>".join(sections)
+
+    def _definition_section_body_html(self, key: str, content: object) -> str:
+        if isinstance(content, list):
+            items = "".join(f"<li>{html.escape(str(item))}</li>" for item in content)
+            return f"<ul class=\"def-list\">{items}</ul>"
+        text = html.escape(str(content))
+        if key == "ejemplo" and self._looks_like_code(str(content)):
+            return f"<pre class=\"codebox\">{text}</pre>"
+        return f"<p>{text}</p>"
+
+    def _looks_like_code(self, text: str) -> bool:
+        if "\n" in text:
+            return True
+        return bool(re.search(r"\b(def|class|print|for|if|while|return)\b|[=():]", text))
 
 
 def main() -> None:

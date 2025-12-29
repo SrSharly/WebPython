@@ -1443,5 +1443,23 @@ GLOSSARY = {
     },
 }
 
-TERMS = {term: data["definition"] for term, data in GLOSSARY.items()}
+def definition_text(data: dict[str, object]) -> str:
+    definition = data.get("definition")
+    if isinstance(definition, str) and definition.strip():
+        return definition.strip()
+    parts = data.get("definition_parts")
+    if not isinstance(parts, dict):
+        return ""
+
+    def _flatten(value: object) -> str:
+        if isinstance(value, list):
+            return " ".join(str(item).strip() for item in value if str(item).strip())
+        return str(value).strip()
+
+    ordered_keys = ["que_es", "para_que", "ejemplo", "error_tipico", "ver_tambien"]
+    texts = [_flatten(parts.get(key)) for key in ordered_keys if parts.get(key)]
+    return " ".join(texts).strip()
+
+
+TERMS = {term: definition_text(data) for term, data in GLOSSARY.items()}
 KEYWORDS = list(GLOSSARY.keys())

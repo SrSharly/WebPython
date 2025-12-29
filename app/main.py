@@ -417,6 +417,7 @@ class MainWindow(QMainWindow):
             code_border = "#3a3a3a"
             keyword_color = "#d6b86a"
             keyword_border = "#b8953d"
+            keyword_hover = "#e6c87b"
         else:
             text_color = "#1f2937"
             code_text = "#e2e8f0"
@@ -424,6 +425,7 @@ class MainWindow(QMainWindow):
             code_border = "#1e293b"
             keyword_color = "#3b5b8a"
             keyword_border = "#8aa0c8"
+            keyword_hover = "#2f4c79"
 
         html_content = f"""
         <html>
@@ -443,11 +445,15 @@ class MainWindow(QMainWindow):
                 border: 1px solid {code_border};
             }}
             code {{ font-family: "Consolas"; }}
-            .kw {{
+            a.kw {{
                 color: {keyword_color};
                 text-decoration: underline dotted {keyword_border};
                 text-underline-offset: 3px;
                 cursor: help;
+            }}
+            a.kw:hover {{
+                color: {keyword_hover};
+                text-decoration-color: {keyword_hover};
             }}
         </style>
         </head>

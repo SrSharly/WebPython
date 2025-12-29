@@ -1190,10 +1190,13 @@ GLOSSARY = {
         "definition": (
             "Python es un lenguaje de programación de alto nivel con una sintaxis "
             "clara que prioriza la legibilidad. Se usa en automatización, desarrollo "
-            "web, ciencia de datos, scripting y aplicaciones de escritorio. "
-            "Ejemplo: print('Hola') imprime texto en la consola. "
+            "web, ciencia de datos, scripting, IA y aplicaciones de escritorio. "
+            "Incluye paradigmas imperativo, orientado a objetos y funcional. "
+            "Ejemplo: print('Hola') imprime texto en la consola, o usar pandas para "
+            "analizar un CSV. "
             "Matiz: su ecosistema de paquetes (pip) y su comunidad facilitan resolver "
-            "problemas comunes rápidamente."
+            "problemas comunes rápidamente, aunque el rendimiento puede requerir "
+            "optimizaciones o extensiones en C."
         ),
     },
     "ciencia de datos": {
@@ -1202,7 +1205,10 @@ GLOSSARY = {
             "La ciencia de datos combina estadística, programación y conocimiento del "
             "dominio para obtener conclusiones a partir de datos. Se usa para analizar "
             "tendencias, construir modelos predictivos y apoyar decisiones. "
-            "Ejemplo: usar pandas y matplotlib para explorar un dataset de ventas. "
+            "Incluye etapas como recolección, limpieza, exploración, modelado y "
+            "comunicación. "
+            "Ejemplo: usar pandas y matplotlib para explorar un dataset de ventas y "
+            "generar un reporte de KPIs. "
             "Matiz: requiere limpieza de datos, validación de resultados y comunicación "
             "clara de los hallazgos."
         ),
@@ -1213,7 +1219,9 @@ GLOSSARY = {
             "Data science aplica estadística, programación y comunicación para "
             "extraer conocimiento de datos. Se usa para entender fenómenos, detectar "
             "patrones, construir modelos y comunicar insights a negocio. "
-            "Ejemplo: analizar el churn de clientes y proponer acciones para reducirlo. "
+            "Incluye desde análisis exploratorio hasta despliegue de modelos. "
+            "Ejemplo: analizar el churn de clientes, entrenar un modelo y proponer "
+            "acciones para reducirlo. "
             "Matiz: la limpieza y la calidad de los datos son el punto de partida del "
             "valor generado."
         ),
@@ -1224,7 +1232,8 @@ GLOSSARY = {
             "Data cience es una escritura incorrecta de data science (ciencia de datos). "
             "Se usa en búsquedas o conversaciones informales, pero el término correcto "
             "es data science. Ejemplo: preparar datos, analizar tendencias y crear modelos. "
-            "Matiz: conviene corregirlo en documentación y presentaciones formales."
+            "Matiz: conviene corregirlo en documentación y presentaciones formales para "
+            "evitar confusiones."
         ),
     },
     "machine learning": {
@@ -1233,8 +1242,10 @@ GLOSSARY = {
             "Machine learning es una rama de la inteligencia artificial que aprende "
             "patrones desde datos para predecir, clasificar o recomendar. "
             "Se usa en motores de recomendación, detección de fraude, visión y NLP. "
-            "Ejemplo: un modelo que predice el precio de una casa a partir de variables. "
-            "Matiz: requiere datos representativos, métricas claras y control de sesgos."
+            "Ejemplo: un modelo que predice el precio de una casa a partir de variables "
+            "como metros cuadrados y ubicación. "
+            "Matiz: requiere datos representativos, métricas claras, prevención de "
+            "sobreajuste y control de sesgos."
         ),
     },
     "full stack": {
@@ -1243,8 +1254,9 @@ GLOSSARY = {
             "Full stack describe a quien desarrolla toda la aplicación: interfaz "
             "(frontend), servidor (backend) y base de datos. Se usa cuando se necesita "
             "entregar un producto end-to-end en equipos pequeños o proyectos ágiles. "
+            "También implica integrar autenticación, APIs, despliegue y monitoreo. "
             "Ejemplo: una SPA con React, una API con Python y una base en PostgreSQL. "
-            "Matiz: exige entender integración, seguridad, rendimiento y despliegue."
+            "Matiz: exige entender integración, seguridad, rendimiento, UX y despliegue."
         ),
     },
     "pyside": {
@@ -1253,8 +1265,10 @@ GLOSSARY = {
             "PySide es el conjunto oficial de bindings de Qt para Python. "
             "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
             "tablas y componentes interactivos. "
-            "Ejemplo: PySide6 para construir una GUI multiplataforma con Qt Designer. "
-            "Matiz: usa señales y slots para comunicar widgets de forma desacoplada."
+            "Ejemplo: PySide6 para construir una GUI multiplataforma con Qt Designer "
+            "y cargar una interfaz .ui. "
+            "Matiz: usa señales y slots para comunicar widgets de forma desacoplada, "
+            "y permite integrar estilos y recursos de Qt."
         ),
     },
     "aws": {
@@ -1263,8 +1277,10 @@ GLOSSARY = {
             "AWS (Amazon Web Services) es la plataforma cloud de Amazon con servicios "
             "de cómputo, almacenamiento, redes, datos e IA. Se usa para desplegar apps, "
             "escalar sistemas y operar infraestructuras globales. "
-            "Ejemplo: EC2 para servidores, S3 para almacenamiento, RDS para bases. "
-            "Matiz: el costo es bajo demanda y depende de región, uso y arquitectura."
+            "Ejemplo: EC2 para servidores, S3 para almacenamiento, RDS para bases y "
+            "CloudFront para distribución de contenido. "
+            "Matiz: el costo es bajo demanda y depende de región, uso, arquitectura "
+            "y políticas de optimización."
         ),
     },
     "s3": {
@@ -1272,7 +1288,8 @@ GLOSSARY = {
         "definition": (
             "Amazon S3 almacena archivos como objetos en buckets y está pensado para "
             "durabilidad y escalabilidad. Se usa para backups, archivos estáticos y "
-            "data lakes. Ejemplo: guardar imágenes de una aplicación web. "
+            "data lakes. Ejemplo: guardar imágenes de una aplicación web o datos crudos "
+            "para analítica. "
             "Matiz: organiza por buckets y permisos; no es un sistema de archivos clásico."
         ),
     },
@@ -1281,8 +1298,8 @@ GLOSSARY = {
         "definition": (
             "Amazon EC2 ofrece instancias virtuales para ejecutar servidores. "
             "Se usa cuando necesitas control total del sistema operativo. "
-            "Ejemplo: desplegar una API en una instancia Linux. "
-            "Matiz: hay que gestionar parches, escalado y seguridad."
+            "Ejemplo: desplegar una API en una instancia Linux con Nginx. "
+            "Matiz: hay que gestionar parches, escalado, seguridad y costos por hora."
         ),
     },
     "rds": {
@@ -1290,8 +1307,9 @@ GLOSSARY = {
         "definition": (
             "Amazon RDS provee bases de datos relacionales gestionadas (PostgreSQL, "
             "MySQL, etc.). Se usa para evitar tareas de mantenimiento como backups. "
-            "Ejemplo: una base de datos transaccional para una app. "
-            "Matiz: simplifica la operación, pero limita ciertas configuraciones."
+            "Ejemplo: una base de datos transaccional para una app con alta disponibilidad. "
+            "Matiz: simplifica la operación, pero limita ciertas configuraciones "
+            "de motor y extensión."
         ),
     },
     "lambda": {
@@ -1300,7 +1318,7 @@ GLOSSARY = {
             "AWS Lambda ejecuta funciones bajo demanda sin servidores visibles. "
             "Se usa para tareas event-driven como procesar archivos o enviar notificaciones. "
             "Ejemplo: procesar imágenes cuando se suben a S3. "
-            "Matiz: tiene límites de tiempo y memoria por ejecución."
+            "Matiz: tiene límites de tiempo y memoria por ejecución, y se cobra por uso."
         ),
     },
     "sagemaker": {
@@ -1308,8 +1326,76 @@ GLOSSARY = {
         "definition": (
             "Amazon SageMaker es una plataforma administrada para entrenar, ajustar y "
             "desplegar modelos de machine learning. Se usa para acelerar el ciclo de ML. "
-            "Ejemplo: entrenamiento distribuido de modelos y despliegue como endpoint. "
+            "Ejemplo: entrenamiento distribuido de modelos y despliegue como endpoint "
+            "para inferencias en tiempo real. "
             "Matiz: integra notebooks, pipelines y monitoreo del rendimiento."
+        ),
+    },
+    "dynamodb": {
+        "tooltip": "Base de datos NoSQL administrada de AWS.",
+        "definition": (
+            "Amazon DynamoDB es una base de datos NoSQL key-value y documental, "
+            "administrada y altamente escalable. Se usa para aplicaciones con alta "
+            "lectura/escritura y baja latencia. "
+            "Ejemplo: guardar sesiones de usuarios o catálogos de productos. "
+            "Matiz: el diseño de particiones es clave para el rendimiento."
+        ),
+    },
+    "cloudfront": {
+        "tooltip": "CDN de AWS para distribución de contenido.",
+        "definition": (
+            "Amazon CloudFront es una red de distribución de contenido (CDN) que "
+            "entrega archivos con baja latencia desde ubicaciones globales. "
+            "Se usa para acelerar sitios web y contenido estático. "
+            "Ejemplo: servir imágenes y archivos JS/CSS de una web. "
+            "Matiz: se integra con S3, ALB o servidores propios como origen."
+        ),
+    },
+    "iam": {
+        "tooltip": "Servicio de identidades y permisos en AWS.",
+        "definition": (
+            "AWS IAM (Identity and Access Management) gestiona usuarios, roles y "
+            "políticas de permisos en AWS. Se usa para controlar quién puede acceder "
+            "a qué recursos. "
+            "Ejemplo: un rol que permite a una Lambda leer un bucket S3. "
+            "Matiz: las políticas deben seguir el principio de menor privilegio."
+        ),
+    },
+    "vpc": {
+        "tooltip": "Red virtual aislada dentro de AWS.",
+        "definition": (
+            "Amazon VPC (Virtual Private Cloud) crea redes virtuales con subredes, "
+            "tablas de rutas y seguridad. Se usa para aislar servicios y controlar "
+            "el tráfico. "
+            "Ejemplo: subred privada para bases de datos y subred pública para una API. "
+            "Matiz: una mala configuración puede exponer recursos sensibles."
+        ),
+    },
+    "sqs": {
+        "tooltip": "Cola de mensajes administrada de AWS.",
+        "definition": (
+            "Amazon SQS es un servicio de colas para desacoplar componentes. "
+            "Se usa para procesar tareas asíncronas y absorber picos de tráfico. "
+            "Ejemplo: encolar pedidos para procesamiento posterior. "
+            "Matiz: garantiza entrega al menos una vez, por lo que hay que manejar duplicados."
+        ),
+    },
+    "sns": {
+        "tooltip": "Servicio de notificaciones y pub/sub de AWS.",
+        "definition": (
+            "Amazon SNS permite publicar mensajes y distribuirlos a múltiples destinos "
+            "como email, HTTP o colas. Se usa para notificaciones y eventos. "
+            "Ejemplo: enviar alertas cuando falla un proceso. "
+            "Matiz: se integra bien con SQS y Lambda para flujos event-driven."
+        ),
+    },
+    "eks": {
+        "tooltip": "Servicio administrado de Kubernetes en AWS.",
+        "definition": (
+            "Amazon EKS ofrece clusters de Kubernetes gestionados. "
+            "Se usa para orquestar contenedores sin administrar el plano de control. "
+            "Ejemplo: desplegar microservicios en un cluster con autoescalado. "
+            "Matiz: hay costos por el control plane y requiere gestión de nodos."
         ),
     },
     "cloud": {
@@ -1319,7 +1405,8 @@ GLOSSARY = {
             "bajo demanda y con pago por uso. Se usa para escalar sin comprar hardware "
             "y para desplegar rápido en múltiples regiones. "
             "Ejemplo: publicar una app en un proveedor cloud con balanceo y backups. "
-            "Matiz: los modelos IaaS, PaaS y SaaS definen el nivel de control."
+            "Matiz: los modelos IaaS, PaaS y SaaS definen el nivel de control y "
+            "responsabilidades compartidas."
         ),
     },
     "iaas": {
@@ -1328,7 +1415,7 @@ GLOSSARY = {
             "IaaS ofrece infraestructura virtualizada como servidores y redes. "
             "Se usa cuando necesitas control del sistema operativo y configuración. "
             "Ejemplo: instancias virtuales en AWS EC2 o Azure Virtual Machines. "
-            "Matiz: el usuario administra el sistema y la seguridad del servidor."
+            "Matiz: el usuario administra el sistema, la seguridad y el parcheo."
         ),
     },
     "paas": {
@@ -1337,7 +1424,7 @@ GLOSSARY = {
             "PaaS ofrece una plataforma administrada para ejecutar aplicaciones. "
             "Se usa para enfocarse en el código sin administrar servidores. "
             "Ejemplo: Heroku, Google App Engine o Azure App Service. "
-            "Matiz: limita ciertas configuraciones del entorno."
+            "Matiz: limita ciertas configuraciones del entorno pero acelera el despliegue."
         ),
     },
     "saas": {
@@ -1346,7 +1433,8 @@ GLOSSARY = {
             "SaaS es software accesible vía web sin instalarlo localmente. "
             "Se usa para consumir aplicaciones listas para usar. "
             "Ejemplo: Gmail, Slack o Notion. "
-            "Matiz: el proveedor gestiona la infraestructura y actualizaciones."
+            "Matiz: el proveedor gestiona la infraestructura y actualizaciones, y el "
+            "usuario se centra en la configuración y uso."
         ),
     },
     "azure": {
@@ -1366,6 +1454,24 @@ GLOSSARY = {
             "Se usa para automatizaciones, APIs ligeras y flujos basados en eventos. "
             "Ejemplo: procesar eventos de cola o disparar tareas programadas. "
             "Matiz: ofrece distintos planes de escalado y límites por ejecución."
+        ),
+    },
+    "azure blob storage": {
+        "tooltip": "Servicio de almacenamiento de objetos en Azure.",
+        "definition": (
+            "Azure Blob Storage almacena datos como objetos en contenedores. "
+            "Se usa para archivos estáticos, backups y data lakes. "
+            "Ejemplo: guardar imágenes de una app o archivos de analítica. "
+            "Matiz: ofrece niveles de acceso (hot, cool, archive) según costo."
+        ),
+    },
+    "azure sql": {
+        "tooltip": "Base de datos relacional administrada en Azure.",
+        "definition": (
+            "Azure SQL Database es un servicio administrado de bases relacionales "
+            "basado en SQL Server. Se usa para aplicaciones transaccionales. "
+            "Ejemplo: base de datos para un ERP con alta disponibilidad. "
+            "Matiz: ofrece escalado elástico y backups automáticos."
         ),
     },
     "gcp": {
@@ -1414,6 +1520,24 @@ GLOSSARY = {
             "Matiz: ofrece backups automáticos y alta disponibilidad."
         ),
     },
+    "cloud functions": {
+        "tooltip": "Servicio serverless de GCP para ejecutar funciones.",
+        "definition": (
+            "Cloud Functions permite ejecutar funciones bajo demanda en Google Cloud. "
+            "Se usa para responder a eventos de almacenamiento, pub/sub o HTTP. "
+            "Ejemplo: procesar un archivo al subirlo a Cloud Storage. "
+            "Matiz: escala automáticamente y se cobra por invocación."
+        ),
+    },
+    "pub/sub": {
+        "tooltip": "Mensajería pub/sub en Google Cloud.",
+        "definition": (
+            "Pub/Sub es un servicio de mensajería asíncrona con productores y suscriptores. "
+            "Se usa para desacoplar sistemas y procesar eventos. "
+            "Ejemplo: un servicio publica eventos y varios consumidores los procesan. "
+            "Matiz: soporta reintentos y ordenamiento según configuración."
+        ),
+    },
     "serverless": {
         "tooltip": "Ejecución de código sin gestionar servidores.",
         "definition": (
@@ -1421,6 +1545,71 @@ GLOSSARY = {
             "administrar servidores. Se usa para tareas event-driven y escalado "
             "automático. Ejemplo: AWS Lambda o Azure Functions. "
             "Matiz: suele tener límites de tiempo y recursos."
+        ),
+    },
+    "data lake": {
+        "tooltip": "Repositorio de datos crudos a gran escala.",
+        "definition": (
+            "Un data lake es un repositorio que almacena datos en su formato original "
+            "para análisis futuro. Se usa para centralizar datos heterogéneos. "
+            "Ejemplo: almacenar archivos parquet y JSON en S3 para analítica. "
+            "Matiz: requiere gobernanza para evitar convertirse en un \"data swamp\"."
+        ),
+    },
+    "data warehouse": {
+        "tooltip": "Almacén de datos optimizado para analítica.",
+        "definition": (
+            "Un data warehouse organiza datos estructurados para consultas analíticas. "
+            "Se usa para reportes, BI y métricas de negocio. "
+            "Ejemplo: consolidar ventas en BigQuery o Snowflake. "
+            "Matiz: suele incluir modelos dimensionales y procesos ETL/ELT."
+        ),
+    },
+    "etl": {
+        "tooltip": "Proceso de extraer, transformar y cargar datos.",
+        "definition": (
+            "ETL (Extract, Transform, Load) es un flujo para mover datos desde fuentes "
+            "a un destino analítico. Se usa para limpiar y estructurar información. "
+            "Ejemplo: extraer CSVs, transformar columnas y cargar a un data warehouse. "
+            "Matiz: en ELT se carga primero y se transforma después."
+        ),
+    },
+    "feature engineering": {
+        "tooltip": "Creación de variables útiles para modelos de ML.",
+        "definition": (
+            "Feature engineering es el proceso de crear o transformar variables para "
+            "mejorar el rendimiento de un modelo. Se usa para capturar patrones "
+            "relevantes del dominio. "
+            "Ejemplo: convertir fechas en día de la semana o crear la variable "
+            "ingreso_por_persona. "
+            "Matiz: debe evitar fugas de información (data leakage)."
+        ),
+    },
+    "api": {
+        "tooltip": "Interfaz para que sistemas se comuniquen.",
+        "definition": (
+            "Una API (Application Programming Interface) define cómo dos sistemas "
+            "intercambian datos. Se usa para exponer funcionalidades de un servicio. "
+            "Ejemplo: una API REST que devuelve JSON con pedidos de clientes. "
+            "Matiz: requiere versionado y autenticación para ser estable y segura."
+        ),
+    },
+    "frontend": {
+        "tooltip": "Parte visual e interactiva de una aplicación.",
+        "definition": (
+            "Frontend es la capa que interactúa con el usuario: UI, estilos y lógica "
+            "en el navegador o cliente. Se usa para presentar datos y capturar acciones. "
+            "Ejemplo: una interfaz React que consume una API. "
+            "Matiz: rendimiento y accesibilidad impactan directamente en la UX."
+        ),
+    },
+    "backend": {
+        "tooltip": "Lógica del servidor y acceso a datos.",
+        "definition": (
+            "Backend es la capa que procesa solicitudes, aplica reglas de negocio y "
+            "gestiona bases de datos. Se usa para implementar APIs y servicios internos. "
+            "Ejemplo: un servicio FastAPI que valida usuarios y consulta una base. "
+            "Matiz: seguridad, escalabilidad y observabilidad son claves."
         ),
     },
     "docker": {

@@ -4,19 +4,21 @@ GLOSSARY = {
     "variable": {
         "tooltip": "Espacio de memoria con un nombre que guarda un valor.",
         "definition": (
-            "Una variable es un nombre que apunta a un valor guardado en memoria. "
-            "Se usa para reutilizar datos y hacer el código más claro. "
+            "Una variable es un nombre que referencia un valor guardado en memoria. "
+            "Se usa para reutilizar datos, hacer el código legible y expresar intención. "
             "Ejemplo: x = 5 guarda el 5 en la variable x. "
-            "Error típico: olvidar que el nombre puede ser reasignado y cambia el valor."
+            "Matiz: el nombre puede reasignarse y apuntar a otro valor, por lo que su "
+            "contenido puede cambiar durante la ejecución."
         ),
     },
     "función": {
         "tooltip": "Bloque reutilizable de código que realiza una tarea específica.",
         "definition": (
-            "Una función agrupa instrucciones con un nombre para poder reutilizarlas. "
-            "Se usa para evitar repetir lógica y organizar el programa. "
+            "Una función agrupa instrucciones bajo un nombre para reutilizarlas. "
+            "Se usa para evitar repetir lógica, organizar el programa y encapsular "
+            "comportamiento. "
             "Ejemplo: def saludar(): print('Hola'). "
-            "Matiz: una función puede devolver un valor con return o no devolver nada."
+            "Matiz: puede devolver un valor con return o no devolver nada (None)."
         ),
     },
     "método": {
@@ -31,10 +33,10 @@ GLOSSARY = {
     "clase": {
         "tooltip": "Molde que define atributos y comportamientos para crear objetos.",
         "definition": (
-            "Una clase es un molde que describe datos y acciones para crear objetos. "
+            "Una clase es un molde que describe datos (atributos) y acciones (métodos). "
             "Se usa para modelar entidades con estado y comportamiento. "
             "Ejemplo: class Perro: def ladrar(self): print('guau'). "
-            "Matiz: crear la clase no crea objetos; hay que instanciarla."
+            "Matiz: definir la clase no crea objetos; hay que instanciarla con Perro()."
         ),
     },
     "objeto": {
@@ -52,7 +54,8 @@ GLOSSARY = {
             "Un módulo es un archivo .py que contiene funciones, clases y variables. "
             "Se usa para organizar el código y reutilizarlo con import. "
             "Ejemplo: import math permite usar math.sqrt(9). "
-            "Error típico: crear un archivo con el mismo nombre que un módulo estándar."
+            "Error típico: crear un archivo con el mismo nombre que un módulo estándar "
+            "y bloquear la importación correcta."
         ),
     },
     "paquete": {
@@ -61,7 +64,8 @@ GLOSSARY = {
             "Un paquete es una carpeta que agrupa módulos relacionados. "
             "Se usa para estructurar proyectos grandes y jerarquizar imports. "
             "Ejemplo: from mi_paquete import utilidades. "
-            "Matiz: el paquete necesita un __init__.py para ser importable."
+            "Matiz: en Python clásico necesita un __init__.py para ser importable "
+            "como paquete."
         ),
     },
     "parámetro": {
@@ -194,9 +198,10 @@ GLOSSARY = {
         "tooltip": "Colección de pares clave-valor.",
         "definition": (
             "Un diccionario guarda pares clave-valor para buscar datos rápido. "
-            "Se usa para mapas o configuraciones. "
+            "Se usa para mapas, configuraciones o datos estructurados. "
             "Ejemplo: edades = {'Ana': 20}. "
-            "Matiz: las claves deben ser únicas e inmutables."
+            "Matiz: las claves deben ser únicas e inmutables, y las búsquedas son "
+            "rápidas gracias a tablas hash."
         ),
     },
     "diccionario": {
@@ -1178,6 +1183,163 @@ GLOSSARY = {
             "Se usa para definir el tipo de dato de cada campo. "
             "Ejemplo: columna 'edad' en usuarios. "
             "Matiz: el tipo de columna limita los valores permitidos."
+        ),
+    },
+    "python": {
+        "tooltip": "Lenguaje de programación interpretado y multiplataforma.",
+        "definition": (
+            "Python es un lenguaje de programación de alto nivel, legible y con una "
+            "gran comunidad. Se usa para desarrollo web, automatización, análisis de "
+            "datos, ciencia de datos y más. Ejemplo: print('Hola') imprime texto. "
+            "Matiz: su ecosistema de paquetes (pip) acelera el desarrollo."
+        ),
+    },
+    "ciencia de datos": {
+        "tooltip": "Disciplina que extrae valor de datos con estadística y programación.",
+        "definition": (
+            "La ciencia de datos combina estadística, programación y conocimiento del "
+            "dominio para obtener conclusiones a partir de datos. Se usa para analizar "
+            "tendencias, construir modelos predictivos y apoyar decisiones. "
+            "Ejemplo: usar pandas y matplotlib para explorar un dataset de ventas. "
+            "Matiz: requiere limpieza de datos y validación de resultados."
+        ),
+    },
+    "data science": {
+        "tooltip": "Nombre en inglés de ciencia de datos.",
+        "definition": (
+            "Data science es la disciplina que aplica técnicas estadísticas y de "
+            "programación para extraer conocimiento de datos. Se usa para exploración "
+            "de datos, modelado y comunicación de hallazgos. "
+            "Ejemplo: entrenar un modelo para predecir churn de clientes. "
+            "Matiz: la calidad del dato impacta directamente en la calidad del modelo."
+        ),
+    },
+    "data cience": {
+        "tooltip": "Variante común con error de escritura de data science.",
+        "definition": (
+            "Data cience suele referirse a data science (ciencia de datos). "
+            "Se usa para describir el análisis de datos con estadística y programación. "
+            "Ejemplo: limpieza de datos antes de entrenar un modelo. "
+            "Matiz: aunque esté mal escrito, apunta a la misma disciplina."
+        ),
+    },
+    "machine learning": {
+        "tooltip": "Rama de la IA que aprende patrones desde datos.",
+        "definition": (
+            "Machine learning es una rama de la inteligencia artificial que aprende "
+            "patrones a partir de datos para hacer predicciones o clasificaciones. "
+            "Se usa en recomendaciones, detección de fraude y visión por computador. "
+            "Ejemplo: un modelo que predice el precio de una casa. "
+            "Matiz: requiere datos representativos y evaluación con métricas."
+        ),
+    },
+    "full stack": {
+        "tooltip": "Desarrollo que cubre frontend y backend.",
+        "definition": (
+            "Full stack se refiere a construir aplicaciones completas, desde la "
+            "interfaz de usuario (frontend) hasta la lógica del servidor y la base "
+            "de datos (backend). Se usa en equipos pequeños o productos end-to-end. "
+            "Ejemplo: crear una web con React y una API con Python. "
+            "Matiz: requiere entender integración, seguridad y despliegue."
+        ),
+    },
+    "pyside": {
+        "tooltip": "Bindings de Qt para crear interfaces gráficas en Python.",
+        "definition": (
+            "PySide es un conjunto de bindings oficiales de Qt para Python. "
+            "Se usa para crear aplicaciones de escritorio con ventanas, botones y "
+            "layouts. Ejemplo: usar PySide6 para construir una GUI multiplataforma. "
+            "Matiz: ofrece señales y slots para la comunicación entre componentes."
+        ),
+    },
+    "aws": {
+        "tooltip": "Plataforma cloud de Amazon con múltiples servicios.",
+        "definition": (
+            "AWS (Amazon Web Services) es una plataforma de servicios cloud. "
+            "Se usa para desplegar aplicaciones, almacenar datos y escalar sistemas. "
+            "Ejemplo: EC2 para servidores, S3 para almacenamiento, RDS para bases. "
+            "Matiz: el costo depende del uso y la región."
+        ),
+    },
+    "cloud": {
+        "tooltip": "Modelo de computación con recursos bajo demanda.",
+        "definition": (
+            "La computación en la nube ofrece recursos (cómputo, almacenamiento, red) "
+            "bajo demanda y con pago por uso. Se usa para escalar sin comprar hardware. "
+            "Ejemplo: desplegar una app en un proveedor cloud. "
+            "Matiz: se gestiona con servicios IaaS, PaaS o SaaS."
+        ),
+    },
+    "iaas": {
+        "tooltip": "Infraestructura como servicio.",
+        "definition": (
+            "IaaS ofrece infraestructura virtualizada como servidores y redes. "
+            "Se usa cuando necesitas control del sistema operativo y configuración. "
+            "Ejemplo: instancias virtuales en AWS EC2 o Azure Virtual Machines. "
+            "Matiz: el usuario administra el sistema y la seguridad del servidor."
+        ),
+    },
+    "paas": {
+        "tooltip": "Plataforma como servicio.",
+        "definition": (
+            "PaaS ofrece una plataforma administrada para ejecutar aplicaciones. "
+            "Se usa para enfocarse en el código sin administrar servidores. "
+            "Ejemplo: Heroku, Google App Engine o Azure App Service. "
+            "Matiz: limita ciertas configuraciones del entorno."
+        ),
+    },
+    "saas": {
+        "tooltip": "Software como servicio.",
+        "definition": (
+            "SaaS es software accesible vía web sin instalarlo localmente. "
+            "Se usa para consumir aplicaciones listas para usar. "
+            "Ejemplo: Gmail, Slack o Notion. "
+            "Matiz: el proveedor gestiona la infraestructura y actualizaciones."
+        ),
+    },
+    "azure": {
+        "tooltip": "Plataforma cloud de Microsoft.",
+        "definition": (
+            "Azure es la plataforma cloud de Microsoft con servicios de cómputo, "
+            "almacenamiento, datos e IA. Se usa para aplicaciones empresariales y "
+            "despliegues híbridos. Ejemplo: Azure Functions para serverless. "
+            "Matiz: integra herramientas de Microsoft como Active Directory."
+        ),
+    },
+    "gcp": {
+        "tooltip": "Google Cloud Platform para servicios en la nube.",
+        "definition": (
+            "GCP es la plataforma cloud de Google con servicios de cómputo, datos y "
+            "machine learning. Se usa para análisis a gran escala y despliegues rápidos. "
+            "Ejemplo: BigQuery para análisis y Cloud Run para contenedores. "
+            "Matiz: destaca por sus herramientas de datos."
+        ),
+    },
+    "serverless": {
+        "tooltip": "Ejecución de código sin gestionar servidores.",
+        "definition": (
+            "Serverless es un modelo donde ejecutas funciones bajo demanda sin "
+            "administrar servidores. Se usa para tareas event-driven y escalado "
+            "automático. Ejemplo: AWS Lambda o Azure Functions. "
+            "Matiz: suele tener límites de tiempo y recursos."
+        ),
+    },
+    "docker": {
+        "tooltip": "Herramienta para crear y ejecutar contenedores.",
+        "definition": (
+            "Docker permite empaquetar aplicaciones con sus dependencias en contenedores. "
+            "Se usa para reproducir entornos y facilitar despliegues. "
+            "Ejemplo: ejecutar una API en un contenedor con Dockerfile. "
+            "Matiz: los contenedores comparten el kernel del host."
+        ),
+    },
+    "kubernetes": {
+        "tooltip": "Orquestador de contenedores.",
+        "definition": (
+            "Kubernetes (K8s) es un sistema para orquestar contenedores. "
+            "Se usa para desplegar, escalar y recuperar aplicaciones en clústeres. "
+            "Ejemplo: definir Deployments y Services para una app. "
+            "Matiz: requiere configuración y observabilidad para operar bien."
         ),
     },
 }

@@ -191,7 +191,8 @@ TL;DR: ColumnTransformer aplica transformaciones por tipo de columna y Pipeline 
         pred_ejemplo = pipeline.predict(ejemplo)[0]
 
         layout.addWidget(QLabel("Demo: Pipeline + ColumnTransformer con dataset sintético."))
-        area = QTextEdit(readOnly=True)
+        area = QTextEdit()
+        area.setReadOnly(True)
         area.setText(
             "\n".join(
                 [

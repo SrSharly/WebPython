@@ -81,7 +81,8 @@ class MainWindow(QMainWindow):
         self.tree.itemSelectionChanged.connect(self._on_tree_selection)
 
         self.tabs = QTabWidget()
-        self.summary_view = QTextEdit(readOnly=True)
+        self.summary_view = QTextEdit()
+        self.summary_view.setReadOnly(True)
         self.guide_text = QTextBrowser()
         self.guide_text.setOpenExternalLinks(True)
         self.guide_text.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -98,7 +99,8 @@ class MainWindow(QMainWindow):
         self.examples_scroll.setWidget(self.examples_container)
 
         self.pitfalls_list = QListWidget()
-        self.pitfall_detail = QTextEdit(readOnly=True)
+        self.pitfall_detail = QTextEdit()
+        self.pitfall_detail.setReadOnly(True)
         self.pitfalls_list.currentItemChanged.connect(self._on_pitfall_selected)
 
         pitfalls_panel = QWidget()
@@ -512,13 +514,15 @@ class MainWindow(QMainWindow):
             content_layout.addWidget(question)
 
             hints_btn = QPushButton("Ver pistas")
-            hints_view = QTextEdit(readOnly=True)
+            hints_view = QTextEdit()
+            hints_view.setReadOnly(True)
             hints_view.setPlainText("\n".join(exercise.get("hints", [])))
             hints_view.setVisible(False)
             hints_btn.clicked.connect(lambda _, v=hints_view: v.setVisible(not v.isVisible()))
 
             solution_btn = QPushButton("Ver solución")
-            solution_view = QTextEdit(readOnly=True)
+            solution_view = QTextEdit()
+            solution_view.setReadOnly(True)
             solution_view.setPlainText(exercise.get("solution", ""))
             solution_view.setVisible(False)
             solution_btn.clicked.connect(lambda _, v=solution_view: v.setVisible(not v.isVisible()))

@@ -147,7 +147,8 @@ TL;DR: Usa QMessageBox y QFileDialog para comunicar y pedir confirmación al usu
         layout = QVBoxLayout(widget)
         layout.addWidget(QLabel("Demo: diálogos con registro de resultados."))
 
-        log = QTextEdit(readOnly=True)
+        log = QTextEdit()
+        log.setReadOnly(True)
         info_btn = QPushButton("Info")
         error_btn = QPushButton("Error")
         confirm_btn = QPushButton("Confirmar")

@@ -31,6 +31,7 @@ from PySide6.QtWidgets import (
 
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
+from app.ui.glossary_view import GlossaryView
 from app.utils.code_runner import SnippetRunner
 from app.utils.theme import apply_theme, toggle_theme
 from app.utils.tooltipify import tooltipify_html
@@ -119,12 +120,15 @@ class MainWindow(QMainWindow):
         self.demo_scroll.setWidgetResizable(True)
         self.demo_scroll.setWidget(self.demo_container)
 
+        self.glossary_view = GlossaryView()
+
         self.tabs.addTab(self.guide_scroll, "Tutorial")
         self.tabs.addTab(self.summary_view, "Resumen")
         self.tabs.addTab(pitfalls_panel, "Errores típicos")
         self.tabs.addTab(self.examples_scroll, "Ejemplos")
         self.tabs.addTab(self.exercises_scroll, "Ejercicios")
         self.tabs.addTab(self.demo_scroll, "Demo")
+        self.tabs.addTab(self.glossary_view, "Glosario")
 
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)

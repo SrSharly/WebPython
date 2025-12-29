@@ -1402,7 +1402,8 @@ GLOSSARY = {
                 "Python es un lenguaje de alto nivel, interpretado y multiplataforma "
                 "con una sintaxis clara enfocada en legibilidad y productividad. "
                 "Destaca por su tipado dinámico, gran biblioteca estándar y una "
-                "comunidad muy amplia, además de múltiples paradigmas de programación."
+                "comunidad muy amplia, además de múltiples paradigmas de programación "
+                "(imperativo, orientado a objetos y funcional)."
             ),
             "para_que": (
                 "Se usa en automatización, desarrollo web, ciencia de datos, scripting, "
@@ -1414,7 +1415,8 @@ GLOSSARY = {
             "sintaxis": "print('Hola') o def saludar(nombre): return f'Hola {nombre}'",
             "ejemplo": (
                 "print('Hola') imprime en consola; con pandas.read_csv() puedes cargar "
-                "un CSV, limpiar columnas y generar un análisis rápido."
+                "un CSV, limpiar columnas y generar un análisis rápido o construir un "
+                "script que automatice tareas diarias."
             ),
             "matiz": (
                 "El ecosistema de paquetes (pip) acelera el desarrollo, pero el "
@@ -1472,7 +1474,8 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Jupyter es un entorno interactivo que permite combinar código, texto, "
-                "gráficas y resultados en un mismo documento."
+                "gráficas y resultados en un mismo documento, normalmente en notebooks "
+                "con celdas ejecutables."
             ),
             "para_que": (
                 "Se usa para exploración de datos, prototipos rápidos, docencia y "
@@ -1480,12 +1483,100 @@ GLOSSARY = {
             ),
             "sintaxis": "jupyter lab o jupyter notebook",
             "ejemplo": (
-                "Ejecutar un notebook .ipynb para analizar datos y visualizar gráficos "
-                "paso a paso."
+                "Ejecutar un notebook .ipynb para analizar datos con pandas, generar "
+                "gráficas con matplotlib y documentar hallazgos paso a paso."
             ),
             "matiz": (
                 "Para producción, conviene convertir notebooks en scripts o pipelines "
                 "versionados."
+            ),
+        },
+    },
+    "jupyter notebook": {
+        "tooltip": "Formato y aplicación de notebook interactivo en Jupyter.",
+        "definition_parts": {
+            "que_es": (
+                "Jupyter Notebook es la aplicación y el formato .ipynb para documentos "
+                "interactivos con celdas de código y markdown."
+            ),
+            "para_que": (
+                "Se usa para crear análisis reproducibles, demostraciones y reportes "
+                "con resultados ejecutables."
+            ),
+            "sintaxis": "archivo.ipynb abierto con `jupyter notebook`",
+            "ejemplo": (
+                "Un notebook con celdas que cargan un CSV, limpian datos y generan un "
+                "reporte con gráficos."
+            ),
+            "matiz": (
+                "Los notebooks guardan salidas en el archivo JSON, por lo que conviene "
+                "limpiar outputs antes de versionar en Git."
+            ),
+        },
+    },
+    "jupyterlab": {
+        "tooltip": "Interfaz moderna y modular de Jupyter.",
+        "definition_parts": {
+            "que_es": (
+                "JupyterLab es la interfaz moderna de Jupyter con paneles, pestañas y "
+                "extensiones para notebooks, terminales y editores."
+            ),
+            "para_que": (
+                "Se usa para trabajar con múltiples notebooks, archivos y recursos en "
+                "una experiencia de IDE basada en navegador."
+            ),
+            "sintaxis": "jupyter lab",
+            "ejemplo": (
+                "Abrir dos notebooks en paralelo y un editor de scripts en la misma "
+                "ventana."
+            ),
+            "matiz": (
+                "Permite extensiones, pero hay que considerar compatibilidad de "
+                "versiones y recursos en ambientes compartidos."
+            ),
+        },
+    },
+    "kernel": {
+        "tooltip": "Proceso que ejecuta el código en un notebook.",
+        "definition_parts": {
+            "que_es": (
+                "Un kernel es el proceso que ejecuta el código de un notebook y "
+                "mantiene el estado (variables, imports y resultados)."
+            ),
+            "para_que": (
+                "Se usa para conectar notebooks a distintos lenguajes o entornos, "
+                "como Python, R o Julia."
+            ),
+            "sintaxis": "python3, ipykernel o selección de kernel en Jupyter",
+            "ejemplo": (
+                "Cambiar el kernel a un entorno con pandas instalado para ejecutar "
+                "celdas correctamente."
+            ),
+            "matiz": (
+                "Si el kernel se reinicia, se pierden variables y hay que re-ejecutar "
+                "las celdas."
+            ),
+        },
+    },
+    "celda": {
+        "tooltip": "Unidad básica de ejecución en un notebook.",
+        "definition_parts": {
+            "que_es": (
+                "Una celda es un bloque de contenido en un notebook, ya sea de código "
+                "o texto (markdown)."
+            ),
+            "para_que": (
+                "Se usa para ejecutar pasos específicos y documentar cada parte del "
+                "análisis de forma incremental."
+            ),
+            "sintaxis": "Shift+Enter para ejecutar una celda en Jupyter",
+            "ejemplo": (
+                "Una celda que calcula el promedio de ventas y otra que lo explica en "
+                "texto con markdown."
+            ),
+            "matiz": (
+                "El orden de ejecución puede afectar resultados si se re-ejecutan "
+                "celdas fuera de secuencia."
             ),
         },
     },
@@ -1585,7 +1676,7 @@ GLOSSARY = {
             "que_es": (
                 "Data science es la disciplina que combina análisis estadístico, "
                 "programación, visualización y narrativa para extraer insights y "
-                "aplicar modelos predictivos o descriptivos."
+                "aplicar modelos predictivos o descriptivos a partir de datos."
             ),
             "para_que": (
                 "Se usa para entender fenómenos, detectar patrones, construir modelos "
@@ -1595,7 +1686,8 @@ GLOSSARY = {
             "sintaxis": "data science (dos palabras en inglés)",
             "ejemplo": (
                 "Analizar churn de clientes, entrenar un modelo de clasificación y "
-                "proponer acciones para reducir la pérdida."
+                "proponer acciones para reducir la pérdida, comunicando resultados con "
+                "dashboards."
             ),
             "matiz": (
                 "La calidad de datos y el contexto del negocio determinan el valor real "
@@ -1616,7 +1708,8 @@ GLOSSARY = {
             ),
             "sintaxis": "data science (forma correcta)",
             "ejemplo": (
-                "Escribir \"data cience\" al buscar cursos de ciencia de datos en la web."
+                "Escribir \"data cience\" al buscar cursos de ciencia de datos en la web "
+                "y corregirlo para encontrar más resultados."
             ),
             "matiz": (
                 "Conviene corregirlo en documentación y presentaciones formales para evitar "
@@ -1834,7 +1927,7 @@ GLOSSARY = {
             ),
             "ejemplo": (
                 "Diseñar una UI en Qt Designer y cargar el archivo .ui en una app "
-                "PySide6."
+                "PySide6 para crear un formulario de captura de datos."
             ),
             "matiz": (
                 "Utiliza señales y slots para comunicar widgets de forma desacoplada y "
@@ -1858,7 +1951,8 @@ GLOSSARY = {
             "sintaxis": "aws s3 ls o boto3.client('s3')",
             "ejemplo": (
                 "EC2 para servidores, S3 para almacenamiento, RDS para bases de datos y "
-                "CloudFront para distribución de contenido."
+                "CloudFront para distribución de contenido, integrados en una arquitectura "
+                "con VPC e IAM."
             ),
             "matiz": (
                 "El costo es bajo demanda y depende de región, uso, arquitectura y "
@@ -1965,6 +2059,7 @@ GLOSSARY = {
                 "Se usa para acelerar el desarrollo de apps móviles y web con backend "
                 "serverless, notificaciones y analítica."
             ),
+            "sintaxis": "firebase login y firebase deploy",
             "ejemplo": (
                 "Usar Firebase Authentication para login con Google y Firestore para "
                 "guardar perfiles de usuario."
@@ -1986,6 +2081,7 @@ GLOSSARY = {
                 "Se usa para crear backends rápidos con APIs REST/GraphQL automáticas "
                 "y gestión de usuarios."
             ),
+            "sintaxis": "supabase init y supabase db push",
             "ejemplo": (
                 "Crear una tabla de tareas y consultar datos desde un frontend con "
                 "las SDKs de Supabase."
@@ -2007,6 +2103,7 @@ GLOSSARY = {
                 "Se usa para publicar apps web y APIs sin gestionar infraestructura, "
                 "ideal para prototipos y MVPs."
             ),
+            "sintaxis": "heroku create y git push heroku main",
             "ejemplo": (
                 "Hacer push de una app Flask y desplegarla con un Procfile en minutos."
             ),
@@ -2027,6 +2124,7 @@ GLOSSARY = {
                 "Se usa para desplegar apps con pipelines Git, HTTPS automático y "
                 "escalado sencillo."
             ),
+            "sintaxis": "render.yaml o despliegue conectado a Git",
             "ejemplo": (
                 "Desplegar una API FastAPI conectada a PostgreSQL con despliegue continuo."
             ),
@@ -2047,6 +2145,7 @@ GLOSSARY = {
                 "Se usa para monitorear rendimiento, crear alarmas y visualizar dashboards "
                 "de infraestructura y aplicaciones."
             ),
+            "sintaxis": "aws cloudwatch put-metric-alarm --alarm-name ...",
             "ejemplo": (
                 "Configurar una alarma cuando la CPU de una instancia EC2 supera el 80%."
             ),
@@ -2067,6 +2166,7 @@ GLOSSARY = {
                 "Se usa para desplegar y escalar contenedores con integración a servicios "
                 "como ALB, IAM y CloudWatch."
             ),
+            "sintaxis": "aws ecs create-cluster y aws ecs create-service",
             "ejemplo": (
                 "Ejecutar microservicios en contenedores usando Fargate sin administrar "
                 "servidores."
@@ -2087,6 +2187,7 @@ GLOSSARY = {
             "para_que": (
                 "Se usa para versionar y distribuir imágenes Docker dentro de AWS."
             ),
+            "sintaxis": "aws ecr create-repository y docker push ...",
             "ejemplo": (
                 "Publicar una imagen y luego desplegarla en ECS o EKS."
             ),
@@ -2106,6 +2207,7 @@ GLOSSARY = {
             "para_que": (
                 "Se usa para crear, actualizar y versionar recursos de forma reproducible."
             ),
+            "sintaxis": "aws cloudformation deploy --template-file stack.yaml",
             "ejemplo": (
                 "Provisionar una VPC con subredes y una instancia EC2 desde una plantilla."
             ),
@@ -2125,6 +2227,7 @@ GLOSSARY = {
                 "Se usa para gestionar dominios, balancear tráfico y hacer failover "
                 "entre regiones."
             ),
+            "sintaxis": "aws route53 change-resource-record-sets --hosted-zone-id ...",
             "ejemplo": (
                 "Configurar registros A y CNAME para apuntar un dominio a un balanceador."
             ),
@@ -2501,6 +2604,7 @@ GLOSSARY = {
                 "Se usa para automatizar CI/CD, planificar trabajo y coordinar equipos "
                 "de desarrollo."
             ),
+            "sintaxis": "az devops login y az pipelines create",
             "ejemplo": (
                 "Configurar un pipeline que ejecute tests y despliegue a Azure App Service."
             ),
@@ -2554,6 +2658,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Azure Blob Storage almacena datos como objetos en contenedores",
             "para_que": "para archivos estáticos, backups y data lakes.",
+            "sintaxis": "az storage blob upload --container-name datos --file archivo.csv",
             "ejemplo": "guardar imágenes de una app o archivos de analítica.",
             "matiz": "ofrece niveles de acceso (hot, cool, archive) según costo.",
         },
@@ -2566,6 +2671,7 @@ GLOSSARY = {
                 "Server"
             ),
             "para_que": "para aplicaciones transaccionales.",
+            "sintaxis": "az sql db create --name mi-db --server mi-servidor",
             "ejemplo": "base de datos para un ERP con alta disponibilidad.",
             "matiz": "ofrece escalado elástico y backups automáticos.",
         },
@@ -2621,6 +2727,7 @@ GLOSSARY = {
                 "Se usa para reducir latencia, mitigar ataques DDoS y gestionar "
                 "reglas de firewall en el borde."
             ),
+            "sintaxis": "configurar DNS en el panel de Cloudflare",
             "ejemplo": (
                 "Activar caché global y WAF para un sitio que recibe tráfico internacional."
             ),
@@ -2641,6 +2748,7 @@ GLOSSARY = {
                 "Se usa para publicar sitios estáticos y apps web con CI/CD automático "
                 "y previews por cada rama."
             ),
+            "sintaxis": "vercel deploy o integración con Git",
             "ejemplo": (
                 "Desplegar una app Next.js con preview URLs por pull request."
             ),
@@ -2661,6 +2769,7 @@ GLOSSARY = {
                 "Se usa para publicar landing pages, documentación y SPAs con "
                 "despliegues automáticos."
             ),
+            "sintaxis": "netlify deploy o integración con Git",
             "ejemplo": (
                 "Conectar un repositorio y desplegar automáticamente cada commit."
             ),
@@ -2681,6 +2790,7 @@ GLOSSARY = {
                 "Se usa para desplegar VPS, bases de datos administradas y "
                 "contenedores con baja complejidad."
             ),
+            "sintaxis": "doctl compute droplet create mi-droplet",
             "ejemplo": (
                 "Crear un droplet para alojar una API con Docker y Nginx."
             ),
@@ -2694,6 +2804,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Google Cloud Storage almacena objetos en buckets con alta durabilidad",
             "para_que": "para datos estáticos, backups y data lakes.",
+            "sintaxis": "gsutil cp archivo.csv gs://mi-bucket/datos/",
             "ejemplo": "guardar archivos de un sistema de analítica.",
             "matiz": "permite definir clases de almacenamiento según costo y acceso.",
         },
@@ -2703,6 +2814,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Cloud Run ejecuta contenedores HTTP de forma serverless",
             "para_que": "para desplegar APIs y servicios sin administrar servidores.",
+            "sintaxis": "gcloud run deploy mi-servicio --source .",
             "ejemplo": "publicar un contenedor con FastAPI en GCP.",
             "matiz": "escala a cero y se cobra por uso real.",
         },
@@ -2712,6 +2824,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "BigQuery es un data warehouse serverless para consultas SQL a gran escala",
             "para_que": "para analítica de grandes volúmenes de datos.",
+            "sintaxis": "bq query --use_legacy_sql=false \"SELECT ...\"",
             "ejemplo": "consultas sobre terabytes de logs en segundos.",
             "matiz": "cobra por almacenamiento y por volumen de datos consultados.",
         },
@@ -2721,6 +2834,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Cloud SQL es el servicio de bases de datos relacionales gestionadas de GCP",
             "para_que": "para ejecutar PostgreSQL, MySQL o SQL Server sin administrar servidores.",
+            "sintaxis": "gcloud sql instances create mi-db --database-version=POSTGRES_15",
             "ejemplo": "base transaccional para un backend web.",
             "matiz": "ofrece backups automáticos y alta disponibilidad.",
         },
@@ -2730,6 +2844,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Cloud Functions permite ejecutar funciones bajo demanda en Google Cloud",
             "para_que": "para responder a eventos de almacenamiento, pub/sub o HTTP.",
+            "sintaxis": "gcloud functions deploy procesar --runtime python311 --trigger-http",
             "ejemplo": "procesar un archivo al subirlo a Cloud Storage.",
             "matiz": "escala automáticamente y se cobra por invocación.",
         },
@@ -2739,6 +2854,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Pub/Sub es un servicio de mensajería asíncrona con productores y suscriptores",
             "para_que": "para desacoplar sistemas y procesar eventos.",
+            "sintaxis": "gcloud pubsub topics create eventos",
             "ejemplo": "un servicio publica eventos y varios consumidores los procesan.",
             "matiz": "soporta reintentos y ordenamiento según configuración.",
         },
@@ -2748,6 +2864,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Serverless es un modelo donde ejecutas funciones bajo demanda sin administrar servidores",
             "para_que": "para tareas event-driven y escalado automático.",
+            "sintaxis": "función + trigger (HTTP, cola, storage)",
             "ejemplo": "AWS Lambda o Azure Functions.",
             "matiz": "suele tener límites de tiempo y recursos.",
         },

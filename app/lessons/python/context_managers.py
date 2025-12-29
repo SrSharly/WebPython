@@ -14,122 +14,205 @@ class ContextManagersLesson(Lesson):
 
     def summary(self) -> str:
         return (
-            "Aprende a usar context managers para abrir y cerrar recursos de forma segura "
-            "con la sentencia with, desde cero y con buenas prácticas."
+            "Aprende desde cero qué es un context manager, cómo usar with para cerrar recursos, "
+            "y cómo crear tus propios manejadores con buenas prácticas."
         )
 
     def guide(self) -> str:
         return """
 ## ¿Qué problema resuelven?
-Cuando abres un archivo o una conexión, debes **cerrarla**. Si olvidas, puedes perder datos o bloquear recursos.
+Cuando abres un archivo o una conexión, debes **cerrarla**. Si olvidas, puedes perder datos o
+bloquear recursos. Un context manager lo hace por ti.
 
-Ejemplo del problema:
+Ejemplo del problema (con comentarios):
 ```
-archivo = open("datos.txt", "w")
-archivo.write("Hola")
-archivo.close()
+archivo = open("datos.txt", "w")  # abrimos archivo
+archivo.write("Hola")  # escribimos contenido
+archivo.close()  # cerramos manualmente
 ```
 Si ocurre un error antes de `close()`, el archivo queda abierto.
 
-## Solución: context managers (with)
-La sentencia `with` garantiza que el recurso se cierre aunque haya errores.
+## ¿Qué es un context manager?
+Es un **objeto** que define cómo entrar y salir de un bloque. En términos simples:
+"abre y luego limpia". Se usa con la palabra clave `with`.
+
+## Conceptos previos (sin asumir nada)
+- **función**: bloque reutilizable de código.
+- **método**: función asociada a un objeto.
+- **variable**: nombre que apunta a un valor.
+- **print**: función que muestra texto en la salida.
+- **len**: función que devuelve longitud (por ejemplo, de un texto).
+
+### Buenas prácticas (CalloutBox: best_practice)
+- Usa nombres en **snake_case**.
+- Prefiere `with` en lugar de `try/finally` manual.
+- Mantén el bloque `with` pequeño y claro.
+
+## Paso 1: Usar with con archivos
+`with` garantiza el cierre aunque haya errores.
 ```
-with open("datos.txt", "w") as archivo:
-    archivo.write("Hola")
+with open("datos.txt", "w") as archivo:  # abrimos con with
+    archivo.write("Hola")  # escribimos dentro del bloque
+print("Listo")  # fuera del bloque, archivo cerrado
 ```
 
-### ¿Qué es un context manager?
-Es un objeto que define cómo **entrar** y **salir** de un bloque. En términos simples: “abre y luego limpia”.
-
-## Ejemplo paso a paso
-1. Entramos al bloque (`__enter__`).
-2. Trabajamos con el recurso.
-3. Salimos y se limpia (`__exit__`).
-
-Ejemplo simple:
+## Paso 2: Leer con seguridad
 ```
-with open("datos.txt", "r") as archivo:
-    contenido = archivo.read()
+with open("datos.txt", "r") as archivo:  # abrimos en lectura
+    contenido = archivo.read()  # leemos todo
+print(contenido)  # mostramos
 ```
 
-## Context managers propios (concepto)
-Puedes crear uno con una clase y los métodos `__enter__` y `__exit__`.
+## Paso 3: Explicar métodos importantes
+- `read()` lee el contenido completo.
+- `write()` escribe texto.
+- `close()` cierra el recurso.
+
+## Paso 4: Context managers propios (clase)
+Un context manager propio implementa `__enter__` y `__exit__`.
 ```
-class Temporizador:
+class Temporizador:  # clase ejemplo
+    def __enter__(self):  # entramos al bloque
+        print("Inicio")  # mensaje
+        return self  # devolvemos el objeto
+
+    def __exit__(self, exc_type, exc, traceback):  # salimos
+        print("Fin")  # mensaje final
+```
+
+Uso con `with`:
+```
+with Temporizador() as t:  # usamos el context manager
+    print("Trabajando")  # acción dentro
+```
+
+## Paso 5: Múltiples recursos en un solo with
+Puedes abrir varios recursos en una sola línea.
+```
+with open("a.txt", "w") as a, open("b.txt", "w") as b:  # dos archivos
+    a.write("A")  # escribimos en el primero
+    b.write("B")  # escribimos en el segundo
+```
+
+## Paso 6: Control de errores con __exit__
+Si `__exit__` devuelve `True`, puede suprimir la excepción.
+```
+class Silenciador:  # context manager
     def __enter__(self):
-        print("Inicio")
         return self
-
     def __exit__(self, exc_type, exc, traceback):
-        print("Fin")
+        print("Error controlado")  # mensaje
+        return True  # suprime el error
 ```
 
-## Buenas prácticas
-- **PEP8**: `snake_case` para funciones/variables.
-- **Indentación**: 4 espacios.
-- **Claridad**: `with` es más legible que `try/finally` manual.
-- **Evita magic numbers**: usa nombres para rutas o tiempos.
+## Más allá (nivel pro)
+### Pro: Context manager con validación real
+```
+class ArchivoSeguro:  # clase
+    def __init__(self, ruta):  # constructor
+        self.ruta = ruta  # guardamos ruta
+        self.archivo = None  # variable inicial
 
-## Resumen de ejemplos
+    def __enter__(self):  # entrada
+        self.archivo = open(self.ruta, "r")  # abrimos archivo
+        return self.archivo  # devolvemos archivo
+
+    def __exit__(self, exc_type, exc, traceback):  # salida
+        if self.archivo is not None:  # validamos
+            self.archivo.close()  # cerramos siempre
 ```
-with open("log.txt", "a") as archivo:
-    archivo.write("registro\n")
+**Warning real:** si no cierras el archivo en `__exit__`, puedes perder datos o bloquearlo.
+
+### Pro: Manejo de errores sin esconderlos
 ```
-```
-class Bloque:
+class RegistroErrores:
     def __enter__(self):
-        print("Entrando")
         return self
-
     def __exit__(self, exc_type, exc, traceback):
-        print("Saliendo")
+        if exc_type:
+            print("Error:", exc)  # mostramos el error
+        return False  # no suprime el error
 ```
+**Warning real:** devolver `True` sin querer puede ocultar errores importantes.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
                 "Olvidar cerrar recursos",
-                "Sin with, necesitas cerrar manualmente cada recurso.",
+                "Solución: usa with para cerrar automáticamente aunque haya error.",
             ),
             (
                 "Usar try sin finally",
-                "Un error puede evitar el cierre si no hay finally.",
+                "Solución: reemplaza por with o añade finally para cerrar.",
             ),
             (
-                "Ignorar excepciones",
-                "Los context managers pueden recibir y manejar errores en __exit__.",
+                "Silenciar errores sin intención",
+                "Solución: en __exit__ devuelve False para no ocultar excepciones.",
             ),
             (
-                "Anidar sin necesidad",
-                "Si tienes varios recursos, puedes usar una sola línea with con comas.",
+                "Anidar muchos with",
+                "Solución: usa una sola línea with con comas cuando sea posible.",
+            ),
+            (
+                "Bloques with demasiado grandes",
+                "Solución: reduce el bloque a lo esencial para claridad.",
+            ),
+            (
+                "Usar rutas mágicas",
+                "Solución: guarda rutas en variables con nombres claros.",
+            ),
+            (
+                "No explicar métodos",
+                "Solución: comenta read(), write() y close() cuando enseñes a principiantes.",
+            ),
+            (
+                "Reutilizar el mismo archivo cerrado",
+                "Solución: abre un nuevo recurso si necesitas otra operación.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "with con archivo",
-                """with open("datos.txt", "w") as archivo:  # Abrimos archivo
-    archivo.write("Hola")  # Escribimos
-print("Listo")  # Fuera del bloque""",
+                "with con escritura",
+                """with open("datos.txt", "w") as archivo:  # abrimos archivo
+    archivo.write("Hola")  # escribimos
+print("Listo")  # fuera del bloque""",
             ),
             (
                 "with con lectura",
-                """with open("datos.txt", "r") as archivo:  # Abrimos en lectura
-    contenido = archivo.read()  # Leemos contenido
-print(contenido)  # Mostramos""",
+                """with open("datos.txt", "r") as archivo:  # abrimos en lectura
+    contenido = archivo.read()  # leemos contenido
+print(contenido)  # mostramos""",
             ),
             (
                 "Context manager propio",
-                """class Temporizador:  # Definimos clase
-    def __enter__(self):  # Entramos
-        print("Inicio")  # Mensaje
-        return self  # Retornamos
-    def __exit__(self, exc_type, exc, traceback):  # Salimos
-        print("Fin")  # Mensaje
-with Temporizador() as t:  # Usamos with
-    print("Trabajando")  # Acción""",
+                """class Temporizador:  # clase
+    def __enter__(self):  # entramos
+        print("Inicio")  # mensaje
+        return self  # retornamos
+    def __exit__(self, exc_type, exc, traceback):  # salimos
+        print("Fin")  # mensaje
+with Temporizador() as t:  # usamos with
+    print("Trabajando")  # acción""",
+            ),
+            (
+                "Varios recursos",
+                """with open("a.txt", "w") as a, open("b.txt", "w") as b:  # dos archivos
+    a.write("A")  # escribimos en a
+    b.write("B")  # escribimos en b""",
+            ),
+            (
+                "Suprimir error",
+                """class Silenciador:  # clase
+    def __enter__(self):
+        return self
+    def __exit__(self, exc_type, exc, traceback):
+        print("Error controlado")  # mensaje
+        return True  # suprime el error
+with Silenciador():
+    1 / 0  # error que se suprime""",
             ),
         ]
 
@@ -143,12 +226,37 @@ with Temporizador() as t:  # Usamos with
             {
                 "question": "Crea un context manager simple que imprima 'inicio' y 'fin'.",
                 "hints": ["Implementa __enter__ y __exit__"],
-                "solution": "class CM:\n    def __enter__(self):\n        print('inicio')\n        return self\n    def __exit__(self, exc_type, exc, traceback):\n        print('fin')",
+                "solution": (
+                    "class CM:\n"
+                    "    def __enter__(self):\n"
+                    "        print('inicio')\n"
+                    "        return self\n"
+                    "    def __exit__(self, exc_type, exc, traceback):\n"
+                    "        print('fin')"
+                ),
             },
             {
                 "question": "Lee un archivo con with y guarda el contenido en una variable.",
                 "hints": ["Usa .read()"],
                 "solution": "with open('datos.txt', 'r') as f:\n    contenido = f.read()",
+            },
+            {
+                "question": "Abre dos archivos en una sola línea with.",
+                "hints": ["Usa with ... as a, ... as b"],
+                "solution": "with open('a.txt', 'w') as a, open('b.txt', 'w') as b:\n    a.write('A')\n    b.write('B')",
+            },
+            {
+                "question": "Crea un context manager que NO suprima errores.",
+                "hints": ["__exit__ debe retornar False"],
+                "solution": (
+                    "class Registro:\n"
+                    "    def __enter__(self):\n"
+                    "        return self\n"
+                    "    def __exit__(self, exc_type, exc, traceback):\n"
+                    "        if exc_type:\n"
+                    "            print('Error:', exc)\n"
+                    "        return False"
+                ),
             },
         ]
 

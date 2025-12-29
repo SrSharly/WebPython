@@ -323,6 +323,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Una tupla es una colección ordenada que no se puede modificar",
             "para_que": "para datos que no deberían cambiar.",
+            "sintaxis": "dimensiones = (1920, 1080) o (valor,)",
             "ejemplo": "dimensiones = (1920, 1080).",
             "matiz": "una tupla de un solo elemento lleva coma: (5,).",
         },
@@ -332,7 +333,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Las tuplas son colecciones ordenadas e inmutables",
             "para_que": "para registrar datos fijos.",
+            "sintaxis": "colores = ('rojo', 'azul')",
             "ejemplo": "colores = ('rojo', 'azul').",
+            "matiz": "se usan para agrupar valores relacionados sin intención de mutarlos.",
             "error_tipico": "pensar que son listas y tratar de modificar elementos.",
         },
     },
@@ -374,6 +377,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Los diccionarios organizan datos en pares clave-valor",
             "para_que": "para búsquedas rápidas por clave.",
+            "sintaxis": "precios = {'pan': 1.2, 'leche': 0.9}",
             "ejemplo": "precios = {'pan': 1.2, 'leche': 0.9}.",
             "matiz": "usa get para evitar errores si no existe la clave.",
         },
@@ -402,6 +406,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un conjunto guarda valores únicos y no garantiza orden",
             "para_que": "para comprobar pertenencia rápidamente.",
+            "sintaxis": "vistos = {'ana', 'luis'} o set(['ana', 'luis'])",
             "ejemplo": "vistos = {'ana', 'luis'}.",
             "matiz": "no puedes indexar un set con [0].",
         },
@@ -411,7 +416,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Los conjuntos almacenan elementos únicos sin orden",
             "para_que": "para eliminar duplicados o comparar colecciones.",
+            "sintaxis": "set([1, 1, 2])",
             "ejemplo": "set([1, 1, 2]) produce {1, 2}.",
+            "matiz": "el orden de iteración no es un contrato, aunque parezca estable.",
             "error_tipico": "pensar que mantienen el orden de inserción.",
         },
     },
@@ -420,6 +427,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un objeto mutable puede cambiar su contenido después de crearse",
             "para_que": "cuando necesitas actualizar datos en sitio.",
+            "sintaxis": "lista.append(4) o diccionario['k'] = 'v'",
             "ejemplo": "una lista es mutable, puedes hacer lista.append(4).",
             "matiz": "mutar un objeto compartido afecta a todas las referencias.",
         },
@@ -429,7 +437,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un objeto inmutable no puede cambiarse; si lo 'modificas' creas otro",
             "para_que": "para valores fijos o claves de diccionario.",
+            "sintaxis": "texto = 'hola' o coordenadas = (1, 2)",
             "ejemplo": "strings y tuplas son inmutables.",
+            "matiz": "si necesitas modificarlo, debes crear una nueva instancia.",
             "error_tipico": "intentar modificar un string con asignación por índice.",
         },
     },
@@ -447,7 +457,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un generador produce valores uno por uno sin guardar todos en memoria",
             "para_que": "para secuencias grandes o infinitas.",
+            "sintaxis": "(x * 2 for x in range(3)) o def gen(): yield x",
             "ejemplo": "(x * 2 for x in range(3)) crea un generador.",
+            "matiz": "al consumirlo una vez, no puedes reiniciarlo sin recrearlo.",
             "error_tipico": "intentar indexarlo como si fuera una lista.",
         },
     },
@@ -465,7 +477,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "try delimita el código que podría fallar",
             "para_que": "junto con except para manejar errores.",
+            "sintaxis": "try: ... except Error: ...",
             "ejemplo": "try: abrir_archivo() except FileNotFoundError: ...",
+            "matiz": "se recomienda capturar excepciones específicas y registrar fallos.",
             "error_tipico": "poner demasiado código dentro y ocultar bugs.",
         },
     },
@@ -492,7 +506,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "with abre un bloque que administra recursos automáticamente",
             "para_que": "para abrir archivos o conexiones y cerrarlas al final.",
+            "sintaxis": "with open('a.txt') as f: ...",
             "ejemplo": "with open('a.txt') as f: leer = f.read().",
+            "matiz": "también se usa con locks o transacciones que deben cerrarse.",
             "error_tipico": "olvidar usar with y dejar recursos abiertos.",
         },
     },
@@ -510,7 +526,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "El scope indica dónde una variable puede ser usada",
             "para_que": "para entender por qué un nombre existe o no existe en un bloque.",
+            "sintaxis": "def funcion(): variable_local = 1",
             "ejemplo": "una variable creada en una función no existe fuera.",
+            "matiz": "Python sigue la regla LEGB (local, enclosing, global, built-in).",
             "error_tipico": "intentar leer una variable local fuera de su función.",
         },
     },
@@ -528,7 +546,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Una variable local existe solo dentro de la función o bloque donde se crea",
             "para_que": "para mantener datos temporales.",
+            "sintaxis": "def fn(): temp = 5",
             "ejemplo": "dentro de una función, temp = 5.",
+            "matiz": "cada llamada crea un nuevo scope local independiente.",
             "error_tipico": "intentar usarla fuera de su alcance.",
         },
     },
@@ -546,7 +566,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "PascalCase escribe cada palabra con inicial en mayúscula",
             "para_que": "en Python sobre todo para nombres de clases.",
+            "sintaxis": "class UsuarioPremium: ...",
             "ejemplo": "class UsuarioPremium.",
+            "matiz": "es común en lenguajes tipados para tipos, clases y componentes.",
             "error_tipico": "usarlo para variables en lugar de snake_case.",
         },
     },
@@ -564,7 +586,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "La indentación en Python define bloques de código",
             "para_que": "para delimitar if, for, funciones, etc.",
+            "sintaxis": "    cuatro espacios por nivel",
             "ejemplo": "cuatro espacios antes de una línea dentro de una función.",
+            "matiz": "la indentación es sintaxis, no solo estilo, y afecta la ejecución.",
             "error_tipico": "mezclar tabs y espacios y provocar errores de indentación.",
         },
     },
@@ -582,7 +606,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un slice extrae una parte de una secuencia usando inicio y fin",
             "para_que": "con listas, strings o tuplas.",
+            "sintaxis": "secuencia[inicio:fin:paso]",
             "ejemplo": "texto[0:3] devuelve los primeros 3 caracteres.",
+            "matiz": "puedes omitir inicio/fin para tomar desde el principio o el final.",
             "error_tipico": "olvidar que el índice final no se incluye.",
         },
     },
@@ -600,7 +626,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "append añade un elemento al final de una lista",
             "para_que": "para crecer listas paso a paso.",
+            "sintaxis": "lista.append(valor)",
             "ejemplo": "lista.append(10).",
+            "matiz": "modifica la lista en sitio y devuelve None.",
             "error_tipico": "asignar lista = lista.append(10) y perder la lista.",
         },
     },
@@ -618,7 +646,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "insert agrega un elemento en una posición específica de la lista",
             "para_que": "para insertar sin reemplazar.",
+            "sintaxis": "lista.insert(indice, valor)",
             "ejemplo": "lista.insert(1, 'nuevo').",
+            "matiz": "insertar al inicio puede ser costoso en listas grandes.",
             "error_tipico": "usar índices fuera del rango sin entender el resultado.",
         },
     },
@@ -636,7 +666,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "remove elimina la primera aparición de un valor en una lista",
             "para_que": "para borrar por valor.",
+            "sintaxis": "lista.remove(valor)",
             "ejemplo": "lista.remove('a').",
+            "matiz": "si hay duplicados, solo borra la primera coincidencia.",
             "error_tipico": "si el valor no existe, lanza ValueError.",
         },
     },
@@ -780,7 +812,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un cursor recorre los resultados de una consulta a la base de datos",
             "para_que": "para leer filas una por una o en bloques.",
+            "sintaxis": "cursor = conexion.cursor()",
             "ejemplo": "cursor.fetchone().",
+            "matiz": "algunos drivers permiten usar cursores en modo servidor para grandes volúmenes.",
             "error_tipico": "olvidar cerrar el cursor y dejar recursos abiertos.",
         },
     },
@@ -798,7 +832,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "commit confirma de forma permanente los cambios en una transacción",
             "para_que": "cuando todo salió bien.",
+            "sintaxis": "conexion.commit()",
             "ejemplo": "conexion.commit().",
+            "matiz": "en muchas bases de datos el autocommit puede estar desactivado.",
             "error_tipico": "olvidar commit y perder los cambios.",
         },
     },
@@ -834,7 +870,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Una sesión agrupa operaciones y controla el ciclo de vida de objetos ORM",
             "para_que": "para añadir, actualizar o borrar registros.",
+            "sintaxis": "session = Session(); session.add(obj)",
             "ejemplo": "session.add(usuario); session.commit().",
+            "matiz": "es recomendable usar context managers para cerrar sesiones.",
             "error_tipico": "olvidar cerrar la sesión y mantener conexiones abiertas.",
         },
     },
@@ -852,7 +890,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "DSN es un texto con los datos necesarios para conectarse a una base",
             "para_que": "para indicar host, usuario, base y opciones.",
+            "sintaxis": "postgres://user:pass@host:5432/db",
             "ejemplo": "postgres://user:pass@localhost/db.",
+            "matiz": "usa variables de entorno o secretos para no exponer credenciales.",
             "error_tipico": "exponer el DSN en logs públicos.",
         },
     },
@@ -924,7 +964,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "Un layout organiza widgets en filas, columnas o rejillas",
             "para_que": "para que la interfaz se adapte al tamaño.",
+            "sintaxis": "layout = QVBoxLayout(); layout.addWidget(boton)",
             "ejemplo": "QVBoxLayout apila elementos en vertical.",
+            "matiz": "un buen layout evita tamaños fijos y mejora la accesibilidad.",
             "error_tipico": "poner widgets sin layout y que no redimensionen bien.",
         },
     },
@@ -951,7 +993,9 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": "El bucle de eventos procesa clics, teclas y actualizaciones",
             "para_que": "para que la GUI responda.",
+            "sintaxis": "app.exec()",
             "ejemplo": "eventos de mouse llegan al bucle.",
+            "matiz": "tareas pesadas deben ir a hilos o procesos para no bloquearlo.",
             "error_tipico": "usar tareas largas sin hilos y congelar la UI.",
         },
     },
@@ -1358,13 +1402,14 @@ GLOSSARY = {
                 "Python es un lenguaje de alto nivel, interpretado y multiplataforma "
                 "con una sintaxis clara enfocada en legibilidad y productividad. "
                 "Destaca por su tipado dinámico, gran biblioteca estándar y una "
-                "comunidad muy amplia."
+                "comunidad muy amplia, además de múltiples paradigmas de programación."
             ),
             "para_que": (
                 "Se usa en automatización, desarrollo web, ciencia de datos, scripting, "
                 "IA, DevOps, QA y aplicaciones de escritorio, combinando paradigmas "
                 "imperativo, orientado a objetos y funcional. También es común en "
-                "herramientas de línea de comandos, APIs, ETLs y pipelines de datos."
+                "herramientas de línea de comandos, APIs, ETLs, pipelines de datos y "
+                "automatización de infraestructura."
             ),
             "sintaxis": "print('Hola') o def saludar(nombre): return f'Hola {nombre}'",
             "ejemplo": (
@@ -1389,6 +1434,7 @@ GLOSSARY = {
                 "Se usa para limpiar, transformar, combinar y analizar datos en tablas, "
                 "facilitando operaciones de análisis exploratorio."
             ),
+            "sintaxis": "import pandas as pd; df = pd.read_csv('archivo.csv')",
             "ejemplo": (
                 "Leer un CSV con pandas.read_csv(), filtrar filas y calcular métricas "
                 "por categoría."
@@ -1410,6 +1456,7 @@ GLOSSARY = {
                 "Se usa para álgebra lineal, estadísticas básicas, simulaciones y "
                 "preprocesamiento numérico eficiente."
             ),
+            "sintaxis": "import numpy as np; arreglo = np.array([1, 2, 3])",
             "ejemplo": (
                 "Crear un array con numpy.array([1, 2, 3]) y aplicar operaciones "
                 "vectorizadas."
@@ -1431,6 +1478,7 @@ GLOSSARY = {
                 "Se usa para exploración de datos, prototipos rápidos, docencia y "
                 "comunicación de análisis reproducibles."
             ),
+            "sintaxis": "jupyter lab o jupyter notebook",
             "ejemplo": (
                 "Ejecutar un notebook .ipynb para analizar datos y visualizar gráficos "
                 "paso a paso."
@@ -1452,6 +1500,7 @@ GLOSSARY = {
                 "Se usa para entrenar modelos como regresión, clasificación y clustering, "
                 "además de pipelines de preprocesamiento."
             ),
+            "sintaxis": "from sklearn.model_selection import train_test_split",
             "ejemplo": (
                 "Entrenar un modelo de regresión lineal con train_test_split y evaluar "
                 "su error."
@@ -1473,6 +1522,7 @@ GLOSSARY = {
                 "Se usa en visión por computador, NLP y sistemas de recomendación con "
                 "aceleración por GPU/TPU."
             ),
+            "sintaxis": "import tensorflow as tf; modelo = tf.keras.Sequential([...])",
             "ejemplo": (
                 "Entrenar una red neuronal con Keras para clasificar imágenes."
             ),
@@ -1493,6 +1543,7 @@ GLOSSARY = {
                 "Se usa para prototipar y entrenar modelos de redes neuronales con "
                 "gran control sobre el entrenamiento."
             ),
+            "sintaxis": "import torch; modelo = torch.nn.Linear(10, 1)",
             "ejemplo": (
                 "Definir un modelo con torch.nn.Module y entrenarlo con un loop "
                 "personalizado."
@@ -1533,7 +1584,8 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Data science es la disciplina que combina análisis estadístico, "
-                "programación, visualización y narrativa para extraer insights."
+                "programación, visualización y narrativa para extraer insights y "
+                "aplicar modelos predictivos o descriptivos."
             ),
             "para_que": (
                 "Se usa para entender fenómenos, detectar patrones, construir modelos "
@@ -1568,7 +1620,7 @@ GLOSSARY = {
             ),
             "matiz": (
                 "Conviene corregirlo en documentación y presentaciones formales para evitar "
-                "confusiones."
+                "confusiones y para mejorar la visibilidad de recursos reales."
             ),
         },
     },
@@ -1648,7 +1700,8 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Full stack describe el desarrollo integral de una aplicación: interfaz "
-                "(frontend), servidor (backend), base de datos y despliegue."
+                "(frontend), servidor (backend), base de datos, integraciones y "
+                "despliegue."
             ),
             "para_que": (
                 "Se usa cuando se necesita entregar productos end-to-end en equipos pequeños "
@@ -1735,6 +1788,7 @@ GLOSSARY = {
             "para_que": (
                 "Se usa para estandarizar endpoints, cachés y códigos de estado en APIs."
             ),
+            "sintaxis": "GET /recursos/1, POST /recursos",
             "ejemplo": (
                 "GET /productos obtiene recursos, POST /productos crea uno nuevo."
             ),
@@ -1755,6 +1809,7 @@ GLOSSARY = {
                 "Se usa para reducir over-fetching y unificar múltiples fuentes de datos "
                 "en una sola API."
             ),
+            "sintaxis": "query { usuarios { id nombre } }",
             "ejemplo": (
                 "Consultar usuarios { id, nombre, pedidos { total } } en una sola petición."
             ),
@@ -1809,6 +1864,27 @@ GLOSSARY = {
                 "El costo es bajo demanda y depende de región, uso, arquitectura y "
                 "políticas de optimización. Un buen diseño de IAM y VPC impacta la "
                 "seguridad y el mantenimiento."
+            ),
+        },
+    },
+    "aws fargate": {
+        "tooltip": "Servicio serverless para ejecutar contenedores en AWS.",
+        "definition_parts": {
+            "que_es": (
+                "AWS Fargate es un motor de ejecución para contenedores que elimina la "
+                "necesidad de administrar servidores en ECS o EKS."
+            ),
+            "para_que": (
+                "Se usa para ejecutar workloads en contenedores con escalado automático, "
+                "pagando por recursos consumidos."
+            ),
+            "sintaxis": "aws ecs run-task --launch-type FARGATE",
+            "ejemplo": (
+                "Desplegar un servicio API en ECS sin gestionar instancias EC2."
+            ),
+            "matiz": (
+                "Necesita configurar subredes, roles IAM y límites de recursos para evitar "
+                "sobrecostos."
             ),
         },
     },
@@ -2453,6 +2529,26 @@ GLOSSARY = {
             ),
         },
     },
+    "azure app service": {
+        "tooltip": "Plataforma PaaS de Azure para desplegar aplicaciones web.",
+        "definition_parts": {
+            "que_es": (
+                "Azure App Service es un servicio administrado para alojar aplicaciones "
+                "web, APIs y backends sin gestionar servidores."
+            ),
+            "para_que": (
+                "Se usa para desplegar apps con escalado automático, certificados SSL y "
+                "slots de despliegue."
+            ),
+            "sintaxis": "az webapp up --name mi-app --resource-group mi-grupo",
+            "ejemplo": (
+                "Publicar una API en Flask con un pipeline de CI/CD y un dominio propio."
+            ),
+            "matiz": (
+                "El rendimiento y el costo dependen del plan de servicio elegido."
+            ),
+        },
+    },
     "azure blob storage": {
         "tooltip": "Servicio de almacenamiento de objetos en Azure.",
         "definition_parts": {
@@ -2491,6 +2587,26 @@ GLOSSARY = {
             ),
             "matiz": (
                 "Destaca por sus herramientas de datos y analítica."
+            ),
+        },
+    },
+    "vertex ai": {
+        "tooltip": "Plataforma de ML administrado en Google Cloud.",
+        "definition_parts": {
+            "que_es": (
+                "Vertex AI es la suite de Google Cloud para construir, entrenar y "
+                "desplegar modelos de machine learning de forma administrada."
+            ),
+            "para_que": (
+                "Se usa para MLOps, pipelines de entrenamiento, despliegue de endpoints "
+                "y monitoreo de modelos."
+            ),
+            "sintaxis": "gcloud ai models list",
+            "ejemplo": (
+                "Entrenar un modelo de clasificación y exponerlo como endpoint para una API."
+            ),
+            "matiz": (
+                "Integra servicios como BigQuery y AutoML, pero requiere gobernanza de datos."
             ),
         },
     },
@@ -2645,7 +2761,7 @@ GLOSSARY = {
             ),
             "para_que": "para centralizar datos heterogéneos.",
             "ejemplo": "almacenar archivos parquet y JSON en S3 para analítica.",
-            "matiz": "requiere gobernanza para evitar convertirse en un "data swamp".",
+            "matiz": "requiere gobernanza para evitar convertirse en un \"data swamp\".",
         },
     },
     "data warehouse": {
@@ -2744,6 +2860,9 @@ def definition_text(data: dict[str, object]) -> str:
     parts = data.get("definition_parts")
     if not isinstance(parts, dict):
         return ""
+    parts = dict(parts)
+    if not parts.get("sintaxis") and parts.get("ejemplo"):
+        parts["sintaxis"] = "Ver ejemplo (forma típica)."
 
     def _flatten(value: object) -> str:
         if isinstance(value, list):

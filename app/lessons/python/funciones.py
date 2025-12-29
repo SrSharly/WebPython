@@ -94,7 +94,7 @@ class FuncionesLesson(Lesson):
             ),
             (
                 "Docstrings",
-                """def promedio(valores):\n    """"Calcula el promedio de una lista de números.""""\n    return sum(valores) / len(valores)\n\nprint(promedio([1, 2, 3]))""",
+                "def promedio(valores):\n    \"\"\"Calcula el promedio de una lista de números.\"\"\"\n    return sum(valores) / len(valores)\n\nprint(promedio([1, 2, 3]))",
             ),
             (
                 "Scope local",

@@ -5,7 +5,7 @@ import logging
 import sys
 from dataclasses import dataclass
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import QSettings, Qt
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
@@ -32,7 +32,10 @@ from PySide6.QtWidgets import (
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.utils.code_runner import SnippetRunner
-from app.utils.ui_helpers import CodeCard, apply_app_theme, badge
+from app.utils.glossary import apply_glossary_tooltips
+from app.utils.theme import apply_theme, toggle_theme
+from app.utils.ui_components import CodeCard
+from app.utils.ui_helpers import badge
 
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -51,8 +54,11 @@ class LessonEntry:
 
 
 class MainWindow(QMainWindow):
-    def __init__(self) -> None:
+    def __init__(self, app: QApplication, settings: QSettings, theme_name: str) -> None:
         super().__init__()
+        self.app = app
+        self.settings = settings
+        self.current_theme = theme_name
         self.setWindowTitle("Pythonpedia")
         self.resize(1280, 800)
         self.runner = SnippetRunner()
@@ -133,7 +139,14 @@ class MainWindow(QMainWindow):
         self.header_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.title_label = QLabel("Selecciona una lección")
         self.title_label.setObjectName("HeaderTitle")
-        self.header_layout.addWidget(self.title_label)
+        header_row = QHBoxLayout()
+        header_row.addWidget(self.title_label)
+        header_row.addStretch()
+        self.theme_toggle = QPushButton()
+        self.theme_toggle.setProperty("secondary", True)
+        self.theme_toggle.clicked.connect(self._toggle_theme)
+        header_row.addWidget(self.theme_toggle)
+        self.header_layout.addLayout(header_row)
 
         self.badge_row = QWidget()
         self.badge_layout = QHBoxLayout(self.badge_row)
@@ -166,6 +179,7 @@ class MainWindow(QMainWindow):
 
         search_shortcut = QShortcut(QKeySequence("Ctrl+K"), self)
         search_shortcut.activated.connect(self.search_input.setFocus)
+        self._update_theme_toggle()
 
     def _load_lessons(self) -> None:
         self.tree.clear()
@@ -286,6 +300,7 @@ class MainWindow(QMainWindow):
                 widget.deleteLater()
 
     def _render_lesson(self, entry: LessonEntry) -> None:
+        self.current_entry = entry
         lesson = entry.instance
 
         self._clear_badges()
@@ -324,7 +339,7 @@ class MainWindow(QMainWindow):
             if stripped.startswith("```"):
                 if in_code_block:
                     chunks.append(
-                        "<pre><code>"
+                        '<pre class="code-block"><code>'
                         + html.escape("\n".join(code_lines))
                         + "</code></pre>"
                     )
@@ -362,7 +377,7 @@ class MainWindow(QMainWindow):
         if list_items:
             chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
         if code_lines:
-            chunks.append("<pre><code>" + html.escape("\n".join(code_lines)) + "</code></pre>")
+            chunks.append('<pre class="code-block"><code>' + html.escape("\n".join(code_lines)) + "</code></pre>")
         return "".join(chunks)
 
     def _render_guide(self, lesson: Lesson) -> None:
@@ -386,28 +401,45 @@ class MainWindow(QMainWindow):
         else:
             resumen_html = ""
 
-        self.guide_text.setHtml(
-            f"""
-            <html>
-            <head>
-            <style>
-                body {{ font-family: 'Segoe UI'; color: #1f2937; }}
-                h1 {{ font-size: 22px; margin-bottom: 8px; }}
-                h2 {{ font-size: 18px; margin-top: 16px; }}
-                h3 {{ font-size: 16px; margin-top: 14px; }}
-                p {{ line-height: 1.5; }}
-                ul {{ margin-left: 18px; }}
-                pre {{ background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 8px; }}
-                code {{ font-family: \"Consolas\"; }}
-            </style>
-            </head>
-            <body>
-                {sections_html}
-                {resumen_html}
-            </body>
-            </html>
-            """
-        )
+        if self.current_theme == "dark":
+            text_color = "#e6e6e6"
+            code_text = "#e6e6e6"
+            code_background = "#2a2a2a"
+            code_border = "#3a3a3a"
+        else:
+            text_color = "#1f2937"
+            code_text = "#e2e8f0"
+            code_background = "#0f172a"
+            code_border = "#1e293b"
+
+        html_content = f"""
+        <html>
+        <head>
+        <style>
+            body {{ font-family: 'Segoe UI'; color: {text_color}; }}
+            h1 {{ font-size: 22px; margin-bottom: 8px; }}
+            h2 {{ font-size: 18px; margin-top: 16px; }}
+            h3 {{ font-size: 16px; margin-top: 14px; }}
+            p {{ line-height: 1.5; color: {text_color}; }}
+            ul {{ margin-left: 18px; color: {text_color}; }}
+            .code-block {{
+                background: {code_background};
+                color: {code_text};
+                padding: 12px;
+                border-radius: 10px;
+                border: 1px solid {code_border};
+            }}
+            code {{ font-family: "Consolas"; }}
+        </style>
+        </head>
+        <body>
+            {sections_html}
+            {resumen_html}
+        </body>
+        </html>
+        """
+        html_content = apply_glossary_tooltips(html_content)
+        self.guide_text.setHtml(html_content)
         self.guide_text.document().setTextWidth(self.guide_text.viewport().width())
         content_height = int(self.guide_text.document().size().height())
         self.guide_text.setMinimumHeight(content_height + 40)
@@ -501,11 +533,31 @@ class MainWindow(QMainWindow):
         else:
             self.demo_layout.addWidget(demo_widget)
 
+    def _update_theme_toggle(self) -> None:
+        if self.current_theme == "dark":
+            self.theme_toggle.setText("☀️")
+            self.theme_toggle.setToolTip("Cambiar a tema claro")
+        else:
+            self.theme_toggle.setText("🌙")
+            self.theme_toggle.setToolTip("Cambiar a tema oscuro")
+
+    def _toggle_theme(self) -> None:
+        self.current_theme = toggle_theme(self.current_theme)
+        self.settings.setValue("ui/theme", self.current_theme)
+        apply_theme(self.app, self.current_theme)
+        self._update_theme_toggle()
+        if hasattr(self, "current_entry"):
+            self._render_guide(self.current_entry.instance)
+
 
 def main() -> None:
     app = QApplication(sys.argv)
-    apply_app_theme(app)
-    window = MainWindow()
+    settings = QSettings("Pythonpedia", "Pythonpedia")
+    theme_name = settings.value("ui/theme", "light")
+    if not isinstance(theme_name, str):
+        theme_name = "light"
+    apply_theme(app, theme_name)
+    window = MainWindow(app, settings, theme_name)
     window.show()
     sys.exit(app.exec())
 

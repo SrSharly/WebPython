@@ -34,6 +34,7 @@ from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
 from app.utils.code_runner import SnippetRunner
 from app.utils.theme import apply_theme, toggle_theme
+from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
 from app.utils.ui_components import CodeCard
 from app.utils.ui_helpers import badge
@@ -88,6 +89,8 @@ class MainWindow(QMainWindow):
         self.guide_text.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.guide_text.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.guide_text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self._tooltip_controller = InstantTooltipController(self.guide_text)
+        self.guide_text.installEventFilter(self._tooltip_controller)
         self.guide_scroll = QScrollArea()
         self.guide_scroll.setWidgetResizable(True)
         self.guide_scroll.setWidget(self.guide_text)
@@ -571,9 +574,12 @@ class MainWindow(QMainWindow):
 def main() -> None:
     app = QApplication(sys.argv)
     style_hints = app.styleHints()
-    style_hints.setToolTipWakeUpDelay(0)
-    style_hints.setToolTipFallAsleepDelay(0)
-    style_hints.setToolTipDuration(0)
+    if hasattr(style_hints, "setToolTipWakeUpDelay"):
+        style_hints.setToolTipWakeUpDelay(0)
+    if hasattr(style_hints, "setToolTipFallAsleepDelay"):
+        style_hints.setToolTipFallAsleepDelay(0)
+    if hasattr(style_hints, "setToolTipDuration"):
+        style_hints.setToolTipDuration(0)
     settings = QSettings("Pythonpedia", "Pythonpedia")
     theme_name = settings.value("ui/theme", "light")
     if not isinstance(theme_name, str):

@@ -73,6 +73,50 @@ mensaje = f"{producto} cuesta {precio}€"
 texto = "hola"
 mayus = texto.upper()
 ```
+
+## Más allá (nivel pro)
+- **`join` para unir muchas piezas**: es más rápido y claro que encadenar `+`.
+  ```
+  palabras = ["Hola", "mundo"]  # lista de palabras
+  frase = " ".join(palabras)  # join une con espacios
+  print(frase)  # muestra "Hola mundo"
+  ```
+  Úsalo cuando tengas listas de textos.
+  Evítalo si solo unes dos strings simples.
+- **Formato avanzado en f-strings**: puedes controlar decimales y alineación.
+  ```
+  precio = 3.5  # número con decimales
+  mensaje = f"Total: {precio:.2f}€"  # .2f fuerza 2 decimales
+  print(mensaje)  # muestra "Total: 3.50€"
+  ```
+  Úsalo cuando imprimas valores para usuarios o reportes.
+  Evítalo si el formato exacto no importa.
+- **Raw strings (`r""`)**: evitan interpretar barras invertidas.
+  ```
+  ruta = r"C:\nuevas\carpetas"  # raw string, no interpreta \n
+  print(ruta)  # muestra la ruta real
+  ```
+  Úsalo para rutas de Windows o patrones de texto con muchas barras.
+  Evítalo si necesitas secuencias especiales como `\n`.
+- **`textwrap.dedent` (quitar sangría común)**: útil para textos multilínea.
+  ```
+  import textwrap  # módulo de texto
+  texto = textwrap.dedent(\"\"\"\
+      Línea 1
+      Línea 2
+  \"\"\")  # elimina sangría común
+  print(texto)  # muestra líneas sin espacios extra
+  ```
+  Úsalo cuando definas textos largos en el código.
+  Evítalo si el texto corto no tiene sangría extra.
+- **Normalización con `strip` antes de comparar**: evita fallos por espacios.
+  ```
+  entrada = "  admin "  # texto con espacios
+  es_admin = entrada.strip() == "admin"  # limpiamos y comparamos
+  print(es_admin)  # True
+  ```
+  Úsalo cuando recibas entradas de usuario o archivos.
+  Evítalo si los espacios son parte del significado.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

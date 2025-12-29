@@ -26,17 +26,72 @@ class QComboBoxLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- QComboBox muestra una lista desplegable de opciones.
-- addItem() o addItems() agrega valores visibles.
-- currentText() devuelve la opción seleccionada.
-- currentIndexChanged se dispara al cambiar selección.
-- setEditable(True) permite que el usuario escriba.
-- Puedes usar insertItem() para colocar en un índice.
-- removeItem() elimina entradas específicas.
-- setPlaceholderText muestra un texto inicial.
-- Usa setCurrentIndex() para selección programática.
-- Guarda data extra con addItem(texto, data).
-- Las señales editTextChanged y activated dan más control.
+## Qué es
+QComboBox es un selector desplegable que permite elegir una opción de una lista.
+
+## Cuándo se usa
+Cuando hay pocas opciones posibles y quieres ahorrar espacio en pantalla.
+
+## Conceptos previos
+- Widgets básicos y layouts.
+- Señales en PySide6.
+
+## Paso 1: Crear y poblar el combo
+```
+combo = QComboBox()
+combo.addItems(["Rojo", "Verde", "Azul"])
+```
+
+## Paso 2: Leer la selección
+```
+texto = combo.currentText()
+```
+
+## Paso 3: Escuchar cambios
+```
+combo.currentIndexChanged.connect(lambda _: print(combo.currentText()))
+```
+
+## Paso 4: Permitir edición
+```
+combo.setEditable(True)
+```
+
+## Mini-reto
+Mini-reto 1: Agrega un elemento “Otro” si el usuario escribe algo nuevo.
+Solución:
+```
+combo.setEditable(True)
+combo.editTextChanged.connect(lambda t: combo.addItem(t) if combo.findText(t) == -1 else None)
+```
+
+## Errores típicos (mal vs bien)
+Mal: usar índices mágicos.
+```
+combo.setCurrentIndex(2)
+```
+Bien: buscar por texto o data.
+```
+indice = combo.findText("Verde")
+combo.setCurrentIndex(indice)
+```
+
+## Nota
+Nota: usa setPlaceholderText para indicar qué debe elegir el usuario.
+
+## Advertencia
+Advertencia: si el combo es editable, valida la entrada escrita.
+
+## Checklist final
+- Creo un QComboBox y agrego items.
+- Leo la opción seleccionada.
+- Escucho cambios con señales.
+- Habilito edición cuando aplica.
+
+## Ver también
+- QLineEdit
+- QLabel
+- QPushButton
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -79,35 +134,43 @@ class QComboBoxLesson(Lesson):
         return [
             (
                 "Agregar items",
-                """combo = QComboBox()\ncombo.addItems(["Rojo", "Verde", "Azul"])""",
+                """combo = QComboBox()  # Creamos el combo
+combo.addItems(["Rojo", "Verde", "Azul"])  # Agregamos opciones""",
             ),
             (
                 "Leer selección",
-                """combo = QComboBox()\nprint(combo.currentText())""",
+                """combo = QComboBox()  # Creamos el combo
+print(combo.currentText())  # Leemos el texto""",
             ),
             (
                 "Señal de cambio",
-                """combo = QComboBox()\ncombo.currentIndexChanged.connect(print)""",
+                """combo = QComboBox()  # Creamos el combo
+combo.currentIndexChanged.connect(print)  # Conectamos señal""",
             ),
             (
                 "Editable",
-                """combo = QComboBox()\ncombo.setEditable(True)""",
+                """combo = QComboBox()  # Creamos el combo
+combo.setEditable(True)  # Permitimos escritura""",
             ),
             (
                 "Agregar con data",
-                """combo = QComboBox()\ncombo.addItem("Lima", "PE-LIM")""",
+                """combo = QComboBox()  # Creamos el combo
+combo.addItem("Lima", "PE-LIM")  # Agregamos texto y data""",
             ),
             (
                 "Insertar al inicio",
-                """combo = QComboBox()\ncombo.insertItem(0, "Selecciona...")""",
+                """combo = QComboBox()  # Creamos el combo
+combo.insertItem(0, "Selecciona...")  # Insertamos al inicio""",
             ),
             (
                 "Eliminar item",
-                """combo = QComboBox()\ncombo.removeItem(2)""",
+                """combo = QComboBox()  # Creamos el combo
+combo.removeItem(2)  # Eliminamos el tercer item""",
             ),
             (
                 "Seleccionar índice",
-                """combo = QComboBox()\ncombo.setCurrentIndex(1)""",
+                """combo = QComboBox()  # Creamos el combo
+combo.setCurrentIndex(1)  # Seleccionamos el índice""",
             ),
         ]
 

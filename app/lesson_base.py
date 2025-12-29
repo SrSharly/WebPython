@@ -19,6 +19,9 @@ class Lesson(QWidget):
     def guide(self) -> str:
         raise NotImplementedError
 
+    def tutorial(self) -> str:
+        return self.guide()
+
     def guide_sections(self) -> list[dict] | None:
         return None
 

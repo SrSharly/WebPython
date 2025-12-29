@@ -27,17 +27,71 @@ class QLabelLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- QLabel es un widget de solo lectura para texto o imágenes.
-- setText() actualiza el contenido en tiempo real.
-- setWordWrap(True) permite texto largo sin romper el layout.
-- setAlignment() controla la alineación horizontal y vertical.
-- setTextFormat() define si interpreta texto enriquecido (HTML).
-- setPixmap() muestra imágenes en lugar de texto.
-- setBuddy() permite asociar un label a un input.
-- Ajusta el tamaño con setMinimumWidth o sizePolicy.
-- Usa estilos con setStyleSheet para resaltar mensajes.
-- QLabel no es editable; para texto editable usa QLineEdit.
-- Puedes usar HTML simple para resaltar partes específicas.
+## Qué es
+QLabel es un widget de solo lectura para mostrar texto o imágenes dentro de una interfaz.
+
+## Cuándo se usa
+Para títulos, mensajes de estado, instrucciones o etiquetas de campos de formulario.
+
+## Conceptos previos
+- Widgets básicos de PySide6.
+- Uso de layouts para organizar la interfaz.
+
+## Paso 1: Mostrar texto simple
+```
+label = QLabel("Hola mundo")
+```
+
+## Paso 2: Alinear y permitir word wrap
+```
+label.setAlignment(Qt.AlignCenter)
+label.setWordWrap(True)
+```
+
+## Paso 3: Texto enriquecido (HTML simple)
+```
+label.setText("<b>Negrita</b>")
+label.setTextFormat(Qt.RichText)
+```
+
+## Paso 4: Actualizar el contenido en tiempo real
+```
+label.setText("Estado: procesando")
+```
+
+## Mini-reto
+Mini-reto 1: Crea un QLabel que muestre “Listo” en verde.
+Solución:
+```
+label = QLabel("Listo")
+label.setStyleSheet("color: #1b5e20;")
+```
+
+## Errores típicos (mal vs bien)
+Mal: texto largo sin word wrap.
+```
+label.setText("Un texto muy largo que se corta...")
+```
+Bien: activar word wrap.
+```
+label.setWordWrap(True)
+```
+
+## Nota
+Nota: QLabel no es editable; para entrada de texto usa QLineEdit.
+
+## Advertencia
+Advertencia: si usas HTML, configura el formato como RichText.
+
+## Checklist final
+- Muestro texto con QLabel.
+- Ajusto alineación y wrap.
+- Uso HTML simple cuando necesito formato.
+
+## Ver también
+- QLineEdit
+- QPushButton
+- QComboBox
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -80,35 +134,42 @@ class QLabelLesson(Lesson):
         return [
             (
                 "Texto básico",
-                """label = QLabel("Hola mundo")""",
+                """label = QLabel("Hola mundo")  # Creamos el label""",
             ),
             (
                 "Alineación centrada",
-                """label = QLabel("Centro")\nlabel.setAlignment(Qt.AlignCenter)""",
+                """label = QLabel("Centro")  # Creamos el label
+label.setAlignment(Qt.AlignCenter)  # Centramos el texto""",
             ),
             (
                 "Word wrap",
-                """label = QLabel("Texto largo...")\nlabel.setWordWrap(True)""",
+                """label = QLabel("Texto largo...")  # Creamos el label
+label.setWordWrap(True)  # Permitimos salto de línea""",
             ),
             (
                 "Texto enriquecido",
-                """label = QLabel("<b>Negrita</b>")\nlabel.setTextFormat(Qt.RichText)""",
+                """label = QLabel("<b>Negrita</b>")  # HTML básico
+label.setTextFormat(Qt.RichText)  # Indicamos RichText""",
             ),
             (
                 "Actualizar texto",
-                """label = QLabel("Estado: listo")\nlabel.setText("Estado: procesando")""",
+                """label = QLabel("Estado: listo")  # Texto inicial
+label.setText("Estado: procesando")  # Actualizamos texto""",
             ),
             (
                 "Cambiar estilo",
-                """label = QLabel("Error")\nlabel.setStyleSheet("color: #b00020;")""",
+                """label = QLabel("Error")  # Texto de error
+label.setStyleSheet("color: #b00020;")  # Estilo rojo""",
             ),
             (
                 "Limpiar contenido",
-                """label = QLabel("Mensaje")\nlabel.clear()""",
+                """label = QLabel("Mensaje")  # Texto inicial
+label.clear()  # Limpiamos contenido""",
             ),
             (
                 "Asignar buddy",
-                """label = QLabel("Nombre:")\nlabel.setBuddy(nombre_input)""",
+                """label = QLabel("Nombre:")  # Label de campo
+label.setBuddy(nombre_input)  # Asociamos el input""",
             ),
         ]
 

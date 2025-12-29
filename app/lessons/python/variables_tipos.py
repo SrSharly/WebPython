@@ -21,18 +21,90 @@ class VariablesTiposLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- En Python, una variable es un nombre que referencia un objeto.
-- El tipado es dinámico: el tipo está en el objeto, no en el nombre.
-- Puedes reasignar una variable a un objeto de otro tipo.
-- Los tipos básicos: int, float, str, bool, list, tuple, dict, set.
-- Algunos tipos son mutables (list, dict, set) y otros inmutables (int, str, tuple).
-- La mutabilidad impacta en el comportamiento al pasar valores a funciones.
-- Usa isinstance(obj, Tipo) para validar tipos sin romper polimorfismo.
-- Las anotaciones de tipo ayudan a documentación y herramientas estáticas.
-- Las conversiones explícitas (int(), str()) son más seguras que la implícita.
-- None representa la ausencia de valor, no es "0" ni "".
-- Evita nombres ambiguos como data o temp si puedes ser específico.
-- Usa constantes en MAYÚSCULAS para valores de configuración.
+## Qué es
+Una variable en Python es un nombre que apunta a un objeto. El tipo pertenece al objeto, no al nombre.
+
+## Cuándo se usa
+Cada vez que guardas datos para reutilizarlos: números, textos, listas, resultados de cálculos, etc.
+
+## Conceptos previos
+- Saber qué es un objeto (algo que existe en memoria).
+- Entender que Python es de tipado dinámico.
+
+## Paso 1: Crear y reasignar variables
+Puedes crear una variable simplemente asignando un valor.
+```
+nombre = "Ana"
+```
+Luego puedes reasignar a otro tipo sin problema.
+```
+nombre = 3.14
+```
+
+## Paso 2: Tipos básicos y cómo identificarlos
+Tipos comunes: int, float, str, bool, list, tuple, dict, set.
+```
+edad = 30
+print(type(edad))
+```
+
+## Paso 3: Mutabilidad (qué cambia y qué no)
+Las listas y diccionarios se pueden modificar en el lugar (mutables). Las cadenas y tuplas no.
+```
+nums = [1, 2]
+nums.append(3)
+```
+
+## Paso 4: Conversiones explícitas
+Es mejor convertir de forma explícita para evitar errores inesperados.
+```
+texto = "42"
+numero = int(texto)
+```
+
+## Paso 5: None como ausencia de valor
+None significa “no hay valor todavía”.
+```
+resultado = None
+if resultado is None:
+    print("Falta calcular")
+```
+
+## Mini-reto
+Mini-reto 1: Crea una variable con tu edad, conviértela a string y forma una frase.
+Solución:
+```
+edad = 28
+frase = "Tengo " + str(edad) + " años"
+```
+
+## Errores típicos (mal vs bien)
+Mal: mezclar tipos sin convertir.
+```
+"3" + 4
+```
+Bien: convertir antes de operar.
+```
+"3" + str(4)
+```
+
+## Nota
+Nota: usa nombres descriptivos (por ejemplo, total_ventas) para que tu código sea legible.
+
+## Advertencia
+Advertencia: no uses nombres como list o str porque sobrescribes funciones útiles.
+
+## Checklist final
+- Sé qué es una variable y qué es un objeto.
+- Identifico tipos básicos con type().
+- Distingo tipos mutables e inmutables.
+- Convierto tipos de forma explícita.
+- Uso None para ausencia de valor.
+
+## Ver también
+- Funciones
+- Excepciones
+- Iteradores y generadores
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -79,39 +151,56 @@ class VariablesTiposLesson(Lesson):
         return [
             (
                 "Asignación y reasignación",
-                """x = 10\nx = "texto"\nprint(x)""",
+                """x = 10  # Creamos un entero
+x = "texto"  # Reasignamos a un string
+print(x)  # Mostramos el valor actual""",
             ),
             (
                 "Mutabilidad",
-                """nums = [1, 2, 3]\nalias = nums\nalias.append(4)\nprint(nums)""",
+                """nums = [1, 2, 3]  # Lista mutable
+alias = nums  # Creamos un alias
+alias.append(4)  # Modificamos desde el alias
+print(nums)  # La lista original cambia""",
             ),
             (
                 "Copias seguras",
-                """original = [1, 2, 3]\ncopia = original.copy()\ncopia.append(99)\nprint(original, copia)""",
+                """original = [1, 2, 3]  # Lista original
+copia = original.copy()  # Copiamos la lista
+copia.append(99)  # Modificamos la copia
+print(original, copia)  # Original y copia son distintas""",
             ),
             (
                 "Anotaciones de tipo",
-                """from typing import List\nvalues: List[int] = [1, 2, 3]\nprint(values)""",
+                """from typing import List  # Importamos List
+values: List[int] = [1, 2, 3]  # Anotamos el tipo
+print(values)  # Mostramos la lista""",
             ),
             (
                 "Uso de None",
-                """value = None\nif value is None:\n    print("Sin valor")""",
+                """value = None  # Indicamos ausencia de valor
+if value is None:  # Comparamos con is
+    print("Sin valor")  # Mostramos mensaje""",
             ),
             (
                 "Conversión explícita",
-                """num = int("42")\nprint(num + 1)""",
+                """num = int("42")  # Convertimos a entero
+print(num + 1)  # Sumamos un valor""",
             ),
             (
                 "Tupla de un elemento",
-                """solo = (1,)\nprint(type(solo))""",
+                """solo = (1,)  # Creamos una tupla de un elemento
+print(type(solo))  # Mostramos el tipo""",
             ),
             (
                 "Booleanos y truthy",
-                """items = []\nif not items:\n    print("Lista vacía")""",
+                """items = []  # Lista vacía
+if not items:  # Evaluación truthy
+    print("Lista vacía")  # Informamos""",
             ),
             (
                 "Comparación robusta",
-                """name = "Python"\nprint(name.casefold() == "python")""",
+                """name = "Python"  # Cadena original
+print(name.casefold() == "python")  # Comparamos sin mayúsculas""",
             ),
         ]
 

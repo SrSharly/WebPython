@@ -92,6 +92,7 @@ def discover_lessons() -> list[LessonInfo]:
     ]
     category_order = [
         "Python",
+        "Bases de datos",
         "PySide6",
         "Pandas",
         "PandasAI",
@@ -113,12 +114,27 @@ def discover_lessons() -> list[LessonInfo]:
         "Excepciones",
     ]
     python_rank = {name: idx for idx, name in enumerate(python_curriculum)}
+    databases_curriculum = [
+        "¿Qué es una base de datos?",
+        "SQLite con Python (sqlite3)",
+        "PostgreSQL con Python (psycopg / asyncpg)",
+        "MySQL / MariaDB con Python",
+        "ORMs: SQLAlchemy",
+        "NoSQL: MongoDB",
+        "Buenas prácticas y seguridad",
+        "Rendimiento y patrones reales",
+    ]
+    databases_rank = {name: idx for idx, name in enumerate(databases_curriculum)}
 
     def sort_key(info: LessonInfo) -> tuple[int, str, str, str]:
         order = category_rank.get(info.category, len(category_order))
         if info.category == "Python":
             if info.title in python_rank:
                 return (order, 0, python_rank[info.title], info.title)
+            return (order, 1, 0, info.title)
+        if info.category == "Bases de datos":
+            if info.title in databases_rank:
+                return (order, 0, databases_rank[info.title], info.title)
             return (order, 1, 0, info.title)
         category_name = info.category if order == len(category_order) else ""
         return (order, category_name, info.subcategory, info.title)

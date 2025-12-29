@@ -65,13 +65,13 @@ import sqlite3  # Módulo estándar
 
 with sqlite3.connect("agenda.db") as conn:  # Conexión
     conn.execute(  # Ejecutamos SQL
-        """
+        '''
         CREATE TABLE IF NOT EXISTS contactos (
             id INTEGER PRIMARY KEY,
             nombre TEXT NOT NULL,
             telefono TEXT NOT NULL
         )
-        """
+        '''
     )
 ```
 

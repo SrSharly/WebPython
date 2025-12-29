@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import QEvent, QObject
-from PySide6.QtGui import QCursor, QTextFormat
+from PySide6.QtGui import QCursor
 from PySide6.QtWidgets import QToolTip, QTextBrowser
 
 
@@ -21,10 +21,6 @@ class InstantTooltipController(QObject):
             cursor = self._widget.cursorForPosition(event.pos())
             char_format = cursor.charFormat()
             text = char_format.toolTip()
-            if not text:
-                prop = char_format.property(QTextFormat.ToolTip)
-                text = prop if isinstance(prop, str) else ""
-
             if text:
                 if text != self._last_text or not self._tooltip_visible:
                     QToolTip.showText(QCursor.pos(), text, self._widget)

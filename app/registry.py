@@ -90,5 +90,21 @@ def discover_lessons() -> list[LessonInfo]:
         )
         for lesson_cls in get_lessons()
     ]
-    lessons.sort(key=lambda info: (info.category, info.subcategory, info.title))
+    category_order = [
+        "Python",
+        "PySide6",
+        "Pandas",
+        "PandasAI",
+        "scikit-learn",
+        "TensorFlow",
+        "PyTorch",
+    ]
+    category_rank = {name: idx for idx, name in enumerate(category_order)}
+
+    def sort_key(info: LessonInfo) -> tuple[int, str, str, str]:
+        order = category_rank.get(info.category, len(category_order))
+        category_name = info.category if order == len(category_order) else ""
+        return (order, category_name, info.subcategory, info.title)
+
+    lessons.sort(key=sort_key)
     return lessons

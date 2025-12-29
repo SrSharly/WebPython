@@ -19,6 +19,9 @@ class Lesson(QWidget):
     def guide(self) -> str:
         raise NotImplementedError
 
+    def guide_sections(self) -> list[dict] | None:
+        return None
+
     def common_pitfalls(self) -> list[tuple[str, str]]:
         raise NotImplementedError
 

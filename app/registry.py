@@ -112,6 +112,7 @@ def discover_lessons() -> list[LessonInfo]:
         "Iteradores y generadores",
         "Context managers",
         "Excepciones",
+        "Jupyter (Notebook): cuándo y por qué usarlo",
     ]
     python_rank = {name: idx for idx, name in enumerate(python_curriculum)}
     databases_curriculum = [

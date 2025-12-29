@@ -15,73 +15,51 @@ class FuncionesLesson(Lesson):
     def summary(self) -> str:
         return (
             "Las funciones encapsulan lógica reutilizable. Aquí aprenderás a definirlas, "
-            "pasar argumentos, devolver valores y aplicar buenas prácticas de diseño."
+            "pasar argumentos, devolver valores y aplicar buenas prácticas desde cero."
         )
 
     def guide(self) -> str:
         return """
-## Qué es
-Una función es un bloque de código con nombre que ejecuta una tarea y puede devolver un resultado.
+## ¿Qué es una función?
+Una **función** es un bloque de código con nombre que puedes reutilizar. Piensa en una receta: le das ingredientes (argumentos), hace pasos y devuelve un resultado.
 
-## Cuándo se usa
-Cuando quieres reutilizar lógica, evitar repetición y dar claridad a tu programa.
+### Partes básicas
+- **def**: palabra clave para definir.
+- **nombre**: identifica la función.
+- **parámetros**: nombres que reciben datos.
+- **return**: devuelve un resultado (si no hay return, devuelve `None`).
 
-## Conceptos previos
-- Variables y tipos básicos.
-- Indentación (sangría) en Python.
-
-## Paso 1: Definir una función simple
+Ejemplo inmediato:
 ```
-def saludar(nombre):
-    return f"Hola {nombre}"
-```
+def saludar(nombre):  # nombre es un parámetro
+    return f"Hola {nombre}"  # devolvemos un texto
 
-## Paso 2: Llamar a la función
-```
-mensaje = saludar("Ana")
-print(mensaje)
+mensaje = saludar("Ana")  # "Ana" es un argumento
 ```
 
-## Paso 3: Parámetros y valores por defecto
-```
-def potencia(base, exp=2):
-    return base ** exp
-```
+## Parámetros vs argumentos (sin confusión)
+- **Parámetro**: nombre dentro de la función (`nombre`).
+- **Argumento**: valor que pasas al llamar (`"Ana"`).
 
-## Paso 4: Argumentos variables
-- *args recibe varios posicionales.
-- **kwargs recibe varios nombrados.
+## Scope (alcance) explicado simple
+Las variables dentro de la función son **locales**. No afectan a las de afuera.
 ```
-def resumen(*args, **kwargs):
-    return args, kwargs
-```
+contador = 0  # Variable global
 
-## Paso 5: Alcance (scope)
-Las variables dentro de la función son locales y no afectan al exterior.
-```
-contador = 0
-
-def contar():
-    contador_local = contador + 1
+def sumar_uno():
+    contador_local = contador + 1  # Usa la global, pero guarda en local
     return contador_local
 ```
 
-## Mini-reto
-Mini-reto 1: Crea una función que reciba dos números y devuelva el mayor.
-Solución:
+## Valores por defecto
+Si no pasas un argumento, se usa el default.
 ```
-def mayor(a, b):
-    return a if a > b else b
+def potencia(base, exponente=2):
+    return base ** exponente
 ```
 
-## Errores típicos (mal vs bien)
-Mal: usar lista mutable como valor por defecto.
-```
-def agregar(item, lista=[]):
-    lista.append(item)
-    return lista
-```
-Bien: usar None y crear la lista dentro.
+### Advertencia sobre defaults mutables
+Nunca uses listas o dicts como default.
 ```
 def agregar(item, lista=None):
     if lista is None:
@@ -90,23 +68,45 @@ def agregar(item, lista=None):
     return lista
 ```
 
-## Nota
-Nota: documenta con docstrings para que otros entiendan la función.
+## *args y **kwargs sin miedo
+- `*args`: captura varios argumentos posicionales.
+- `**kwargs`: captura argumentos con nombre.
+```
+def resumen(*args, **kwargs):
+    return args, kwargs
+```
 
-## Advertencia
-Advertencia: evita funciones enormes; divide en funciones pequeñas.
+## Docstrings simples (documenta tu intención)
+Una docstring es un texto que explica qué hace la función.
+```
+def promedio(valores):
+    """Calcula el promedio de una lista de números."""
+    return sum(valores) / len(valores)
+```
 
-## Checklist final
-- Sé definir y llamar funciones.
-- Uso parámetros con y sin default.
-- Distingo *args y **kwargs.
-- Comprendo el scope local.
-- Documento mis funciones.
+## Type hints (gradual, sin abrumar)
+Los hints no cambian la ejecución, pero ayudan a leer y detectar errores.
+```
+def area_cuadrado(lado: float) -> float:
+    return lado * lado
+```
 
-## Ver también
-- Variables y tipos
-- Excepciones
-- Iteradores y generadores
+## Buenas prácticas esenciales
+- **PEP8**: `snake_case` para funciones, `PascalCase` para clases.
+- **Indentación**: 4 espacios siempre.
+- **Nombres claros**: `calcular_total` > `calc`.
+- **Evita magic numbers**: usa constantes.
+- **Código legible > trucos**: prioriza claridad.
+
+## Resumen de ejemplos
+```
+def es_mayor(a, b):
+    return a if a > b else b
+```
+```
+def saludo(nombre, idioma="es"):
+    return "Hola" if idioma == "es" else "Hello"
+```
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -131,18 +131,6 @@ Advertencia: evita funciones enormes; divide en funciones pequeñas.
                 "Shadowing",
                 "Si defines una variable igual que una función, pierdes la referencia.",
             ),
-            (
-                "No validar entrada",
-                "Agregar validaciones evita errores silenciosos en usos futuros.",
-            ),
-            (
-                "Uso excesivo de lambda",
-                "Si es compleja, usa def con nombre.",
-            ),
-            (
-                "Modificar argumentos",
-                "Alterar listas recibidas puede afectar al llamador.",
-            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
@@ -150,55 +138,37 @@ Advertencia: evita funciones enormes; divide en funciones pequeñas.
             (
                 "Función básica",
                 """def saludar(nombre):  # Definimos la función
-    return f"Hola {nombre}"  # Retornamos un saludo
+    return f"Hola {nombre}"  # Retornamos saludo
 print(saludar("Ana"))  # Llamamos a la función""",
             ),
             (
                 "Valores por defecto",
-                """def potencia(base, exp=2):  # Exp tiene valor por defecto
-    return base ** exp  # Calculamos la potencia
-print(potencia(3))  # Usa exp=2
-print(potencia(3, 3))  # Usa exp=3""",
+                """def potencia(base, exponente=2):  # Default en exponente
+    return base ** exponente  # Calculamos potencia
+print(potencia(3))  # Usa default
+print(potencia(3, 3))  # Usa 3""",
             ),
             (
-                "*args",
-                """def suma(*nums):  # Recibe varios números
-    return sum(nums)  # Sumamos todos
-print(suma(1, 2, 3))  # Probamos la función""",
+                "*args y **kwargs",
+                """def resumen(*args, **kwargs):  # Recibe varios datos
+    return args, kwargs  # Devuelve ambos
+print(resumen(1, 2, nombre="Luis"))  # Ejemplo""",
             ),
             (
-                "**kwargs",
-                """def crear_usuario(**data):  # Recibe pares clave-valor
-    return data  # Retorna el dict
-print(crear_usuario(nombre="Luis", rol="admin"))  # Ejemplo""",
-            ),
-            (
-                "Funciones como argumentos",
-                """def aplicar(x, fn):  # Recibe un valor y una función
-    return fn(x)  # Aplica la función
-print(aplicar(5, lambda n: n * 2))  # Usamos lambda""",
-            ),
-            (
-                "Docstrings",
-                """def promedio(valores):  # Definimos la función
-    '''Calcula el promedio de una lista de números.'''  # Docstring
-    return sum(valores) / len(valores)  # Retornamos el promedio
-print(promedio([1, 2, 3]))  # Probamos la función""",
+                "Docstring",
+                """def promedio(valores):  # Definimos función
+    '''Calcula el promedio de números.'''  # Docstring
+    return sum(valores) / len(valores)  # Calculamos
+print(promedio([1, 2, 3]))  # Probamos""",
             ),
             (
                 "Scope local",
                 """x = 10  # Variable global
-def mostrar():  # Definimos la función
+def mostrar():  # Función
     x = 5  # Variable local
     print(x)  # Imprime 5
-mostrar()  # Ejecutamos la función
+mostrar()  # Ejecutamos
 print(x)  # Imprime 10""",
-            ),
-            (
-                "Argumentos nombrados",
-                """def saludo(nombre, idioma="es"):  # Idioma por defecto
-    return "Hola" if idioma == "es" else "Hello"  # Selección de saludo
-print(saludo(nombre="Marta"))  # Llamada con nombre""",
             ),
         ]
 

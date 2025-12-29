@@ -79,39 +79,39 @@ TL;DR: Usa typing para describir contratos y detectar problemas antes de ejecuta
         return [
             (
                 "Optional vs Union",
-                """from typing import Optional\n\ndef buscar(nombre: str) -> Optional[int]:\n    return 1 if nombre else None""",
+                """from typing import Optional  # Importamos Optional\n+def buscar(nombre: str) -> Optional[int]:  # Definimos función\n+    return 1 if nombre else None  # Retornamos""",
             ),
             (
                 "Literal",
-                """from typing import Literal\n\ndef modo(color: Literal["rojo", "azul"]) -> str:\n    return color""",
+                """from typing import Literal  # Importamos Literal\n+def modo(color: Literal["rojo", "azul"]) -> str:  # Definimos función\n+    return color  # Retornamos""",
             ),
             (
                 "TypedDict",
-                """from typing import TypedDict\n\nclass Usuario(TypedDict):\n    nombre: str\n    edad: int\n\nu: Usuario = {"nombre": "Ana", "edad": 30}""",
+                """from typing import TypedDict  # Importamos TypedDict\n+class Usuario(TypedDict):  # Definimos TypedDict\n+    nombre: str  # Campo nombre\n+    edad: int  # Campo edad\n+u: Usuario = {"nombre": "Ana", "edad": 30}  # Creamos dict""",
             ),
             (
                 "Protocol",
-                """from typing import Protocol\n\nclass Escribible(Protocol):\n    def escribir(self, texto: str) -> None: ...""",
+                """from typing import Protocol  # Importamos Protocol\n+class Escribible(Protocol):  # Definimos Protocol\n+    def escribir(self, texto: str) -> None: ...  # Método requerido""",
             ),
             (
                 "Sequence vs list",
-                """from typing import Sequence\n\ndef total(valores: Sequence[int]) -> int:\n    return sum(valores)""",
+                """from typing import Sequence  # Importamos Sequence\n+def total(valores: Sequence[int]) -> int:  # Definimos función\n+    return sum(valores)  # Sumamos""",
             ),
             (
                 "Mapping vs dict",
-                """from typing import Mapping\n\ndef leer(cfg: Mapping[str, str]) -> str:\n    return cfg.get("host", "")""",
+                """from typing import Mapping  # Importamos Mapping\n+def leer(cfg: Mapping[str, str]) -> str:  # Definimos función\n+    return cfg.get("host", "")  # Leemos clave""",
             ),
             (
                 "Callable",
-                """from typing import Callable\n\ndef aplicar(x: int, fn: Callable[[int], int]) -> int:\n    return fn(x)""",
+                """from typing import Callable  # Importamos Callable\n+def aplicar(x: int, fn: Callable[[int], int]) -> int:  # Definimos función\n+    return fn(x)  # Aplicamos""",
             ),
             (
                 "TypeVar",
-                """from typing import TypeVar\n\nT = TypeVar("T")\n\ndef primero(valores: list[T]) -> T:\n    return valores[0]""",
+                """from typing import TypeVar  # Importamos TypeVar\n+T = TypeVar("T")  # Definimos TypeVar\n+def primero(valores: list[T]) -> T:  # Definimos función\n+    return valores[0]  # Retornamos primero""",
             ),
             (
                 "Default seguro",
-                """from typing import Optional\n\ndef agregar(item: int, datos: Optional[list[int]] = None) -> list[int]:\n    if datos is None:\n        datos = []\n    datos.append(item)\n    return datos""",
+                """from typing import Optional  # Importamos Optional\n+def agregar(item: int, datos: Optional[list[int]] = None) -> list[int]:  # Función\n+    if datos is None:  # Validamos None\n+        datos = []  # Creamos lista\n+    datos.append(item)  # Agregamos\n+    return datos  # Retornamos""",
             ),
         ]
 

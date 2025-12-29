@@ -32,7 +32,7 @@ from PySide6.QtWidgets import (
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.utils.code_runner import SnippetRunner
-from app.utils.ui_helpers import CodeCard, InfoBox, apply_app_theme, badge
+from app.utils.ui_helpers import CodeCard, apply_app_theme, badge
 
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -75,14 +75,14 @@ class MainWindow(QMainWindow):
 
         self.tabs = QTabWidget()
         self.summary_view = QTextEdit(readOnly=True)
-        self.guide_container = QWidget()
-        self.guide_layout = QVBoxLayout(self.guide_container)
-        self.guide_layout.setAlignment(Qt.AlignTop)
         self.guide_text = QTextBrowser()
-        self.guide_layout.addWidget(self.guide_text)
+        self.guide_text.setOpenExternalLinks(True)
+        self.guide_text.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.guide_text.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.guide_text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.guide_scroll = QScrollArea()
         self.guide_scroll.setWidgetResizable(True)
-        self.guide_scroll.setWidget(self.guide_container)
+        self.guide_scroll.setWidget(self.guide_text)
         self.examples_container = QWidget()
         self.examples_layout = QVBoxLayout(self.examples_container)
         self.examples_layout.setAlignment(Qt.AlignTop)
@@ -129,6 +129,8 @@ class MainWindow(QMainWindow):
         self.header_widget = QWidget()
         self.header_layout = QVBoxLayout(self.header_widget)
         self.header_layout.setContentsMargins(0, 0, 0, 0)
+        self.header_layout.setSpacing(4)
+        self.header_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         self.title_label = QLabel("Selecciona una lección")
         self.title_label.setObjectName("HeaderTitle")
         self.header_layout.addWidget(self.title_label)
@@ -137,12 +139,15 @@ class MainWindow(QMainWindow):
         self.badge_layout = QHBoxLayout(self.badge_row)
         self.badge_layout.setAlignment(Qt.AlignLeft)
         self.badge_layout.setContentsMargins(0, 0, 0, 0)
+        self.badge_layout.setSpacing(6)
         self.header_layout.addWidget(self.badge_row)
 
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
         right_layout.addWidget(self.header_widget)
         right_layout.addWidget(self.tabs)
+        right_layout.setStretch(0, 0)
+        right_layout.setStretch(1, 1)
 
         splitter = QSplitter()
         splitter.addWidget(left_panel)
@@ -361,7 +366,6 @@ class MainWindow(QMainWindow):
         return "".join(chunks)
 
     def _render_guide(self, lesson: Lesson) -> None:
-        self._clear_layout(self.guide_layout)
         guide_sections = lesson.guide_sections()
         if guide_sections:
             sections_html = "<h1>Tutorial paso a paso</h1>" + "".join(
@@ -372,8 +376,16 @@ class MainWindow(QMainWindow):
         else:
             sections_html = f"<h1>Tutorial paso a paso</h1>{self._guide_html_from_text(lesson.tutorial())}"
 
-        self.guide_text = QTextBrowser()
-        self.guide_text.setOpenExternalLinks(True)
+        examples = lesson.code_examples()
+        if examples:
+            resumen = examples[:2]
+            resumen_html = "<h2>Resumen de ejemplos</h2>" + "".join(
+                f"<h3>{html.escape(title)}</h3><pre><code>{html.escape(code)}</code></pre>"
+                for title, code in resumen
+            )
+        else:
+            resumen_html = ""
+
         self.guide_text.setHtml(
             f"""
             <html>
@@ -391,35 +403,14 @@ class MainWindow(QMainWindow):
             </head>
             <body>
                 {sections_html}
+                {resumen_html}
             </body>
             </html>
             """
         )
-        self.guide_layout.addWidget(self.guide_text)
-
-        self.guide_layout.addWidget(
-            InfoBox(
-                "Nota rápida",
-                "Puedes copiar los ejemplos con el botón y ejecutarlos en la pestaña Ejemplos.",
-                variant="note",
-            )
-        )
-        self.guide_layout.addWidget(
-            InfoBox(
-                "Advertencia",
-                "Ejecuta los ejemplos en un entorno seguro si vas a modificarlos.",
-                variant="warning",
-            )
-        )
-
-        examples = lesson.code_examples()
-        if examples:
-            section_title = QLabel("Ejemplos en contexto")
-            section_title.setObjectName("SectionTitle")
-            self.guide_layout.addWidget(section_title)
-            for title, code in examples:
-                self.guide_layout.addWidget(CodeCard(title, code))
-        self.guide_layout.addStretch()
+        self.guide_text.document().setTextWidth(self.guide_text.viewport().width())
+        content_height = int(self.guide_text.document().size().height())
+        self.guide_text.setMinimumHeight(content_height + 40)
 
     def _render_pitfalls(self, lesson: Lesson) -> None:
         self.pitfalls_list.clear()

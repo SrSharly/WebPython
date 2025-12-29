@@ -14,97 +14,113 @@ class VariablesTiposLesson(Lesson):
 
     def summary(self) -> str:
         return (
-            "Aprende cómo Python maneja variables, tipos y mutabilidad. "
-            "Esta lección cubre tipado dinámico, anotaciones, coerción y mejores "
-            "prácticas para escribir código claro y seguro."
+            "Aprende cómo Python guarda datos en variables, cómo funcionan los tipos, "
+            "y por qué la mutabilidad y las copias importan desde el primer día."
         )
 
     def guide(self) -> str:
         return """
-## Qué es
-Una variable en Python es un nombre que apunta a un objeto. El tipo pertenece al objeto, no al nombre.
+## Empezamos desde cero: ¿qué es una variable?
+Una **variable** es un nombre que apunta a un valor en memoria. No es una caja física, es una *etiqueta*.
 
-## Cuándo se usa
-Cada vez que guardas datos para reutilizarlos: números, textos, listas, resultados de cálculos, etc.
-
-## Conceptos previos
-- Saber qué es un objeto (algo que existe en memoria).
-- Entender que Python es de tipado dinámico.
-
-## Paso 1: Crear y reasignar variables
-Puedes crear una variable simplemente asignando un valor.
+Imagina un post-it pegado a un objeto: el post-it es el nombre, el objeto es el valor.
 ```
-nombre = "Ana"
-```
-Luego puedes reasignar a otro tipo sin problema.
-```
-nombre = 3.14
+mensaje = "Hola"  # La variable 'mensaje' apunta a un texto
 ```
 
-## Paso 2: Tipos básicos y cómo identificarlos
-Tipos comunes: int, float, str, bool, list, tuple, dict, set.
+### Tipado dinámico en palabras simples
+Python es de **tipado dinámico**: el nombre puede apuntar a valores de distinto tipo en distintos momentos.
 ```
-edad = 30
-print(type(edad))
-```
-
-## Paso 3: Mutabilidad (qué cambia y qué no)
-Las listas y diccionarios se pueden modificar en el lugar (mutables). Las cadenas y tuplas no.
-```
-nums = [1, 2]
-nums.append(3)
+edad = 20  # Ahora edad apunta a un int
+edad = "veinte"  # Ahora apunta a un str
 ```
 
-## Paso 4: Conversiones explícitas
-Es mejor convertir de forma explícita para evitar errores inesperados.
+### Tipos básicos que usarás todo el tiempo
+- **int**: números enteros (10, -3)
+- **float**: números con decimales (3.14)
+- **str**: texto ("hola")
+- **bool**: verdadero o falso (True/False)
+- **list, tuple, dict, set**: estructuras para guardar varios datos
+
+Ejemplo inmediato:
 ```
-texto = "42"
-numero = int(texto)
+precio = 19.99  # float
+nombre = "Ana"  # str
+activo = True  # bool
 ```
 
-## Paso 5: None como ausencia de valor
-None significa “no hay valor todavía”.
+## Mutabilidad: ¿qué puede cambiar y qué no?
+**Mutable** significa que el valor se puede modificar sin crear uno nuevo.
+- Listas y diccionarios: mutables.
+- Strings y tuplas: inmutables.
+
+Ejemplo con lista (mutable):
 ```
-resultado = None
-if resultado is None:
+compras = ["pan", "leche"]  # Lista inicial
+compras.append("café")  # Cambia la misma lista
+```
+
+Ejemplo con string (inmutable):
+```
+texto = "hola"  # String inicial
+texto = texto.upper()  # Crea un nuevo string
+```
+
+## Referencia vs copia (muy importante)
+Cuando haces `b = a`, **no copias** el objeto, solo creas otra referencia.
+```
+original = [1, 2]  # Lista original
+alias = original  # alias apunta al mismo objeto
+alias.append(3)  # Cambiamos el mismo objeto
+```
+Para copiar de verdad:
+```
+original = [1, 2]  # Lista original
+copia = original.copy()  # Copia real
+copia.append(3)  # Solo cambia la copia
+```
+
+## Conversión explícita: no adivines, convierte
+No mezcles tipos sin convertir. Es más claro y seguro.
+```
+texto = "42"  # str
+numero = int(texto)  # convertimos a int
+```
+
+## None: “aún no tengo valor”
+`None` indica ausencia de valor, no es 0 ni "".
+```
+resultado = None  # No hay valor todavía
+if resultado is None:  # Comparación correcta
     print("Falta calcular")
 ```
 
-## Mini-reto
-Mini-reto 1: Crea una variable con tu edad, conviértela a string y forma una frase.
-Solución:
+## Buenas prácticas desde el inicio
+- **PEP8**: usa `snake_case` para variables y funciones, `PascalCase` para clases.
+- **Indentación**: 4 espacios, evita tabs.
+- **Nombres claros**: mejor `total_ventas` que `tv`.
+- **Evita magic numbers**: usa constantes con nombre.
+- **Claridad > trucos**: el código se lee más veces de las que se escribe.
+
+Ejemplo con constantes y nombres claros:
 ```
-edad = 28
-frase = "Tengo " + str(edad) + " años"
+IVA = 0.21  # Constante con nombre
+precio_base = 100  # Nombre claro
+precio_final = precio_base * (1 + IVA)  # Cálculo legible
 ```
 
-## Errores típicos (mal vs bien)
-Mal: mezclar tipos sin convertir.
-```
-"3" + 4
-```
-Bien: convertir antes de operar.
-```
-"3" + str(4)
-```
+### Tip (pequeña ayuda)
+Si dudas del tipo, usa `type(valor)` o imprime el valor para entenderlo.
 
-## Nota
-Nota: usa nombres descriptivos (por ejemplo, total_ventas) para que tu código sea legible.
-
-## Advertencia
-Advertencia: no uses nombres como list o str porque sobrescribes funciones útiles.
-
-## Checklist final
-- Sé qué es una variable y qué es un objeto.
-- Identifico tipos básicos con type().
-- Distingo tipos mutables e inmutables.
-- Convierto tipos de forma explícita.
-- Uso None para ausencia de valor.
-
-## Ver también
-- Funciones
-- Excepciones
-- Iteradores y generadores
+## Resumen de ejemplos
+```
+usuario = "Marta"  # Variable tipo str
+edad = 31  # Variable tipo int
+```
+```
+lista = [1, 2]  # Lista mutable
+lista.append(3)  # Modificamos en sitio
+```
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -129,78 +145,41 @@ Advertencia: no uses nombres como list o str porque sobrescribes funciones útil
                 "Shadowing de builtins",
                 "Nombrar variables como list, dict o str sobrescribe funciones útiles.",
             ),
-            (
-                "Olvidar el orden de evaluación",
-                "En expresiones complejas, paréntesis aclaran y evitan errores.",
-            ),
-            (
-                "Asumir precisión exacta en float",
-                "Los floats tienen errores de redondeo; usa round o decimal si es crítico.",
-            ),
-            (
-                "Confundir tuplas de un elemento",
-                "(1) es int; (1,) es tupla. La coma es clave.",
-            ),
-            (
-                "Comparación de cadenas con mayúsculas",
-                "Usa .lower()/.casefold() para comparar sin sensibilidad a mayúsculas.",
-            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
                 "Asignación y reasignación",
-                """x = 10  # Creamos un entero
-x = "texto"  # Reasignamos a un string
-print(x)  # Mostramos el valor actual""",
+                """nombre = "Ana"  # Creamos un string
+nombre = 3.14  # Reasignamos a float
+print(nombre)  # Mostramos el valor""",
             ),
             (
-                "Mutabilidad",
-                """nums = [1, 2, 3]  # Lista mutable
-alias = nums  # Creamos un alias
-alias.append(4)  # Modificamos desde el alias
-print(nums)  # La lista original cambia""",
+                "Mutabilidad y alias",
+                """nums = [1, 2]  # Lista mutable
+alias = nums  # Alias a la misma lista
+alias.append(3)  # Modificamos la lista
+print(nums)  # Se ve el cambio""",
             ),
             (
-                "Copias seguras",
-                """original = [1, 2, 3]  # Lista original
-copia = original.copy()  # Copiamos la lista
-copia.append(99)  # Modificamos la copia
-print(original, copia)  # Original y copia son distintas""",
-            ),
-            (
-                "Anotaciones de tipo",
-                """from typing import List  # Importamos List
-values: List[int] = [1, 2, 3]  # Anotamos el tipo
-print(values)  # Mostramos la lista""",
-            ),
-            (
-                "Uso de None",
-                """value = None  # Indicamos ausencia de valor
-if value is None:  # Comparamos con is
-    print("Sin valor")  # Mostramos mensaje""",
+                "Copia segura",
+                """original = [1, 2]  # Lista original
+copia = original.copy()  # Copia independiente
+copia.append(99)  # Cambiamos la copia
+print(original)  # Original intacta""",
             ),
             (
                 "Conversión explícita",
-                """num = int("42")  # Convertimos a entero
-print(num + 1)  # Sumamos un valor""",
+                """texto = "42"  # Texto numérico
+numero = int(texto)  # Convertimos a int
+print(numero + 1)  # Sumamos uno""",
             ),
             (
-                "Tupla de un elemento",
-                """solo = (1,)  # Creamos una tupla de un elemento
-print(type(solo))  # Mostramos el tipo""",
-            ),
-            (
-                "Booleanos y truthy",
-                """items = []  # Lista vacía
-if not items:  # Evaluación truthy
-    print("Lista vacía")  # Informamos""",
-            ),
-            (
-                "Comparación robusta",
-                """name = "Python"  # Cadena original
-print(name.casefold() == "python")  # Comparamos sin mayúsculas""",
+                "Uso de None",
+                """valor = None  # Sin valor
+if valor is None:  # Comparación correcta
+    print("Sin valor")  # Mensaje""",
             ),
         ]
 
@@ -214,7 +193,7 @@ print(name.casefold() == "python")  # Comparamos sin mayúsculas""",
             {
                 "question": "Crea una tupla con un solo elemento 'python'.",
                 "hints": ["La coma es obligatoria"],
-                "solution": "tupla = (" + '"python"' + ",)",
+                "solution": "tupla = (\"python\",)",
             },
             {
                 "question": "Convierte la cadena '3.14' en float y súmale 1.",

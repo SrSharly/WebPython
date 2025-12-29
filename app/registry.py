@@ -116,6 +116,10 @@ def discover_lessons() -> list[LessonInfo]:
     python_rank = {name: idx for idx, name in enumerate(python_curriculum)}
     databases_curriculum = [
         "¿Qué es una base de datos?",
+        "SQLite desde cero",
+        "SQLAlchemy Core desde cero",
+        "SQLAlchemy ORM desde cero",
+        "Redshift con SQLAlchemy",
         "SQLite con Python (sqlite3)",
         "PostgreSQL con Python (psycopg / asyncpg)",
         "MySQL / MariaDB con Python",

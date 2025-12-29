@@ -43,7 +43,7 @@ class VariablesTiposLesson(Lesson):
             ),
             (
                 "Mezclar tipos en operaciones",
-                """"3" + 4 produce error: str e int no se concatenan sin conversión.""",
+                '"3" + 4 produce error: str e int no se concatenan sin conversión.',
             ),
             (
                 "Mutabilidad en argumentos",

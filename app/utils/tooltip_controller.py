@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from urllib.parse import unquote
+
 from PySide6.QtCore import QEvent, QObject, Qt
 from PySide6.QtWidgets import QTextBrowser
 
+from app.utils.glossary import TERMS
 from app.utils.instant_tooltip import InstantTooltipPopup
 
 
@@ -10,7 +13,7 @@ class InstantTooltipController(QObject):
     def __init__(self, widget: QTextBrowser) -> None:
         super().__init__(widget)
         self._widget = widget
-        self._current_tip_text: str | None = None
+        self._current_term_id: str | None = None
         self._popup = InstantTooltipPopup(widget)
         self._widget.setMouseTracking(True)
         self._widget.setAttribute(Qt.WA_Hover, True)
@@ -20,20 +23,25 @@ class InstantTooltipController(QObject):
             return super().eventFilter(watched, event)
 
         if event.type() in (QEvent.MouseMove, QEvent.HoverMove):
-            cursor = self._widget.cursorForPosition(event.pos())
-            char_format = cursor.charFormat()
-            text = char_format.toolTip()
-            if text:
-                if text != self._current_tip_text:
-                    self._popup.show_text(text, self._widget.mapToGlobal(event.pos()), self._widget)
-                    self._current_tip_text = text
-            elif self._current_tip_text is not None:
+            anchor = self._widget.anchorAt(event.pos())
+            term_id = None
+            if anchor.startswith("tip:"):
+                term_id = unquote(anchor.removeprefix("tip:"))
+            if term_id and term_id in TERMS:
+                if term_id != self._current_term_id:
+                    self._popup.show_text(
+                        TERMS[term_id],
+                        self._widget.mapToGlobal(event.pos()),
+                        self._widget,
+                    )
+                    self._current_term_id = term_id
+            elif self._current_term_id is not None:
                 self._popup.hide_now()
-                self._current_tip_text = None
+                self._current_term_id = None
 
         elif event.type() in (QEvent.Leave, QEvent.HoverLeave):
-            if self._current_tip_text is not None:
+            if self._current_term_id is not None:
                 self._popup.hide_now()
-                self._current_tip_text = None
+                self._current_term_id = None
 
         return super().eventFilter(watched, event)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import html
 import re
+from urllib.parse import quote
 from functools import lru_cache
 
 from app.utils.glossary import KEYWORDS, TERMS
@@ -26,20 +26,19 @@ def tooltipify_html(html_text: str) -> str:
     def _replace(match: re.Match[str]) -> str:
         original = match.group(0)
         key = original.lower()
-        definition = TERMS.get(key)
-        if definition is None:
+        if key not in TERMS:
             return original
         current = counts.get(key, 0)
         if current >= _MAX_MATCHES_PER_TERM:
             return original
         counts[key] = current + 1
-        safe_definition = html.escape(definition, quote=True)
-        return f'<span class="kw" title="{safe_definition}">{original}</span>'
+        term_id = quote(key)
+        return f'<a href="tip:{term_id}" class="kw">{original}</a>'
 
     parts = re.split(r"(<[^>]+>)", html_text)
     output: list[str] = []
     skip_tag_depth = 0
-    kw_span_depth = 0
+    kw_tag_depth = 0
     for part in parts:
         if part.startswith("<"):
             tag_name = part.strip("<>").split()[0].lower().strip("/")
@@ -47,14 +46,14 @@ def tooltipify_html(html_text: str) -> str:
             if tag_name in _SKIP_TAGS:
                 skip_tag_depth = skip_tag_depth - 1 if is_end_tag else skip_tag_depth + 1
                 skip_tag_depth = max(skip_tag_depth, 0)
-            if tag_name == "span":
+            if tag_name in {"span", "a"}:
                 if not is_end_tag and _KW_CLASS_RE.search(part):
-                    kw_span_depth += 1
-                elif is_end_tag and kw_span_depth:
-                    kw_span_depth -= 1
+                    kw_tag_depth += 1
+                elif is_end_tag and kw_tag_depth:
+                    kw_tag_depth -= 1
             output.append(part)
             continue
-        if skip_tag_depth or kw_span_depth:
+        if skip_tag_depth or kw_tag_depth:
             output.append(part)
             continue
         output.append(pattern.sub(_replace, part))

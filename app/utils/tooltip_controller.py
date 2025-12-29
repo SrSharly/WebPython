@@ -1,41 +1,39 @@
 from __future__ import annotations
 
-from PySide6.QtCore import QEvent, QObject
-from PySide6.QtGui import QCursor
-from PySide6.QtWidgets import QToolTip, QTextBrowser
+from PySide6.QtCore import QEvent, QObject, Qt
+from PySide6.QtWidgets import QTextBrowser
+
+from app.utils.instant_tooltip import InstantTooltipPopup
 
 
 class InstantTooltipController(QObject):
     def __init__(self, widget: QTextBrowser) -> None:
         super().__init__(widget)
         self._widget = widget
-        self._last_text: str | None = None
-        self._tooltip_visible = False
+        self._current_tip_text: str | None = None
+        self._popup = InstantTooltipPopup(widget)
         self._widget.setMouseTracking(True)
+        self._widget.setAttribute(Qt.WA_Hover, True)
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
         if watched is not self._widget:
             return super().eventFilter(watched, event)
 
-        if event.type() == QEvent.MouseMove:
+        if event.type() in (QEvent.MouseMove, QEvent.HoverMove):
             cursor = self._widget.cursorForPosition(event.pos())
             char_format = cursor.charFormat()
             text = char_format.toolTip()
             if text:
-                if text != self._last_text or not self._tooltip_visible:
-                    QToolTip.showText(QCursor.pos(), text, self._widget)
-                    self._tooltip_visible = True
-                    self._last_text = text
-            else:
-                if self._tooltip_visible:
-                    QToolTip.hideText()
-                    self._tooltip_visible = False
-                    self._last_text = None
+                if text != self._current_tip_text:
+                    self._popup.show_text(text, self._widget.mapToGlobal(event.pos()), self._widget)
+                    self._current_tip_text = text
+            elif self._current_tip_text is not None:
+                self._popup.hide_now()
+                self._current_tip_text = None
 
         elif event.type() in (QEvent.Leave, QEvent.HoverLeave):
-            if self._tooltip_visible:
-                QToolTip.hideText()
-                self._tooltip_visible = False
-                self._last_text = None
+            if self._current_tip_text is not None:
+                self._popup.hide_now()
+                self._current_tip_text = None
 
         return super().eventFilter(watched, event)

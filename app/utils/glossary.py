@@ -89,1140 +89,1267 @@ GLOSSARY = {
     },
     "módulo": {
         "tooltip": "Archivo de Python que agrupa código reutilizable.",
-        "definition": (
-            "Un módulo es un archivo .py que contiene funciones, clases y variables. "
-            "Se usa para organizar el código y reutilizarlo con import. "
-            "Ejemplo: import math permite usar math.sqrt(9). "
-            "Error típico: crear un archivo con el mismo nombre que un módulo estándar "
-            "y bloquear la importación correcta."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un módulo es un archivo .py que contiene funciones, clases, variables "
+                "y constantes reutilizables."
+            ),
+            "para_que": (
+                "Organizar el código por responsabilidades, reutilizar lógica y separar "
+                "funcionalidades en piezas independientes."
+            ),
+            "sintaxis": "import math o from mi_modulo import funcion",
+            "ejemplo": "import math permite usar math.sqrt(9).",
+            "matiz": (
+                "Evita nombrar tu archivo igual que módulos estándar para no ocultarlos "
+                "en el import."
+            ),
+            "error_tipico": (
+                "crear un archivo con el mismo nombre que un módulo estándar y bloquear la importación "
+                "correcta."
+            ),
+        },
     },
     "paquete": {
         "tooltip": "Carpeta con módulos y un __init__.py para organizar código.",
-        "definition": (
-            "Un paquete es una carpeta que agrupa módulos relacionados. "
-            "Se usa para estructurar proyectos grandes y jerarquizar imports. "
-            "Ejemplo: from mi_paquete import utilidades. "
-            "Matiz: en Python clásico necesita un __init__.py para ser importable "
-            "como paquete."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un paquete es una carpeta que agrupa módulos relacionados y expone "
+                "una jerarquía de importación."
+            ),
+            "para_que": (
+                "Estructurar proyectos grandes, separar dominios y reutilizar "
+                "funcionalidades en distintos niveles."
+            ),
+            "sintaxis": "from mi_paquete import utilidades",
+            "ejemplo": "from mi_paquete import utilidades.",
+            "matiz": "en Python clásico necesita un __init__.py para ser importable como paquete.",
+        },
     },
     "parámetro": {
         "tooltip": "Nombre definido en la función para recibir valores.",
-        "definition": (
-            "Un parámetro es el nombre dentro de una función que recibirá un valor. "
-            "Se usa para hacer funciones flexibles. "
-            "Ejemplo: def sumar(a, b): return a + b. "
-            "Error típico: confundir parámetro (nombre) con argumento (valor real)."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un parámetro es el nombre dentro de la función que recibirá un valor "
+                "cuando se la invoque."
+            ),
+            "para_que": (
+                "Hacer funciones flexibles que acepten diferentes datos sin duplicar "
+                "código."
+            ),
+            "sintaxis": "def sumar(a, b): ...",
+            "ejemplo": "def sumar(a, b): return a + b.",
+            "matiz": (
+                "Los parámetros pueden tener valores por defecto y tipos anotados para "
+                "mejorar la claridad."
+            ),
+            "error_tipico": "confundir parámetro (nombre) con argumento (valor real).",
+        },
     },
     "argumento": {
         "tooltip": "Valor real que se envía a una función al llamarla.",
-        "definition": (
-            "Un argumento es el valor que pasas cuando llamas a una función. "
-            "Se usa para alimentar los parámetros de la función. "
-            "Ejemplo: sumar(2, 3) usa 2 y 3 como argumentos. "
-            "Matiz: los argumentos pueden ser posicionales o con nombre."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un argumento es el valor concreto que pasas cuando llamas a una "
+                "función."
+            ),
+            "para_que": (
+                "Alimentar los parámetros y ejecutar la función con datos específicos."
+            ),
+            "sintaxis": "sumar(2, 3) o sumar(a=2, b=3)",
+            "ejemplo": "sumar(2, 3) usa 2 y 3 como argumentos.",
+            "matiz": "los argumentos pueden ser posicionales o con nombre.",
+        },
     },
     "return": {
         "tooltip": "Palabra clave que devuelve un valor desde una función.",
-        "definition": (
-            "return finaliza una función y devuelve un valor al lugar donde se llamó. "
-            "Se usa para producir resultados reutilizables. "
-            "Ejemplo: return a + b devuelve la suma. "
-            "Error típico: usar return sin valor pensando que devuelve un string vacío."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "return finaliza la ejecución de una función y envía un valor al lugar "
+                "donde se llamó."
+            ),
+            "para_que": "Producir resultados reutilizables y controlar el flujo.",
+            "sintaxis": "return resultado",
+            "ejemplo": "return a + b devuelve la suma.",
+            "matiz": "Si no se indica valor, la función devuelve None.",
+            "error_tipico": "usar return sin valor pensando que devuelve un string vacío.",
+        },
     },
     "none": {
         "tooltip": "Objeto especial que representa ausencia de valor.",
-        "definition": (
-            "None representa que no hay un valor válido. "
-            "Se usa para indicar ausencia o resultado vacío. "
-            "Ejemplo: resultado = None antes de calcular. "
-            "Matiz: None no es lo mismo que 0, '' o False."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "None representa ausencia de valor y se usa como marcador explícito."
+            ),
+            "para_que": (
+                "Indicar que algo aún no está calculado, no existe o no aplica."
+            ),
+            "sintaxis": "valor is None",
+            "ejemplo": "resultado = None antes de calcular.",
+            "matiz": "None no es lo mismo que 0, '' o False.",
+        },
     },
     "bool": {
         "tooltip": "Tipo de dato lógico con valores True o False.",
-        "definition": (
-            "bool es el tipo lógico con dos valores: True o False. "
-            "Se usa en condiciones y controles de flujo. "
-            "Ejemplo: es_mayor = edad > 18. "
-            "Error típico: comparar con 'True' en vez de evaluar la condición directa."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "bool es el tipo lógico con dos valores posibles: True o False."
+            ),
+            "para_que": (
+                "Evaluar condiciones en if, while y expresiones de control de flujo."
+            ),
+            "sintaxis": "es_mayor = edad > 18",
+            "ejemplo": "es_mayor = edad > 18.",
+            "matiz": (
+                "En Python, bool es un subtipo de int, por eso True equivale a 1 y "
+                "False a 0."
+            ),
+            "error_tipico": "comparar con 'True' en vez de evaluar la condición directa.",
+        },
     },
     "int": {
         "tooltip": "Tipo numérico para enteros.",
-        "definition": (
-            "int representa números enteros sin decimales. "
-            "Se usa para contar, indexar o iterar. "
-            "Ejemplo: cantidad = 42. "
-            "Matiz: dividir con / produce float aunque uses ints."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "int representa números enteros sin decimales y con precisión exacta."
+            ),
+            "para_que": "Contar, indexar, iterar y manejar cantidades discretas.",
+            "sintaxis": "contador = 0",
+            "ejemplo": "cantidad = 42.",
+            "matiz": "dividir con / produce float aunque uses ints.",
+        },
     },
     "float": {
         "tooltip": "Tipo numérico para decimales.",
-        "definition": (
-            "float representa números con decimales. "
-            "Se usa para cálculos con precisión aproximada. "
-            "Ejemplo: precio = 19.99. "
-            "Error típico: comparar floats con == por problemas de precisión."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "float representa números con decimales y precisión aproximada."
+            ),
+            "para_que": (
+                "Realizar cálculos con medidas, porcentajes o resultados no enteros."
+            ),
+            "sintaxis": "precio = 19.99",
+            "ejemplo": "precio = 19.99.",
+            "matiz": (
+                "La representación binaria puede introducir pequeñas diferencias en "
+                "comparaciones exactas."
+            ),
+            "error_tipico": "comparar floats con == por problemas de precisión.",
+        },
     },
     "str": {
         "tooltip": "Tipo de texto (cadena de caracteres).",
-        "definition": (
-            "str es el tipo de dato para texto en Python. "
-            "Se usa para almacenar palabras, frases o datos formateados. "
-            "Ejemplo: nombre = 'Ana'. "
-            "Matiz: los strings son inmutables; no se pueden cambiar en sitio."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "str es el tipo de dato para texto en Python y representa cadenas de "
+                "caracteres Unicode."
+            ),
+            "para_que": (
+                "Guardar palabras, frases, rutas, JSON o datos formateados."
+            ),
+            "sintaxis": "mensaje = 'Hola' o mensaje = \"Hola\"",
+            "ejemplo": "nombre = 'Ana'.",
+            "matiz": "los strings son inmutables; no se pueden cambiar en sitio.",
+        },
     },
     "list": {
         "tooltip": "Colección ordenada y mutable de elementos.",
-        "definition": (
-            "Una lista es una colección ordenada que puede cambiarse. "
-            "Se usa para guardar varios elementos en un solo lugar. "
-            "Ejemplo: numeros = [1, 2, 3]. "
-            "Error típico: compartir la misma lista entre variables sin copiarla."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una lista es una colección ordenada y mutable de elementos."
+            ),
+            "para_que": (
+                "Guardar varios elementos en un solo lugar y modificarlos en tiempo "
+                "de ejecución."
+            ),
+            "sintaxis": "numeros = [1, 2, 3]",
+            "ejemplo": "numeros = [1, 2, 3].",
+            "matiz": (
+                "Las listas pueden contener tipos distintos, pero mezclar tipos puede "
+                "complicar el mantenimiento."
+            ),
+            "error_tipico": "compartir la misma lista entre variables sin copiarla.",
+        },
     },
     "lista": {
         "tooltip": "Colección ordenada y mutable de elementos.",
-        "definition": (
-            "Una lista es una colección ordenada que puede cambiarse. "
-            "Se usa para guardar varios elementos en un solo lugar. "
-            "Ejemplo: numeros = [1, 2, 3]. "
-            "Error típico: modificarla mientras la recorres con un for."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una lista es una colección ordenada y mutable de elementos."
+            ),
+            "para_que": (
+                "Guardar varios elementos en un solo lugar y modificarlos en tiempo "
+                "de ejecución."
+            ),
+            "sintaxis": "numeros = [1, 2, 3]",
+            "ejemplo": "numeros = [1, 2, 3].",
+            "matiz": (
+                "Al modificar una lista mientras la recorres, puedes saltarte elementos."
+            ),
+            "error_tipico": "modificarla mientras la recorres con un for.",
+        },
     },
     "listas": {
         "tooltip": "Colección ordenada y mutable de elementos.",
-        "definition": (
-            "Las listas guardan elementos en orden y se pueden modificar. "
-            "Se usan para agrupar datos relacionados. "
-            "Ejemplo: frutas = ['manzana', 'pera']. "
-            "Matiz: los índices empiezan en 0."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Las listas guardan elementos en orden y permiten modificaciones."
+            ),
+            "para_que": (
+                "Agrupar datos relacionados y mantener un orden útil para indexación."
+            ),
+            "sintaxis": "frutas = ['manzana', 'pera']",
+            "ejemplo": "frutas = ['manzana', 'pera'].",
+            "matiz": "los índices empiezan en 0.",
+        },
     },
     "tuple": {
         "tooltip": "Colección ordenada e inmutable de elementos.",
-        "definition": (
-            "Una tupla es una colección ordenada que no se puede modificar. "
-            "Se usa para agrupar datos fijos. "
-            "Ejemplo: punto = (3, 4). "
-            "Error típico: intentar hacer punto[0] = 5."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una tupla es una colección ordenada e inmutable de elementos."
+            ),
+            "para_que": "Agrupar datos fijos o valores que no deberían cambiar.",
+            "sintaxis": "punto = (3, 4)",
+            "ejemplo": "punto = (3, 4).",
+            "matiz": (
+                "Se usan a menudo para devolver múltiples valores desde una función."
+            ),
+            "error_tipico": "intentar hacer punto[0] = 5.",
+        },
     },
     "tupla": {
         "tooltip": "Colección ordenada e inmutable de elementos.",
-        "definition": (
-            "Una tupla es una colección ordenada que no se puede modificar. "
-            "Se usa para datos que no deberían cambiar. "
-            "Ejemplo: dimensiones = (1920, 1080). "
-            "Matiz: una tupla de un solo elemento lleva coma: (5,)."
-        ),
+        "definition_parts": {
+            "que_es": "Una tupla es una colección ordenada que no se puede modificar",
+            "para_que": "para datos que no deberían cambiar.",
+            "ejemplo": "dimensiones = (1920, 1080).",
+            "matiz": "una tupla de un solo elemento lleva coma: (5,).",
+        },
     },
     "tuplas": {
         "tooltip": "Colección ordenada e inmutable de elementos.",
-        "definition": (
-            "Las tuplas son colecciones ordenadas e inmutables. "
-            "Se usan para registrar datos fijos. "
-            "Ejemplo: colores = ('rojo', 'azul'). "
-            "Error típico: pensar que son listas y tratar de modificar elementos."
-        ),
+        "definition_parts": {
+            "que_es": "Las tuplas son colecciones ordenadas e inmutables",
+            "para_que": "para registrar datos fijos.",
+            "ejemplo": "colores = ('rojo', 'azul').",
+            "error_tipico": "pensar que son listas y tratar de modificar elementos.",
+        },
     },
     "dict": {
         "tooltip": "Colección de pares clave-valor.",
-        "definition": (
-            "Un diccionario guarda pares clave-valor para buscar datos rápido. "
-            "Se usa para mapas, configuraciones o datos estructurados. "
-            "Ejemplo: edades = {'Ana': 20}. "
-            "Matiz: las claves deben ser únicas e inmutables, y las búsquedas son "
-            "rápidas gracias a tablas hash."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un diccionario guarda pares clave-valor para búsquedas rápidas."
+            ),
+            "para_que": (
+                "Representar mapas, configuraciones, catálogos o datos estructurados."
+            ),
+            "sintaxis": "edades = {'Ana': 20}",
+            "ejemplo": "edades = {'Ana': 20}.",
+            "matiz": (
+                "las claves deben ser únicas e inmutables, y las búsquedas son rápidas gracias a tablas "
+                "hash."
+            ),
+        },
     },
     "diccionario": {
         "tooltip": "Colección de pares clave-valor.",
-        "definition": (
-            "Un diccionario relaciona claves con valores. "
-            "Se usa para acceder a información por nombre. "
-            "Ejemplo: colores = {'rojo': '#ff0000'}. "
-            "Error típico: acceder a una clave inexistente y provocar KeyError."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un diccionario relaciona claves con valores y permite acceso directo."
+            ),
+            "para_que": "Acceder a información por nombre, id o identificador.",
+            "sintaxis": "colores = {'rojo': '#ff0000'}",
+            "ejemplo": "colores = {'rojo': '#ff0000'}.",
+            "matiz": (
+                "Las claves pueden ser strings, números o tuplas, pero deben ser "
+                "inmutables."
+            ),
+            "error_tipico": "acceder a una clave inexistente y provocar KeyError.",
+        },
     },
     "diccionarios": {
         "tooltip": "Colección de pares clave-valor.",
-        "definition": (
-            "Los diccionarios organizan datos en pares clave-valor. "
-            "Se usan para búsquedas rápidas por clave. "
-            "Ejemplo: precios = {'pan': 1.2, 'leche': 0.9}. "
-            "Matiz: usa get para evitar errores si no existe la clave."
-        ),
+        "definition_parts": {
+            "que_es": "Los diccionarios organizan datos en pares clave-valor",
+            "para_que": "para búsquedas rápidas por clave.",
+            "ejemplo": "precios = {'pan': 1.2, 'leche': 0.9}.",
+            "matiz": "usa get para evitar errores si no existe la clave.",
+        },
     },
     "set": {
         "tooltip": "Colección de elementos únicos sin orden.",
-        "definition": (
-            "Un set es una colección sin orden y sin elementos repetidos. "
-            "Se usa para eliminar duplicados o hacer operaciones de conjuntos. "
-            "Ejemplo: unicos = {1, 2, 3}. "
-            "Error típico: esperar un orden fijo al iterar."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un set es una colección sin orden y sin elementos repetidos."
+            ),
+            "para_que": (
+                "Eliminar duplicados, comprobar pertenencia y hacer operaciones de "
+                "conjuntos."
+            ),
+            "sintaxis": "unicos = {1, 2, 3} o set([1, 2, 3])",
+            "ejemplo": "unicos = {1, 2, 3}.",
+            "matiz": (
+                "Aunque los sets no tienen orden, desde Python 3.7 suelen iterar en "
+                "orden de inserción, pero no es garantía contractual."
+            ),
+            "error_tipico": "esperar un orden fijo al iterar.",
+        },
     },
     "conjunto": {
         "tooltip": "Colección de elementos únicos sin orden.",
-        "definition": (
-            "Un conjunto guarda valores únicos y no garantiza orden. "
-            "Se usa para comprobar pertenencia rápidamente. "
-            "Ejemplo: vistos = {'ana', 'luis'}. "
-            "Matiz: no puedes indexar un set con [0]."
-        ),
+        "definition_parts": {
+            "que_es": "Un conjunto guarda valores únicos y no garantiza orden",
+            "para_que": "para comprobar pertenencia rápidamente.",
+            "ejemplo": "vistos = {'ana', 'luis'}.",
+            "matiz": "no puedes indexar un set con [0].",
+        },
     },
     "conjuntos": {
         "tooltip": "Colección de elementos únicos sin orden.",
-        "definition": (
-            "Los conjuntos almacenan elementos únicos sin orden. "
-            "Se usan para eliminar duplicados o comparar colecciones. "
-            "Ejemplo: set([1, 1, 2]) produce {1, 2}. "
-            "Error típico: pensar que mantienen el orden de inserción."
-        ),
+        "definition_parts": {
+            "que_es": "Los conjuntos almacenan elementos únicos sin orden",
+            "para_que": "para eliminar duplicados o comparar colecciones.",
+            "ejemplo": "set([1, 1, 2]) produce {1, 2}.",
+            "error_tipico": "pensar que mantienen el orden de inserción.",
+        },
     },
     "mutable": {
         "tooltip": "Se puede modificar después de ser creado.",
-        "definition": (
-            "Un objeto mutable puede cambiar su contenido después de crearse. "
-            "Se usa cuando necesitas actualizar datos en sitio. "
-            "Ejemplo: una lista es mutable, puedes hacer lista.append(4). "
-            "Matiz: mutar un objeto compartido afecta a todas las referencias."
-        ),
+        "definition_parts": {
+            "que_es": "Un objeto mutable puede cambiar su contenido después de crearse",
+            "para_que": "cuando necesitas actualizar datos en sitio.",
+            "ejemplo": "una lista es mutable, puedes hacer lista.append(4).",
+            "matiz": "mutar un objeto compartido afecta a todas las referencias.",
+        },
     },
     "inmutable": {
         "tooltip": "No se puede modificar después de ser creado.",
-        "definition": (
-            "Un objeto inmutable no puede cambiarse; si lo 'modificas' creas otro. "
-            "Se usa para valores fijos o claves de diccionario. "
-            "Ejemplo: strings y tuplas son inmutables. "
-            "Error típico: intentar modificar un string con asignación por índice."
-        ),
+        "definition_parts": {
+            "que_es": "Un objeto inmutable no puede cambiarse; si lo 'modificas' creas otro",
+            "para_que": "para valores fijos o claves de diccionario.",
+            "ejemplo": "strings y tuplas son inmutables.",
+            "error_tipico": "intentar modificar un string con asignación por índice.",
+        },
     },
     "iterador": {
         "tooltip": "Objeto que permite recorrer elementos uno a uno.",
-        "definition": (
-            "Un iterador devuelve elementos de una colección uno a uno. "
-            "Se usa con for o next() para recorrer datos. "
-            "Ejemplo: iter([1, 2]) crea un iterador. "
-            "Matiz: un iterador se agota cuando llegas al final."
-        ),
+        "definition_parts": {
+            "que_es": "Un iterador devuelve elementos de una colección uno a uno",
+            "para_que": "con for o next() para recorrer datos.",
+            "ejemplo": "iter([1, 2]) crea un iterador.",
+            "matiz": "un iterador se agota cuando llegas al final.",
+        },
     },
     "generador": {
         "tooltip": "Función o expresión que produce valores bajo demanda.",
-        "definition": (
-            "Un generador produce valores uno por uno sin guardar todos en memoria. "
-            "Se usa para secuencias grandes o infinitas. "
-            "Ejemplo: (x * 2 for x in range(3)) crea un generador. "
-            "Error típico: intentar indexarlo como si fuera una lista."
-        ),
+        "definition_parts": {
+            "que_es": "Un generador produce valores uno por uno sin guardar todos en memoria",
+            "para_que": "para secuencias grandes o infinitas.",
+            "ejemplo": "(x * 2 for x in range(3)) crea un generador.",
+            "error_tipico": "intentar indexarlo como si fuera una lista.",
+        },
     },
     "excepción": {
         "tooltip": "Evento que interrumpe el flujo normal por un error.",
-        "definition": (
-            "Una excepción es un error que interrumpe el flujo normal del programa. "
-            "Se usa para señalar fallos y tratarlos con try/except. "
-            "Ejemplo: int('a') lanza ValueError. "
-            "Matiz: si no la manejas, el programa se detiene."
-        ),
+        "definition_parts": {
+            "que_es": "Una excepción es un error que interrumpe el flujo normal del programa",
+            "para_que": "para señalar fallos y tratarlos con try/except.",
+            "ejemplo": "int('a') lanza ValueError.",
+            "matiz": "si no la manejas, el programa se detiene.",
+        },
     },
     "try": {
         "tooltip": "Bloque para capturar errores potenciales.",
-        "definition": (
-            "try delimita el código que podría fallar. "
-            "Se usa junto con except para manejar errores. "
-            "Ejemplo: try: abrir_archivo() except FileNotFoundError: ... "
-            "Error típico: poner demasiado código dentro y ocultar bugs."
-        ),
+        "definition_parts": {
+            "que_es": "try delimita el código que podría fallar",
+            "para_que": "junto con except para manejar errores.",
+            "ejemplo": "try: abrir_archivo() except FileNotFoundError: ...",
+            "error_tipico": "poner demasiado código dentro y ocultar bugs.",
+        },
     },
     "except": {
         "tooltip": "Bloque que maneja una excepción específica.",
-        "definition": (
-            "except captura una excepción y ejecuta código alternativo. "
-            "Se usa para manejar errores esperables. "
-            "Ejemplo: except ZeroDivisionError: print('No dividir entre 0'). "
-            "Matiz: evita usar except sin tipo porque oculta errores reales."
-        ),
+        "definition_parts": {
+            "que_es": "except captura una excepción y ejecuta código alternativo",
+            "para_que": "para manejar errores esperables.",
+            "ejemplo": "except ZeroDivisionError: print('No dividir entre 0').",
+            "matiz": "evita usar except sin tipo porque oculta errores reales.",
+        },
     },
     "finally": {
         "tooltip": "Bloque que se ejecuta siempre al finalizar un try.",
-        "definition": (
-            "finally se ejecuta siempre, haya error o no. "
-            "Se usa para liberar recursos. "
-            "Ejemplo: finally: archivo.close(). "
-            "Matiz: no reemplaza el manejo de errores, solo asegura limpieza."
-        ),
+        "definition_parts": {
+            "que_es": "finally se ejecuta siempre, haya error o no",
+            "para_que": "para liberar recursos.",
+            "ejemplo": "finally: archivo.close().",
+            "matiz": "no reemplaza el manejo de errores, solo asegura limpieza.",
+        },
     },
     "with": {
         "tooltip": "Bloque que gestiona recursos con context manager.",
-        "definition": (
-            "with abre un bloque que administra recursos automáticamente. "
-            "Se usa para abrir archivos o conexiones y cerrarlas al final. "
-            "Ejemplo: with open('a.txt') as f: leer = f.read(). "
-            "Error típico: olvidar usar with y dejar recursos abiertos."
-        ),
+        "definition_parts": {
+            "que_es": "with abre un bloque que administra recursos automáticamente",
+            "para_que": "para abrir archivos o conexiones y cerrarlas al final.",
+            "ejemplo": "with open('a.txt') as f: leer = f.read().",
+            "error_tipico": "olvidar usar with y dejar recursos abiertos.",
+        },
     },
     "context manager": {
         "tooltip": "Objeto que controla la entrada y salida de un bloque with.",
-        "definition": (
-            "Un context manager define qué hacer al entrar y salir de un with. "
-            "Se usa para gestionar recursos de forma segura. "
-            "Ejemplo: open() es un context manager para archivos. "
-            "Matiz: implementa __enter__ y __exit__."
-        ),
+        "definition_parts": {
+            "que_es": "Un context manager define qué hacer al entrar y salir de un with",
+            "para_que": "para gestionar recursos de forma segura.",
+            "ejemplo": "open() es un context manager para archivos.",
+            "matiz": "implementa __enter__ y __exit__.",
+        },
     },
     "scope": {
         "tooltip": "Alcance donde una variable es visible y válida.",
-        "definition": (
-            "El scope indica dónde una variable puede ser usada. "
-            "Se usa para entender por qué un nombre existe o no existe en un bloque. "
-            "Ejemplo: una variable creada en una función no existe fuera. "
-            "Error típico: intentar leer una variable local fuera de su función."
-        ),
+        "definition_parts": {
+            "que_es": "El scope indica dónde una variable puede ser usada",
+            "para_que": "para entender por qué un nombre existe o no existe en un bloque.",
+            "ejemplo": "una variable creada en una función no existe fuera.",
+            "error_tipico": "intentar leer una variable local fuera de su función.",
+        },
     },
     "global": {
         "tooltip": "Palabra clave para usar una variable del ámbito global.",
-        "definition": (
-            "global permite modificar una variable definida fuera de una función. "
-            "Se usa con cuidado cuando necesitas cambiar un valor global. "
-            "Ejemplo: global contador dentro de una función. "
-            "Matiz: su abuso hace el código más difícil de mantener."
-        ),
+        "definition_parts": {
+            "que_es": "global permite modificar una variable definida fuera de una función",
+            "para_que": "con cuidado cuando necesitas cambiar un valor global.",
+            "ejemplo": "global contador dentro de una función.",
+            "matiz": "su abuso hace el código más difícil de mantener.",
+        },
     },
     "local": {
         "tooltip": "Variable definida dentro de un bloque o función.",
-        "definition": (
-            "Una variable local existe solo dentro de la función o bloque donde se crea. "
-            "Se usa para mantener datos temporales. "
-            "Ejemplo: dentro de una función, temp = 5. "
-            "Error típico: intentar usarla fuera de su alcance."
-        ),
+        "definition_parts": {
+            "que_es": "Una variable local existe solo dentro de la función o bloque donde se crea",
+            "para_que": "para mantener datos temporales.",
+            "ejemplo": "dentro de una función, temp = 5.",
+            "error_tipico": "intentar usarla fuera de su alcance.",
+        },
     },
     "snake_case": {
         "tooltip": "Convención de nombres con minúsculas y guiones bajos.",
-        "definition": (
-            "snake_case es una forma de nombrar variables con minúsculas y guiones bajos. "
-            "Se usa en Python para nombres de variables y funciones. "
-            "Ejemplo: total_ventas = 10. "
-            "Matiz: ayuda a la legibilidad y sigue PEP 8."
-        ),
+        "definition_parts": {
+            "que_es": "snake_case es una forma de nombrar variables con minúsculas y guiones bajos",
+            "para_que": "en Python para nombres de variables y funciones.",
+            "ejemplo": "total_ventas = 10.",
+            "matiz": "ayuda a la legibilidad y sigue PEP 8.",
+        },
     },
     "pascalcase": {
         "tooltip": "Convención de nombres con cada palabra en mayúscula.",
-        "definition": (
-            "PascalCase escribe cada palabra con inicial en mayúscula. "
-            "Se usa en Python sobre todo para nombres de clases. "
-            "Ejemplo: class UsuarioPremium. "
-            "Error típico: usarlo para variables en lugar de snake_case."
-        ),
+        "definition_parts": {
+            "que_es": "PascalCase escribe cada palabra con inicial en mayúscula",
+            "para_que": "en Python sobre todo para nombres de clases.",
+            "ejemplo": "class UsuarioPremium.",
+            "error_tipico": "usarlo para variables en lugar de snake_case.",
+        },
     },
     "pep8": {
         "tooltip": "Guía de estilo oficial para escribir código Python.",
-        "definition": (
-            "PEP 8 es la guía de estilo oficial para escribir Python legible. "
-            "Se usa para nombrar, espaciar y organizar el código. "
-            "Ejemplo: 4 espacios por indentación. "
-            "Matiz: seguirla facilita trabajar en equipo."
-        ),
+        "definition_parts": {
+            "que_es": "PEP 8 es la guía de estilo oficial para escribir Python legible",
+            "para_que": "para nombrar, espaciar y organizar el código.",
+            "ejemplo": "4 espacios por indentación.",
+            "matiz": "seguirla facilita trabajar en equipo.",
+        },
     },
     "indentación": {
         "tooltip": "Espacios o tabulaciones que delimitan bloques de código.",
-        "definition": (
-            "La indentación en Python define bloques de código. "
-            "Se usa para delimitar if, for, funciones, etc. "
-            "Ejemplo: cuatro espacios antes de una línea dentro de una función. "
-            "Error típico: mezclar tabs y espacios y provocar errores de indentación."
-        ),
+        "definition_parts": {
+            "que_es": "La indentación en Python define bloques de código",
+            "para_que": "para delimitar if, for, funciones, etc.",
+            "ejemplo": "cuatro espacios antes de una línea dentro de una función.",
+            "error_tipico": "mezclar tabs y espacios y provocar errores de indentación.",
+        },
     },
     "f-string": {
         "tooltip": "Cadena con interpolación usando prefijo f.",
-        "definition": (
-            "Una f-string permite insertar variables en un string con { }. "
-            "Se usa para crear textos dinámicos de forma clara. "
-            "Ejemplo: f'Hola {nombre}'. "
-            "Matiz: las expresiones dentro de { } se evalúan al momento."
-        ),
+        "definition_parts": {
+            "que_es": "Una f-string permite insertar variables en un string con { }",
+            "para_que": "para crear textos dinámicos de forma clara.",
+            "ejemplo": "f'Hola {nombre}'.",
+            "matiz": "las expresiones dentro de { } se evalúan al momento.",
+        },
     },
     "slice": {
         "tooltip": "Subsección de una secuencia usando índices y rango.",
-        "definition": (
-            "Un slice extrae una parte de una secuencia usando inicio y fin. "
-            "Se usa con listas, strings o tuplas. "
-            "Ejemplo: texto[0:3] devuelve los primeros 3 caracteres. "
-            "Error típico: olvidar que el índice final no se incluye."
-        ),
+        "definition_parts": {
+            "que_es": "Un slice extrae una parte de una secuencia usando inicio y fin",
+            "para_que": "con listas, strings o tuplas.",
+            "ejemplo": "texto[0:3] devuelve los primeros 3 caracteres.",
+            "error_tipico": "olvidar que el índice final no se incluye.",
+        },
     },
     "comprehension": {
         "tooltip": "Sintaxis compacta para construir colecciones.",
-        "definition": (
-            "Una comprehension crea listas, sets o dicts en una sola línea. "
-            "Se usa para transformar datos de forma concisa. "
-            "Ejemplo: [x * 2 for x in numeros]. "
-            "Matiz: si se vuelve muy larga, pierde legibilidad."
-        ),
+        "definition_parts": {
+            "que_es": "Una comprehension crea listas, sets o dicts en una sola línea",
+            "para_que": "para transformar datos de forma concisa.",
+            "ejemplo": "[x * 2 for x in numeros].",
+            "matiz": "si se vuelve muy larga, pierde legibilidad.",
+        },
     },
     "append": {
         "tooltip": "Método de listas que agrega un elemento al final.",
-        "definition": (
-            "append añade un elemento al final de una lista. "
-            "Se usa para crecer listas paso a paso. "
-            "Ejemplo: lista.append(10). "
-            "Error típico: asignar lista = lista.append(10) y perder la lista."
-        ),
+        "definition_parts": {
+            "que_es": "append añade un elemento al final de una lista",
+            "para_que": "para crecer listas paso a paso.",
+            "ejemplo": "lista.append(10).",
+            "error_tipico": "asignar lista = lista.append(10) y perder la lista.",
+        },
     },
     "extend": {
         "tooltip": "Método de listas que agrega varios elementos.",
-        "definition": (
-            "extend añade varios elementos de otra colección a una lista. "
-            "Se usa para concatenar listas. "
-            "Ejemplo: lista.extend([4, 5]). "
-            "Matiz: extend recibe una colección, append recibiría la lista completa."
-        ),
+        "definition_parts": {
+            "que_es": "extend añade varios elementos de otra colección a una lista",
+            "para_que": "para concatenar listas.",
+            "ejemplo": "lista.extend([4, 5]).",
+            "matiz": "extend recibe una colección, append recibiría la lista completa.",
+        },
     },
     "insert": {
         "tooltip": "Método de listas que agrega en una posición específica.",
-        "definition": (
-            "insert agrega un elemento en una posición específica de la lista. "
-            "Se usa para insertar sin reemplazar. "
-            "Ejemplo: lista.insert(1, 'nuevo'). "
-            "Error típico: usar índices fuera del rango sin entender el resultado."
-        ),
+        "definition_parts": {
+            "que_es": "insert agrega un elemento en una posición específica de la lista",
+            "para_que": "para insertar sin reemplazar.",
+            "ejemplo": "lista.insert(1, 'nuevo').",
+            "error_tipico": "usar índices fuera del rango sin entender el resultado.",
+        },
     },
     "pop": {
         "tooltip": "Método que extrae y devuelve un elemento.",
-        "definition": (
-            "pop elimina y devuelve un elemento de una lista (por defecto el último). "
-            "Se usa para procesar elementos y quitarlos. "
-            "Ejemplo: ultimo = lista.pop(). "
-            "Matiz: si la lista está vacía, lanza IndexError."
-        ),
+        "definition_parts": {
+            "que_es": "pop elimina y devuelve un elemento de una lista (por defecto el último)",
+            "para_que": "para procesar elementos y quitarlos.",
+            "ejemplo": "ultimo = lista.pop().",
+            "matiz": "si la lista está vacía, lanza IndexError.",
+        },
     },
     "remove": {
         "tooltip": "Método que elimina la primera coincidencia.",
-        "definition": (
-            "remove elimina la primera aparición de un valor en una lista. "
-            "Se usa para borrar por valor. "
-            "Ejemplo: lista.remove('a'). "
-            "Error típico: si el valor no existe, lanza ValueError."
-        ),
+        "definition_parts": {
+            "que_es": "remove elimina la primera aparición de un valor en una lista",
+            "para_que": "para borrar por valor.",
+            "ejemplo": "lista.remove('a').",
+            "error_tipico": "si el valor no existe, lanza ValueError.",
+        },
     },
     "sort": {
         "tooltip": "Método que ordena los elementos en su lugar.",
-        "definition": (
-            "sort ordena una lista en el mismo lugar. "
-            "Se usa para ordenar sin crear otra lista. "
-            "Ejemplo: numeros.sort(). "
-            "Matiz: sort no devuelve la lista; devuelve None."
-        ),
+        "definition_parts": {
+            "que_es": "sort ordena una lista en el mismo lugar",
+            "para_que": "para ordenar sin crear otra lista.",
+            "ejemplo": "numeros.sort().",
+            "matiz": "sort no devuelve la lista; devuelve None.",
+        },
     },
     "upper": {
         "tooltip": "Método de strings que convierte a mayúsculas.",
-        "definition": (
-            "upper crea una versión en mayúsculas del string. "
-            "Se usa para normalizar texto. "
-            "Ejemplo: 'hola'.upper() -> 'HOLA'. "
-            "Matiz: no modifica el string original."
-        ),
+        "definition_parts": {
+            "que_es": "upper crea una versión en mayúsculas del string",
+            "para_que": "para normalizar texto.",
+            "ejemplo": "'hola'.upper() -> 'HOLA'.",
+            "matiz": "no modifica el string original.",
+        },
     },
     "lower": {
         "tooltip": "Método de strings que convierte a minúsculas.",
-        "definition": (
-            "lower crea una versión en minúsculas del string. "
-            "Se usa para comparar sin importar el caso. "
-            "Ejemplo: 'Hola'.lower() -> 'hola'. "
-            "Matiz: devuelve un nuevo string, no modifica el original."
-        ),
+        "definition_parts": {
+            "que_es": "lower crea una versión en minúsculas del string",
+            "para_que": "para comparar sin importar el caso.",
+            "ejemplo": "'Hola'.lower() -> 'hola'.",
+            "matiz": "devuelve un nuevo string, no modifica el original.",
+        },
     },
     "strip": {
         "tooltip": "Método que quita espacios al inicio y final.",
-        "definition": (
-            "strip elimina espacios (u otros caracteres) al inicio y final. "
-            "Se usa para limpiar entradas de usuario. "
-            "Ejemplo: '  hola  '.strip() -> 'hola'. "
-            "Matiz: no quita espacios del medio."
-        ),
+        "definition_parts": {
+            "que_es": "strip elimina espacios (u otros caracteres) al inicio y final",
+            "para_que": "para limpiar entradas de usuario.",
+            "ejemplo": "'  hola  '.strip() -> 'hola'.",
+            "matiz": "no quita espacios del medio.",
+        },
     },
     "split": {
         "tooltip": "Método que separa un string en partes.",
-        "definition": (
-            "split divide un string en una lista usando un separador. "
-            "Se usa para procesar texto. "
-            "Ejemplo: 'a,b'.split(',') -> ['a', 'b']. "
-            "Matiz: si no das separador, usa espacios en blanco."
-        ),
+        "definition_parts": {
+            "que_es": "split divide un string en una lista usando un separador",
+            "para_que": "para procesar texto.",
+            "ejemplo": "'a,b'.split(',') -> ['a', 'b'].",
+            "matiz": "si no das separador, usa espacios en blanco.",
+        },
     },
     "join": {
         "tooltip": "Método que une una lista de strings.",
-        "definition": (
-            "join une una colección de strings usando un separador. "
-            "Se usa para construir textos. "
-            "Ejemplo: ','.join(['a', 'b']) -> 'a,b'. "
-            "Error típico: incluir elementos que no son strings."
-        ),
+        "definition_parts": {
+            "que_es": "join une una colección de strings usando un separador",
+            "para_que": "para construir textos.",
+            "ejemplo": "','.join(['a', 'b']) -> 'a,b'.",
+            "error_tipico": "incluir elementos que no son strings.",
+        },
     },
     "replace": {
         "tooltip": "Método que reemplaza subcadenas.",
-        "definition": (
-            "replace sustituye una subcadena por otra. "
-            "Se usa para limpiar o cambiar texto. "
-            "Ejemplo: 'hola'.replace('h', 'H') -> 'Hola'. "
-            "Matiz: reemplaza todas las apariciones por defecto."
-        ),
+        "definition_parts": {
+            "que_es": "replace sustituye una subcadena por otra",
+            "para_que": "para limpiar o cambiar texto.",
+            "ejemplo": "'hola'.replace('h', 'H') -> 'Hola'.",
+            "matiz": "reemplaza todas las apariciones por defecto.",
+        },
     },
     "startswith": {
         "tooltip": "Método que comprueba el prefijo.",
-        "definition": (
-            "startswith verifica si un string comienza con un prefijo. "
-            "Se usa para validar formatos. "
-            "Ejemplo: 'https://'.startswith('http') -> True. "
-            "Matiz: distingue mayúsculas y minúsculas."
-        ),
+        "definition_parts": {
+            "que_es": "startswith verifica si un string comienza con un prefijo",
+            "para_que": "para validar formatos.",
+            "ejemplo": "'https://'.startswith('http') -> True.",
+            "matiz": "distingue mayúsculas y minúsculas.",
+        },
     },
     "endswith": {
         "tooltip": "Método que comprueba el sufijo.",
-        "definition": (
-            "endswith verifica si un string termina con un sufijo. "
-            "Se usa para validar extensiones. "
-            "Ejemplo: 'archivo.txt'.endswith('.txt') -> True. "
-            "Matiz: también distingue mayúsculas y minúsculas."
-        ),
+        "definition_parts": {
+            "que_es": "endswith verifica si un string termina con un sufijo",
+            "para_que": "para validar extensiones.",
+            "ejemplo": "'archivo.txt'.endswith('.txt') -> True.",
+            "matiz": "también distingue mayúsculas y minúsculas.",
+        },
     },
     "get": {
         "tooltip": "Método de dict que devuelve un valor con clave.",
-        "definition": (
-            "get obtiene el valor de una clave en un diccionario. "
-            "Se usa para evitar errores si la clave no existe. "
-            "Ejemplo: datos.get('edad', 0). "
-            "Matiz: puedes dar un valor por defecto."
-        ),
+        "definition_parts": {
+            "que_es": "get obtiene el valor de una clave en un diccionario",
+            "para_que": "para evitar errores si la clave no existe.",
+            "ejemplo": "datos.get('edad', 0).",
+            "matiz": "puedes dar un valor por defecto.",
+        },
     },
     "items": {
         "tooltip": "Método de dict que devuelve pares clave-valor.",
-        "definition": (
-            "items devuelve pares clave-valor como tuplas. "
-            "Se usa para recorrer diccionarios. "
-            "Ejemplo: for k, v in datos.items(): ... "
-            "Matiz: el resultado es una vista, no una lista real."
-        ),
+        "definition_parts": {
+            "que_es": "items devuelve pares clave-valor como tuplas",
+            "para_que": "para recorrer diccionarios.",
+            "ejemplo": "for k, v in datos.items(): ...",
+            "matiz": "el resultado es una vista, no una lista real.",
+        },
     },
     "keys": {
         "tooltip": "Método de dict que devuelve las claves.",
-        "definition": (
-            "keys devuelve todas las claves de un diccionario. "
-            "Se usa para iterar o verificar claves. "
-            "Ejemplo: 'nombre' in datos.keys(). "
-            "Matiz: también es una vista dinámica."
-        ),
+        "definition_parts": {
+            "que_es": "keys devuelve todas las claves de un diccionario",
+            "para_que": "para iterar o verificar claves.",
+            "ejemplo": "'nombre' in datos.keys().",
+            "matiz": "también es una vista dinámica.",
+        },
     },
     "values": {
         "tooltip": "Método de dict que devuelve los valores.",
-        "definition": (
-            "values devuelve los valores de un diccionario. "
-            "Se usa para recorrer solo los datos. "
-            "Ejemplo: for v in datos.values(): ... "
-            "Matiz: puede contener valores duplicados."
-        ),
+        "definition_parts": {
+            "que_es": "values devuelve los valores de un diccionario",
+            "para_que": "para recorrer solo los datos.",
+            "ejemplo": "for v in datos.values(): ...",
+            "matiz": "puede contener valores duplicados.",
+        },
     },
     "update": {
         "tooltip": "Método de dict que fusiona valores.",
-        "definition": (
-            "update agrega o reemplaza claves en un diccionario. "
-            "Se usa para combinar configuraciones. "
-            "Ejemplo: datos.update({'edad': 30}). "
-            "Matiz: sobrescribe valores existentes con la misma clave."
-        ),
+        "definition_parts": {
+            "que_es": "update agrega o reemplaza claves en un diccionario",
+            "para_que": "para combinar configuraciones.",
+            "ejemplo": "datos.update({'edad': 30}).",
+            "matiz": "sobrescribe valores existentes con la misma clave.",
+        },
     },
     "sql": {
         "tooltip": "Lenguaje para consultar y manipular bases de datos relacionales.",
-        "definition": (
-            "SQL es un lenguaje para crear y consultar bases de datos relacionales. "
-            "Se usa para seleccionar, insertar o actualizar datos. "
-            "Ejemplo: SELECT * FROM usuarios. "
-            "Matiz: usar parámetros evita inyección SQL."
-        ),
+        "definition_parts": {
+            "que_es": "SQL es un lenguaje para crear y consultar bases de datos relacionales",
+            "para_que": "para seleccionar, insertar o actualizar datos.",
+            "ejemplo": "SELECT * FROM usuarios.",
+            "matiz": "usar parámetros evita inyección SQL.",
+        },
     },
     "cursor": {
         "tooltip": "Objeto que permite recorrer resultados de una consulta.",
-        "definition": (
-            "Un cursor recorre los resultados de una consulta a la base de datos. "
-            "Se usa para leer filas una por una o en bloques. "
-            "Ejemplo: cursor.fetchone(). "
-            "Error típico: olvidar cerrar el cursor y dejar recursos abiertos."
-        ),
+        "definition_parts": {
+            "que_es": "Un cursor recorre los resultados de una consulta a la base de datos",
+            "para_que": "para leer filas una por una o en bloques.",
+            "ejemplo": "cursor.fetchone().",
+            "error_tipico": "olvidar cerrar el cursor y dejar recursos abiertos.",
+        },
     },
     "transacción": {
         "tooltip": "Grupo de operaciones que se confirman o revierten juntas.",
-        "definition": (
-            "Una transacción agrupa varias operaciones en una sola unidad. "
-            "Se usa para asegurar consistencia en la base de datos. "
-            "Ejemplo: transferir saldo entre dos cuentas. "
-            "Matiz: si algo falla, se revierte con rollback."
-        ),
+        "definition_parts": {
+            "que_es": "Una transacción agrupa varias operaciones en una sola unidad",
+            "para_que": "para asegurar consistencia en la base de datos.",
+            "ejemplo": "transferir saldo entre dos cuentas.",
+            "matiz": "si algo falla, se revierte con rollback.",
+        },
     },
     "commit": {
         "tooltip": "Acción que confirma los cambios pendientes.",
-        "definition": (
-            "commit confirma de forma permanente los cambios en una transacción. "
-            "Se usa cuando todo salió bien. "
-            "Ejemplo: conexion.commit(). "
-            "Error típico: olvidar commit y perder los cambios."
-        ),
+        "definition_parts": {
+            "que_es": "commit confirma de forma permanente los cambios en una transacción",
+            "para_que": "cuando todo salió bien.",
+            "ejemplo": "conexion.commit().",
+            "error_tipico": "olvidar commit y perder los cambios.",
+        },
     },
     "rollback": {
         "tooltip": "Acción que revierte los cambios pendientes.",
-        "definition": (
-            "rollback revierte los cambios no confirmados en una transacción. "
-            "Se usa cuando ocurre un error. "
-            "Ejemplo: conexion.rollback(). "
-            "Matiz: solo revierte cambios desde el último commit."
-        ),
+        "definition_parts": {
+            "que_es": "rollback revierte los cambios no confirmados en una transacción",
+            "para_que": "cuando ocurre un error.",
+            "ejemplo": "conexion.rollback().",
+            "matiz": "solo revierte cambios desde el último commit.",
+        },
     },
     "orm": {
         "tooltip": "Técnica que mapea clases de Python a tablas.",
-        "definition": (
-            "Un ORM mapea clases de Python a tablas de una base de datos. "
-            "Se usa para trabajar con datos como objetos. "
-            "Ejemplo: Usuario(nombre='Ana') se guarda en la tabla usuarios. "
-            "Matiz: sigue habiendo SQL por debajo; hay que entenderlo."
-        ),
+        "definition_parts": {
+            "que_es": "Un ORM mapea clases de Python a tablas de una base de datos",
+            "para_que": "para trabajar con datos como objetos.",
+            "ejemplo": "Usuario(nombre='Ana') se guarda en la tabla usuarios.",
+            "matiz": "sigue habiendo SQL por debajo; hay que entenderlo.",
+        },
     },
     "engine": {
         "tooltip": "Componente que gestiona la conexión a la base de datos.",
-        "definition": (
-            "El engine representa la conexión y configuración de acceso a la base. "
-            "Se usa para crear sesiones o ejecutar consultas. "
-            "Ejemplo: engine = create_engine(url). "
-            "Matiz: reutilizar el engine evita abrir conexiones innecesarias."
-        ),
+        "definition_parts": {
+            "que_es": "El engine representa la conexión y configuración de acceso a la base",
+            "para_que": "para crear sesiones o ejecutar consultas.",
+            "ejemplo": "engine = create_engine(url).",
+            "matiz": "reutilizar el engine evita abrir conexiones innecesarias.",
+        },
     },
     "session": {
         "tooltip": "Unidad de trabajo que gestiona objetos y transacciones.",
-        "definition": (
-            "Una sesión agrupa operaciones y controla el ciclo de vida de objetos ORM. "
-            "Se usa para añadir, actualizar o borrar registros. "
-            "Ejemplo: session.add(usuario); session.commit(). "
-            "Error típico: olvidar cerrar la sesión y mantener conexiones abiertas."
-        ),
+        "definition_parts": {
+            "que_es": "Una sesión agrupa operaciones y controla el ciclo de vida de objetos ORM",
+            "para_que": "para añadir, actualizar o borrar registros.",
+            "ejemplo": "session.add(usuario); session.commit().",
+            "error_tipico": "olvidar cerrar la sesión y mantener conexiones abiertas.",
+        },
     },
     "pool": {
         "tooltip": "Conjunto de conexiones reutilizables.",
-        "definition": (
-            "Un pool mantiene conexiones abiertas para reutilizarlas. "
-            "Se usa para mejorar rendimiento en bases de datos. "
-            "Ejemplo: el pool entrega una conexión disponible al hacer una consulta. "
-            "Matiz: si el pool se agota, las consultas esperan."
-        ),
+        "definition_parts": {
+            "que_es": "Un pool mantiene conexiones abiertas para reutilizarlas",
+            "para_que": "para mejorar rendimiento en bases de datos.",
+            "ejemplo": "el pool entrega una conexión disponible al hacer una consulta.",
+            "matiz": "si el pool se agota, las consultas esperan.",
+        },
     },
     "dsn": {
         "tooltip": "Cadena que describe cómo conectarse a la base de datos.",
-        "definition": (
-            "DSN es un texto con los datos necesarios para conectarse a una base. "
-            "Se usa para indicar host, usuario, base y opciones. "
-            "Ejemplo: postgres://user:pass@localhost/db. "
-            "Error típico: exponer el DSN en logs públicos."
-        ),
+        "definition_parts": {
+            "que_es": "DSN es un texto con los datos necesarios para conectarse a una base",
+            "para_que": "para indicar host, usuario, base y opciones.",
+            "ejemplo": "postgres://user:pass@localhost/db.",
+            "error_tipico": "exponer el DSN en logs públicos.",
+        },
     },
     "sql injection": {
         "tooltip": "Ataque que manipula SQL con datos sin parametrizar.",
-        "definition": (
-            "SQL injection ocurre cuando datos sin filtrar alteran una consulta. "
-            "Se usa como ejemplo de qué evitar. "
-            "Ejemplo: concatenar texto de usuario en una query. "
-            "Matiz: usa parámetros para evitar este riesgo."
-        ),
+        "definition_parts": {
+            "que_es": "SQL injection ocurre cuando datos sin filtrar alteran una consulta",
+            "para_que": "como ejemplo de qué evitar.",
+            "ejemplo": "concatenar texto de usuario en una query.",
+            "matiz": "usa parámetros para evitar este riesgo.",
+        },
     },
     "señal": {
         "tooltip": "Notificación emitida cuando ocurre un evento en una GUI.",
-        "definition": (
-            "Una señal es un aviso que se emite cuando sucede algo en la interfaz. "
-            "Se usa para comunicar eventos a otros componentes. "
-            "Ejemplo: button.clicked es una señal. "
-            "Matiz: una señal no hace nada si nadie la conecta a un slot."
-        ),
+        "definition_parts": {
+            "que_es": "Una señal es un aviso que se emite cuando sucede algo en la interfaz",
+            "para_que": "para comunicar eventos a otros componentes.",
+            "ejemplo": "button.clicked es una señal.",
+            "matiz": "una señal no hace nada si nadie la conecta a un slot.",
+        },
     },
     "señales": {
         "tooltip": "Notificaciones emitidas cuando ocurren eventos en una GUI.",
-        "definition": (
-            "Las señales notifican eventos de la interfaz. "
-            "Se usan para conectar acciones con respuestas. "
-            "Ejemplo: slider.valueChanged se emite al mover el slider. "
-            "Matiz: puedes conectar varias funciones a una misma señal."
-        ),
+        "definition_parts": {
+            "que_es": "Las señales notifican eventos de la interfaz",
+            "para_que": "para conectar acciones con respuestas.",
+            "ejemplo": "slider.valueChanged se emite al mover el slider.",
+            "matiz": "puedes conectar varias funciones a una misma señal.",
+        },
     },
     "slot": {
         "tooltip": "Función que responde a una señal en Qt/PySide.",
-        "definition": (
-            "Un slot es la función que se ejecuta cuando llega una señal. "
-            "Se usa para definir la reacción a eventos. "
-            "Ejemplo: button.clicked.connect(mi_funcion). "
-            "Matiz: el slot debe aceptar los argumentos que emite la señal."
-        ),
+        "definition_parts": {
+            "que_es": "Un slot es la función que se ejecuta cuando llega una señal",
+            "para_que": "para definir la reacción a eventos.",
+            "ejemplo": "button.clicked.connect(mi_funcion).",
+            "matiz": "el slot debe aceptar los argumentos que emite la señal.",
+        },
     },
     "slots": {
         "tooltip": "Funciones que responden a señales en Qt/PySide.",
-        "definition": (
-            "Los slots son funciones que reaccionan a señales. "
-            "Se usan para organizar lógica de interfaz. "
-            "Ejemplo: conectar varias señales a un mismo slot. "
-            "Matiz: ayudan a separar la UI de la lógica."
-        ),
+        "definition_parts": {
+            "que_es": "Los slots son funciones que reaccionan a señales",
+            "para_que": "para organizar lógica de interfaz.",
+            "ejemplo": "conectar varias señales a un mismo slot.",
+            "matiz": "ayudan a separar la UI de la lógica.",
+        },
     },
     "widget": {
         "tooltip": "Componente visual básico de una interfaz gráfica.",
-        "definition": (
-            "Un widget es un elemento visual como botones, inputs o etiquetas. "
-            "Se usa para construir la interfaz. "
-            "Ejemplo: QLabel muestra texto. "
-            "Matiz: todos los widgets tienen un padre para el layout."
-        ),
+        "definition_parts": {
+            "que_es": "Un widget es un elemento visual como botones, inputs o etiquetas",
+            "para_que": "para construir la interfaz.",
+            "ejemplo": "QLabel muestra texto.",
+            "matiz": "todos los widgets tienen un padre para el layout.",
+        },
     },
     "widgets": {
         "tooltip": "Componentes visuales básicos de una interfaz gráfica.",
-        "definition": (
-            "Los widgets son piezas visuales de la interfaz. "
-            "Se usan para construir ventanas completas. "
-            "Ejemplo: QPushButton es un widget de botón. "
-            "Matiz: su tamaño puede gestionarse con layouts."
-        ),
+        "definition_parts": {
+            "que_es": "Los widgets son piezas visuales de la interfaz",
+            "para_que": "para construir ventanas completas.",
+            "ejemplo": "QPushButton es un widget de botón.",
+            "matiz": "su tamaño puede gestionarse con layouts.",
+        },
     },
     "layout": {
         "tooltip": "Distribuidor que organiza widgets en una interfaz.",
-        "definition": (
-            "Un layout organiza widgets en filas, columnas o rejillas. "
-            "Se usa para que la interfaz se adapte al tamaño. "
-            "Ejemplo: QVBoxLayout apila elementos en vertical. "
-            "Error típico: poner widgets sin layout y que no redimensionen bien."
-        ),
+        "definition_parts": {
+            "que_es": "Un layout organiza widgets en filas, columnas o rejillas",
+            "para_que": "para que la interfaz se adapte al tamaño.",
+            "ejemplo": "QVBoxLayout apila elementos en vertical.",
+            "error_tipico": "poner widgets sin layout y que no redimensionen bien.",
+        },
     },
     "layouts": {
         "tooltip": "Distribuidores que organizan widgets en una interfaz.",
-        "definition": (
-            "Los layouts distribuyen widgets automáticamente. "
-            "Se usan para mantener orden y responsividad. "
-            "Ejemplo: combinar QHBoxLayout y QVBoxLayout. "
-            "Matiz: un widget solo puede pertenecer a un layout."
-        ),
+        "definition_parts": {
+            "que_es": "Los layouts distribuyen widgets automáticamente",
+            "para_que": "para mantener orden y responsividad.",
+            "ejemplo": "combinar QHBoxLayout y QVBoxLayout.",
+            "matiz": "un widget solo puede pertenecer a un layout.",
+        },
     },
     "event loop": {
         "tooltip": "Bucle que procesa eventos y mantiene viva la interfaz.",
-        "definition": (
-            "El event loop es el ciclo que recibe eventos y los distribuye. "
-            "Se usa para mantener la app reactiva. "
-            "Ejemplo: app.exec() inicia el bucle. "
-            "Matiz: bloquear el event loop congela la interfaz."
-        ),
+        "definition_parts": {
+            "que_es": "El event loop es el ciclo que recibe eventos y los distribuye",
+            "para_que": "para mantener la app reactiva.",
+            "ejemplo": "app.exec() inicia el bucle.",
+            "matiz": "bloquear el event loop congela la interfaz.",
+        },
     },
     "bucle de eventos": {
         "tooltip": "Bucle que procesa eventos y mantiene viva la interfaz.",
-        "definition": (
-            "El bucle de eventos procesa clics, teclas y actualizaciones. "
-            "Se usa para que la GUI responda. "
-            "Ejemplo: eventos de mouse llegan al bucle. "
-            "Error típico: usar tareas largas sin hilos y congelar la UI."
-        ),
+        "definition_parts": {
+            "que_es": "El bucle de eventos procesa clics, teclas y actualizaciones",
+            "para_que": "para que la GUI responda.",
+            "ejemplo": "eventos de mouse llegan al bucle.",
+            "error_tipico": "usar tareas largas sin hilos y congelar la UI.",
+        },
     },
     "qthread": {
         "tooltip": "Clase de Qt para ejecutar tareas en un hilo separado.",
-        "definition": (
-            "QThread permite ejecutar trabajo pesado sin bloquear la interfaz. "
-            "Se usa para tareas largas o de fondo. "
-            "Ejemplo: mover cálculo pesado a un QThread. "
-            "Matiz: nunca actualices la UI desde el hilo secundario."
-        ),
+        "definition_parts": {
+            "que_es": "QThread permite ejecutar trabajo pesado sin bloquear la interfaz",
+            "para_que": "para tareas largas o de fondo.",
+            "ejemplo": "mover cálculo pesado a un QThread.",
+            "matiz": "nunca actualices la UI desde el hilo secundario.",
+        },
     },
     "model/view": {
         "tooltip": "Patrón que separa datos (modelo) y presentación (vista).",
-        "definition": (
-            "Model/View separa los datos de cómo se muestran. "
-            "Se usa para interfaces con listas y tablas. "
-            "Ejemplo: QListView con un modelo de datos. "
-            "Matiz: el modelo notifica cambios a la vista."
-        ),
+        "definition_parts": {
+            "que_es": "Model/View separa los datos de cómo se muestran",
+            "para_que": "para interfaces con listas y tablas.",
+            "ejemplo": "QListView con un modelo de datos.",
+            "matiz": "el modelo notifica cambios a la vista.",
+        },
     },
     "modelo/vista": {
         "tooltip": "Patrón que separa datos (modelo) y presentación (vista).",
-        "definition": (
-            "El patrón modelo/vista separa la lógica de datos de la UI. "
-            "Se usa para mantener el código organizado. "
-            "Ejemplo: QTableView con un modelo. "
-            "Matiz: actualizar el modelo actualiza la vista automáticamente."
-        ),
+        "definition_parts": {
+            "que_es": "El patrón modelo/vista separa la lógica de datos de la UI",
+            "para_que": "para mantener el código organizado.",
+            "ejemplo": "QTableView con un modelo.",
+            "matiz": "actualizar el modelo actualiza la vista automáticamente.",
+        },
     },
     "dataframe": {
         "tooltip": "Tabla de datos bidimensional con filas y columnas en Pandas.",
-        "definition": (
-            "Un DataFrame es una tabla con filas y columnas en Pandas. "
-            "Se usa para análisis y limpieza de datos. "
-            "Ejemplo: df = pd.DataFrame({'a': [1, 2]}). "
-            "Matiz: las columnas pueden tener tipos distintos."
-        ),
+        "definition_parts": {
+            "que_es": "Un DataFrame es una tabla con filas y columnas en Pandas",
+            "para_que": "para análisis y limpieza de datos.",
+            "ejemplo": "df = pd.DataFrame({'a': [1, 2]}).",
+            "matiz": "las columnas pueden tener tipos distintos.",
+        },
     },
     "dataframes": {
         "tooltip": "Tablas de datos bidimensionales con filas y columnas en Pandas.",
-        "definition": (
-            "Los DataFrames son tablas con filas y columnas. "
-            "Se usan para análisis de datos. "
-            "Ejemplo: df[['col1', 'col2']] selecciona columnas. "
-            "Matiz: trabajar con copias vs vistas puede afectar cambios."
-        ),
+        "definition_parts": {
+            "que_es": "Los DataFrames son tablas con filas y columnas",
+            "para_que": "para análisis de datos.",
+            "ejemplo": "df[['col1', 'col2']] selecciona columnas.",
+            "matiz": "trabajar con copias vs vistas puede afectar cambios.",
+        },
     },
     "serie": {
         "tooltip": "Estructura unidimensional de datos en Pandas.",
-        "definition": (
-            "Una Series es una columna con índices en Pandas. "
-            "Se usa para trabajar con una sola dimensión. "
-            "Ejemplo: s = df['columna']. "
-            "Matiz: el índice es parte importante de la Series."
-        ),
+        "definition_parts": {
+            "que_es": "Una Series es una columna con índices en Pandas",
+            "para_que": "para trabajar con una sola dimensión.",
+            "ejemplo": "s = df['columna'].",
+            "matiz": "el índice es parte importante de la Series.",
+        },
     },
     "series": {
         "tooltip": "Estructuras unidimensionales de datos en Pandas.",
-        "definition": (
-            "Las Series son estructuras unidimensionales con índice. "
-            "Se usan para columnas o datos sueltos. "
-            "Ejemplo: pd.Series([1, 2, 3]). "
-            "Matiz: operaciones con Series alinean por índice."
-        ),
+        "definition_parts": {
+            "que_es": "Las Series son estructuras unidimensionales con índice",
+            "para_que": "para columnas o datos sueltos.",
+            "ejemplo": "pd.Series([1, 2, 3]).",
+            "matiz": "operaciones con Series alinean por índice.",
+        },
     },
     "groupby": {
         "tooltip": "Operación que agrupa filas para aplicar cálculos por grupo.",
-        "definition": (
-            "groupby agrupa filas para calcular agregados por grupo. "
-            "Se usa para resúmenes y estadísticas. "
-            "Ejemplo: df.groupby('categoria').mean(). "
-            "Matiz: tras agrupar, necesitas una agregación."
-        ),
+        "definition_parts": {
+            "que_es": "groupby agrupa filas para calcular agregados por grupo",
+            "para_que": "para resúmenes y estadísticas.",
+            "ejemplo": "df.groupby('categoria').mean().",
+            "matiz": "tras agrupar, necesitas una agregación.",
+        },
     },
     "merge": {
         "tooltip": "Operación para combinar DataFrames por claves comunes.",
-        "definition": (
-            "merge combina DataFrames usando columnas comunes. "
-            "Se usa para unir datasets relacionados. "
-            "Ejemplo: df1.merge(df2, on='id'). "
-            "Matiz: el tipo de join cambia qué filas aparecen."
-        ),
+        "definition_parts": {
+            "que_es": "merge combina DataFrames usando columnas comunes",
+            "para_que": "para unir datasets relacionados.",
+            "ejemplo": "df1.merge(df2, on='id').",
+            "matiz": "el tipo de join cambia qué filas aparecen.",
+        },
     },
     "loc": {
         "tooltip": "Acceso por etiquetas de filas/columnas en Pandas.",
-        "definition": (
-            "loc selecciona datos usando etiquetas de filas/columnas. "
-            "Se usa cuando el índice tiene nombres. "
-            "Ejemplo: df.loc[0, 'col']. "
-            "Matiz: incluye el último índice en rangos por etiqueta."
-        ),
+        "definition_parts": {
+            "que_es": "loc selecciona datos usando etiquetas de filas/columnas",
+            "para_que": "cuando el índice tiene nombres.",
+            "ejemplo": "df.loc[0, 'col'].",
+            "matiz": "incluye el último índice en rangos por etiqueta.",
+        },
     },
     "iloc": {
         "tooltip": "Acceso por posiciones numéricas en Pandas.",
-        "definition": (
-            "iloc selecciona datos por posición numérica. "
-            "Se usa cuando quieres índices por posición. "
-            "Ejemplo: df.iloc[0, 1]. "
-            "Matiz: los rangos son exclusivos en el final, como en slicing."
-        ),
+        "definition_parts": {
+            "que_es": "iloc selecciona datos por posición numérica",
+            "para_que": "cuando quieres índices por posición.",
+            "ejemplo": "df.iloc[0, 1].",
+            "matiz": "los rangos son exclusivos en el final, como en slicing.",
+        },
     },
     "nan": {
         "tooltip": "Valor especial que representa datos faltantes.",
-        "definition": (
-            "NaN representa valores faltantes en datos numéricos. "
-            "Se usa para indicar ausencia en Pandas o NumPy. "
-            "Ejemplo: pd.Series([1, None]). "
-            "Matiz: NaN no es igual a sí mismo (NaN != NaN)."
-        ),
+        "definition_parts": {
+            "que_es": "NaN representa valores faltantes en datos numéricos",
+            "para_que": "para indicar ausencia en Pandas o NumPy.",
+            "ejemplo": "pd.Series([1, None]).",
+            "matiz": "NaN no es igual a sí mismo (NaN != NaN).",
+        },
     },
     "dtype": {
         "tooltip": "Tipo de dato almacenado en un array o columna.",
-        "definition": (
-            "dtype indica el tipo de datos de una columna o array. "
-            "Se usa para entender cómo se guardan los valores. "
-            "Ejemplo: df['col'].dtype. "
-            "Matiz: cambiar dtype puede afectar memoria y precisión."
-        ),
+        "definition_parts": {
+            "que_es": "dtype indica el tipo de datos de una columna o array",
+            "para_que": "para entender cómo se guardan los valores.",
+            "ejemplo": "df['col'].dtype.",
+            "matiz": "cambiar dtype puede afectar memoria y precisión.",
+        },
     },
     "pipeline": {
         "tooltip": "Secuencia encadenada de pasos de procesamiento y modelo.",
-        "definition": (
-            "Un pipeline encadena pasos de preprocesado y modelo. "
-            "Se usa para evitar fugas y mantener flujo reproducible. "
-            "Ejemplo: Pipeline([('scaler', ...), ('model', ...)]). "
-            "Matiz: cada paso debe implementar fit/transform o fit/predict."
-        ),
+        "definition_parts": {
+            "que_es": "Un pipeline encadena pasos de preprocesado y modelo",
+            "para_que": "para evitar fugas y mantener flujo reproducible.",
+            "ejemplo": "Pipeline([('scaler', ...), ('model', ...)]).",
+            "matiz": "cada paso debe implementar fit/transform o fit/predict.",
+        },
     },
     "leakage": {
         "tooltip": "Uso de información del futuro en entrenamiento, sesga resultados.",
-        "definition": (
-            "Leakage ocurre cuando el modelo ve información que no tendrá en producción. "
-            "Se usa como advertencia en ML. "
-            "Ejemplo: usar la variable objetivo para normalizar datos. "
-            "Matiz: produce métricas falsas y modelos poco fiables."
-        ),
+        "definition_parts": {
+            "que_es": "Leakage ocurre cuando el modelo ve información que no tendrá en producción",
+            "para_que": "como advertencia en ML.",
+            "ejemplo": "usar la variable objetivo para normalizar datos.",
+            "matiz": "produce métricas falsas y modelos poco fiables.",
+        },
     },
     "cross-validation": {
         "tooltip": "Técnica que valida con varias particiones del dataset.",
-        "definition": (
-            "La cross-validation divide los datos en varias particiones para evaluar. "
-            "Se usa para medir rendimiento real del modelo. "
-            "Ejemplo: K-Fold con 5 particiones. "
-            "Matiz: hay que mantener el orden temporal si es series de tiempo."
-        ),
+        "definition_parts": {
+            "que_es": "La cross-validation divide los datos en varias particiones para evaluar",
+            "para_que": "para medir rendimiento real del modelo.",
+            "ejemplo": "K-Fold con 5 particiones.",
+            "matiz": "hay que mantener el orden temporal si es series de tiempo.",
+        },
     },
     "validación cruzada": {
         "tooltip": "Técnica que valida con varias particiones del dataset.",
-        "definition": (
-            "La validación cruzada evalúa el modelo en varias particiones. "
-            "Se usa para reducir el sesgo de una sola división. "
-            "Ejemplo: cross_val_score en sklearn. "
-            "Matiz: aumenta el costo de cómputo."
-        ),
+        "definition_parts": {
+            "que_es": "La validación cruzada evalúa el modelo en varias particiones",
+            "para_que": "para reducir el sesgo de una sola división.",
+            "ejemplo": "cross_val_score en sklearn.",
+            "matiz": "aumenta el costo de cómputo.",
+        },
     },
     "estimator": {
         "tooltip": "Objeto en sklearn que aprende parámetros desde datos.",
-        "definition": (
-            "Un estimator es un modelo o transformador en sklearn. "
-            "Se usa para ajustar parámetros con fit. "
-            "Ejemplo: LinearRegression() es un estimator. "
-            "Matiz: algunos estimators también transforman datos."
-        ),
+        "definition_parts": {
+            "que_es": "Un estimator es un modelo o transformador en sklearn",
+            "para_que": "para ajustar parámetros con fit.",
+            "ejemplo": "LinearRegression() es un estimator.",
+            "matiz": "algunos estimators también transforman datos.",
+        },
     },
     "fit": {
         "tooltip": "Proceso de ajustar un modelo a los datos de entrenamiento.",
-        "definition": (
-            "fit entrena un modelo con datos de entrenamiento. "
-            "Se usa para aprender parámetros. "
-            "Ejemplo: model.fit(X_train, y_train). "
-            "Matiz: no uses datos de test en fit."
-        ),
+        "definition_parts": {
+            "que_es": "fit entrena un modelo con datos de entrenamiento",
+            "para_que": "para aprender parámetros.",
+            "ejemplo": "model.fit(X_train, y_train).",
+            "matiz": "no uses datos de test en fit.",
+        },
     },
     "transform": {
         "tooltip": "Aplicación de una transformación a los datos.",
-        "definition": (
-            "transform aplica una transformación ya aprendida a nuevos datos. "
-            "Se usa después de fit en escaladores o codificadores. "
-            "Ejemplo: scaler.transform(X). "
-            "Matiz: fit_transform combina ambos pasos en entrenamiento."
-        ),
+        "definition_parts": {
+            "que_es": "transform aplica una transformación ya aprendida a nuevos datos",
+            "para_que": "después de fit en escaladores o codificadores.",
+            "ejemplo": "scaler.transform(X).",
+            "matiz": "fit_transform combina ambos pasos en entrenamiento.",
+        },
     },
     "predict": {
         "tooltip": "Generación de salidas de un modelo entrenado.",
-        "definition": (
-            "predict genera predicciones usando un modelo entrenado. "
-            "Se usa para obtener resultados en datos nuevos. "
-            "Ejemplo: model.predict(X_test). "
-            "Matiz: la salida depende del tipo de modelo (clase o valor)."
-        ),
+        "definition_parts": {
+            "que_es": "predict genera predicciones usando un modelo entrenado",
+            "para_que": "para obtener resultados en datos nuevos.",
+            "ejemplo": "model.predict(X_test).",
+            "matiz": "la salida depende del tipo de modelo (clase o valor).",
+        },
     },
     "tensor": {
         "tooltip": "Estructura n-dimensional para datos numéricos en DL.",
-        "definition": (
-            "Un tensor es una estructura n-dimensional para datos. "
-            "Se usa en deep learning para representar matrices y más. "
-            "Ejemplo: un batch de imágenes es un tensor 4D. "
-            "Matiz: la forma (shape) es clave para operar con tensores."
-        ),
+        "definition_parts": {
+            "que_es": "Un tensor es una estructura n-dimensional para datos",
+            "para_que": "en deep learning para representar matrices y más.",
+            "ejemplo": "un batch de imágenes es un tensor 4D.",
+            "matiz": "la forma (shape) es clave para operar con tensores.",
+        },
     },
     "tensores": {
         "tooltip": "Estructuras n-dimensionales para datos numéricos en DL.",
-        "definition": (
-            "Los tensores son estructuras n-dimensionales de datos. "
-            "Se usan en redes neuronales para inputs y pesos. "
-            "Ejemplo: pesos de una capa son un tensor. "
-            "Matiz: las operaciones requieren dimensiones compatibles."
-        ),
+        "definition_parts": {
+            "que_es": "Los tensores son estructuras n-dimensionales de datos",
+            "para_que": "en redes neuronales para inputs y pesos.",
+            "ejemplo": "pesos de una capa son un tensor.",
+            "matiz": "las operaciones requieren dimensiones compatibles.",
+        },
     },
     "autograd": {
         "tooltip": "Sistema de cálculo automático de gradientes.",
-        "definition": (
-            "Autograd calcula gradientes automáticamente. "
-            "Se usa para entrenar redes neuronales con backpropagation. "
-            "Ejemplo: en PyTorch, los tensores con requires_grad. "
-            "Matiz: hay que limpiar gradientes entre pasos."
-        ),
+        "definition_parts": {
+            "que_es": "Autograd calcula gradientes automáticamente",
+            "para_que": "para entrenar redes neuronales con backpropagation.",
+            "ejemplo": "en PyTorch, los tensores con requires_grad.",
+            "matiz": "hay que limpiar gradientes entre pasos.",
+        },
     },
     "optimizer": {
         "tooltip": "Algoritmo que actualiza pesos para minimizar la pérdida.",
-        "definition": (
-            "Un optimizer ajusta los pesos para minimizar la función de pérdida. "
-            "Se usa durante el entrenamiento. "
-            "Ejemplo: Adam o SGD. "
-            "Matiz: el learning rate influye mucho en el resultado."
-        ),
+        "definition_parts": {
+            "que_es": "Un optimizer ajusta los pesos para minimizar la función de pérdida",
+            "para_que": "durante el entrenamiento.",
+            "ejemplo": "Adam o SGD.",
+            "matiz": "el learning rate influye mucho en el resultado.",
+        },
     },
     "optimizador": {
         "tooltip": "Algoritmo que actualiza pesos para minimizar la pérdida.",
-        "definition": (
-            "Un optimizador actualiza los pesos de un modelo. "
-            "Se usa para reducir la pérdida durante el entrenamiento. "
-            "Ejemplo: optimizador = Adam(model.parameters()). "
-            "Matiz: una tasa de aprendizaje muy alta puede divergir."
-        ),
+        "definition_parts": {
+            "que_es": "Un optimizador actualiza los pesos de un modelo",
+            "para_que": "para reducir la pérdida durante el entrenamiento.",
+            "ejemplo": "optimizador = Adam(model.parameters()).",
+            "matiz": "una tasa de aprendizaje muy alta puede divergir.",
+        },
     },
     "epoch": {
         "tooltip": "Iteración completa sobre todo el conjunto de entrenamiento.",
-        "definition": (
-            "Una epoch es una pasada completa por el dataset de entrenamiento. "
-            "Se usa para medir avance en entrenamiento. "
-            "Ejemplo: entrenar 10 epochs. "
-            "Matiz: más epochs no siempre significan mejor modelo."
-        ),
+        "definition_parts": {
+            "que_es": "Una epoch es una pasada completa por el dataset de entrenamiento",
+            "para_que": "para medir avance en entrenamiento.",
+            "ejemplo": "entrenar 10 epochs.",
+            "matiz": "más epochs no siempre significan mejor modelo.",
+        },
     },
     "época": {
         "tooltip": "Iteración completa sobre todo el conjunto de entrenamiento.",
-        "definition": (
-            "Época es lo mismo que epoch: una pasada completa por el dataset. "
-            "Se usa para contar ciclos de entrenamiento. "
-            "Ejemplo: 5 épocas de entrenamiento. "
-            "Matiz: hay riesgo de overfitting si entrenas demasiado."
-        ),
+        "definition_parts": {
+            "que_es": "Época es lo mismo que epoch: una pasada completa por el dataset",
+            "para_que": "para contar ciclos de entrenamiento.",
+            "ejemplo": "5 épocas de entrenamiento.",
+            "matiz": "hay riesgo de overfitting si entrenas demasiado.",
+        },
     },
     "batch": {
         "tooltip": "Subconjunto de datos usado en una actualización.",
-        "definition": (
-            "Un batch es un subconjunto de datos usado en una actualización. "
-            "Se usa para entrenar por partes en lugar de todo el dataset. "
-            "Ejemplo: batch_size = 32. "
-            "Matiz: batch muy pequeño puede hacer el entrenamiento inestable."
-        ),
+        "definition_parts": {
+            "que_es": "Un batch es un subconjunto de datos usado en una actualización",
+            "para_que": "para entrenar por partes en lugar de todo el dataset.",
+            "ejemplo": "batch_size = 32.",
+            "matiz": "batch muy pequeño puede hacer el entrenamiento inestable.",
+        },
     },
     "lote": {
         "tooltip": "Subconjunto de datos usado en una actualización.",
-        "definition": (
-            "Un lote es un grupo de ejemplos usados en cada actualización. "
-            "Se usa para controlar memoria y rendimiento. "
-            "Ejemplo: entrenar con lotes de 64. "
-            "Matiz: lotes grandes pueden requerir más memoria."
-        ),
+        "definition_parts": {
+            "que_es": "Un lote es un grupo de ejemplos usados en cada actualización",
+            "para_que": "para controlar memoria y rendimiento.",
+            "ejemplo": "entrenar con lotes de 64.",
+            "matiz": "lotes grandes pueden requerir más memoria.",
+        },
     },
     "gradiente": {
         "tooltip": "Dirección de mayor cambio de la función de pérdida.",
-        "definition": (
-            "El gradiente indica cómo cambiar los pesos para reducir la pérdida. "
-            "Se usa en optimización. "
-            "Ejemplo: descenso por gradiente ajusta pesos en dirección opuesta. "
-            "Matiz: gradientes muy grandes pueden causar explosión."
-        ),
+        "definition_parts": {
+            "que_es": "El gradiente indica cómo cambiar los pesos para reducir la pérdida",
+            "para_que": "en optimización.",
+            "ejemplo": "descenso por gradiente ajusta pesos en dirección opuesta.",
+            "matiz": "gradientes muy grandes pueden causar explosión.",
+        },
     },
     "backpropagation": {
         "tooltip": "Algoritmo que propaga el error para ajustar pesos.",
-        "definition": (
-            "Backpropagation propaga el error hacia atrás para calcular gradientes. "
-            "Se usa para entrenar redes neuronales. "
-            "Ejemplo: se calcula la pérdida y se propaga por capas. "
-            "Matiz: requiere derivadas de las funciones de activación."
-        ),
+        "definition_parts": {
+            "que_es": "Backpropagation propaga el error hacia atrás para calcular gradientes",
+            "para_que": "para entrenar redes neuronales.",
+            "ejemplo": "se calcula la pérdida y se propaga por capas.",
+            "matiz": "requiere derivadas de las funciones de activación.",
+        },
     },
     "loss": {
         "tooltip": "Medida de error que el modelo intenta minimizar.",
-        "definition": (
-            "La loss mide cuánto se equivoca el modelo. "
-            "Se usa para guiar el entrenamiento. "
-            "Ejemplo: MSE en regresión. "
-            "Matiz: una loss baja en entrenamiento no garantiza buen rendimiento."
-        ),
+        "definition_parts": {
+            "que_es": "La loss mide cuánto se equivoca el modelo",
+            "para_que": "para guiar el entrenamiento.",
+            "ejemplo": "MSE en regresión.",
+            "matiz": "una loss baja en entrenamiento no garantiza buen rendimiento.",
+        },
     },
     "índice": {
         "tooltip": "Estructura que acelera búsquedas en una tabla de datos.",
-        "definition": (
-            "Un índice acelera la búsqueda de filas en una tabla. "
-            "Se usa en bases de datos para consultas rápidas. "
-            "Ejemplo: índice en la columna id. "
-            "Matiz: mejora lecturas pero puede ralentizar escrituras."
-        ),
+        "definition_parts": {
+            "que_es": "Un índice acelera la búsqueda de filas en una tabla",
+            "para_que": "en bases de datos para consultas rápidas.",
+            "ejemplo": "índice en la columna id.",
+            "matiz": "mejora lecturas pero puede ralentizar escrituras.",
+        },
     },
     "clave primaria": {
         "tooltip": "Columna que identifica de forma única cada fila.",
-        "definition": (
-            "La clave primaria identifica de forma única cada fila. "
-            "Se usa para garantizar unicidad en tablas. "
-            "Ejemplo: id incremental como clave primaria. "
-            "Matiz: no debe repetirse ni ser nula."
-        ),
+        "definition_parts": {
+            "que_es": "La clave primaria identifica de forma única cada fila",
+            "para_que": "para garantizar unicidad en tablas.",
+            "ejemplo": "id incremental como clave primaria.",
+            "matiz": "no debe repetirse ni ser nula.",
+        },
     },
     "clave foránea": {
         "tooltip": "Columna que referencia la clave primaria de otra tabla.",
-        "definition": (
-            "Una clave foránea referencia la clave primaria de otra tabla. "
-            "Se usa para relacionar tablas. "
-            "Ejemplo: pedidos.usuario_id apunta a usuarios.id. "
-            "Matiz: debe existir en la tabla referenciada."
-        ),
+        "definition_parts": {
+            "que_es": "Una clave foránea referencia la clave primaria de otra tabla",
+            "para_que": "para relacionar tablas.",
+            "ejemplo": "pedidos.usuario_id apunta a usuarios.id.",
+            "matiz": "debe existir en la tabla referenciada.",
+        },
     },
     "join": {
         "tooltip": "Operación que combina filas de tablas relacionadas.",
-        "definition": (
-            "Un join combina filas de tablas relacionadas por una clave. "
-            "Se usa para consultar datos de varias tablas. "
-            "Ejemplo: SELECT ... FROM a JOIN b ON a.id = b.a_id. "
-            "Matiz: los tipos de join cambian qué filas aparecen."
-        ),
+        "definition_parts": {
+            "que_es": "Un join combina filas de tablas relacionadas por una clave",
+            "para_que": "para consultar datos de varias tablas.",
+            "ejemplo": "SELECT ... FROM a JOIN b ON a.id = b.a_id.",
+            "matiz": "los tipos de join cambian qué filas aparecen.",
+        },
     },
     "inner join": {
         "tooltip": "Join que devuelve solo coincidencias entre tablas.",
-        "definition": (
-            "INNER JOIN devuelve solo filas que tienen coincidencia en ambas tablas. "
-            "Se usa cuando quieres solo datos relacionados. "
-            "Ejemplo: INNER JOIN usuarios y pedidos. "
-            "Matiz: filas sin relación se descartan."
-        ),
+        "definition_parts": {
+            "que_es": "INNER JOIN devuelve solo filas que tienen coincidencia en ambas tablas",
+            "para_que": "cuando quieres solo datos relacionados.",
+            "ejemplo": "INNER JOIN usuarios y pedidos.",
+            "matiz": "filas sin relación se descartan.",
+        },
     },
     "left join": {
         "tooltip": "Join que devuelve todas las filas de la tabla izquierda.",
-        "definition": (
-            "LEFT JOIN devuelve todas las filas de la tabla izquierda. "
-            "Se usa para mantener datos aunque no haya coincidencia. "
-            "Ejemplo: usuarios LEFT JOIN pedidos. "
-            "Matiz: las columnas sin coincidencia quedan como NULL."
-        ),
+        "definition_parts": {
+            "que_es": "LEFT JOIN devuelve todas las filas de la tabla izquierda",
+            "para_que": "para mantener datos aunque no haya coincidencia.",
+            "ejemplo": "usuarios LEFT JOIN pedidos.",
+            "matiz": "las columnas sin coincidencia quedan como NULL.",
+        },
     },
     "right join": {
         "tooltip": "Join que devuelve todas las filas de la tabla derecha.",
-        "definition": (
-            "RIGHT JOIN devuelve todas las filas de la tabla derecha. "
-            "Se usa cuando quieres preservar la tabla derecha. "
-            "Ejemplo: pedidos RIGHT JOIN usuarios. "
-            "Matiz: no todos los motores soportan RIGHT JOIN."
-        ),
+        "definition_parts": {
+            "que_es": "RIGHT JOIN devuelve todas las filas de la tabla derecha",
+            "para_que": "cuando quieres preservar la tabla derecha.",
+            "ejemplo": "pedidos RIGHT JOIN usuarios.",
+            "matiz": "no todos los motores soportan RIGHT JOIN.",
+        },
     },
     "full join": {
         "tooltip": "Join que devuelve coincidencias y no coincidencias.",
-        "definition": (
-            "FULL JOIN devuelve filas coincidentes y no coincidentes. "
-            "Se usa para ver todo el conjunto de datos. "
-            "Ejemplo: FULL JOIN entre clientes y pedidos. "
-            "Matiz: algunos motores no lo soportan sin UNION."
-        ),
+        "definition_parts": {
+            "que_es": "FULL JOIN devuelve filas coincidentes y no coincidentes",
+            "para_que": "para ver todo el conjunto de datos.",
+            "ejemplo": "FULL JOIN entre clientes y pedidos.",
+            "matiz": "algunos motores no lo soportan sin UNION.",
+        },
     },
     "tabla": {
         "tooltip": "Estructura que guarda datos en filas y columnas.",
-        "definition": (
-            "Una tabla almacena datos en filas y columnas. "
-            "Se usa para organizar información en bases de datos. "
-            "Ejemplo: tabla usuarios con columnas id y nombre. "
-            "Matiz: un buen diseño evita duplicación de datos."
-        ),
+        "definition_parts": {
+            "que_es": "Una tabla almacena datos en filas y columnas",
+            "para_que": "para organizar información en bases de datos.",
+            "ejemplo": "tabla usuarios con columnas id y nombre.",
+            "matiz": "un buen diseño evita duplicación de datos.",
+        },
     },
     "fila": {
         "tooltip": "Registro horizontal de una tabla.",
-        "definition": (
-            "Una fila es un registro completo dentro de una tabla. "
-            "Se usa para representar una entidad. "
-            "Ejemplo: una fila de usuarios representa a una persona. "
-            "Matiz: cada fila se identifica por la clave primaria."
-        ),
+        "definition_parts": {
+            "que_es": "Una fila es un registro completo dentro de una tabla",
+            "para_que": "para representar una entidad.",
+            "ejemplo": "una fila de usuarios representa a una persona.",
+            "matiz": "cada fila se identifica por la clave primaria.",
+        },
     },
     "columna": {
         "tooltip": "Campo vertical que representa un atributo.",
-        "definition": (
-            "Una columna representa un atributo de la tabla. "
-            "Se usa para definir el tipo de dato de cada campo. "
-            "Ejemplo: columna 'edad' en usuarios. "
-            "Matiz: el tipo de columna limita los valores permitidos."
-        ),
+        "definition_parts": {
+            "que_es": "Una columna representa un atributo de la tabla",
+            "para_que": "para definir el tipo de dato de cada campo.",
+            "ejemplo": "columna 'edad' en usuarios.",
+            "matiz": "el tipo de columna limita los valores permitidos.",
+        },
     },
     "python": {
         "tooltip": "Lenguaje de programación interpretado y multiplataforma.",
@@ -1682,6 +1809,72 @@ GLOSSARY = {
                 "El costo es bajo demanda y depende de región, uso, arquitectura y "
                 "políticas de optimización. Un buen diseño de IAM y VPC impacta la "
                 "seguridad y el mantenimiento."
+            ),
+        },
+    },
+    "oracle cloud": {
+        "tooltip": "Plataforma cloud de Oracle (OCI).",
+        "definition_parts": {
+            "que_es": (
+                "Oracle Cloud Infrastructure (OCI) es la plataforma cloud de Oracle "
+                "con servicios de cómputo, bases de datos y redes."
+            ),
+            "para_que": (
+                "Desplegar aplicaciones, usar bases de datos administradas y construir "
+                "arquitecturas empresariales en la nube."
+            ),
+            "sintaxis": "oci os object list --bucket-name mi-bucket",
+            "ejemplo": (
+                "Usar OCI Compute para instancias y Oracle Autonomous Database para "
+                "gestionar datos sin operación manual."
+            ),
+            "matiz": (
+                "Su integración con bases Oracle es un punto fuerte, pero conviene "
+                "comparar costos y servicios según región."
+            ),
+        },
+    },
+    "ibm cloud": {
+        "tooltip": "Plataforma cloud de IBM para servicios empresariales.",
+        "definition_parts": {
+            "que_es": (
+                "IBM Cloud ofrece servicios de cómputo, datos, IA y herramientas "
+                "empresariales con enfoque híbrido."
+            ),
+            "para_que": (
+                "Construir soluciones cloud e híbridas, desplegar contenedores y usar "
+                "servicios gestionados de datos."
+            ),
+            "sintaxis": "ibmcloud login y ibmcloud ks cluster ls",
+            "ejemplo": (
+                "Crear un cluster de Kubernetes con IBM Cloud Kubernetes Service y "
+                "conectar servicios de base de datos."
+            ),
+            "matiz": (
+                "Es popular en entornos corporativos y requiere considerar integración "
+                "con sistemas legacy."
+            ),
+        },
+    },
+    "alibaba cloud": {
+        "tooltip": "Plataforma cloud de Alibaba con presencia global.",
+        "definition_parts": {
+            "que_es": (
+                "Alibaba Cloud es la plataforma de nube de Alibaba con servicios de "
+                "cómputo, almacenamiento y analítica."
+            ),
+            "para_que": (
+                "Desplegar aplicaciones en mercados asiáticos, usar CDN global y "
+                "servicios de datos escalables."
+            ),
+            "sintaxis": "aliyun oss ls",
+            "ejemplo": (
+                "Guardar archivos en OSS y distribuirlos con CDN para mejorar la "
+                "latencia."
+            ),
+            "matiz": (
+                "Su fortaleza está en Asia, pero conviene revisar la disponibilidad "
+                "regional y la documentación."
             ),
         },
     },
@@ -2262,21 +2455,24 @@ GLOSSARY = {
     },
     "azure blob storage": {
         "tooltip": "Servicio de almacenamiento de objetos en Azure.",
-        "definition": (
-            "Azure Blob Storage almacena datos como objetos en contenedores. "
-            "Se usa para archivos estáticos, backups y data lakes. "
-            "Ejemplo: guardar imágenes de una app o archivos de analítica. "
-            "Matiz: ofrece niveles de acceso (hot, cool, archive) según costo."
-        ),
+        "definition_parts": {
+            "que_es": "Azure Blob Storage almacena datos como objetos en contenedores",
+            "para_que": "para archivos estáticos, backups y data lakes.",
+            "ejemplo": "guardar imágenes de una app o archivos de analítica.",
+            "matiz": "ofrece niveles de acceso (hot, cool, archive) según costo.",
+        },
     },
     "azure sql": {
         "tooltip": "Base de datos relacional administrada en Azure.",
-        "definition": (
-            "Azure SQL Database es un servicio administrado de bases relacionales "
-            "basado en SQL Server. Se usa para aplicaciones transaccionales. "
-            "Ejemplo: base de datos para un ERP con alta disponibilidad. "
-            "Matiz: ofrece escalado elástico y backups automáticos."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Azure SQL Database es un servicio administrado de bases relacionales basado en SQL "
+                "Server"
+            ),
+            "para_que": "para aplicaciones transaccionales.",
+            "ejemplo": "base de datos para un ERP con alta disponibilidad.",
+            "matiz": "ofrece escalado elástico y backups automáticos.",
+        },
     },
     "gcp": {
         "tooltip": "Google Cloud Platform para servicios en la nube.",
@@ -2379,149 +2575,162 @@ GLOSSARY = {
     },
     "cloud storage": {
         "tooltip": "Almacenamiento de objetos en Google Cloud.",
-        "definition": (
-            "Google Cloud Storage almacena objetos en buckets con alta durabilidad. "
-            "Se usa para datos estáticos, backups y data lakes. "
-            "Ejemplo: guardar archivos de un sistema de analítica. "
-            "Matiz: permite definir clases de almacenamiento según costo y acceso."
-        ),
+        "definition_parts": {
+            "que_es": "Google Cloud Storage almacena objetos en buckets con alta durabilidad",
+            "para_que": "para datos estáticos, backups y data lakes.",
+            "ejemplo": "guardar archivos de un sistema de analítica.",
+            "matiz": "permite definir clases de almacenamiento según costo y acceso.",
+        },
     },
     "cloud run": {
         "tooltip": "Servicio de GCP para ejecutar contenedores.",
-        "definition": (
-            "Cloud Run ejecuta contenedores HTTP de forma serverless. "
-            "Se usa para desplegar APIs y servicios sin administrar servidores. "
-            "Ejemplo: publicar un contenedor con FastAPI en GCP. "
-            "Matiz: escala a cero y se cobra por uso real."
-        ),
+        "definition_parts": {
+            "que_es": "Cloud Run ejecuta contenedores HTTP de forma serverless",
+            "para_que": "para desplegar APIs y servicios sin administrar servidores.",
+            "ejemplo": "publicar un contenedor con FastAPI en GCP.",
+            "matiz": "escala a cero y se cobra por uso real.",
+        },
     },
     "bigquery": {
         "tooltip": "Data warehouse administrado de Google Cloud.",
-        "definition": (
-            "BigQuery es un data warehouse serverless para consultas SQL a gran escala. "
-            "Se usa para analítica de grandes volúmenes de datos. "
-            "Ejemplo: consultas sobre terabytes de logs en segundos. "
-            "Matiz: cobra por almacenamiento y por volumen de datos consultados."
-        ),
+        "definition_parts": {
+            "que_es": "BigQuery es un data warehouse serverless para consultas SQL a gran escala",
+            "para_que": "para analítica de grandes volúmenes de datos.",
+            "ejemplo": "consultas sobre terabytes de logs en segundos.",
+            "matiz": "cobra por almacenamiento y por volumen de datos consultados.",
+        },
     },
     "cloud sql": {
         "tooltip": "Base de datos relacional administrada en GCP.",
-        "definition": (
-            "Cloud SQL es el servicio de bases de datos relacionales gestionadas de GCP. "
-            "Se usa para ejecutar PostgreSQL, MySQL o SQL Server sin administrar servidores. "
-            "Ejemplo: base transaccional para un backend web. "
-            "Matiz: ofrece backups automáticos y alta disponibilidad."
-        ),
+        "definition_parts": {
+            "que_es": "Cloud SQL es el servicio de bases de datos relacionales gestionadas de GCP",
+            "para_que": "para ejecutar PostgreSQL, MySQL o SQL Server sin administrar servidores.",
+            "ejemplo": "base transaccional para un backend web.",
+            "matiz": "ofrece backups automáticos y alta disponibilidad.",
+        },
     },
     "cloud functions": {
         "tooltip": "Servicio serverless de GCP para ejecutar funciones.",
-        "definition": (
-            "Cloud Functions permite ejecutar funciones bajo demanda en Google Cloud. "
-            "Se usa para responder a eventos de almacenamiento, pub/sub o HTTP. "
-            "Ejemplo: procesar un archivo al subirlo a Cloud Storage. "
-            "Matiz: escala automáticamente y se cobra por invocación."
-        ),
+        "definition_parts": {
+            "que_es": "Cloud Functions permite ejecutar funciones bajo demanda en Google Cloud",
+            "para_que": "para responder a eventos de almacenamiento, pub/sub o HTTP.",
+            "ejemplo": "procesar un archivo al subirlo a Cloud Storage.",
+            "matiz": "escala automáticamente y se cobra por invocación.",
+        },
     },
     "pub/sub": {
         "tooltip": "Mensajería pub/sub en Google Cloud.",
-        "definition": (
-            "Pub/Sub es un servicio de mensajería asíncrona con productores y suscriptores. "
-            "Se usa para desacoplar sistemas y procesar eventos. "
-            "Ejemplo: un servicio publica eventos y varios consumidores los procesan. "
-            "Matiz: soporta reintentos y ordenamiento según configuración."
-        ),
+        "definition_parts": {
+            "que_es": "Pub/Sub es un servicio de mensajería asíncrona con productores y suscriptores",
+            "para_que": "para desacoplar sistemas y procesar eventos.",
+            "ejemplo": "un servicio publica eventos y varios consumidores los procesan.",
+            "matiz": "soporta reintentos y ordenamiento según configuración.",
+        },
     },
     "serverless": {
         "tooltip": "Ejecución de código sin gestionar servidores.",
-        "definition": (
-            "Serverless es un modelo donde ejecutas funciones bajo demanda sin "
-            "administrar servidores. Se usa para tareas event-driven y escalado "
-            "automático. Ejemplo: AWS Lambda o Azure Functions. "
-            "Matiz: suele tener límites de tiempo y recursos."
-        ),
+        "definition_parts": {
+            "que_es": "Serverless es un modelo donde ejecutas funciones bajo demanda sin administrar servidores",
+            "para_que": "para tareas event-driven y escalado automático.",
+            "ejemplo": "AWS Lambda o Azure Functions.",
+            "matiz": "suele tener límites de tiempo y recursos.",
+        },
     },
     "data lake": {
         "tooltip": "Repositorio de datos crudos a gran escala.",
-        "definition": (
-            "Un data lake es un repositorio que almacena datos en su formato original "
-            "para análisis futuro. Se usa para centralizar datos heterogéneos. "
-            "Ejemplo: almacenar archivos parquet y JSON en S3 para analítica. "
-            "Matiz: requiere gobernanza para evitar convertirse en un \"data swamp\"."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un data lake es un repositorio que almacena datos en su formato original para análisis "
+                "futuro"
+            ),
+            "para_que": "para centralizar datos heterogéneos.",
+            "ejemplo": "almacenar archivos parquet y JSON en S3 para analítica.",
+            "matiz": "requiere gobernanza para evitar convertirse en un "data swamp".",
+        },
     },
     "data warehouse": {
         "tooltip": "Almacén de datos optimizado para analítica.",
-        "definition": (
-            "Un data warehouse organiza datos estructurados para consultas analíticas. "
-            "Se usa para reportes, BI y métricas de negocio. "
-            "Ejemplo: consolidar ventas en BigQuery o Snowflake. "
-            "Matiz: suele incluir modelos dimensionales y procesos ETL/ELT."
-        ),
+        "definition_parts": {
+            "que_es": "Un data warehouse organiza datos estructurados para consultas analíticas",
+            "para_que": "para reportes, BI y métricas de negocio.",
+            "ejemplo": "consolidar ventas en BigQuery o Snowflake.",
+            "matiz": "suele incluir modelos dimensionales y procesos ETL/ELT.",
+        },
     },
     "etl": {
         "tooltip": "Proceso de extraer, transformar y cargar datos.",
-        "definition": (
-            "ETL (Extract, Transform, Load) es un flujo para mover datos desde fuentes "
-            "a un destino analítico. Se usa para limpiar y estructurar información. "
-            "Ejemplo: extraer CSVs, transformar columnas y cargar a un data warehouse. "
-            "Matiz: en ELT se carga primero y se transforma después."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "ETL (Extract, Transform, Load) es un flujo para mover datos desde fuentes a un destino "
+                "analítico"
+            ),
+            "para_que": "para limpiar y estructurar información.",
+            "ejemplo": "extraer CSVs, transformar columnas y cargar a un data warehouse.",
+            "matiz": "en ELT se carga primero y se transforma después.",
+        },
     },
     "feature engineering": {
         "tooltip": "Creación de variables útiles para modelos de ML.",
-        "definition": (
-            "Feature engineering es el proceso de crear o transformar variables para "
-            "mejorar el rendimiento de un modelo. Se usa para capturar patrones "
-            "relevantes del dominio. "
-            "Ejemplo: convertir fechas en día de la semana o crear la variable "
-            "ingreso_por_persona. "
-            "Matiz: debe evitar fugas de información (data leakage)."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Feature engineering es el proceso de crear o transformar variables para mejorar el "
+                "rendimiento de un modelo"
+            ),
+            "para_que": "para capturar patrones relevantes del dominio.",
+            "ejemplo": "convertir fechas en día de la semana o crear la variable ingreso_por_persona.",
+            "matiz": "debe evitar fugas de información (data leakage).",
+        },
     },
     "api": {
         "tooltip": "Interfaz para que sistemas se comuniquen.",
-        "definition": (
-            "Una API (Application Programming Interface) define cómo dos sistemas "
-            "intercambian datos. Se usa para exponer funcionalidades de un servicio. "
-            "Ejemplo: una API REST que devuelve JSON con pedidos de clientes. "
-            "Matiz: requiere versionado y autenticación para ser estable y segura."
-        ),
+        "definition_parts": {
+            "que_es": "Una API (Application Programming Interface) define cómo dos sistemas intercambian datos",
+            "para_que": "para exponer funcionalidades de un servicio.",
+            "ejemplo": "una API REST que devuelve JSON con pedidos de clientes.",
+            "matiz": "requiere versionado y autenticación para ser estable y segura.",
+        },
     },
     "frontend": {
         "tooltip": "Parte visual e interactiva de una aplicación.",
-        "definition": (
-            "Frontend es la capa que interactúa con el usuario: UI, estilos y lógica "
-            "en el navegador o cliente. Se usa para presentar datos y capturar acciones. "
-            "Ejemplo: una interfaz React que consume una API. "
-            "Matiz: rendimiento y accesibilidad impactan directamente en la UX."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Frontend es la capa que interactúa con el usuario: UI, estilos y lógica en el navegador "
+                "o cliente"
+            ),
+            "para_que": "para presentar datos y capturar acciones.",
+            "ejemplo": "una interfaz React que consume una API.",
+            "matiz": "rendimiento y accesibilidad impactan directamente en la UX.",
+        },
     },
     "backend": {
         "tooltip": "Lógica del servidor y acceso a datos.",
-        "definition": (
-            "Backend es la capa que procesa solicitudes, aplica reglas de negocio y "
-            "gestiona bases de datos. Se usa para implementar APIs y servicios internos. "
-            "Ejemplo: un servicio FastAPI que valida usuarios y consulta una base. "
-            "Matiz: seguridad, escalabilidad y observabilidad son claves."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Backend es la capa que procesa solicitudes, aplica reglas de negocio y gestiona bases de "
+                "datos"
+            ),
+            "para_que": "para implementar APIs y servicios internos.",
+            "ejemplo": "un servicio FastAPI que valida usuarios y consulta una base.",
+            "matiz": "seguridad, escalabilidad y observabilidad son claves.",
+        },
     },
     "docker": {
         "tooltip": "Herramienta para crear y ejecutar contenedores.",
-        "definition": (
-            "Docker permite empaquetar aplicaciones con sus dependencias en contenedores. "
-            "Se usa para reproducir entornos y facilitar despliegues. "
-            "Ejemplo: ejecutar una API en un contenedor con Dockerfile. "
-            "Matiz: los contenedores comparten el kernel del host."
-        ),
+        "definition_parts": {
+            "que_es": "Docker permite empaquetar aplicaciones con sus dependencias en contenedores",
+            "para_que": "para reproducir entornos y facilitar despliegues.",
+            "ejemplo": "ejecutar una API en un contenedor con Dockerfile.",
+            "matiz": "los contenedores comparten el kernel del host.",
+        },
     },
     "kubernetes": {
         "tooltip": "Orquestador de contenedores.",
-        "definition": (
-            "Kubernetes (K8s) es un sistema para orquestar contenedores. "
-            "Se usa para desplegar, escalar y recuperar aplicaciones en clústeres. "
-            "Ejemplo: definir Deployments y Services para una app. "
-            "Matiz: requiere configuración y observabilidad para operar bien."
-        ),
+        "definition_parts": {
+            "que_es": "Kubernetes (K8s) es un sistema para orquestar contenedores",
+            "para_que": "para desplegar, escalar y recuperar aplicaciones en clústeres.",
+            "ejemplo": "definir Deployments y Services para una app.",
+            "matiz": "requiere configuración y observabilidad para operar bien.",
+        },
     },
 }
 
@@ -2565,6 +2774,12 @@ def definition_text(data: dict[str, object]) -> str:
         if value:
             text = _flatten(value)
             if text:
+                if key == "para_que":
+                    cleaned = text.strip()
+                    lower = cleaned.lower()
+                    if lower.startswith("para "):
+                        cleaned = cleaned[5:].strip()
+                    text = cleaned
                 lines.append(f"{labels.get(key, key)} {text}")
     return "\n".join(lines).strip()
 

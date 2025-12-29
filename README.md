@@ -24,6 +24,12 @@ pip install pandas pandasai scikit-learn tensorflow torch
 python -m app
 ```
 
+También puedes ejecutar el wrapper del root:
+
+```bash
+python main.py
+```
+
 ## Añadir una lección
 
 1. Crea un archivo `.py` dentro de `app/lessons/<categoria>/`.

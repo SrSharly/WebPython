@@ -26,18 +26,75 @@ class QLineEditLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- QLineEdit captura texto en una sola línea.
-- textChanged se emite al cambiar el texto.
-- returnPressed se emite al presionar Enter.
-- setPlaceholderText muestra ayuda contextual.
-- setEchoMode permite ocultar contraseñas.
-- setValidator valida entradas (numéricas, regex).
-- Usa clear() para limpiar rápidamente.
-- readOnly evita cambios del usuario.
-- setMaxLength limita caracteres.
-- Selecciona texto con selectAll().
-- Puedes usar input masks para formatos.
-- Conecta señales para validación en vivo.
+## Qué es
+QLineEdit es un campo de texto de una sola línea para entradas cortas como nombres, emails o contraseñas.
+
+## Cuándo se usa
+En formularios, barras de búsqueda y cualquier entrada de texto breve.
+
+## Conceptos previos
+- Señales básicas en PySide6.
+- Uso de layouts para ordenar widgets.
+
+## Paso 1: Crear un QLineEdit
+```
+line = QLineEdit()
+```
+
+## Paso 2: Ayudar al usuario con placeholder
+```
+line.setPlaceholderText("Nombre")
+```
+
+## Paso 3: Escuchar cambios de texto
+```
+line.textChanged.connect(lambda text: print(text))
+```
+
+## Paso 4: Capturar Enter
+```
+line.returnPressed.connect(lambda: print(line.text()))
+```
+
+## Paso 5: Modo contraseña y validación
+```
+line.setEchoMode(QLineEdit.Password)
+```
+
+## Mini-reto
+Mini-reto 1: Deshabilita un botón hasta que el usuario escriba 5 caracteres.
+Solución:
+```
+line.textChanged.connect(lambda t: btn.setEnabled(len(t) >= 5))
+```
+
+## Errores típicos (mal vs bien)
+Mal: no validar y aceptar cualquier texto.
+```
+print(line.text())
+```
+Bien: validar antes de usar el dato.
+```
+texto = line.text()
+if len(texto) >= 5:
+    print(texto)
+```
+
+## Nota
+Nota: usa setMaxLength para evitar textos demasiado largos.
+
+## Advertencia
+Advertencia: si el input es contraseña, usa Password para ocultar caracteres.
+
+## Checklist final
+- Creo un QLineEdit y muestro placeholder.
+- Manejo textChanged y returnPressed.
+- Uso modos de echo y límites cuando aplica.
+
+## Ver también
+- QLabel
+- QPushButton
+- QComboBox
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -80,35 +137,43 @@ class QLineEditLesson(Lesson):
         return [
             (
                 "Placeholder",
-                """line = QLineEdit()\nline.setPlaceholderText("Nombre")""",
+                """line = QLineEdit()  # Creamos input
+line.setPlaceholderText("Nombre")  # Mostramos ayuda""",
             ),
             (
                 "Capturar enter",
-                """line = QLineEdit()\nline.returnPressed.connect(lambda: print(line.text()))""",
+                """line = QLineEdit()  # Creamos input
+line.returnPressed.connect(lambda: print(line.text()))  # Enter imprime texto""",
             ),
             (
                 "Modo contraseña",
-                """line = QLineEdit()\nline.setEchoMode(QLineEdit.Password)""",
+                """line = QLineEdit()  # Creamos input
+line.setEchoMode(QLineEdit.Password)  # Ocultamos texto""",
             ),
             (
                 "Limitar longitud",
-                """line = QLineEdit()\nline.setMaxLength(12)""",
+                """line = QLineEdit()  # Creamos input
+line.setMaxLength(12)  # Limitamos caracteres""",
             ),
             (
                 "Solo lectura",
-                """line = QLineEdit()\nline.setReadOnly(True)""",
+                """line = QLineEdit()  # Creamos input
+line.setReadOnly(True)  # Evitamos edición""",
             ),
             (
                 "Señal textChanged",
-                """line = QLineEdit()\nline.textChanged.connect(lambda text: print(text))""",
+                """line = QLineEdit()  # Creamos input
+line.textChanged.connect(lambda text: print(text))  # Escuchamos cambios""",
             ),
             (
                 "Limpiar input",
-                """line = QLineEdit()\nline.clear()""",
+                """line = QLineEdit()  # Creamos input
+line.clear()  # Limpiamos el texto""",
             ),
             (
                 "Seleccionar todo",
-                """line = QLineEdit()\nline.selectAll()""",
+                """line = QLineEdit()  # Creamos input
+line.selectAll()  # Seleccionamos todo""",
             ),
         ]
 

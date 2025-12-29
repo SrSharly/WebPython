@@ -113,8 +113,8 @@ class MainWindow(QMainWindow):
         self.demo_scroll.setWidgetResizable(True)
         self.demo_scroll.setWidget(self.demo_container)
 
+        self.tabs.addTab(self.guide_scroll, "Tutorial")
         self.tabs.addTab(self.summary_view, "Resumen")
-        self.tabs.addTab(self.guide_scroll, "Guía")
         self.tabs.addTab(pitfalls_panel, "Errores típicos")
         self.tabs.addTab(self.examples_scroll, "Ejemplos")
         self.tabs.addTab(self.exercises_scroll, "Ejercicios")
@@ -230,7 +230,7 @@ class MainWindow(QMainWindow):
             info.level,
             " ".join(info.tags),
             lesson.summary(),
-            lesson.guide(),
+            lesson.tutorial(),
         ]
         guide_sections = lesson.guide_sections()
         if guide_sections:
@@ -312,8 +312,40 @@ class MainWindow(QMainWindow):
         lines = text.splitlines()
         chunks: list[str] = []
         list_items: list[str] = []
+        code_lines: list[str] = []
+        in_code_block = False
         for line in lines:
             stripped = line.strip()
+            if stripped.startswith("```"):
+                if in_code_block:
+                    chunks.append(
+                        "<pre><code>"
+                        + html.escape("\n".join(code_lines))
+                        + "</code></pre>"
+                    )
+                    code_lines = []
+                    in_code_block = False
+                else:
+                    if list_items:
+                        chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                        list_items = []
+                    in_code_block = True
+                continue
+            if in_code_block:
+                code_lines.append(line)
+                continue
+            if stripped.startswith("### "):
+                if list_items:
+                    chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                    list_items = []
+                chunks.append(f"<h3>{html.escape(stripped[4:].strip())}</h3>")
+                continue
+            if stripped.startswith("## "):
+                if list_items:
+                    chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                    list_items = []
+                chunks.append(f"<h2>{html.escape(stripped[3:].strip())}</h2>")
+                continue
             if stripped.startswith(("-", "*")):
                 list_items.append(html.escape(stripped[1:].strip()))
                 continue
@@ -324,19 +356,21 @@ class MainWindow(QMainWindow):
                 chunks.append(f"<p>{html.escape(stripped)}</p>")
         if list_items:
             chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+        if code_lines:
+            chunks.append("<pre><code>" + html.escape("\n".join(code_lines)) + "</code></pre>")
         return "".join(chunks)
 
     def _render_guide(self, lesson: Lesson) -> None:
         self._clear_layout(self.guide_layout)
         guide_sections = lesson.guide_sections()
         if guide_sections:
-            sections_html = "<h1>Guía paso a paso</h1>" + "".join(
+            sections_html = "<h1>Tutorial paso a paso</h1>" + "".join(
                 f"<h2>{html.escape(section.get('title', ''))}</h2>"
                 f"{self._guide_html_from_text(section.get('content', ''))}"
                 for section in guide_sections
             )
         else:
-            sections_html = f"<h1>Guía paso a paso</h1>{self._guide_html_from_text(lesson.guide())}"
+            sections_html = f"<h1>Tutorial paso a paso</h1>{self._guide_html_from_text(lesson.tutorial())}"
 
         self.guide_text = QTextBrowser()
         self.guide_text.setOpenExternalLinks(True)
@@ -348,8 +382,11 @@ class MainWindow(QMainWindow):
                 body {{ font-family: 'Segoe UI'; color: #1f2937; }}
                 h1 {{ font-size: 22px; margin-bottom: 8px; }}
                 h2 {{ font-size: 18px; margin-top: 16px; }}
+                h3 {{ font-size: 16px; margin-top: 14px; }}
                 p {{ line-height: 1.5; }}
                 ul {{ margin-left: 18px; }}
+                pre {{ background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 8px; }}
+                code {{ font-family: \"Consolas\"; }}
             </style>
             </head>
             <body>

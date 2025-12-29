@@ -21,18 +21,81 @@ class DataFrameBasicsLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- Un DataFrame es una tabla con filas y columnas.
-- Puedes crearlo desde dicts, listas o archivos.
-- El índice identifica filas; puede ser personalizado.
-- Usa .loc para selección por etiqueta y .iloc por posición.
-- Las columnas se acceden como df["col"] o df.col.
-- Usa df.head() para inspeccionar datos.
-- Las operaciones vectorizadas son más rápidas que loops.
-- Los filtros usan máscaras booleanas.
-- Usa df.assign() para añadir columnas.
-- df.groupby() permite agregaciones.
-- missing values se representan como NaN.
-- Usa df.fillna() o df.dropna() para limpiar.
+## Qué es
+Un DataFrame es una tabla con filas y columnas, similar a una hoja de cálculo.
+
+## Cuándo se usa
+Cuando necesitas analizar, filtrar o transformar datos tabulares (CSV, Excel, bases de datos).
+
+## Conceptos previos
+- Listas y diccionarios en Python.
+- Operaciones básicas con números.
+
+## Paso 1: Crear un DataFrame
+```
+import pandas as pd
+data = {"nombre": ["Ana", "Luis"], "edad": [30, 25]}
+df = pd.DataFrame(data)
+```
+
+## Paso 2: Inspeccionar datos
+```
+print(df.head())
+```
+
+## Paso 3: Seleccionar columnas y filas
+```
+print(df["edad"])  # Columna
+print(df.loc[0])  # Fila por etiqueta
+```
+
+## Paso 4: Filtrar con condiciones
+```
+mayores = df[df["edad"] > 25]
+```
+
+## Paso 5: Agregar columnas y agrupar
+```
+df = df.assign(nueva=df["edad"] + 1)
+resumen = df.groupby("nombre")["edad"].mean()
+```
+
+## Mini-reto
+Mini-reto 1: Crea un DataFrame con productos y precios, y filtra los mayores a 10.
+Solución:
+```
+productos = {"producto": ["A", "B"], "precio": [8, 12]}
+df = pd.DataFrame(productos)
+print(df[df["precio"] > 10])
+```
+
+## Errores típicos (mal vs bien)
+Mal: asignación encadenada.
+```
+df[df["edad"] > 25]["edad"] = 99
+```
+Bien: usa loc para asignar.
+```
+df.loc[df["edad"] > 25, "edad"] = 99
+```
+
+## Nota
+Nota: usa .copy() si vas a modificar un subconjunto.
+
+## Advertencia
+Advertencia: los NaN propagan operaciones; limpia datos antes de calcular.
+
+## Checklist final
+- Creo DataFrames desde dicts.
+- Selecciono con [] y loc/iloc.
+- Filtro con máscaras booleanas.
+- Agrego columnas con assign.
+- Agrupo con groupby.
+
+## Ver también
+- Variables y tipos
+- Iteradores y generadores
+- Excepciones
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -47,7 +110,7 @@ class DataFrameBasicsLesson(Lesson):
             ),
             (
                 "Asignación encadenada",
-                "df[df.col > 0]["col"] = 1 no garantiza cambios.",
+                "df[df.col > 0][\"col\"] = 1 no garantiza cambios.",
             ),
             (
                 "Index mal definido",
@@ -75,35 +138,54 @@ class DataFrameBasicsLesson(Lesson):
         return [
             (
                 "Crear DataFrame",
-                """import pandas as pd\n\ndata = {"nombre": ["Ana", "Luis"], "edad": [30, 25]}\ndf = pd.DataFrame(data)\nprint(df)""",
+                """import pandas as pd  # Importamos pandas
+data = {"nombre": ["Ana", "Luis"], "edad": [30, 25]}  # Creamos dict
+df = pd.DataFrame(data)  # Construimos el DataFrame
+print(df)  # Mostramos la tabla""",
             ),
             (
                 "Seleccionar columnas",
-                """df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})\nprint(df["a"])""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"a": [1, 2], "b": [3, 4]})  # Creamos DataFrame
+print(df["a"])  # Seleccionamos la columna a""",
             ),
             (
                 "Filtrar filas",
-                """df = pd.DataFrame({"edad": [20, 30, 40]})\nprint(df[df["edad"] > 25])""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"edad": [20, 30, 40]})  # Creamos DataFrame
+print(df[df["edad"] > 25])  # Filtramos por edad""",
             ),
             (
                 "loc vs iloc",
-                """df = pd.DataFrame({"valor": [10, 20]}, index=["a", "b"])\nprint(df.loc["a"])\nprint(df.iloc[0])""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"valor": [10, 20]}, index=["a", "b"])  # DataFrame con índice
+print(df.loc["a"])  # Selección por etiqueta
+print(df.iloc[0])  # Selección por posición""",
             ),
             (
                 "Agregar columna",
-                """df = pd.DataFrame({"x": [1, 2, 3]})\ndf = df.assign(y=df["x"] * 2)\nprint(df)""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"x": [1, 2, 3]})  # DataFrame base
+df = df.assign(y=df["x"] * 2)  # Creamos nueva columna
+print(df)  # Mostramos el resultado""",
             ),
             (
                 "Groupby",
-                """df = pd.DataFrame({"tipo": ["A", "A", "B"], "valor": [1, 2, 3]})\nprint(df.groupby("tipo")["valor"].mean())""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"tipo": ["A", "A", "B"], "valor": [1, 2, 3]})  # DataFrame
+print(df.groupby("tipo")["valor"].mean())  # Media por grupo""",
             ),
             (
                 "Missing values",
-                """df = pd.DataFrame({"x": [1, None, 3]})\nprint(df.fillna(0))""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"x": [1, None, 3]})  # DataFrame con NaN
+print(df.fillna(0))  # Rellenamos NaN""",
             ),
             (
                 "Reset index",
-                """df = pd.DataFrame({"a": [1, 2]}, index=["id1", "id2"])\nprint(df.reset_index())""",
+                """import pandas as pd  # Importamos pandas
+df = pd.DataFrame({"a": [1, 2]}, index=["id1", "id2"])  # DataFrame con índice
+print(df.reset_index())  # Reiniciamos índice""",
             ),
         ]
 
@@ -135,6 +217,8 @@ class DataFrameBasicsLesson(Lesson):
             widget = QWidget()
             layout = QVBoxLayout(widget)
             layout.addWidget(QLabel(message or "Pandas no disponible."))
+            layout.addWidget(QLabel("Instala pandas con: pip install pandas"))
+            layout.addWidget(QLabel("Luego reinicia la aplicación para ver la demo."))
             return widget
         widget = QWidget()
         layout = QVBoxLayout(widget)

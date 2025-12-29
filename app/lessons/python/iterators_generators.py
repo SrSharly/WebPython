@@ -23,19 +23,78 @@ class IteratorsGeneratorsLesson(Lesson):
 
     def guide(self) -> str:
         return """
-TL;DR: Iteradores y generadores consumen datos paso a paso, ahorrando memoria y facilitando pipelines.
-- Un iterable es cualquier objeto con __iter__ (listas, strings, dicts).
-- Un iterador es el objeto devuelto por iter(), con __next__.
-- next(it) avanza y lanza StopIteration al terminar.
-- Iterables pueden producir múltiples iteradores; iteradores se consumen una vez.
-- Las funciones generator usan yield para producir valores en secuencia.
-- yield from delega la iteración a otro iterable o generador.
-- Los generadores son perezosos: calculan cuando se necesitan.
-- send(valor) permite enviar datos a un generador pausado (uso avanzado).
-- Los generadores son ideales para streams y archivos grandes.
-- Evita convertir a lista si no necesitas todo el resultado.
-- Usa pipelines de generadores para transformar datos en etapas.
-- Maneja StopIteration si implementas iteradores manuales.
+## Qué es
+Un iterable es algo que puedes recorrer; un iterador es quien te da los valores uno a uno; un generador es una forma fácil de crear iteradores.
+
+## Cuándo se usa
+Cuando quieres procesar datos grandes sin cargarlos todos en memoria o crear pipelines de datos.
+
+## Conceptos previos
+- Listas y bucles for.
+- Funciones y flujo básico.
+
+## Paso 1: Diferenciar iterable vs iterador
+```
+data = [1, 2, 3]
+it = iter(data)
+```
+
+## Paso 2: Avanzar con next()
+```
+print(next(it))
+print(next(it))
+```
+
+## Paso 3: Crear un generador con yield
+```
+def cuenta(n):
+    for i in range(n):
+        yield i
+```
+
+## Paso 4: Pipelines perezosos
+```
+data = range(5)
+cuadrados = (x * x for x in data)
+pares = (x for x in cuadrados if x % 2 == 0)
+```
+
+## Mini-reto
+Mini-reto 1: Genera los primeros 3 números impares.
+Solución:
+```
+def impares(n):
+    for i in range(n):
+        yield i * 2 + 1
+```
+
+## Errores típicos (mal vs bien)
+Mal: convertir a lista cuando no hace falta.
+```
+list(cuenta(1000000))
+```
+Bien: iterar perezosamente.
+```
+for valor in cuenta(3):
+    print(valor)
+```
+
+## Nota
+Nota: un iterador se consume una vez; si necesitas reusar, créalo de nuevo.
+
+## Advertencia
+Advertencia: modificar una colección mientras iteras puede saltarse elementos.
+
+## Checklist final
+- Distingo iterable, iterador y generador.
+- Uso iter() y next().
+- Creo generadores con yield.
+- Aplico pipelines perezosos.
+
+## Ver también
+- Funciones
+- Context managers
+- Variables y tipos
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -82,39 +141,85 @@ TL;DR: Iteradores y generadores consumen datos paso a paso, ahorrando memoria y 
         return [
             (
                 "Iterable vs iterador",
-                """data = [1, 2, 3]\nit = iter(data)\nprint(next(it))\nprint(next(it))""",
+                """data = [1, 2, 3]  # Iterable
+it = iter(data)  # Obtenemos el iterador
+print(next(it))  # Primer elemento
+print(next(it))  # Segundo elemento""",
             ),
             (
                 "StopIteration",
-                """it = iter([1])\ntry:\n    next(it)\n    next(it)\nexcept StopIteration:\n    print("Se terminó")""",
+                """it = iter([1])  # Creamos iterador
+try:  # Iniciamos el bloque try
+    next(it)  # Primer valor
+    next(it)  # Provoca StopIteration
+except StopIteration:  # Capturamos el fin
+    print("Se terminó")  # Mensaje""",
             ),
             (
                 "Generador básico",
-                """def cuenta(n):\n    for i in range(n):\n        yield i\n\nprint(list(cuenta(3)))""",
+                """def cuenta(n):  # Definimos el generador
+    for i in range(n):  # Recorremos el rango
+        yield i  # Emitimos el valor
+print(list(cuenta(3)))  # Materializamos para ver""",
             ),
             (
                 "yield from",
-                """def a():\n    yield from [1, 2, 3]\n\nprint(list(a()))""",
+                """def a():  # Definimos el generador
+    yield from [1, 2, 3]  # Delegamos al iterable
+print(list(a()))  # Mostramos resultados""",
             ),
             (
                 "Pipeline perezoso",
-                """data = range(5)\ncuadrados = (x * x for x in data)\npares = (x for x in cuadrados if x % 2 == 0)\nprint(list(pares))""",
+                """data = range(5)  # Iterable base
+cuadrados = (x * x for x in data)  # Generador de cuadrados
+pares = (x for x in cuadrados if x % 2 == 0)  # Filtramos pares
+print(list(pares))  # Materializamos para mostrar""",
             ),
             (
                 "Iterador manual",
-                """class Contador:\n    def __init__(self, tope):\n        self.actual = 0\n        self.tope = tope\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.actual >= self.tope:\n            raise StopIteration\n        valor = self.actual\n        self.actual += 1\n        return valor\n\nprint(list(Contador(3)))""",
+                """class Contador:  # Definimos la clase
+    def __init__(self, tope):  # Inicializamos
+        self.actual = 0  # Contador actual
+        self.tope = tope  # Límite
+    def __iter__(self):  # Devolvemos el iterador
+        return self  # Retornamos self
+    def __next__(self):  # Siguiente elemento
+        if self.actual >= self.tope:  # Verificamos fin
+            raise StopIteration  # Detenemos iteración
+        valor = self.actual  # Guardamos valor
+        self.actual += 1  # Incrementamos
+        return valor  # Devolvemos valor
+print(list(Contador(3)))  # Mostramos la lista""",
             ),
             (
                 "send en generador",
-                """def acumulador():\n    total = 0\n    while True:\n        valor = yield total\n        if valor is None:\n            break\n        total += valor\n\ngen = acumulador()\nprint(next(gen))\nprint(gen.send(5))\nprint(gen.send(3))""",
+                """def acumulador():  # Definimos el generador
+    total = 0  # Inicializamos total
+    while True:  # Bucle infinito
+        valor = yield total  # Esperamos envío
+        if valor is None:  # Señal de salida
+            break  # Salimos del bucle
+        total += valor  # Acumulamos
+gen = acumulador()  # Creamos generador
+print(next(gen))  # Primamos generador
+print(gen.send(5))  # Enviamos 5
+print(gen.send(3))  # Enviamos 3""",
             ),
             (
                 "Lectura simulada de líneas",
-                """def leer_lineas():\n    for linea in ["a", "b", "c"]:\n        yield linea\n\nfor linea in leer_lineas():\n    print(linea)""",
+                """def leer_lineas():  # Definimos generador
+    for linea in ["a", "b", "c"]:  # Iteramos sobre lista
+        yield linea  # Emitimos cada línea
+for linea in leer_lineas():  # Recorremos el generador
+    print(linea)  # Imprimimos la línea""",
             ),
             (
                 "Recrear iterador",
-                """data = [1, 2]\nit = iter(data)\nlist(it)\nit = iter(data)\nprint(list(it))""",
+                """data = [1, 2]  # Lista base
+it = iter(data)  # Creamos iterador
+list(it)  # Consumimos
+it = iter(data)  # Recreamos iterador
+print(list(it))  # Mostramos valores""",
             ),
         ]
 

@@ -26,18 +26,70 @@ class QPushButtonLesson(Lesson):
 
     def guide(self) -> str:
         return """
-- QPushButton dispara la señal clicked cuando se pulsa.
-- Puedes conectar clicked a funciones o lambdas.
-- setEnabled() deshabilita el botón.
-- setCheckable() permite estados on/off.
-- setText() cambia el texto dinámicamente.
-- setIcon() añade un icono al botón.
-- Usa tooltips para explicar acciones.
-- Qt maneja el foco y accesibilidad automáticamente.
-- Usa estilos con setStyleSheet para personalizar.
-- Los botones deben tener parent o estar en un layout.
-- Usa la señal toggled para botones checkables.
-- Emite pressed y released para acciones avanzadas.
+## Qué es
+QPushButton es el botón clásico de Qt para ejecutar acciones con un clic.
+
+## Cuándo se usa
+Cuando necesitas disparar una acción (guardar, enviar, confirmar) o activar/desactivar un estado.
+
+## Conceptos previos
+- Widgets básicos en PySide6.
+- Señales y slots (conectar eventos).
+
+## Paso 1: Crear un botón
+```
+btn = QPushButton("Guardar")
+```
+
+## Paso 2: Conectar la señal clicked
+```
+btn.clicked.connect(lambda: print("Guardado"))
+```
+
+## Paso 3: Botón checkable (on/off)
+```
+btn.setCheckable(True)
+btn.toggled.connect(lambda estado: print(estado))
+```
+
+## Paso 4: Deshabilitar cuando no aplica
+```
+btn.setEnabled(False)
+```
+
+## Mini-reto
+Mini-reto 1: Crea un botón que cambie su texto a “Listo” cuando se haga clic.
+Solución:
+```
+btn = QPushButton("Procesar")
+btn.clicked.connect(lambda: btn.setText("Listo"))
+```
+
+## Errores típicos (mal vs bien)
+Mal: hacer trabajo pesado en clicked y congelar la UI.
+```
+btn.clicked.connect(lambda: tarea_lenta())
+```
+Bien: mover el trabajo pesado a otro hilo o mostrar feedback.
+```
+btn.clicked.connect(lambda: print("Procesando..."))
+```
+
+## Nota
+Nota: usa tooltips si la acción no es obvia.
+
+## Advertencia
+Advertencia: un botón sin conexión no hace nada, siempre conecta señales.
+
+## Checklist final
+- Creo botones y conecto clicked.
+- Uso setCheckable y toggled cuando necesito estado.
+- Deshabilito acciones cuando no aplican.
+
+## Ver también
+- QLabel
+- QLineEdit
+- QComboBox
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -80,35 +132,45 @@ class QPushButtonLesson(Lesson):
         return [
             (
                 "Botón simple",
-                """btn = QPushButton("Guardar")\nbtn.clicked.connect(lambda: print("Guardado"))""",
+                """btn = QPushButton("Guardar")  # Creamos el botón
+btn.clicked.connect(lambda: print("Guardado"))  # Conectamos clicked""",
             ),
             (
                 "Deshabilitar",
-                """btn = QPushButton("Enviar")\nbtn.setEnabled(False)""",
+                """btn = QPushButton("Enviar")  # Creamos el botón
+btn.setEnabled(False)  # Lo deshabilitamos""",
             ),
             (
                 "Botón checkable",
-                """btn = QPushButton("Modo oscuro")\nbtn.setCheckable(True)\nbtn.toggled.connect(print)""",
+                """btn = QPushButton("Modo oscuro")  # Creamos botón
+btn.setCheckable(True)  # Habilitamos estado
+btn.toggled.connect(print)  # Mostramos el estado""",
             ),
             (
                 "Tooltip",
-                """btn = QPushButton("Ayuda")\nbtn.setToolTip("Muestra ayuda")""",
+                """btn = QPushButton("Ayuda")  # Botón de ayuda
+btn.setToolTip("Muestra ayuda")  # Texto de ayuda""",
             ),
             (
                 "Cambiar texto",
-                """btn = QPushButton("Start")\nbtn.setText("Stop")""",
+                """btn = QPushButton("Start")  # Texto inicial
+btn.setText("Stop")  # Cambiamos el texto""",
             ),
             (
                 "Señales pressed/released",
-                """btn = QPushButton("Grabando")\nbtn.pressed.connect(lambda: print("presionado"))\nbtn.released.connect(lambda: print("liberado"))""",
+                """btn = QPushButton("Grabando")  # Creamos botón
+btn.pressed.connect(lambda: print("presionado"))  # Señal pressed
+btn.released.connect(lambda: print("liberado"))  # Señal released""",
             ),
             (
                 "Anidar en layout",
-                """layout = QVBoxLayout()\nlayout.addWidget(QPushButton("Aceptar"))""",
+                """layout = QVBoxLayout()  # Creamos layout
+layout.addWidget(QPushButton("Aceptar"))  # Añadimos botón""",
             ),
             (
                 "Estilos simples",
-                """btn = QPushButton("Importante")\nbtn.setStyleSheet("font-weight: bold;")""",
+                """btn = QPushButton("Importante")  # Creamos botón
+btn.setStyleSheet("font-weight: bold;")  # Aplicamos estilo""",
             ),
         ]
 

@@ -50,13 +50,13 @@ with sqlite3.connect("tienda.db") as conn:  # Abrimos conexión
 ```
 with sqlite3.connect("tienda.db") as conn:
     conn.execute(
-        """
+        '''
         CREATE TABLE IF NOT EXISTS productos (
             id INTEGER PRIMARY KEY,
             nombre TEXT NOT NULL,
             precio REAL NOT NULL
         )
-        """
+        '''
     )
 ```
 

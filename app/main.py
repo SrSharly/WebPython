@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import html
 import logging
+import re
 import sys
 from dataclasses import dataclass
 
@@ -343,50 +344,136 @@ class MainWindow(QMainWindow):
         list_items: list[str] = []
         code_lines: list[str] = []
         in_code_block = False
+        callout: dict[str, object] | None = None
+        callout_list_items: list[str] = []
+
+        callout_pattern = re.compile(
+            r"^(?P<title>.+?)\s*\(CalloutBox:\s*(?P<variant>[a-z_]+)\s*\)$",
+            re.IGNORECASE,
+        )
+
+        def render_callout(title: str, variant: str, body_html: str) -> str:
+            meta = {
+                "best_practice": {"label": "Buenas prácticas", "icon": "✅", "class": "best"},
+                "note": {"label": "Nota", "icon": "💡", "class": "note"},
+                "warning": {"label": "Advertencia", "icon": "⚠️", "class": "warn"},
+                "definition": {"label": "Definición", "icon": "📌", "class": "definition"},
+            }
+            info = meta.get(variant, {"label": title, "icon": "💬", "class": "note"})
+            if variant == "best_practice":
+                display_title = info["label"]
+            else:
+                display_title = title or info["label"]
+            return (
+                f"<div class=\"card callout {info['class']}\">"
+                f"<div class=\"card-header\">"
+                f"<span class=\"card-icon\">{info['icon']}</span>"
+                f"<span class=\"card-title\">{html.escape(display_title)}</span>"
+                "</div>"
+                f"<div class=\"card-body\">{body_html}</div>"
+                "</div>"
+            )
+
+        def render_code_card(code: str) -> str:
+            return (
+                "<div class=\"card code-card\">"
+                "<div class=\"card-header\">"
+                "<span class=\"card-icon\">💻</span>"
+                "<span class=\"card-title\">Código</span>"
+                "<span class=\"copy-btn\">Copiar</span>"
+                "</div>"
+                f"<pre class=\"code-block\"><code>{html.escape(code)}</code></pre>"
+                "</div>"
+            )
+
+        def flush_list_items() -> None:
+            nonlocal list_items
+            if list_items:
+                chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                list_items = []
+
+        def flush_callout_list() -> None:
+            nonlocal callout_list_items
+            if callout is not None and callout_list_items:
+                body = callout.setdefault("body", [])
+                if isinstance(body, list):
+                    body.append("<ul>" + "".join(f"<li>{item}</li>" for item in callout_list_items) + "</ul>")
+                callout_list_items = []
+
+        def flush_callout() -> None:
+            nonlocal callout
+            if callout is None:
+                return
+            flush_callout_list()
+            body_parts = callout.get("body", [])
+            body_html = "".join(body_parts) if isinstance(body_parts, list) else ""
+            chunks.append(
+                render_callout(
+                    str(callout.get("title", "")),
+                    str(callout.get("variant", "note")),
+                    body_html,
+                )
+            )
+            callout = None
+
         for line in lines:
             stripped = line.strip()
             if stripped.startswith("```"):
                 if in_code_block:
-                    chunks.append(
-                        '<pre class="code-block"><code>'
-                        + html.escape("\n".join(code_lines))
-                        + "</code></pre>"
-                    )
+                    chunks.append(render_code_card("\n".join(code_lines)))
                     code_lines = []
                     in_code_block = False
                 else:
-                    if list_items:
-                        chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
-                        list_items = []
+                    if callout is not None:
+                        flush_callout()
+                    flush_list_items()
                     in_code_block = True
                 continue
             if in_code_block:
                 code_lines.append(line)
                 continue
             if stripped.startswith("### "):
-                if list_items:
-                    chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
-                    list_items = []
-                chunks.append(f"<h3>{html.escape(stripped[4:].strip())}</h3>")
+                flush_list_items()
+                if callout is not None:
+                    flush_callout()
+                title = stripped[4:].strip()
+                match = callout_pattern.match(title)
+                if match:
+                    callout = {
+                        "title": match.group("title").strip(),
+                        "variant": match.group("variant").strip().lower(),
+                        "body": [],
+                    }
+                else:
+                    chunks.append(f"<h3>{html.escape(title)}</h3>")
                 continue
             if stripped.startswith("## "):
-                if list_items:
-                    chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
-                    list_items = []
+                flush_list_items()
+                if callout is not None:
+                    flush_callout()
                 chunks.append(f"<h2>{html.escape(stripped[3:].strip())}</h2>")
                 continue
             if stripped.startswith(("-", "*")):
-                list_items.append(html.escape(stripped[1:].strip()))
+                if callout is not None:
+                    callout_list_items.append(html.escape(stripped[1:].strip()))
+                else:
+                    list_items.append(html.escape(stripped[1:].strip()))
                 continue
-            if list_items:
-                chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
-                list_items = []
+            flush_list_items()
             if stripped:
-                chunks.append(f"<p>{html.escape(stripped)}</p>")
+                if callout is not None:
+                    flush_callout_list()
+                    body = callout.setdefault("body", [])
+                    if isinstance(body, list):
+                        body.append(f"<p>{html.escape(stripped)}</p>")
+                else:
+                    chunks.append(f"<p>{html.escape(stripped)}</p>")
         if list_items:
-            chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+            flush_list_items()
+        if callout is not None:
+            flush_callout()
         if code_lines:
-            chunks.append('<pre class="code-block"><code>' + html.escape("\n".join(code_lines)) + "</code></pre>")
+            chunks.append(render_code_card("\n".join(code_lines)))
         return "".join(chunks)
 
     def _render_guide(self, lesson: Lesson) -> None:
@@ -404,7 +491,15 @@ class MainWindow(QMainWindow):
         if examples:
             resumen = examples[:2]
             resumen_html = "<h2>Resumen de ejemplos</h2>" + "".join(
-                f"<h3>{html.escape(title)}</h3><pre><code>{html.escape(code)}</code></pre>"
+                f"<h3>{html.escape(title)}</h3>"
+                f"<div class=\"card code-card\">"
+                "<div class=\"card-header\">"
+                "<span class=\"card-icon\">💻</span>"
+                "<span class=\"card-title\">Código</span>"
+                "<span class=\"copy-btn\">Copiar</span>"
+                "</div>"
+                f"<pre class=\"code-block\"><code>{html.escape(code)}</code></pre>"
+                "</div>"
                 for title, code in resumen
             )
         else:
@@ -412,20 +507,40 @@ class MainWindow(QMainWindow):
 
         if self.current_theme == "dark":
             text_color = "#e6e6e6"
-            code_text = "#e6e6e6"
-            code_background = "#2a2a2a"
-            code_border = "#3a3a3a"
+            code_text = "#e5e7eb"
+            code_background = "#111827"
+            code_border = "#1f2937"
             keyword_color = "#d6b86a"
             keyword_border = "#b8953d"
             keyword_hover = "#e6c87b"
+            card_border = "#3a3a3a"
+            card_header = "#f8f0d4"
+            accent_code = "#d4af37"
+            accent_best = "#7cc992"
+            accent_note = "#7aa2c7"
+            accent_warn = "#d4a64a"
+            bg_best = "#1f2a22"
+            bg_note = "#1f2a3a"
+            bg_warn = "#3a2f1f"
+            bg_definition = "#2d2639"
         else:
             text_color = "#1f2937"
             code_text = "#e2e8f0"
-            code_background = "#0f172a"
-            code_border = "#1e293b"
+            code_background = "#0b1220"
+            code_border = "#111827"
             keyword_color = "#3b5b8a"
             keyword_border = "#8aa0c8"
             keyword_hover = "#2f4c79"
+            card_border = "#d7dde8"
+            card_header = "#1f2937"
+            accent_code = "#d4af37"
+            accent_best = "#3f7a57"
+            accent_note = "#4d6fa1"
+            accent_warn = "#d4883a"
+            bg_best = "#f2f7ef"
+            bg_note = "#eef4ff"
+            bg_warn = "#fff3e2"
+            bg_definition = "#f3f0ff"
 
         html_content = f"""
         <html>
@@ -437,12 +552,61 @@ class MainWindow(QMainWindow):
             h3 {{ font-size: 16px; margin-top: 14px; }}
             p {{ line-height: 1.5; color: {text_color}; }}
             ul {{ margin-left: 18px; color: {text_color}; }}
+            .card {{
+                border-radius: 12px;
+                padding: 12px 14px;
+                border: 1px solid {card_border};
+                margin: 12px 0;
+            }}
+            .card-header {{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: {card_header};
+            }}
+            .card-icon {{
+                font-size: 14px;
+            }}
+            .copy-btn {{
+                margin-left: auto;
+                padding: 4px 10px;
+                border-radius: 8px;
+                border: 1px solid {card_border};
+                background: transparent;
+                font-size: 12px;
+            }}
+            .code-card {{
+                background: {code_background};
+                border-left: 4px solid {accent_code};
+            }}
+            .callout.best {{
+                background: {bg_best};
+                border-left: 4px solid {accent_best};
+            }}
+            .callout.note {{
+                background: {bg_note};
+                border-left: 4px solid {accent_note};
+            }}
+            .callout.warn {{
+                background: {bg_warn};
+                border-left: 4px solid {accent_warn};
+            }}
+            .callout.definition {{
+                background: {bg_definition};
+                border-left: 4px solid {accent_note};
+            }}
             .code-block {{
                 background: {code_background};
                 color: {code_text};
                 padding: 12px;
                 border-radius: 10px;
                 border: 1px solid {code_border};
+                font-family: "Consolas";
+                font-size: 12px;
+                margin: 0;
+                white-space: pre-wrap;
             }}
             code {{ font-family: "Consolas"; }}
             a.kw {{

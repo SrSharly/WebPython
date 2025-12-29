@@ -32,8 +32,8 @@ from PySide6.QtWidgets import (
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.utils.code_runner import SnippetRunner
-from app.utils.glossary import apply_glossary_tooltips
 from app.utils.theme import apply_theme, toggle_theme
+from app.utils.tooltipify import tooltipify_html
 from app.utils.ui_components import CodeCard
 from app.utils.ui_helpers import badge
 
@@ -406,11 +406,15 @@ class MainWindow(QMainWindow):
             code_text = "#e6e6e6"
             code_background = "#2a2a2a"
             code_border = "#3a3a3a"
+            keyword_color = "#d6b86a"
+            keyword_border = "#b8953d"
         else:
             text_color = "#1f2937"
             code_text = "#e2e8f0"
             code_background = "#0f172a"
             code_border = "#1e293b"
+            keyword_color = "#3b5b8a"
+            keyword_border = "#8aa0c8"
 
         html_content = f"""
         <html>
@@ -430,6 +434,12 @@ class MainWindow(QMainWindow):
                 border: 1px solid {code_border};
             }}
             code {{ font-family: "Consolas"; }}
+            .kw {{
+                color: {keyword_color};
+                text-decoration: underline dotted {keyword_border};
+                text-underline-offset: 3px;
+                cursor: help;
+            }}
         </style>
         </head>
         <body>
@@ -438,7 +448,7 @@ class MainWindow(QMainWindow):
         </body>
         </html>
         """
-        html_content = apply_glossary_tooltips(html_content)
+        html_content = tooltipify_html(html_content)
         self.guide_text.setHtml(html_content)
         self.guide_text.document().setTextWidth(self.guide_text.viewport().width())
         content_height = int(self.guide_text.document().size().height())

@@ -1,69 +1,75 @@
 from __future__ import annotations
 
-import html
-import re
-
 TERMS = {
-    "snake_case": "Convención de nombres con palabras en minúsculas separadas por guiones bajos.",
-    "pascalcase": "Convención de nombres con cada palabra iniciando en mayúscula, sin separadores.",
     "variable": "Espacio de memoria con un nombre que guarda un valor.",
     "función": "Bloque reutilizable de código que realiza una tarea específica.",
+    "método": "Función asociada a un objeto o clase.",
+    "clase": "Molde que define atributos y comportamientos para crear objetos.",
+    "objeto": "Instancia de una clase con estado y comportamiento.",
+    "módulo": "Archivo de Python que agrupa código reutilizable.",
+    "paquete": "Carpeta con módulos y un __init__.py para organizar código.",
     "parámetro": "Nombre definido en la función para recibir valores.",
     "argumento": "Valor real que se envía a una función al llamarla.",
-    "tupla": "Colección ordenada e inmutable de elementos.",
-    "lista": "Colección ordenada y mutable de elementos.",
+    "return": "Palabra clave que devuelve un valor desde una función.",
+    "none": "Objeto especial que representa ausencia de valor.",
+    "bool": "Tipo de dato lógico con valores True o False.",
+    "int": "Tipo numérico para enteros.",
+    "float": "Tipo numérico para decimales.",
+    "str": "Tipo de texto (cadena de caracteres).",
+    "list": "Colección ordenada y mutable de elementos.",
+    "tuple": "Colección ordenada e inmutable de elementos.",
+    "dict": "Colección de pares clave-valor.",
+    "set": "Colección de elementos únicos sin orden.",
     "mutable": "Se puede modificar después de ser creado.",
     "inmutable": "No se puede modificar después de ser creado.",
-    "método": "Función asociada a un objeto o clase.",
-    "objeto": "Instancia de una clase con estado y comportamiento.",
+    "iterador": "Objeto que permite recorrer elementos uno a uno.",
+    "generador": "Función o expresión que produce valores bajo demanda.",
+    "excepción": "Evento que interrumpe el flujo normal por un error.",
+    "try": "Bloque para capturar errores potenciales.",
+    "except": "Bloque que maneja una excepción específica.",
+    "finally": "Bloque que se ejecuta siempre al finalizar un try.",
+    "with": "Bloque que gestiona recursos con context manager.",
+    "context manager": "Objeto que controla la entrada y salida de un bloque with.",
     "scope": "Alcance donde una variable es visible y válida.",
+    "global": "Palabra clave para usar una variable del ámbito global.",
+    "local": "Variable definida dentro de un bloque o función.",
+    "snake_case": "Convención de nombres con minúsculas y guiones bajos.",
+    "pascalcase": "Convención de nombres con cada palabra en mayúscula.",
+    "pep8": "Guía de estilo oficial para escribir código Python.",
+    "indentación": "Espacios o tabulaciones que delimitan bloques de código.",
+    "f-string": "Cadena con interpolación usando prefijo f.",
+    "slice": "Subsección de una secuencia usando índices y rango.",
+    "comprehension": "Sintaxis compacta para construir colecciones.",
     "append": "Método de listas que agrega un elemento al final.",
+    "extend": "Método de listas que agrega varios elementos.",
+    "insert": "Método de listas que agrega en una posición específica.",
+    "pop": "Método que extrae y devuelve un elemento.",
+    "remove": "Método que elimina la primera coincidencia.",
+    "sort": "Método que ordena los elementos en su lugar.",
     "upper": "Método de strings que convierte a mayúsculas.",
-    "len": "Función que devuelve la longitud de una colección.",
-    "print": "Función que muestra texto en la salida estándar.",
-    "transacción": "Grupo de operaciones que se confirman o se revierten juntas.",
-    "cursor": "Objeto que permite recorrer los resultados de una consulta.",
-    "pool": "Conjunto de conexiones reutilizables para evitar abrir nuevas cada vez.",
-    "orm": "Técnica que mapea clases de Python a tablas de base de datos.",
-    "engine": "Componente de SQLAlchemy que sabe cómo conectarse a una base de datos.",
-    "session": "Unidad de trabajo que gestiona objetos y transacciones en ORM.",
-    "commit": "Acción que confirma los cambios pendientes en una transacción.",
-    "rollback": "Acción que revierte los cambios de una transacción.",
-    "sql injection": "Ataque que manipula SQL cuando se concatenan datos sin parámetros.",
-    "dsn": "Cadena que describe cómo conectarse a una base de datos.",
-    "warehouse": "Almacén de datos optimizado para análisis y reportes.",
+    "lower": "Método de strings que convierte a minúsculas.",
+    "strip": "Método que quita espacios al inicio y final.",
+    "split": "Método que separa un string en partes.",
+    "join": "Método que une una lista de strings.",
+    "replace": "Método que reemplaza subcadenas.",
+    "startswith": "Método que comprueba el prefijo.",
+    "endswith": "Método que comprueba el sufijo.",
+    "get": "Método de dict que devuelve un valor con clave.",
+    "items": "Método de dict que devuelve pares clave-valor.",
+    "keys": "Método de dict que devuelve las claves.",
+    "values": "Método de dict que devuelve los valores.",
+    "update": "Método de dict que fusiona valores.",
+    "sql": "Lenguaje para consultar y manipular bases de datos relacionales.",
+    "cursor": "Objeto que permite recorrer resultados de una consulta.",
+    "transacción": "Grupo de operaciones que se confirman o revierten juntas.",
+    "commit": "Acción que confirma los cambios pendientes.",
+    "rollback": "Acción que revierte los cambios pendientes.",
+    "orm": "Técnica que mapea clases de Python a tablas.",
+    "engine": "Componente que gestiona la conexión a la base de datos.",
+    "session": "Unidad de trabajo que gestiona objetos y transacciones.",
+    "pool": "Conjunto de conexiones reutilizables.",
+    "dsn": "Cadena que describe cómo conectarse a la base de datos.",
+    "sql injection": "Ataque que manipula SQL con datos sin parametrizar.",
 }
 
-_TERM_PATTERN = re.compile(
-    r"(?<!\w)(" + "|".join(re.escape(term) for term in sorted(TERMS, key=len, reverse=True)) + r")(?!\w)",
-    flags=re.IGNORECASE,
-)
-
-
-def _apply_tooltips_to_text(text: str) -> str:
-    def _replace(match: re.Match[str]) -> str:
-        original = match.group(0)
-        definition = TERMS.get(original.lower())
-        if definition is None:
-            return original
-        safe_definition = html.escape(definition, quote=True)
-        return f'<span title="{safe_definition}">{original}</span>'
-
-    return _TERM_PATTERN.sub(_replace, text)
-
-
-def apply_glossary_tooltips(html_or_text: str) -> str:
-    parts = re.split(r"(<[^>]+>)", html_or_text)
-    output: list[str] = []
-    in_code = False
-    for part in parts:
-        if part.startswith("<"):
-            tag = part.lower()
-            if tag.startswith("<code") or tag.startswith("<pre"):
-                in_code = True
-            if tag.startswith("</code") or tag.startswith("</pre"):
-                in_code = False
-            output.append(part)
-        else:
-            output.append(part if in_code else _apply_tooltips_to_text(part))
-    return "".join(output)
+KEYWORDS = list(TERMS.keys())

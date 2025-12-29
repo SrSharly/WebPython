@@ -1,0 +1,2 @@
+PySide6
+# Opcionales: pandas, pandasai, scikit-learn, tensorflow, torch

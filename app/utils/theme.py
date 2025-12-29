@@ -127,6 +127,22 @@ QFrame#CodeCard {
     border: 1px solid #e1e5ef;
     border-radius: 14px;
 }
+QFrame#DefinitionPanel {
+    background: #ffffff;
+    border: 1px solid #d7dde8;
+    border-radius: 14px;
+}
+QLabel#DefinitionTitle {
+    font-size: 16px;
+    font-weight: 700;
+}
+QLabel#DefinitionTerm {
+    background: #eef1f7;
+    color: #1f2937;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+}
 QTextEdit#CodeBlock {
     background: #0f172a;
     color: #e2e8f0;
@@ -269,6 +285,22 @@ QFrame#CodeCard {
     background: #2a2a2a;
     border: 1px solid #3a3a3a;
     border-radius: 14px;
+}
+QFrame#DefinitionPanel {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 14px;
+}
+QLabel#DefinitionTitle {
+    font-size: 16px;
+    font-weight: 700;
+}
+QLabel#DefinitionTerm {
+    background: #2e2e2e;
+    color: #f7f2e4;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-weight: 700;
 }
 QTextEdit#CodeBlock {
     background: #1e1e1e;

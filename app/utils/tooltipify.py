@@ -4,7 +4,7 @@ import re
 from urllib.parse import quote
 from functools import lru_cache
 
-from app.utils.glossary import KEYWORDS, TERMS
+from app.utils.glossary import GLOSSARY, KEYWORDS
 
 _SKIP_TAGS = {"code", "pre", "style", "script"}
 _MAX_MATCHES_PER_TERM = 8
@@ -26,7 +26,7 @@ def tooltipify_html(html_text: str) -> str:
     def _replace(match: re.Match[str]) -> str:
         original = match.group(0)
         key = original.lower()
-        if key not in TERMS:
+        if key not in GLOSSARY:
             return original
         current = counts.get(key, 0)
         if current >= _MAX_MATCHES_PER_TERM:

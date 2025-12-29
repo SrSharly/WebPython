@@ -5,10 +5,11 @@ import logging
 import sys
 from dataclasses import dataclass
 
-from PySide6.QtCore import QSettings, Qt
-from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtCore import QEvent, QObject, QPoint, QRect, QSettings, Qt
+from PySide6.QtGui import QGuiApplication, QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
+    QFrame,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -33,6 +34,7 @@ from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
 from app.utils.code_runner import SnippetRunner
+from app.utils.glossary import GLOSSARY
 from app.utils.theme import apply_theme, toggle_theme
 from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
@@ -85,12 +87,13 @@ class MainWindow(QMainWindow):
         self.summary_view = QTextEdit()
         self.summary_view.setReadOnly(True)
         self.guide_text = QTextBrowser()
-        self.guide_text.setOpenExternalLinks(True)
+        self.guide_text.setOpenExternalLinks(False)
         self.guide_text.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.guide_text.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.guide_text.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self._tooltip_controller = InstantTooltipController(self.guide_text)
         self.guide_text.installEventFilter(self._tooltip_controller)
+        self._tooltip_controller.termPinned.connect(self._on_term_pinned)
         self.guide_scroll = QScrollArea()
         self.guide_scroll.setWidgetResizable(True)
         self.guide_scroll.setWidget(self.guide_text)
@@ -164,10 +167,44 @@ class MainWindow(QMainWindow):
         self.badge_layout.setSpacing(6)
         self.header_layout.addWidget(self.badge_row)
 
+        self.definition_panel = QFrame()
+        self.definition_panel.setObjectName("DefinitionPanel")
+        definition_layout = QVBoxLayout(self.definition_panel)
+        definition_layout.setContentsMargins(12, 12, 12, 12)
+        definition_layout.setSpacing(8)
+        self.definition_title = QLabel("Definición")
+        self.definition_title.setObjectName("DefinitionTitle")
+        self.definition_term = QLabel()
+        self.definition_term.setObjectName("DefinitionTerm")
+        self.definition_term.setVisible(False)
+        self.definition_body = QTextBrowser()
+        self.definition_body.setReadOnly(True)
+        self.definition_body.setOpenExternalLinks(False)
+        if hasattr(self.definition_body, "setOpenLinks"):
+            self.definition_body.setOpenLinks(False)
+        self.definition_body.setObjectName("DefinitionBody")
+        definition_buttons = QHBoxLayout()
+        self.definition_copy = QPushButton("Copiar")
+        self.definition_close = QPushButton("Cerrar")
+        self.definition_close.setProperty("secondary", True)
+        self.definition_copy.clicked.connect(self._copy_definition)
+        self.definition_close.clicked.connect(self._clear_definition_panel)
+        definition_buttons.addWidget(self.definition_copy)
+        definition_buttons.addWidget(self.definition_close)
+        definition_buttons.addStretch()
+        definition_layout.addWidget(self.definition_title)
+        definition_layout.addWidget(self.definition_term)
+        definition_layout.addWidget(self.definition_body, 1)
+        definition_layout.addLayout(definition_buttons)
+
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
         right_layout.addWidget(self.header_widget)
-        right_layout.addWidget(self.tabs)
+        content_splitter = QSplitter()
+        content_splitter.addWidget(self.tabs)
+        content_splitter.addWidget(self.definition_panel)
+        content_splitter.setSizes([860, 320])
+        right_layout.addWidget(content_splitter)
         right_layout.setStretch(0, 0)
         right_layout.setStretch(1, 1)
 
@@ -189,6 +226,51 @@ class MainWindow(QMainWindow):
         search_shortcut = QShortcut(QKeySequence("Ctrl+K"), self)
         search_shortcut.activated.connect(self.search_input.setFocus)
         self._update_theme_toggle()
+        self._pinned_term: str | None = None
+        self._clear_definition_panel()
+        self.app.installEventFilter(self)
+
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if event.type() == QEvent.MouseButtonPress and self._pinned_term:
+            if self._click_inside_definition_panel(event):
+                return super().eventFilter(watched, event)
+            if self._click_on_tip_anchor(watched, event):
+                return super().eventFilter(watched, event)
+            self._clear_definition_panel()
+        return super().eventFilter(watched, event)
+
+    def _click_inside_definition_panel(self, event: QEvent) -> bool:
+        global_pos = self._event_global_pos(event)
+        if global_pos is None:
+            return False
+        top_left = self.definition_panel.mapToGlobal(QPoint(0, 0))
+        rect = QRect(top_left, self.definition_panel.size())
+        return rect.contains(global_pos)
+
+    def _click_on_tip_anchor(self, watched: QObject, event: QEvent) -> bool:
+        if watched not in {self.guide_text, self.guide_text.viewport()}:
+            return False
+        pos = self._event_local_pos(event)
+        if pos is None:
+            return False
+        if watched is self.guide_text:
+            pos = self.guide_text.viewport().mapFrom(self.guide_text, pos)
+        anchor = self.guide_text.anchorAt(pos)
+        return anchor.startswith("tip:")
+
+    def _event_global_pos(self, event: QEvent) -> QPoint | None:
+        if hasattr(event, "globalPosition"):
+            return event.globalPosition().toPoint()
+        if hasattr(event, "globalPos"):
+            return event.globalPos()
+        return None
+
+    def _event_local_pos(self, event: QEvent) -> QPoint | None:
+        if hasattr(event, "position"):
+            return event.position().toPoint()
+        if hasattr(event, "pos"):
+            return event.pos()
+        return None
 
     def _load_lessons(self) -> None:
         self.tree.clear()
@@ -575,6 +657,29 @@ class MainWindow(QMainWindow):
         self._update_theme_toggle()
         if hasattr(self, "current_entry"):
             self._render_guide(self.current_entry.instance)
+
+    def _on_term_pinned(self, term_id: str) -> None:
+        data = GLOSSARY.get(term_id)
+        if not data:
+            return
+        self._pinned_term = term_id
+        self.definition_term.setText(term_id)
+        self.definition_term.setVisible(True)
+        self.definition_body.setPlainText(data["definition"])
+
+    def _clear_definition_panel(self) -> None:
+        self._pinned_term = None
+        self.definition_term.clear()
+        self.definition_term.setVisible(False)
+        self.definition_body.setPlainText("Haz clic en una palabra resaltada para fijar su definición.")
+
+    def _copy_definition(self) -> None:
+        if not self._pinned_term:
+            return
+        data = GLOSSARY.get(self._pinned_term)
+        if not data:
+            return
+        QGuiApplication.clipboard().setText(data["definition"])
 
 
 def main() -> None:

@@ -14,7 +14,7 @@ from app.lesson_base import Lesson
 class QLineEditLesson(Lesson):
     TITLE = "QLineEdit"
     CATEGORY = "PySide6"
-    SUBCATEGORY = "Widgets"
+    SUBCATEGORY = "Controles"
     LEVEL = "Básico"
     TAGS = ["QLineEdit", "inputs", "signals", "validacion"]
 
@@ -130,6 +130,9 @@ class QLineEditLesson(Lesson):
                 "solution": "line = QLineEdit()\nline.setEchoMode(QLineEdit.Password)",
             },
         ]
+
+    def requirements(self) -> list[str]:
+        return []
 
     def build_demo(self) -> QWidget | None:
         widget = QWidget()

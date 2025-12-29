@@ -14,7 +14,7 @@ from app.lesson_base import Lesson
 class QPushButtonLesson(Lesson):
     TITLE = "QPushButton"
     CATEGORY = "PySide6"
-    SUBCATEGORY = "Widgets"
+    SUBCATEGORY = "Controles"
     LEVEL = "Básico"
     TAGS = ["QPushButton", "signals", "click"]
 
@@ -130,6 +130,9 @@ class QPushButtonLesson(Lesson):
                 "solution": "checkbox = QCheckBox('Activo')\nbtn = QPushButton('Acción')\ncheckbox.stateChanged.connect(lambda state: btn.setEnabled(state == 2))",
             },
         ]
+
+    def requirements(self) -> list[str]:
+        return []
 
     def build_demo(self) -> QWidget | None:
         widget = QWidget()

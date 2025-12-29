@@ -35,6 +35,7 @@ from PySide6.QtWidgets import (
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
+from app.ui.library_reference_view import LibraryReferenceView
 from app.utils.code_runner import SnippetRunner
 from app.utils.glossary import GLOSSARY, definition_text
 from app.utils.theme import apply_theme, toggle_theme
@@ -131,6 +132,7 @@ class MainWindow(QMainWindow):
         self.demo_scroll.setWidget(self.demo_container)
 
         self.glossary_view = GlossaryView()
+        self.library_reference_view = LibraryReferenceView()
 
         self.tabs.addTab(self.guide_scroll, "Tutorial")
         self.tabs.addTab(self.summary_view, "Resumen")
@@ -139,6 +141,7 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.exercises_scroll, "Ejercicios")
         self.tabs.addTab(self.demo_scroll, "Demo")
         self.tabs.addTab(self.glossary_view, "Glosario")
+        self.tabs.addTab(self.library_reference_view, "Librerías")
 
         left_panel = QWidget()
         left_layout = QVBoxLayout(left_panel)

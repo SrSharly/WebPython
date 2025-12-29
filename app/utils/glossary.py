@@ -3,50 +3,89 @@ from __future__ import annotations
 GLOSSARY = {
     "variable": {
         "tooltip": "Espacio de memoria con un nombre que guarda un valor.",
-        "definition": (
-            "Una variable es un nombre que referencia un valor guardado en memoria. "
-            "Se usa para reutilizar datos, hacer el código legible y expresar intención. "
-            "Ejemplo: x = 5 guarda el 5 en la variable x. "
-            "Matiz: el nombre puede reasignarse y apuntar a otro valor, por lo que su "
-            "contenido puede cambiar durante la ejecución."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un nombre que referencia un valor en memoria durante la ejecución."
+            ),
+            "para_que": (
+                "Permite guardar datos, reutilizarlos y hacer el código más legible y "
+                "fácil de mantener."
+            ),
+            "sintaxis": "nombre = valor",
+            "ejemplo": "x = 5 guarda el valor 5 en la variable x.",
+            "matiz": (
+                "El nombre puede reasignarse para apuntar a otro valor más adelante."
+            ),
+        },
     },
     "función": {
         "tooltip": "Bloque reutilizable de código que realiza una tarea específica.",
-        "definition": (
-            "Una función agrupa instrucciones bajo un nombre para reutilizarlas. "
-            "Se usa para evitar repetir lógica, organizar el programa y encapsular "
-            "comportamiento. "
-            "Ejemplo: def saludar(): print('Hola'). "
-            "Matiz: puede devolver un valor con return o no devolver nada (None)."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Un bloque de código con nombre que puede ejecutarse varias veces."
+            ),
+            "para_que": (
+                "Sirve para encapsular lógica, evitar repetición y dividir un problema "
+                "grande en piezas pequeñas."
+            ),
+            "sintaxis": "def nombre(parametros): ...",
+            "ejemplo": "def saludar(): print('Hola')",
+            "matiz": (
+                "Puede devolver un valor con return o no devolver nada (None)."
+            ),
+        },
     },
     "método": {
         "tooltip": "Función asociada a un objeto o clase.",
-        "definition": (
-            "Un método es una función que pertenece a un objeto o clase y actúa sobre sus datos. "
-            "Se usa para definir comportamientos del objeto. "
-            "Ejemplo: 'hola'.upper() llama al método upper del string. "
-            "Error típico: olvidar los paréntesis y no ejecutar el método."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una función asociada a una clase u objeto que opera sobre su estado."
+            ),
+            "para_que": (
+                "Modela comportamientos del objeto, como transformar datos o validar "
+                "su estado interno."
+            ),
+            "sintaxis": "objeto.metodo(args)",
+            "ejemplo": "'hola'.upper() devuelve 'HOLA'.",
+            "matiz": (
+                "Si olvidas los paréntesis, obtienes la referencia al método en lugar "
+                "de ejecutarlo."
+            ),
+        },
     },
     "clase": {
         "tooltip": "Molde que define atributos y comportamientos para crear objetos.",
-        "definition": (
-            "Una clase es un molde que describe datos (atributos) y acciones (métodos). "
-            "Se usa para modelar entidades con estado y comportamiento. "
-            "Ejemplo: class Perro: def ladrar(self): print('guau'). "
-            "Matiz: definir la clase no crea objetos; hay que instanciarla con Perro()."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una plantilla que define atributos (datos) y métodos (acciones)."
+            ),
+            "para_que": (
+                "Se usa para modelar entidades con estado y comportamiento, facilitando "
+                "la reutilización y la organización del código."
+            ),
+            "sintaxis": "class Nombre: ...",
+            "ejemplo": "class Perro: def ladrar(self): print('guau')",
+            "matiz": (
+                "Definir la clase no crea objetos; hay que instanciar con Perro()."
+            ),
+        },
     },
     "objeto": {
         "tooltip": "Instancia de una clase con estado y comportamiento.",
-        "definition": (
-            "Un objeto es una instancia concreta creada a partir de una clase. "
-            "Se usa para trabajar con datos reales siguiendo el molde de la clase. "
-            "Ejemplo: perro = Perro() crea un objeto Perro. "
-            "Error típico: confundir la clase (molde) con el objeto (instancia)."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Una instancia concreta creada a partir de una clase."
+            ),
+            "para_que": (
+                "Permite usar los datos y comportamientos definidos por la clase en "
+                "casos reales."
+            ),
+            "sintaxis": "objeto = Clase()",
+            "ejemplo": "perro = Perro() crea un objeto de la clase Perro.",
+            "matiz": (
+                "No confundir la clase (molde) con el objeto (instancia en memoria)."
+            ),
+        },
     },
     "módulo": {
         "tooltip": "Archivo de Python que agrupa código reutilizable.",
@@ -1200,6 +1239,7 @@ GLOSSARY = {
                 "imperativo, orientado a objetos y funcional. También es común en "
                 "herramientas de línea de comandos, APIs, ETLs y pipelines de datos."
             ),
+            "sintaxis": "print('Hola') o def saludar(nombre): return f'Hola {nombre}'",
             "ejemplo": (
                 "print('Hola') imprime en consola; con pandas.read_csv() puedes cargar "
                 "un CSV, limpiar columnas y generar un análisis rápido."
@@ -1349,6 +1389,7 @@ GLOSSARY = {
                 "segmentar clientes, automatizar reportes y apoyar decisiones estratégicas, "
                 "combinando análisis descriptivo y predictivo."
             ),
+            "sintaxis": "df = pandas.read_csv('ventas.csv')",
             "ejemplo": (
                 "Explorar un dataset de ventas con pandas y matplotlib para generar "
                 "KPIs, detectar estacionalidad y proponer acciones comerciales."
@@ -1372,6 +1413,7 @@ GLOSSARY = {
                 "predictivos y comunicar hallazgos al negocio, desde análisis exploratorio "
                 "hasta experimentación."
             ),
+            "sintaxis": "data science (dos palabras en inglés)",
             "ejemplo": (
                 "Analizar churn de clientes, entrenar un modelo de clasificación y "
                 "proponer acciones para reducir la pérdida."
@@ -1393,6 +1435,7 @@ GLOSSARY = {
                 "Aparece en búsquedas o conversaciones informales, pero el término correcto "
                 "es data science."
             ),
+            "sintaxis": "data science (forma correcta)",
             "ejemplo": (
                 "Escribir \"data cience\" al buscar cursos de ciencia de datos en la web."
             ),
@@ -1415,6 +1458,7 @@ GLOSSARY = {
                 "computador, NLP, pronósticos y mantenimiento predictivo. También se "
                 "aplica en scoring de riesgo y personalización."
             ),
+            "sintaxis": "modelo.fit(X_train, y_train) y_pred = modelo.predict(X_test)",
             "ejemplo": (
                 "Un modelo que predice el precio de una casa a partir de metros cuadrados, "
                 "ubicación y antigüedad."
@@ -1438,6 +1482,7 @@ GLOSSARY = {
                 "o proyectos ágiles, integrando autenticación, APIs, CI/CD, monitoreo "
                 "y observabilidad."
             ),
+            "sintaxis": "frontend + backend + base de datos + despliegue",
             "ejemplo": (
                 "Una SPA con React, una API en Python y una base PostgreSQL, todo "
                 "desplegado en la nube con un pipeline de CI/CD."
@@ -1556,6 +1601,9 @@ GLOSSARY = {
                 "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
                 "tablas y componentes interactivos multiplataforma."
             ),
+            "sintaxis": (
+                "from PySide6.QtWidgets import QApplication, QWidget"
+            ),
             "ejemplo": (
                 "Diseñar una UI en Qt Designer y cargar el archivo .ui en una app "
                 "PySide6."
@@ -1579,6 +1627,7 @@ GLOSSARY = {
                 "infraestructura global con herramientas administradas. Incluye "
                 "opciones de serverless, contenedores, redes privadas y analítica."
             ),
+            "sintaxis": "aws s3 ls o boto3.client('s3')",
             "ejemplo": (
                 "EC2 para servidores, S3 para almacenamiento, RDS para bases de datos y "
                 "CloudFront para distribución de contenido."
@@ -1887,52 +1936,103 @@ GLOSSARY = {
     },
     "cloud": {
         "tooltip": "Modelo de computación con recursos bajo demanda.",
-        "definition": (
-            "La computación en la nube ofrece recursos (cómputo, almacenamiento, red) "
-            "bajo demanda y con pago por uso. Se usa para escalar sin comprar hardware "
-            "y para desplegar rápido en múltiples regiones. "
-            "Ejemplo: publicar una app en un proveedor cloud con balanceo y backups. "
-            "Matiz: los modelos IaaS, PaaS y SaaS definen el nivel de control y "
-            "responsabilidades compartidas."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "La computación en la nube ofrece recursos de cómputo, almacenamiento y "
+                "red bajo demanda con pago por uso."
+            ),
+            "para_que": (
+                "Se usa para escalar sin comprar hardware, desplegar rápido en múltiples "
+                "regiones y aprovechar servicios administrados."
+            ),
+            "sintaxis": "proveedor + servicio (ej: AWS + S3, Azure + Functions)",
+            "ejemplo": (
+                "Publicar una app en un proveedor cloud con balanceo y backups automáticos."
+            ),
+            "matiz": (
+                "Los modelos IaaS, PaaS y SaaS definen el nivel de control y las "
+                "responsabilidades compartidas."
+            ),
+        },
     },
     "iaas": {
         "tooltip": "Infraestructura como servicio.",
-        "definition": (
-            "IaaS ofrece infraestructura virtualizada como servidores y redes. "
-            "Se usa cuando necesitas control del sistema operativo y configuración. "
-            "Ejemplo: instancias virtuales en AWS EC2 o Azure Virtual Machines. "
-            "Matiz: el usuario administra el sistema, la seguridad y el parcheo."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "IaaS ofrece infraestructura virtualizada como servidores, redes y "
+                "almacenamiento."
+            ),
+            "para_que": (
+                "Se usa cuando necesitas controlar el sistema operativo, la red y el "
+                "software instalado."
+            ),
+            "sintaxis": "VM + red + almacenamiento",
+            "ejemplo": (
+                "Instancias virtuales en AWS EC2 o Azure Virtual Machines."
+            ),
+            "matiz": (
+                "El usuario administra sistema, seguridad y parches; el proveedor gestiona "
+                "el hardware."
+            ),
+        },
     },
     "paas": {
         "tooltip": "Plataforma como servicio.",
-        "definition": (
-            "PaaS ofrece una plataforma administrada para ejecutar aplicaciones. "
-            "Se usa para enfocarse en el código sin administrar servidores. "
-            "Ejemplo: Heroku, Google App Engine o Azure App Service. "
-            "Matiz: limita ciertas configuraciones del entorno pero acelera el despliegue."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "PaaS ofrece una plataforma administrada para ejecutar aplicaciones con "
+                "runtime, escalado y servicios integrados."
+            ),
+            "para_que": (
+                "Se usa para enfocarse en el código sin administrar servidores ni "
+                "infraestructura base."
+            ),
+            "sintaxis": "deploy app + buildpack/runtime",
+            "ejemplo": "Heroku, Google App Engine o Azure App Service.",
+            "matiz": (
+                "Limita ciertas configuraciones, pero acelera despliegues y reduce "
+                "operación."
+            ),
+        },
     },
     "saas": {
         "tooltip": "Software como servicio.",
-        "definition": (
-            "SaaS es software accesible vía web sin instalarlo localmente. "
-            "Se usa para consumir aplicaciones listas para usar. "
-            "Ejemplo: Gmail, Slack o Notion. "
-            "Matiz: el proveedor gestiona la infraestructura y actualizaciones, y el "
-            "usuario se centra en la configuración y uso."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "SaaS es software accesible vía web sin instalación local."
+            ),
+            "para_que": (
+                "Se usa para consumir aplicaciones listas para usar con pagos por "
+                "suscripción o uso."
+            ),
+            "sintaxis": "login + uso desde navegador",
+            "ejemplo": "Gmail, Slack o Notion.",
+            "matiz": (
+                "El proveedor gestiona infraestructura y actualizaciones; el usuario "
+                "se centra en la configuración y uso."
+            ),
+        },
     },
     "azure": {
         "tooltip": "Plataforma cloud de Microsoft.",
-        "definition": (
-            "Azure es la plataforma cloud de Microsoft con servicios de cómputo, "
-            "almacenamiento, datos, IA y soluciones empresariales. "
-            "Se usa para cargas híbridas, integración con entornos Windows y despliegues "
-            "a escala. Ejemplo: Azure Functions para serverless y Azure SQL Database. "
-            "Matiz: integra servicios como Active Directory y herramientas de Microsoft."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Azure es la plataforma cloud de Microsoft con servicios de cómputo, "
+                "almacenamiento, datos, IA y soluciones empresariales."
+            ),
+            "para_que": (
+                "Se usa para cargas híbridas, integración con entornos Windows y "
+                "despliegues a escala empresarial."
+            ),
+            "sintaxis": "az login y az webapp up",
+            "ejemplo": (
+                "Azure Functions para serverless y Azure SQL Database para datos."
+            ),
+            "matiz": (
+                "Integra servicios como Active Directory y herramientas del ecosistema "
+                "Microsoft."
+            ),
+        },
     },
     "azure devops": {
         "tooltip": "Suite de herramientas DevOps de Microsoft.",
@@ -1956,12 +2056,22 @@ GLOSSARY = {
     },
     "azure functions": {
         "tooltip": "Servicio serverless de Azure para ejecutar funciones.",
-        "definition": (
-            "Azure Functions permite ejecutar código bajo demanda sin gestionar servidores. "
-            "Se usa para automatizaciones, APIs ligeras y flujos basados en eventos. "
-            "Ejemplo: procesar eventos de cola o disparar tareas programadas. "
-            "Matiz: ofrece distintos planes de escalado y límites por ejecución."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Azure Functions permite ejecutar código bajo demanda sin gestionar "
+                "servidores."
+            ),
+            "para_que": (
+                "Se usa para automatizaciones, APIs ligeras y flujos basados en eventos."
+            ),
+            "sintaxis": "func init && func start",
+            "ejemplo": (
+                "Procesar eventos de cola o disparar tareas programadas."
+            ),
+            "matiz": (
+                "Ofrece distintos planes de escalado y límites por ejecución."
+            ),
+        },
     },
     "azure blob storage": {
         "tooltip": "Servicio de almacenamiento de objetos en Azure.",
@@ -1983,13 +2093,23 @@ GLOSSARY = {
     },
     "gcp": {
         "tooltip": "Google Cloud Platform para servicios en la nube.",
-        "definition": (
-            "GCP es la plataforma cloud de Google con servicios de cómputo, datos y "
-            "machine learning. Se usa para análisis a gran escala, procesamiento de "
-            "eventos y despliegues rápidos. "
-            "Ejemplo: BigQuery para análisis y Cloud Run para contenedores. "
-            "Matiz: destaca por sus herramientas de datos y analítica."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "GCP es la plataforma cloud de Google con servicios de cómputo, datos y "
+                "machine learning."
+            ),
+            "para_que": (
+                "Se usa para análisis a gran escala, procesamiento de eventos y "
+                "despliegues rápidos."
+            ),
+            "sintaxis": "gcloud auth login y gcloud run deploy",
+            "ejemplo": (
+                "BigQuery para análisis y Cloud Run para contenedores."
+            ),
+            "matiz": (
+                "Destaca por sus herramientas de datos y analítica."
+            ),
+        },
     },
     "cloudflare": {
         "tooltip": "Plataforma de CDN y seguridad para aplicaciones web.",
@@ -2221,7 +2341,10 @@ GLOSSARY = {
 def definition_text(data: dict[str, object]) -> str:
     definition = data.get("definition")
     if isinstance(definition, str) and definition.strip():
-        return definition.strip()
+        cleaned = definition.strip()
+        for label in ("Ejemplo:", "Matiz:", "Error típico:", "Ver también:", "Sintaxis:"):
+            cleaned = cleaned.replace(f" {label}", f"\n{label}")
+        return cleaned.strip()
     parts = data.get("definition_parts")
     if not isinstance(parts, dict):
         return ""
@@ -2234,12 +2357,21 @@ def definition_text(data: dict[str, object]) -> str:
     labels = {
         "que_es": "Qué es:",
         "para_que": "Para qué:",
+        "sintaxis": "Sintaxis:",
         "ejemplo": "Ejemplo:",
         "matiz": "Matiz:",
         "error_tipico": "Error típico:",
         "ver_tambien": "Ver también:",
     }
-    ordered_keys = ["que_es", "para_que", "ejemplo", "matiz", "error_tipico", "ver_tambien"]
+    ordered_keys = [
+        "que_es",
+        "para_que",
+        "sintaxis",
+        "ejemplo",
+        "matiz",
+        "error_tipico",
+        "ver_tambien",
+    ]
     lines = []
     for key in ordered_keys:
         value = parts.get(key)

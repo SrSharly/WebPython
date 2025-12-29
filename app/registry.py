@@ -106,21 +106,20 @@ def discover_lessons() -> list[LessonInfo]:
         "Strings y f-strings",
         "Condicionales",
         "Bucles",
-        "Funciones",
         "Estructuras de datos",
+        "Funciones",
         "Iteradores y generadores",
         "Context managers",
         "Excepciones",
-        "Buenas prácticas",
     ]
     python_rank = {name: idx for idx, name in enumerate(python_curriculum)}
 
     def sort_key(info: LessonInfo) -> tuple[int, str, str, str]:
         order = category_rank.get(info.category, len(category_order))
         if info.category == "Python":
-            curriculum_index = python_rank.get(info.title, len(python_curriculum))
-            in_curriculum = 0 if info.title in python_rank else 1
-            return (order, in_curriculum, curriculum_index, info.title)
+            if info.title in python_rank:
+                return (order, 0, python_rank[info.title], info.title)
+            return (order, 1, 0, info.title)
         category_name = info.category if order == len(category_order) else ""
         return (order, category_name, info.subcategory, info.title)
 

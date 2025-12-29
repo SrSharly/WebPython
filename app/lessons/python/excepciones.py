@@ -113,29 +113,65 @@ print(cantidad)  # print muestra el número
 ```
 
 ## Más allá (nivel pro)
-En proyectos reales, los errores suelen cruzar capas. Aquí van ejemplos con advertencias reales.
-
-### Pro: Validación de entrada con errores encadenados
-```
-def convertir_a_entero(valor):  # función de entrada
-    try:
-        return int(valor)  # conversión principal
-    except ValueError as exc:  # falla real
-        raise ValueError("Solo números enteros") from exc  # mensaje claro
-```
-**Warning real:** si no encadenas (`from exc`), pierdes el rastro del error original y depurar es más difícil.
-
-### Pro: Error en limpieza de recursos
-```
-archivo = None  # variable inicial
-try:
-    archivo = open("datos.txt", "r")  # abrimos recurso
-    contenido = archivo.read()  # leemos datos
-finally:
-    if archivo is not None:  # validamos recurso
-        archivo.close()  # cerramos siempre
-```
-**Warning real:** olvidar el `finally` puede dejar archivos abiertos y bloquearlos.
+- **Captura específica por jerarquía**: `Exception` es muy general; empieza por el error real.
+  ```
+  try:  # bloque protegido
+      numero = int("abc")  # error de conversión
+  except ValueError:  # error específico
+      print("Texto no convertible")  # mensaje claro
+  ```
+  Úsalo cuando sepas qué puede fallar.
+  Evítalo si capturas `Exception` y ocultas errores inesperados.
+- **Re-raise para no perder contexto**: vuelve a lanzar el error después de registrar.
+  ```
+  try:  # intentamos
+      1 / 0  # error
+  except ZeroDivisionError:  # capturamos
+      print("División inválida")  # log simple
+      raise  # relanzamos el mismo error
+  ```
+  Úsalo cuando necesitas registrar y dejar que el error suba.
+  Evítalo si quieres recuperar y continuar con valores seguros.
+- **`raise ... from` para encadenar**: mantiene el error original.
+  ```
+  try:  # bloque
+      int("abc")  # conversión fallida
+  except ValueError as exc:  # error original
+      raise RuntimeError("Entrada inválida") from exc  # nuevo error
+  ```
+  Úsalo cuando transformes un error técnico en uno de dominio.
+  Evítalo si no necesitas contexto adicional.
+- **Excepciones propias con intención**: nombre específico comunica el problema.
+  ```
+  class ConfigError(Exception):  # error propio
+      pass  # sin lógica extra
+  raise ConfigError("Falta API_KEY")  # lanzamos
+  ```
+  Úsalo cuando quieras diferenciar fallos de configuración.
+  Evítalo si un error estándar ya describe bien el problema.
+- **Logging en lugar de print**: `logging` permite niveles y salida ordenada.
+  ```
+  import logging  # módulo de logging
+  logger = logging.getLogger(__name__)  # logger del módulo
+  try:  # bloque protegido
+      int("abc")  # error
+  except ValueError:  # captura
+      logger.exception("Entrada inválida")  # registra con traceback
+  ```
+  Úsalo en proyectos reales donde necesitas trazas.
+  Evítalo en ejemplos muy simples donde print es suficiente.
+- **`finally` para limpieza confiable**: se ejecuta siempre.
+  ```
+  recurso = None  # variable inicial
+  try:  # intento principal
+      recurso = open("datos.txt", "r")  # abrimos archivo
+      _ = recurso.read()  # leemos
+  finally:  # limpieza segura
+      if recurso is not None:  # validamos
+          recurso.close()  # cerramos
+  ```
+  Úsalo cuando debas cerrar recursos aunque haya errores.
+  Evítalo si usas `with`, que ya se encarga de cerrar.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

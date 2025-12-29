@@ -115,26 +115,50 @@ print(next(it))  # 1
 ```
 
 ## Más allá (nivel pro)
-### Pro: Generadores para archivos grandes
-```
-def leer_lineas(ruta):  # función generadora
-    with open(ruta, "r") as archivo:  # abrimos archivo
-        for linea in archivo:  # iteramos línea por línea
-            yield linea.strip()  # entregamos sin salto
-```
-**Warning real:** si conviertes el generador a lista con `list()`, pierdes la ventaja de memoria.
-
-### Pro: StopIteration y control manual
-```
-valores = [1, 2]  # lista
-it = iter(valores)  # iterador
-try:
-    while True:  # bucle infinito
-        print(next(it))  # next avanza
-except StopIteration:  # fin del iterador
-    print("Fin del recorrido")  # mensaje final
-```
-**Warning real:** usar `next()` sin manejo puede lanzar StopIteration y detener tu programa.
+- **Streaming de datos (procesar en flujo)**: un generador entrega uno por uno sin cargar todo.
+  ```
+  def leer_lineas(ruta):  # generador de líneas
+      with open(ruta, "r") as archivo:  # abrimos archivo
+          for linea in archivo:  # leemos línea por línea
+              yield linea.strip()  # entregamos cada línea
+  ```
+  Úsalo con archivos grandes o datos continuos.
+  Evítalo si necesitas todos los datos a la vez para ordenarlos.
+- **Generadores se consumen una sola vez**: al iterar, se agotan.
+  ```
+  valores = (n for n in range(3))  # generador
+  print(list(valores))  # materializa y consume
+  print(list(valores))  # lista vacía, ya se agotó
+  ```
+  Úsalo cuando no necesitas repetir el recorrido.
+  Evítalo si debes recorrer varias veces: guarda en lista o crea otro generador.
+- **Materialización consciente**: convertir a lista usa memoria.
+  ```
+  numeros = (n for n in range(1000000))  # generador grande
+  primeros = [n for n in numeros if n < 5]  # materializamos pocos
+  print(primeros)  # mostramos pocos valores
+  ```
+  Úsalo cuando necesitas acceso aleatorio o repetir datos.
+  Evítalo si solo necesitas un recorrido secuencial.
+- **`itertools` (herramientas de iteración)**: combinan iterables de forma eficiente.
+  ```
+  import itertools  # módulo de iteradores
+  letras = ["a", "b"]  # lista
+  numeros = [1, 2]  # lista
+  pares = list(itertools.product(letras, numeros))  # combinaciones
+  print(pares)  # muestra pares
+  ```
+  Úsalo cuando necesites combinaciones o cadenas de iteración.
+  Evítalo si un for simple es suficiente.
+- **Control manual con `next()`**: útil para pasos específicos.
+  ```
+  valores = iter([10, 20, 30])  # iterador manual
+  primero = next(valores)  # primer valor
+  segundo = next(valores)  # segundo valor
+  print(primero, segundo)  # mostramos
+  ```
+  Úsalo cuando necesites avanzar de a uno con precisión.
+  Evítalo en recorridos normales: `for` es más seguro y claro.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

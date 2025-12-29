@@ -132,10 +132,55 @@ if resultado is None:  # comparación correcta
 Mantén nombres consistentes en todo el archivo: mejora la lectura en equipo.
 
 ## Más allá (nivel pro)
-- Distingue copia superficial vs copia profunda cuando tengas listas dentro de listas.
-- Usa `is` solo para `None` y comparaciones de identidad, no de valores.
-- Aprende `dataclasses` para agrupar datos con tipos claros.
-- Estudia el modelo de objetos de Python para entender referencias y memoria.
+- **Copia superficial vs copia profunda (deep copy = copia total)**: una copia superficial
+  duplica la lista principal pero mantiene referencias internas; la profunda copia todo.
+  ```
+  import copy  # importamos el módulo de copias
+  matriz = [[1], [2]]  # lista con listas internas
+  copia_superficial = matriz.copy()  # copia solo la lista externa
+  copia_profunda = copy.deepcopy(matriz)  # copia todo el contenido
+  copia_superficial[0].append(9)  # modifica también la matriz original
+  ```
+  Úsalo cuando tengas estructuras anidadas y necesites independencia real.
+  Evítalo cuando la estructura sea plana: una copia superficial suele ser suficiente.
+- **`is` para identidad, `==` para valores**: `is` comprueba si son el mismo objeto,
+  `==` compara el contenido.
+  ```
+  valor = None  # ausencia de valor
+  print(valor is None)  # True: identidad con None
+  print([1, 2] == [1, 2])  # True: mismos valores
+  ```
+  Úsalo cuando compares con `None` o quieras saber si es el mismo objeto.
+  Evítalo para comparar números o textos: ahí debe ir `==`.
+- **`dataclass` (clase de datos simple)**: agrupa datos relacionados con menos código.
+  ```
+  from dataclasses import dataclass  # importamos dataclass
+  @dataclass  # decorador para clases de datos
+  class Producto:  # clase con datos
+      nombre: str  # nombre del producto
+      precio: float  # precio del producto
+  cafe = Producto("Café", 2.5)  # creamos una instancia
+  ```
+  Úsalo cuando necesites agrupar campos con nombres claros.
+  Evítalo si solo necesitas una variable simple o un dict temporal.
+- **Constantes con nombres claros**: usar mayúsculas indica “no cambiar”.
+  ```
+  IVA = 0.21  # constante fiscal
+  precio_base = 100  # variable normal
+  precio_final = precio_base * (1 + IVA)  # cálculo
+  ```
+  Úsalo para valores estables que se repiten en el proyecto.
+  Evítalo si el valor cambia durante la ejecución.
+- **Evitar efectos secundarios con mutables**: modifica una copia si no quieres
+  afectar al valor original.
+  ```
+  def agregar_item(lista, item):  # función de ejemplo
+      nueva_lista = lista.copy()  # copiamos antes de modificar
+      nueva_lista.append(item)  # cambiamos la copia
+      return nueva_lista  # devolvemos nueva lista
+  ```
+  Úsalo cuando una función no debe alterar los datos que recibe.
+  Evítalo cuando quieras modificar “en sitio” por rendimiento o claridad explícita.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

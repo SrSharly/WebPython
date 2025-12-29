@@ -124,10 +124,48 @@ def area_cuadrado(lado: float) -> float:  # Hint de entrada y salida
 Escribe pruebas simples con ejemplos reales para validar tu función.
 
 ## Más allá (nivel pro)
-- Aprende sobre funciones de orden superior (`map`, `filter`, `sorted`).
-- Estudia closures y cómo capturan variables del scope externo.
-- Explora decoradores para añadir comportamiento sin repetir código.
-- Usa `typing` avanzado (`Iterable`, `Callable`) para proyectos grandes.
+- **Funciones pequeñas y de un solo propósito**: facilitan pruebas y reutilización.
+  ```
+  def calcular_subtotal(precio, cantidad):  # función pequeña
+      return precio * cantidad  # calcula subtotal
+  def aplicar_iva(subtotal, iva):  # función pequeña
+      return subtotal * (1 + iva)  # aplica impuesto
+  ```
+  Úsalo cuando una función empieza a tener muchas tareas.
+  Evítalo si la división crea funciones con nombres confusos o demasiado triviales.
+- **Parámetros keyword-only (solo por nombre)**: obligan a pasar ciertos argumentos
+  con nombre, lo que reduce errores.
+  ```
+  def crear_usuario(nombre, *, activo=True):  # activo es keyword-only
+      return {"nombre": nombre, "activo": activo}  # dict simple
+  usuario = crear_usuario("Ana", activo=False)  # pasamos por nombre
+  ```
+  Úsalo cuando un argumento tenga significado importante o potencialmente ambiguo.
+  Evítalo en funciones súper simples donde no aporta claridad extra.
+- **Funciones puras (sin efectos secundarios)**: no modifican datos externos.
+  ```
+  def sumar_impuesto(precio, iva):  # función pura
+      return precio * (1 + iva)  # devuelve nuevo valor
+  ```
+  Úsalo cuando quieras pruebas fáciles y resultados predecibles.
+  Evítalo si la función debe actualizar estado compartido de forma explícita.
+- **`functools.lru_cache` (caché de resultados)**: guarda resultados de llamadas repetidas.
+  ```
+  from functools import lru_cache  # importamos caché
+  @lru_cache(maxsize=128)  # decorador de caché
+  def convertir_moneda(cantidad):  # ejemplo simple
+      return cantidad * 1.1  # operación repetitiva
+  ```
+  Úsalo cuando una función se llama muchas veces con los mismos argumentos.
+  Evítalo si el resultado depende de datos que cambian con el tiempo.
+- **Docstrings con ejemplo real**: ayudan a otros a usar la función bien.
+  ```
+  def calcular_descuento(precio, porcentaje):  # función
+      '''Devuelve el precio con descuento aplicado.'''  # docstring
+      return precio * (1 - porcentaje)  # cálculo
+  ```
+  Úsalo en funciones públicas o compartidas en equipo.
+  Evítalo solo en funciones internas muy pequeñas donde no aporta valor.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

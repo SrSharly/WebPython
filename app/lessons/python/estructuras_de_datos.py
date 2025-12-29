@@ -69,6 +69,50 @@ lista.append(4)
 config = {"debug": True}
 config["debug"] = False
 ```
+
+## Más allá (nivel pro)
+- **List comprehension (listas por comprensión)**: generan listas de forma clara.
+  ```
+  numeros = [1, 2, 3, 4]  # lista base
+  pares = [n for n in numeros if n % 2 == 0]  # filtramos pares
+  print(pares)  # muestra [2, 4]
+  ```
+  Úsalo cuando una transformación sea corta y legible.
+  Evítalo si la lógica es compleja: usa un for con nombre claro.
+- **`dict.get` con valor por defecto**: evita errores al pedir claves.
+  ```
+  usuario = {"nombre": "Ana"}  # dict sin edad
+  edad = usuario.get("edad", 0)  # 0 si falta la clave
+  print(edad)  # muestra 0
+  ```
+  Úsalo cuando la clave puede faltar y tengas un valor razonable.
+  Evítalo si la ausencia es un error que debe reportarse.
+- **Sets para pertenencia rápida**: `in` en sets es más eficiente.
+  ```
+  permisos = {"leer", "escribir"}  # set de permisos
+  puede_editar = "escribir" in permisos  # comprobamos pertenencia
+  print(puede_editar)  # True
+  ```
+  Úsalo para listas grandes donde necesitas búsquedas frecuentes.
+  Evítalo si el orden de los elementos es importante.
+- **Tuplas para datos fijos**: una tupla comunica “no modificar”.
+  ```
+  punto = (10, 20)  # coordenadas fijas
+  x, y = punto  # desempaquetamos
+  print(x, y)  # mostramos
+  ```
+  Úsalo cuando los datos sean inmutables por diseño.
+  Evítalo si necesitas añadir o quitar elementos.
+- **`defaultdict` (dict con valor automático)**: simplifica conteos.
+  ```
+  from collections import defaultdict  # importamos
+  conteos = defaultdict(int)  # valor inicial 0
+  for letra in "banana":  # recorremos texto
+      conteos[letra] += 1  # sumamos por letra
+  print(conteos["a"])  # muestra 3
+  ```
+  Úsalo para contadores o agrupaciones sencillas.
+  Evítalo si necesitas controlar manualmente cada clave.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

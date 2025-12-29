@@ -106,34 +106,62 @@ class Silenciador:  # context manager
 ```
 
 ## Más allá (nivel pro)
-### Pro: Context manager con validación real
-```
-class ArchivoSeguro:  # clase
-    def __init__(self, ruta):  # constructor
-        self.ruta = ruta  # guardamos ruta
-        self.archivo = None  # variable inicial
-
-    def __enter__(self):  # entrada
-        self.archivo = open(self.ruta, "r")  # abrimos archivo
-        return self.archivo  # devolvemos archivo
-
-    def __exit__(self, exc_type, exc, traceback):  # salida
-        if self.archivo is not None:  # validamos
-            self.archivo.close()  # cerramos siempre
-```
-**Warning real:** si no cierras el archivo en `__exit__`, puedes perder datos o bloquearlo.
-
-### Pro: Manejo de errores sin esconderlos
-```
-class RegistroErrores:
-    def __enter__(self):
-        return self
-    def __exit__(self, exc_type, exc, traceback):
-        if exc_type:
-            print("Error:", exc)  # mostramos el error
-        return False  # no suprime el error
-```
-**Warning real:** devolver `True` sin querer puede ocultar errores importantes.
+- **`contextlib.contextmanager` (decorador simple)**: crea un context manager con `yield`.
+  ```
+  from contextlib import contextmanager  # importamos decorador
+  @contextmanager  # convertimos función en context manager
+  def abrir_archivo(ruta):  # función con yield
+      archivo = open(ruta, "r")  # abrimos recurso
+      try:  # protegemos la apertura
+          yield archivo  # entregamos el recurso
+      finally:  # limpieza garantizada
+          archivo.close()  # cerramos siempre
+  ```
+  Úsalo cuando quieras algo rápido sin crear una clase.
+  Evítalo si necesitas estado complejo entre __enter__ y __exit__.
+- **`ExitStack` para recursos dinámicos**: maneja varios recursos en un solo bloque.
+  ```
+  from contextlib import ExitStack  # importamos ExitStack
+  rutas = ["a.txt", "b.txt"]  # lista de archivos
+  with ExitStack() as stack:  # manejador dinámico
+      archivos = [stack.enter_context(open(r, "w")) for r in rutas]  # abrimos
+      archivos[0].write("A")  # escribimos
+  ```
+  Úsalo cuando el número de recursos se decide en tiempo de ejecución.
+  Evítalo si solo necesitas uno o dos `with` simples.
+- **No ocultar errores por accidente**: `__exit__` debe devolver False normalmente.
+  ```
+  class RegistroErrores:  # clase
+      def __enter__(self):  # entrada
+          return self  # devolvemos
+      def __exit__(self, exc_type, exc, traceback):  # salida
+          if exc_type:  # si hay error
+              print("Error:", exc)  # registramos
+          return False  # no suprime
+  ```
+  Úsalo cuando quieras registrar pero no ocultar fallos.
+  Evítalo si necesitas suprimir errores de forma consciente y documentada.
+- **Bloques `with` pequeños**: reduce el tiempo de recursos abiertos.
+  ```
+  with open("datos.txt", "r") as archivo:  # abrimos archivo
+      contenido = archivo.read()  # leemos rápido
+  print(contenido)  # fuera del bloque
+  ```
+  Úsalo para minimizar riesgos de bloqueo.
+  Evítalo si necesitas el recurso durante toda una operación larga.
+- **Context manager para tiempos (medición simple)**: encapsula inicio/fin.
+  ```
+  import time  # módulo de tiempo
+  class Temporizador:  # clase simple
+      def __enter__(self):  # entrada
+          self.inicio = time.time()  # guardamos inicio
+          return self  # devolvemos
+      def __exit__(self, exc_type, exc, traceback):  # salida
+          duracion = time.time() - self.inicio  # calculamos duración
+          print(f"Duración: {duracion:.2f}s")  # mostramos
+  ```
+  Úsalo para medir bloques de código en desarrollo.
+  Evítalo en producción si ya tienes herramientas de observabilidad.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

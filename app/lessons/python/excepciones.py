@@ -14,24 +14,23 @@ class ExcepcionesLesson(Lesson):
 
     def summary(self) -> str:
         return (
-            "Maneja errores de forma controlada usando excepciones. "
-            "Aprenderás a capturar, lanzar y estructurar errores para construir "
-            "aplicaciones resilientes."
+            "Aprende a manejar errores de forma controlada: desde fallos normales, "
+            "hasta try/except, finally, else y excepciones personalizadas."
         )
 
     def guide(self) -> str:
         return """
-## Qué es
-Una excepción es un evento que interrumpe el flujo normal del programa cuando ocurre un error.
+## Errores normales: por qué pasan
+Un programa falla cuando ocurre algo inesperado: dividir por cero, abrir un archivo inexistente, convertir texto a número.
+Eso es normal. Las **excepciones** son la forma de Python de avisarte.
 
-## Cuándo se usa
-Cuando necesitas controlar fallos esperables (por ejemplo, leer un archivo que puede no existir).
+Ejemplo simple:
+```
+numero = int("hola")  # Esto lanza ValueError
+```
 
-## Conceptos previos
-- Funciones básicas y flujo de control.
-- Diferencia entre error esperado y bug.
-
-## Paso 1: Capturar errores concretos
+## try/except: manejar lo esperable
+Usa `try` para el código que puede fallar y `except` para reaccionar.
 ```
 try:
     edad = int("20")
@@ -39,7 +38,9 @@ except ValueError:
     print("No es un número")
 ```
 
-## Paso 2: Usar else y finally
+## else y finally (control fino)
+- **else** se ejecuta si no hubo error.
+- **finally** siempre se ejecuta (ideal para cerrar recursos).
 ```
 try:
     valor = 10 / 2
@@ -51,62 +52,39 @@ finally:
     print("Cerrar recursos")
 ```
 
-## Paso 3: Lanzar tus propias excepciones
+## Lanzar errores propios (raise)
+Si detectas un dato inválido, puedes lanzar una excepción.
 ```
-def validar(edad):
+def validar_edad(edad):
     if edad < 0:
         raise ValueError("Edad inválida")
 ```
 
-## Paso 4: Crear excepciones personalizadas
+## Excepciones personalizadas
+Sirven para errores específicos de tu aplicación.
 ```
-class DataError(Exception):
+class DatosInvalidosError(Exception):
     pass
 ```
 
-## Mini-reto
-Mini-reto 1: Implementa una función que convierta texto a int y devuelva None si falla.
-Solución:
-```
-def convertir(texto):
-    try:
-        return int(texto)
-    except ValueError:
-        return None
-```
+## Buenas prácticas expertas
+- **PEP8**: `snake_case` y 4 espacios.
+- **Errores específicos**: evita `except Exception` si puedes.
+- **No uses excepciones como flujo normal**.
+- **Claridad > trucos**: un try pequeño es más legible.
+- **Docstrings** en funciones que lanzan errores.
 
-## Errores típicos (mal vs bien)
-Mal: capturar Exception y ocultar el error.
+## Resumen de ejemplos
 ```
 try:
-    1 / 0
-except Exception:
+    print(1 / 0)
+except ZeroDivisionError as error:
+    print("Error", error)
+```
+```
+class ConfigError(Exception):
     pass
 ```
-Bien: capturar el error específico y registrar.
-```
-try:
-    1 / 0
-except ZeroDivisionError as exc:
-    print("Error", exc)
-```
-
-## Nota
-Nota: usa logging si necesitas guardar detalles para depuración.
-
-## Advertencia
-Advertencia: un except vacío puede esconder errores graves.
-
-## Checklist final
-- Capturo errores específicos.
-- Uso else y finally correctamente.
-- Sé lanzar y crear excepciones.
-- No oculto errores sin registrar.
-
-## Ver también
-- Context managers
-- Funciones
-- Variables y tipos
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -131,78 +109,54 @@ Advertencia: un except vacío puede esconder errores graves.
                 "Confundir errores y estados",
                 "No uses excepciones para flujo normal.",
             ),
-            (
-                "Capturar demasiadas líneas",
-                "Un try grande es difícil de leer y de depurar.",
-            ),
-            (
-                "Usar assert en producción",
-                "Los asserts se desactivan con -O.",
-            ),
-            (
-                "Ignorar stacktrace",
-                "Registra el error antes de manejarlo o re-lanzarlo.",
-            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
                 "Try/except básico",
-                """try:  # Iniciamos el bloque try
-    valor = int("10")  # Convertimos a entero
-    print(valor)  # Mostramos el valor
-except ValueError as exc:  # Capturamos error específico
-    print("Error:", exc)  # Informamos del error""",
+                """try:  # Bloque protegido
+    valor = int("10")  # Convertimos
+    print(valor)  # Mostramos
+except ValueError as exc:  # Error específico
+    print("Error:", exc)  # Mensaje""",
             ),
             (
                 "Try/except/else",
-                """try:  # Iniciamos el bloque try
-    resultado = 10 / 2  # División segura
-except ZeroDivisionError:  # Capturamos división por cero
-    print("No dividir por cero")  # Mensaje de error
-else:  # Solo se ejecuta si no hay error
-    print("Resultado:", resultado)  # Mostramos resultado""",
+                """try:  # Bloque protegido
+    resultado = 10 / 2  # División
+except ZeroDivisionError:  # Error
+    print("No dividir por cero")  # Mensaje
+else:  # Sin error
+    print("Resultado:", resultado)  # Mostramos""",
             ),
             (
                 "Finally",
-                """try:  # Iniciamos el bloque try
-    archivo = open("datos.txt", "w")  # Abrimos archivo
-    archivo.write("Hola")  # Escribimos en archivo
-finally:  # Se ejecuta siempre
-    archivo.close()  # Cerramos el archivo""",
+                """try:  # Bloque protegido
+    archivo = open("datos.txt", "w")  # Abrimos
+    archivo.write("Hola")  # Escribimos
+finally:  # Siempre se ejecuta
+    archivo.close()  # Cerramos""",
             ),
             (
                 "Raise personalizado",
-                """def validar(edad):  # Definimos la función
-    if edad < 0:  # Validamos la edad
-        raise ValueError("Edad inválida")  # Lanzamos error
-validar(5)  # Llamamos a la función""",
+                """def validar(edad):  # Función
+    if edad < 0:  # Validamos
+        raise ValueError("Edad inválida")  # Lanzamos
+validar(5)  # Llamamos""",
             ),
             (
                 "Excepción custom",
-                """class ConfigError(Exception):  # Creamos excepción
-    pass  # No agregamos lógica
-raise ConfigError("Falta API_KEY")  # Lanzamos el error""",
+                """class ConfigError(Exception):  # Clase error
+    pass  # Sin lógica extra
+raise ConfigError("Falta API_KEY")  # Lanzamos""",
             ),
             (
                 "Encadenar errores",
-                """try:  # Intentamos convertir
-    int("abc")  # Fuerza ValueError
-except ValueError as exc:  # Capturamos ValueError
+                """try:  # Intentamos
+    int("abc")  # Forzamos ValueError
+except ValueError as exc:  # Capturamos
     raise RuntimeError("Entrada no válida") from exc  # Encadenamos""",
-            ),
-            (
-                "Captura múltiple",
-                """try:  # Iniciamos el bloque
-    valor = int("x")  # Forzamos error
-except (ValueError, TypeError):  # Capturamos múltiples errores
-    print("Conversión inválida")  # Mensaje""",
-            ),
-            (
-                "Context manager",
-                """with open("datos.txt", "w") as archivo:  # Abrimos con with
-    archivo.write("Seguro")  # Escribimos y cerramos""",
             ),
         ]
 

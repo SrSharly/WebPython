@@ -100,9 +100,27 @@ def discover_lessons() -> list[LessonInfo]:
         "PyTorch",
     ]
     category_rank = {name: idx for idx, name in enumerate(category_order)}
+    python_curriculum = [
+        "Variables y tipos",
+        "Operadores y expresiones",
+        "Strings y f-strings",
+        "Condicionales",
+        "Bucles",
+        "Funciones",
+        "Estructuras de datos",
+        "Iteradores y generadores",
+        "Context managers",
+        "Excepciones",
+        "Buenas prácticas",
+    ]
+    python_rank = {name: idx for idx, name in enumerate(python_curriculum)}
 
     def sort_key(info: LessonInfo) -> tuple[int, str, str, str]:
         order = category_rank.get(info.category, len(category_order))
+        if info.category == "Python":
+            curriculum_index = python_rank.get(info.title, len(python_curriculum))
+            in_curriculum = 0 if info.title in python_rank else 1
+            return (order, in_curriculum, curriculum_index, info.title)
         category_name = info.category if order == len(category_order) else ""
         return (order, category_name, info.subcategory, info.title)
 

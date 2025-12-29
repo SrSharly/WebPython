@@ -566,6 +566,10 @@ class MainWindow(QMainWindow):
 
 def main() -> None:
     app = QApplication(sys.argv)
+    style_hints = app.styleHints()
+    style_hints.setToolTipWakeUpDelay(0)
+    style_hints.setToolTipFallAsleepDelay(0)
+    style_hints.setToolTipDuration(0)
     settings = QSettings("Pythonpedia", "Pythonpedia")
     theme_name = settings.value("ui/theme", "light")
     if not isinstance(theme_name, str):

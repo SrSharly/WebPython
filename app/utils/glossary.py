@@ -1189,22 +1189,25 @@ GLOSSARY = {
         "tooltip": "Lenguaje de programación interpretado y multiplataforma.",
         "definition_parts": {
             "que_es": (
-                "Python es un lenguaje de alto nivel con una sintaxis clara que "
-                "prioriza la legibilidad y la productividad."
+                "Python es un lenguaje de alto nivel, interpretado y multiplataforma "
+                "con una sintaxis clara enfocada en legibilidad y productividad. "
+                "Destaca por su tipado dinámico, gran biblioteca estándar y una "
+                "comunidad muy amplia."
             ),
             "para_que": (
                 "Se usa en automatización, desarrollo web, ciencia de datos, scripting, "
-                "IA y aplicaciones de escritorio, combinando paradigmas imperativo, "
-                "orientado a objetos y funcional."
+                "IA, DevOps, QA y aplicaciones de escritorio, combinando paradigmas "
+                "imperativo, orientado a objetos y funcional. También es común en "
+                "herramientas de línea de comandos, APIs, ETLs y pipelines de datos."
             ),
             "ejemplo": (
-                "print('Hola') imprime texto en consola, y con pandas se puede leer "
-                "un CSV y generar un análisis rápido."
+                "print('Hola') imprime en consola; con pandas.read_csv() puedes cargar "
+                "un CSV, limpiar columnas y generar un análisis rápido."
             ),
             "matiz": (
-                "El ecosistema de paquetes (pip) y la comunidad facilitan soluciones "
-                "rápidas, aunque el rendimiento puede requerir optimizaciones o "
-                "extensiones en C."
+                "El ecosistema de paquetes (pip) acelera el desarrollo, pero el "
+                "rendimiento puede requerir optimizaciones, tipado o extensiones en C. "
+                "El manejo de entornos virtuales es clave para evitar conflictos."
             ),
         },
     },
@@ -1338,19 +1341,22 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "La ciencia de datos combina estadística, programación y conocimiento del "
-                "dominio para transformar datos en conocimiento accionable."
+                "dominio para transformar datos en conocimiento accionable. Abarca "
+                "recolección, limpieza, análisis, modelado y comunicación."
             ),
             "para_que": (
                 "Se usa para analizar tendencias, construir modelos predictivos, "
-                "segmentar clientes y apoyar decisiones estratégicas."
+                "segmentar clientes, automatizar reportes y apoyar decisiones estratégicas, "
+                "combinando análisis descriptivo y predictivo."
             ),
             "ejemplo": (
                 "Explorar un dataset de ventas con pandas y matplotlib para generar "
-                "KPIs, detectar estacionalidad y proponer mejoras."
+                "KPIs, detectar estacionalidad y proponer acciones comerciales."
             ),
             "matiz": (
                 "La limpieza, validación y comunicación de resultados son tan importantes "
-                "como el modelo en sí."
+                "como el modelo en sí. La ética y la privacidad también influyen en "
+                "cómo se usan los datos."
             ),
         },
     },
@@ -1359,11 +1365,12 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Data science es la disciplina que combina análisis estadístico, "
-                "programación y narrativa para extraer insights de los datos."
+                "programación, visualización y narrativa para extraer insights."
             ),
             "para_que": (
                 "Se usa para entender fenómenos, detectar patrones, construir modelos "
-                "predictivos y comunicar hallazgos al negocio."
+                "predictivos y comunicar hallazgos al negocio, desde análisis exploratorio "
+                "hasta experimentación."
             ),
             "ejemplo": (
                 "Analizar churn de clientes, entrenar un modelo de clasificación y "
@@ -1371,7 +1378,8 @@ GLOSSARY = {
             ),
             "matiz": (
                 "La calidad de datos y el contexto del negocio determinan el valor real "
-                "de los resultados."
+                "de los resultados. Un buen data science incluye storytelling y métricas "
+                "de impacto."
             ),
         },
     },
@@ -1399,11 +1407,13 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Machine learning es una rama de la inteligencia artificial que aprende "
-                "patrones desde datos para predecir, clasificar o recomendar."
+                "patrones desde datos para predecir, clasificar o recomendar. Incluye "
+                "enfoques supervisados, no supervisados y por refuerzo."
             ),
             "para_que": (
                 "Se usa en motores de recomendación, detección de fraude, visión por "
-                "computador, NLP y pronósticos."
+                "computador, NLP, pronósticos y mantenimiento predictivo. También se "
+                "aplica en scoring de riesgo y personalización."
             ),
             "ejemplo": (
                 "Un modelo que predice el precio de una casa a partir de metros cuadrados, "
@@ -1411,7 +1421,8 @@ GLOSSARY = {
             ),
             "matiz": (
                 "Requiere datos representativos, métricas claras, prevención de sobreajuste "
-                "y control de sesgos."
+                "y control de sesgos. Sin un buen pipeline de validación, el rendimiento "
+                "en producción puede degradarse."
             ),
         },
     },
@@ -1420,19 +1431,20 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "Full stack describe el desarrollo integral de una aplicación: interfaz "
-                "(frontend), servidor (backend) y base de datos."
+                "(frontend), servidor (backend), base de datos y despliegue."
             ),
             "para_que": (
                 "Se usa cuando se necesita entregar productos end-to-end en equipos pequeños "
-                "o proyectos ágiles, integrando autenticación, APIs y despliegues."
+                "o proyectos ágiles, integrando autenticación, APIs, CI/CD, monitoreo "
+                "y observabilidad."
             ),
             "ejemplo": (
                 "Una SPA con React, una API en Python y una base PostgreSQL, todo "
-                "desplegado en la nube."
+                "desplegado en la nube con un pipeline de CI/CD."
             ),
             "matiz": (
                 "Exige comprender integración, seguridad, rendimiento, UX y despliegue, "
-                "no solo escribir código."
+                "no solo escribir código. El foco puede variar según el rol en el equipo."
             ),
         },
     },
@@ -1538,7 +1550,7 @@ GLOSSARY = {
         "definition_parts": {
             "que_es": (
                 "PySide es el conjunto oficial de bindings de Qt para Python, "
-                "incluyendo PySide6 para Qt 6."
+                "incluyendo PySide6 para Qt 6. Permite usar widgets y QML desde Python."
             ),
             "para_que": (
                 "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
@@ -1550,7 +1562,8 @@ GLOSSARY = {
             ),
             "matiz": (
                 "Utiliza señales y slots para comunicar widgets de forma desacoplada y "
-                "permite integrar temas y recursos del ecosistema Qt."
+                "permite integrar temas y recursos del ecosistema Qt. El empaquetado "
+                "para distribución suele requerir herramientas como PyInstaller."
             ),
         },
     },
@@ -1563,7 +1576,8 @@ GLOSSARY = {
             ),
             "para_que": (
                 "Se usa para desplegar aplicaciones, escalar sistemas y operar "
-                "infraestructura global con herramientas administradas."
+                "infraestructura global con herramientas administradas. Incluye "
+                "opciones de serverless, contenedores, redes privadas y analítica."
             ),
             "ejemplo": (
                 "EC2 para servidores, S3 para almacenamiento, RDS para bases de datos y "
@@ -1571,7 +1585,90 @@ GLOSSARY = {
             ),
             "matiz": (
                 "El costo es bajo demanda y depende de región, uso, arquitectura y "
-                "políticas de optimización."
+                "políticas de optimización. Un buen diseño de IAM y VPC impacta la "
+                "seguridad y el mantenimiento."
+            ),
+        },
+    },
+    "firebase": {
+        "tooltip": "Plataforma cloud de Google para apps móviles y web.",
+        "definition_parts": {
+            "que_es": (
+                "Firebase es una plataforma de Google que ofrece servicios administrados "
+                "para autenticación, bases de datos y hosting."
+            ),
+            "para_que": (
+                "Se usa para acelerar el desarrollo de apps móviles y web con backend "
+                "serverless, notificaciones y analítica."
+            ),
+            "ejemplo": (
+                "Usar Firebase Authentication para login con Google y Firestore para "
+                "guardar perfiles de usuario."
+            ),
+            "matiz": (
+                "El enfoque serverless reduce la operación, pero puede generar dependencia "
+                "del proveedor y costos por lectura/escritura."
+            ),
+        },
+    },
+    "supabase": {
+        "tooltip": "Backend como servicio basado en PostgreSQL.",
+        "definition_parts": {
+            "que_es": (
+                "Supabase es una plataforma open source que ofrece base de datos "
+                "PostgreSQL, autenticación y almacenamiento."
+            ),
+            "para_que": (
+                "Se usa para crear backends rápidos con APIs REST/GraphQL automáticas "
+                "y gestión de usuarios."
+            ),
+            "ejemplo": (
+                "Crear una tabla de tareas y consultar datos desde un frontend con "
+                "las SDKs de Supabase."
+            ),
+            "matiz": (
+                "Permite autohospedaje, pero el control de permisos y políticas RLS "
+                "requiere diseño cuidadoso."
+            ),
+        },
+    },
+    "heroku": {
+        "tooltip": "Plataforma PaaS para desplegar aplicaciones rápidamente.",
+        "definition_parts": {
+            "que_es": (
+                "Heroku es una plataforma como servicio que simplifica el despliegue de "
+                "apps con buildpacks y escalado básico."
+            ),
+            "para_que": (
+                "Se usa para publicar apps web y APIs sin gestionar infraestructura, "
+                "ideal para prototipos y MVPs."
+            ),
+            "ejemplo": (
+                "Hacer push de una app Flask y desplegarla con un Procfile en minutos."
+            ),
+            "matiz": (
+                "Su simplicidad reduce control sobre la infraestructura y puede elevar "
+                "costos a gran escala."
+            ),
+        },
+    },
+    "render": {
+        "tooltip": "Plataforma cloud para desplegar servicios y webs.",
+        "definition_parts": {
+            "que_es": (
+                "Render es un proveedor cloud que facilita despliegues de servicios, "
+                "bases de datos y sitios estáticos."
+            ),
+            "para_que": (
+                "Se usa para desplegar apps con pipelines Git, HTTPS automático y "
+                "escalado sencillo."
+            ),
+            "ejemplo": (
+                "Desplegar una API FastAPI conectada a PostgreSQL con despliegue continuo."
+            ),
+            "matiz": (
+                "El rendimiento y límites dependen del plan; conviene revisar cuotas y "
+                "regiones disponibles."
             ),
         },
     },

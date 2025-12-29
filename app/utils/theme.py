@@ -105,6 +105,18 @@ QLabel[class='Badge'] {
     border-radius: 10px;
     font-weight: 600;
 }
+QLabel[class='Badge'][variant='common'] {
+    background: #c7d2fe;
+    color: #1e3a8a;
+}
+QLabel[class='Badge'][variant='category'] {
+    background: #e2e8f0;
+    color: #1f2937;
+}
+QLabel[class='Badge'][variant='library'] {
+    background: #bfdbfe;
+    color: #1e3a8a;
+}
 QFrame#CalloutBox {
     background: #eef7ff;
     border: 1px solid #cfe3ff;
@@ -136,6 +148,17 @@ QFrame#DefinitionPanel {
     background: #ffffff;
     border: 1px solid #d7dde8;
     border-radius: 14px;
+}
+QFrame#LibraryDetailPanel {
+    background: #ffffff;
+    border: 1px solid #d7dde8;
+    border-radius: 14px;
+}
+QFrame#SectionDivider {
+    border: 1px solid #e5e7eb;
+}
+QLabel#LibraryItemTitle {
+    font-weight: 600;
 }
 QLabel#DefinitionTitle {
     font-size: 16px;
@@ -268,6 +291,18 @@ QLabel[class='Badge'] {
     border-radius: 10px;
     font-weight: 700;
 }
+QLabel[class='Badge'][variant='common'] {
+    background: #d4af37;
+    color: #1e1e1e;
+}
+QLabel[class='Badge'][variant='category'] {
+    background: #3a3a3a;
+    color: #f7f2e4;
+}
+QLabel[class='Badge'][variant='library'] {
+    background: #4b5563;
+    color: #f7f2e4;
+}
 QFrame#CalloutBox {
     background: #2c2b25;
     border: 1px solid #51442a;
@@ -299,6 +334,17 @@ QFrame#DefinitionPanel {
     background: #2a2a2a;
     border: 1px solid #3a3a3a;
     border-radius: 14px;
+}
+QFrame#LibraryDetailPanel {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 14px;
+}
+QFrame#SectionDivider {
+    border: 1px solid #3f3f3f;
+}
+QLabel#LibraryItemTitle {
+    font-weight: 600;
 }
 QLabel#DefinitionTitle {
     font-size: 16px;

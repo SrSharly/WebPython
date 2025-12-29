@@ -1,13 +1,14 @@
 from __future__ import annotations
 
+import html
 import logging
 import sys
 from dataclasses import dataclass
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QKeySequence
 from PySide6.QtWidgets import (
     QApplication,
-    QFrame,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -15,12 +16,13 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QMainWindow,
-    QMessageBox,
     QPushButton,
     QScrollArea,
     QSizePolicy,
     QSplitter,
+    QShortcut,
     QTabWidget,
+    QTextBrowser,
     QTextEdit,
     QTreeWidget,
     QTreeWidgetItem,
@@ -31,7 +33,7 @@ from PySide6.QtWidgets import (
 from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.utils.code_runner import SnippetRunner
-from app.utils.ui_helpers import badge, copy_to_clipboard
+from app.utils.ui_helpers import CodeCard, InfoBox, apply_app_theme, badge
 
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -58,6 +60,7 @@ class MainWindow(QMainWindow):
 
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Buscar por título, tags o contenido...")
+        self.search_input.setClearButtonEnabled(True)
         self.search_input.textChanged.connect(self._apply_filter)
 
         self.load_errors_box = QGroupBox("Errores de carga")
@@ -73,7 +76,14 @@ class MainWindow(QMainWindow):
 
         self.tabs = QTabWidget()
         self.summary_view = QTextEdit(readOnly=True)
-        self.guide_view = QTextEdit(readOnly=True)
+        self.guide_container = QWidget()
+        self.guide_layout = QVBoxLayout(self.guide_container)
+        self.guide_layout.setAlignment(Qt.AlignTop)
+        self.guide_text = QTextBrowser()
+        self.guide_layout.addWidget(self.guide_text)
+        self.guide_scroll = QScrollArea()
+        self.guide_scroll.setWidgetResizable(True)
+        self.guide_scroll.setWidget(self.guide_container)
         self.examples_container = QWidget()
         self.examples_layout = QVBoxLayout(self.examples_container)
         self.examples_layout.setAlignment(Qt.AlignTop)
@@ -105,7 +115,7 @@ class MainWindow(QMainWindow):
         self.demo_scroll.setWidget(self.demo_container)
 
         self.tabs.addTab(self.summary_view, "Resumen")
-        self.tabs.addTab(self.guide_view, "Guía")
+        self.tabs.addTab(self.guide_scroll, "Guía")
         self.tabs.addTab(pitfalls_panel, "Errores típicos")
         self.tabs.addTab(self.examples_scroll, "Ejemplos")
         self.tabs.addTab(self.exercises_scroll, "Ejercicios")
@@ -117,14 +127,22 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(self.load_errors_box)
         left_layout.addWidget(self.tree)
 
+        self.header_widget = QWidget()
+        self.header_layout = QVBoxLayout(self.header_widget)
+        self.header_layout.setContentsMargins(0, 0, 0, 0)
+        self.title_label = QLabel("Selecciona una lección")
+        self.title_label.setObjectName("HeaderTitle")
+        self.header_layout.addWidget(self.title_label)
+
         self.badge_row = QWidget()
         self.badge_layout = QHBoxLayout(self.badge_row)
         self.badge_layout.setAlignment(Qt.AlignLeft)
         self.badge_layout.setContentsMargins(0, 0, 0, 0)
+        self.header_layout.addWidget(self.badge_row)
 
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
-        right_layout.addWidget(self.badge_row)
+        right_layout.addWidget(self.header_widget)
         right_layout.addWidget(self.tabs)
 
         splitter = QSplitter()
@@ -141,6 +159,9 @@ class MainWindow(QMainWindow):
         self._load_lessons()
         if self.lesson_entries:
             self._select_first()
+
+        search_shortcut = QShortcut(QKeySequence("Ctrl+K"), self)
+        search_shortcut.activated.connect(self.search_input.setFocus)
 
     def _load_lessons(self) -> None:
         self.tree.clear()
@@ -212,6 +233,11 @@ class MainWindow(QMainWindow):
             lesson.summary(),
             lesson.guide(),
         ]
+        guide_sections = lesson.guide_sections()
+        if guide_sections:
+            for section in guide_sections:
+                parts.append(section.get("title", ""))
+                parts.append(section.get("content", ""))
         parts.extend([title + " " + detail for title, detail in lesson.common_pitfalls()])
         parts.extend([title + " " + code for title, code in lesson.code_examples()])
         for exercise in lesson.exercises():
@@ -224,7 +250,7 @@ class MainWindow(QMainWindow):
         query = self.search_input.text().strip().lower()
         for i in range(self.tree.topLevelItemCount()):
             category_item = self.tree.topLevelItem(i)
-            category_visible = False
+            category_visible = True
             for j in range(category_item.childCount()):
                 sub_item = category_item.child(j)
                 sub_visible = False
@@ -234,7 +260,6 @@ class MainWindow(QMainWindow):
                     if not query or query in entry.search_text:
                         lesson_item.setHidden(False)
                         sub_visible = True
-                        category_visible = True
                     else:
                         lesson_item.setHidden(True)
                 sub_item.setHidden(not sub_visible)
@@ -260,6 +285,7 @@ class MainWindow(QMainWindow):
         lesson = entry.instance
 
         self._clear_badges()
+        self.title_label.setText(entry.info_title)
         self.badge_layout.addWidget(badge(entry.info_category, "#2b6cb0"))
         self.badge_layout.addWidget(badge(entry.info_subcategory, "#3182ce"))
         self.badge_layout.addWidget(badge(entry.info_level, "#2f855a"))
@@ -270,7 +296,7 @@ class MainWindow(QMainWindow):
             self.badge_layout.addWidget(badge("Requiere: " + ", ".join(reqs), "#c05621"))
 
         self.summary_view.setPlainText(lesson.summary())
-        self.guide_view.setPlainText(lesson.guide())
+        self._render_guide(lesson)
         self._render_pitfalls(lesson)
         self._render_examples(lesson)
         self._render_exercises(lesson)
@@ -283,6 +309,82 @@ class MainWindow(QMainWindow):
             if widget is not None:
                 widget.deleteLater()
 
+    def _guide_html_from_text(self, text: str) -> str:
+        lines = text.splitlines()
+        chunks: list[str] = []
+        list_items: list[str] = []
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith(("-", "*")):
+                list_items.append(html.escape(stripped[1:].strip()))
+                continue
+            if list_items:
+                chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                list_items = []
+            if stripped:
+                chunks.append(f"<p>{html.escape(stripped)}</p>")
+        if list_items:
+            chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+        return "".join(chunks)
+
+    def _render_guide(self, lesson: Lesson) -> None:
+        self._clear_layout(self.guide_layout)
+        guide_sections = lesson.guide_sections()
+        if guide_sections:
+            sections_html = "<h1>Guía paso a paso</h1>" + "".join(
+                f"<h2>{html.escape(section.get('title', ''))}</h2>"
+                f"{self._guide_html_from_text(section.get('content', ''))}"
+                for section in guide_sections
+            )
+        else:
+            sections_html = f"<h1>Guía paso a paso</h1>{self._guide_html_from_text(lesson.guide())}"
+
+        self.guide_text = QTextBrowser()
+        self.guide_text.setOpenExternalLinks(True)
+        self.guide_text.setHtml(
+            f"""
+            <html>
+            <head>
+            <style>
+                body {{ font-family: 'Segoe UI'; color: #1f2937; }}
+                h1 {{ font-size: 22px; margin-bottom: 8px; }}
+                h2 {{ font-size: 18px; margin-top: 16px; }}
+                p {{ line-height: 1.5; }}
+                ul {{ margin-left: 18px; }}
+            </style>
+            </head>
+            <body>
+                {sections_html}
+            </body>
+            </html>
+            """
+        )
+        self.guide_layout.addWidget(self.guide_text)
+
+        self.guide_layout.addWidget(
+            InfoBox(
+                "Nota rápida",
+                "Puedes copiar los ejemplos con el botón y ejecutarlos en la pestaña Ejemplos.",
+                variant="note",
+            )
+        )
+        self.guide_layout.addWidget(
+            InfoBox(
+                "Advertencia",
+                "Ejecuta los ejemplos en un entorno seguro si vas a modificarlos.",
+                variant="warning",
+            )
+        )
+
+        examples = lesson.code_examples()
+        if examples:
+            section_title = QLabel("Ejemplos en contexto")
+            section_title.setObjectName("SectionTitle")
+            self.guide_layout.addWidget(section_title)
+            for title, code in examples:
+                self.guide_layout.addWidget(CodeCard(title, code))
+        self.guide_layout.addStretch()
+
     def _render_pitfalls(self, lesson: Lesson) -> None:
         self.pitfalls_list.clear()
         self.pitfall_detail.clear()
@@ -292,6 +394,7 @@ class MainWindow(QMainWindow):
             self.pitfalls_list.addItem(item)
         if self.pitfalls_list.count() > 0:
             self.pitfalls_list.setCurrentRow(0)
+
     def _on_pitfall_selected(self, current: QListWidgetItem, _previous: QListWidgetItem | None = None) -> None:
         if current is None:
             self.pitfall_detail.clear()
@@ -302,47 +405,18 @@ class MainWindow(QMainWindow):
     def _render_examples(self, lesson: Lesson) -> None:
         self._clear_layout(self.examples_layout)
         for title, code in lesson.code_examples():
-            card = QGroupBox(title)
-            card_layout = QVBoxLayout(card)
-
-            code_view = QTextEdit()
-            code_view.setPlainText(code)
-            code_view.setFontFamily("Courier")
-            code_view.setReadOnly(True)
-            code_view.setMinimumHeight(120)
-
-            actions = QHBoxLayout()
-            copy_btn = QPushButton("Copiar")
-            copy_btn.clicked.connect(lambda _, c=code: copy_to_clipboard(c, self))
-            actions.addWidget(copy_btn)
-
-            run_btn = QPushButton("Ejecutar")
             can_run, reason = self.runner.can_run(code)
-            if not can_run:
-                run_btn.setEnabled(False)
-                run_btn.setToolTip(reason or "No se puede ejecutar este snippet.")
-            else:
-                run_btn.clicked.connect(lambda _, c=code, v=code_view: self._run_snippet(c, v))
-            actions.addWidget(run_btn)
-            actions.addStretch()
-
-            output_view = QTextEdit(readOnly=True)
-            output_view.setPlaceholderText("Salida...")
-            output_view.setMaximumHeight(120)
-
-            card_layout.addWidget(code_view)
-            card_layout.addLayout(actions)
-            card_layout.addWidget(output_view)
-            card.setProperty("output_view", output_view)
+            callback = self._run_snippet if can_run else None
+            card = CodeCard(title, code, show_run=True, run_callback=callback)
+            if card.output_view is not None and not can_run:
+                card.output_view.setPlainText(reason or "No se puede ejecutar este snippet.")
+                if card.run_button is not None:
+                    card.run_button.setToolTip(reason or "No se puede ejecutar este snippet.")
             self.examples_layout.addWidget(card)
 
         self.examples_layout.addStretch()
 
-    def _run_snippet(self, code: str, code_view: QTextEdit) -> None:
-        parent_card = code_view.parentWidget()
-        if parent_card is None:
-            return
-        output_view = parent_card.property("output_view")
+    def _run_snippet(self, code: str, output_view: QTextEdit | None, _code_view: QTextEdit) -> None:
         if output_view is None:
             return
         result = self.runner.run(code)
@@ -355,10 +429,14 @@ class MainWindow(QMainWindow):
         self._clear_layout(self.exercises_layout)
         for idx, exercise in enumerate(lesson.exercises(), start=1):
             box = QGroupBox(f"Ejercicio {idx}")
+            box.setCheckable(True)
+            box.setChecked(True)
             layout = QVBoxLayout(box)
+            content = QWidget()
+            content_layout = QVBoxLayout(content)
             question = QLabel(exercise.get("question", ""))
             question.setWordWrap(True)
-            layout.addWidget(question)
+            content_layout.addWidget(question)
 
             hints_btn = QPushButton("Ver pistas")
             hints_view = QTextEdit(readOnly=True)
@@ -377,9 +455,11 @@ class MainWindow(QMainWindow):
             actions.addWidget(solution_btn)
             actions.addStretch()
 
-            layout.addLayout(actions)
-            layout.addWidget(hints_view)
-            layout.addWidget(solution_view)
+            content_layout.addLayout(actions)
+            content_layout.addWidget(hints_view)
+            content_layout.addWidget(solution_view)
+            layout.addWidget(content)
+            box.toggled.connect(content.setVisible)
             self.exercises_layout.addWidget(box)
 
         self.exercises_layout.addStretch()
@@ -397,6 +477,7 @@ class MainWindow(QMainWindow):
 
 def main() -> None:
     app = QApplication(sys.argv)
+    apply_app_theme(app)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())

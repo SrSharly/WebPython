@@ -1445,6 +1445,30 @@ GLOSSARY = {
             ),
         },
     },
+    "data engineering": {
+        "tooltip": "Disciplina centrada en construir y operar sistemas de datos.",
+        "definition_parts": {
+            "que_es": (
+                "Data engineering se enfoca en diseñar pipelines, arquitecturas y "
+                "plataformas que ingieren, transforman y sirven datos confiables."
+            ),
+            "para_que": (
+                "Se usa para habilitar análisis y modelos mediante ETLs/ELTs, "
+                "catálogos, calidad de datos, orquestación y gobernanza."
+            ),
+            "sintaxis": (
+                "spark.read.parquet('s3://bucket/datos') o DAGs en Airflow"
+            ),
+            "ejemplo": (
+                "Construir un pipeline que toma logs de una app, los limpia, los "
+                "carga en un data warehouse y actualiza dashboards diarios."
+            ),
+            "matiz": (
+                "La confiabilidad depende de monitoreo, tests de calidad y manejo "
+                "de backfills, no solo de mover datos."
+            ),
+        },
+    },
     "machine learning": {
         "tooltip": "Rama de la IA que aprende patrones desde datos.",
         "definition_parts": {
@@ -1467,6 +1491,28 @@ GLOSSARY = {
                 "Requiere datos representativos, métricas claras, prevención de sobreajuste "
                 "y control de sesgos. Sin un buen pipeline de validación, el rendimiento "
                 "en producción puede degradarse."
+            ),
+        },
+    },
+    "mlops": {
+        "tooltip": "Prácticas para operar modelos de ML en producción.",
+        "definition_parts": {
+            "que_es": (
+                "MLOps combina ingeniería de software, data engineering y ML para "
+                "desplegar, versionar y monitorear modelos en producción."
+            ),
+            "para_que": (
+                "Se usa para automatizar entrenamiento, despliegue, pruebas, "
+                "observabilidad y rollback de modelos."
+            ),
+            "sintaxis": "mlflow ui o pipeline en Kubeflow/Vertex AI",
+            "ejemplo": (
+                "Registrar modelos con MLflow, desplegarlos como API y monitorear "
+                "drift y métricas de negocio."
+            ),
+            "matiz": (
+                "Sin monitoreo de datos y modelos, el rendimiento puede degradarse "
+                "aunque el código esté estable."
             ),
         },
     },
@@ -1821,118 +1867,259 @@ GLOSSARY = {
     },
     "s3": {
         "tooltip": "Servicio de almacenamiento de objetos en AWS.",
-        "definition": (
-            "Amazon S3 almacena archivos como objetos en buckets y está pensado para "
-            "durabilidad y escalabilidad. Se usa para backups, archivos estáticos y "
-            "data lakes. Ejemplo: guardar imágenes de una aplicación web o datos crudos "
-            "para analítica. "
-            "Matiz: organiza por buckets y permisos; no es un sistema de archivos clásico."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon S3 es un servicio de almacenamiento de objetos que organiza "
+                "archivos en buckets con alta durabilidad y escalabilidad."
+            ),
+            "para_que": (
+                "Se usa para backups, archivos estáticos, data lakes, logs y "
+                "almacenamiento de datasets para análisis y machine learning."
+            ),
+            "sintaxis": "aws s3 cp archivo.csv s3://mi-bucket/datasets/",
+            "ejemplo": (
+                "Guardar imágenes de una app web y servirlas vía CloudFront o almacenar "
+                "datos crudos de ventas para analítica."
+            ),
+            "matiz": (
+                "No es un sistema de archivos tradicional: su acceso es por objetos y "
+                "permite políticas de permisos, versiones y clases de almacenamiento."
+            ),
+        },
     },
     "ec2": {
         "tooltip": "Servicio de máquinas virtuales en AWS.",
-        "definition": (
-            "Amazon EC2 ofrece instancias virtuales para ejecutar servidores. "
-            "Se usa cuando necesitas control total del sistema operativo. "
-            "Ejemplo: desplegar una API en una instancia Linux con Nginx. "
-            "Matiz: hay que gestionar parches, escalado, seguridad y costos por hora."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon EC2 provee instancias virtuales configurables para ejecutar "
+                "aplicaciones y servicios en la nube."
+            ),
+            "para_que": (
+                "Se usa cuando necesitas control sobre el sistema operativo, el "
+                "runtime o la red, por ejemplo para APIs, workers o workloads legacy."
+            ),
+            "sintaxis": "aws ec2 describe-instances",
+            "ejemplo": (
+                "Desplegar una API en Linux con Nginx y autoescalado basado en CPU."
+            ),
+            "matiz": (
+                "Requiere gestionar parches, seguridad, escalado y costos por hora o "
+                "por segundo, por lo que conviene automatizar con scripts o IaC."
+            ),
+        },
     },
     "rds": {
         "tooltip": "Servicio administrado de bases de datos en AWS.",
-        "definition": (
-            "Amazon RDS provee bases de datos relacionales gestionadas (PostgreSQL, "
-            "MySQL, etc.). Se usa para evitar tareas de mantenimiento como backups. "
-            "Ejemplo: una base de datos transaccional para una app con alta disponibilidad. "
-            "Matiz: simplifica la operación, pero limita ciertas configuraciones "
-            "de motor y extensión."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon RDS es un servicio administrado de bases de datos relacionales "
+                "como PostgreSQL, MySQL o MariaDB."
+            ),
+            "para_que": (
+                "Se usa para tener backups, parches y alta disponibilidad gestionados "
+                "por AWS, reduciendo la carga operativa."
+            ),
+            "sintaxis": "aws rds describe-db-instances",
+            "ejemplo": (
+                "Base de datos transaccional para una app con réplicas de lectura y "
+                "respaldo automático."
+            ),
+            "matiz": (
+                "Simplifica la operación, pero limita ciertas configuraciones y "
+                "extensiones dependiendo del motor."
+            ),
+        },
     },
     "lambda": {
         "tooltip": "Servicio serverless para ejecutar funciones en AWS.",
-        "definition": (
-            "AWS Lambda ejecuta funciones bajo demanda sin servidores visibles. "
-            "Se usa para tareas event-driven como procesar archivos o enviar notificaciones. "
-            "Ejemplo: procesar imágenes cuando se suben a S3. "
-            "Matiz: tiene límites de tiempo y memoria por ejecución, y se cobra por uso."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "AWS Lambda ejecuta funciones bajo demanda sin gestionar servidores."
+            ),
+            "para_que": (
+                "Se usa para tareas event-driven como procesar archivos, ejecutar "
+                "webhooks o automatizar flujos con bajo costo inicial."
+            ),
+            "sintaxis": "aws lambda invoke --function-name procesar-imagen out.json",
+            "ejemplo": (
+                "Procesar imágenes cuando se suben a S3 o enviar una alerta al detectar "
+                "un error en logs."
+            ),
+            "matiz": (
+                "Tiene límites de tiempo, memoria y cold starts; conviene diseñar "
+                "funciones pequeñas y medir latencias."
+            ),
+        },
     },
     "sagemaker": {
         "tooltip": "Servicio de AWS para construir y desplegar modelos de ML.",
-        "definition": (
-            "Amazon SageMaker es una plataforma administrada para entrenar, ajustar y "
-            "desplegar modelos de machine learning. Se usa para acelerar el ciclo de ML. "
-            "Ejemplo: entrenamiento distribuido de modelos y despliegue como endpoint "
-            "para inferencias en tiempo real. "
-            "Matiz: integra notebooks, pipelines y monitoreo del rendimiento."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon SageMaker es una plataforma administrada para entrenar, "
+                "ajustar, desplegar y monitorizar modelos de machine learning."
+            ),
+            "para_que": (
+                "Se usa para acelerar el ciclo de ML con notebooks, jobs de "
+                "entrenamiento, pipelines y endpoints de inferencia."
+            ),
+            "sintaxis": "boto3.client('sagemaker').create_training_job(...)",
+            "ejemplo": (
+                "Entrenar un modelo de clasificación y desplegarlo como endpoint "
+                "para inferencias en tiempo real."
+            ),
+            "matiz": (
+                "Integra monitoreo de drift y pipelines, pero requiere control de "
+                "costos y versionado de datos/modelos."
+            ),
+        },
     },
     "dynamodb": {
         "tooltip": "Base de datos NoSQL administrada de AWS.",
-        "definition": (
-            "Amazon DynamoDB es una base de datos NoSQL key-value y documental, "
-            "administrada y altamente escalable. Se usa para aplicaciones con alta "
-            "lectura/escritura y baja latencia. "
-            "Ejemplo: guardar sesiones de usuarios o catálogos de productos. "
-            "Matiz: el diseño de particiones es clave para el rendimiento."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon DynamoDB es una base de datos NoSQL key-value y documental, "
+                "administrada y altamente escalable."
+            ),
+            "para_que": (
+                "Se usa para aplicaciones con alta lectura/escritura, baja latencia "
+                "y necesidades de escalado automático."
+            ),
+            "sintaxis": "aws dynamodb put-item --table-name sesiones --item ...",
+            "ejemplo": (
+                "Guardar sesiones de usuarios o catálogos de productos con acceso rápido."
+            ),
+            "matiz": (
+                "El diseño de particiones y claves es crítico para el rendimiento y "
+                "evitar hot partitions."
+            ),
+        },
     },
     "cloudfront": {
         "tooltip": "CDN de AWS para distribución de contenido.",
-        "definition": (
-            "Amazon CloudFront es una red de distribución de contenido (CDN) que "
-            "entrega archivos con baja latencia desde ubicaciones globales. "
-            "Se usa para acelerar sitios web y contenido estático. "
-            "Ejemplo: servir imágenes y archivos JS/CSS de una web. "
-            "Matiz: se integra con S3, ALB o servidores propios como origen."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon CloudFront es una red de distribución de contenido (CDN) que "
+                "entrega archivos desde ubicaciones globales."
+            ),
+            "para_que": (
+                "Se usa para acelerar sitios web, contenido estático y streaming con "
+                "baja latencia y caching."
+            ),
+            "sintaxis": "aws cloudfront create-distribution --origin-domain-name ...",
+            "ejemplo": (
+                "Servir imágenes y archivos JS/CSS desde un bucket S3 como origen."
+            ),
+            "matiz": (
+                "Requiere configurar políticas de cache y invalidaciones para balancear "
+                "costos y frescura del contenido."
+            ),
+        },
     },
     "iam": {
         "tooltip": "Servicio de identidades y permisos en AWS.",
-        "definition": (
-            "AWS IAM (Identity and Access Management) gestiona usuarios, roles y "
-            "políticas de permisos en AWS. Se usa para controlar quién puede acceder "
-            "a qué recursos. "
-            "Ejemplo: un rol que permite a una Lambda leer un bucket S3. "
-            "Matiz: las políticas deben seguir el principio de menor privilegio."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "AWS IAM (Identity and Access Management) gestiona usuarios, roles y "
+                "políticas de permisos en AWS."
+            ),
+            "para_que": (
+                "Se usa para controlar quién puede acceder a recursos y acciones, "
+                "incluyendo credenciales, roles y políticas."
+            ),
+            "sintaxis": "aws iam create-role --role-name lectura-s3 --assume-role-policy ...",
+            "ejemplo": (
+                "Un rol que permite a una Lambda leer un bucket S3 sin exponer claves."
+            ),
+            "matiz": (
+                "Las políticas deben seguir el principio de menor privilegio y "
+                "auditarse regularmente."
+            ),
+        },
     },
     "vpc": {
         "tooltip": "Red virtual aislada dentro de AWS.",
-        "definition": (
-            "Amazon VPC (Virtual Private Cloud) crea redes virtuales con subredes, "
-            "tablas de rutas y seguridad. Se usa para aislar servicios y controlar "
-            "el tráfico. "
-            "Ejemplo: subred privada para bases de datos y subred pública para una API. "
-            "Matiz: una mala configuración puede exponer recursos sensibles."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon VPC (Virtual Private Cloud) crea redes virtuales con subredes, "
+                "tablas de rutas y controles de seguridad."
+            ),
+            "para_que": (
+                "Se usa para aislar servicios, controlar tráfico y definir "
+                "arquitecturas con redes públicas y privadas."
+            ),
+            "sintaxis": "aws ec2 create-vpc --cidr-block 10.0.0.0/16",
+            "ejemplo": (
+                "Subred privada para bases de datos y subred pública para una API."
+            ),
+            "matiz": (
+                "Una mala configuración de rutas o security groups puede exponer "
+                "recursos sensibles."
+            ),
+        },
     },
     "sqs": {
         "tooltip": "Cola de mensajes administrada de AWS.",
-        "definition": (
-            "Amazon SQS es un servicio de colas para desacoplar componentes. "
-            "Se usa para procesar tareas asíncronas y absorber picos de tráfico. "
-            "Ejemplo: encolar pedidos para procesamiento posterior. "
-            "Matiz: garantiza entrega al menos una vez, por lo que hay que manejar duplicados."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon SQS es un servicio de colas de mensajes para desacoplar "
+                "componentes y procesar tareas asíncronas."
+            ),
+            "para_que": (
+                "Se usa para absorber picos de tráfico, distribuir trabajo y "
+                "controlar reintentos."
+            ),
+            "sintaxis": "aws sqs send-message --queue-url ... --message-body \"pedido\"",
+            "ejemplo": (
+                "Encolar pedidos para que workers los procesen posteriormente."
+            ),
+            "matiz": (
+                "Garantiza entrega al menos una vez, por lo que hay que manejar "
+                "duplicados en el consumidor."
+            ),
+        },
     },
     "sns": {
         "tooltip": "Servicio de notificaciones y pub/sub de AWS.",
-        "definition": (
-            "Amazon SNS permite publicar mensajes y distribuirlos a múltiples destinos "
-            "como email, HTTP o colas. Se usa para notificaciones y eventos. "
-            "Ejemplo: enviar alertas cuando falla un proceso. "
-            "Matiz: se integra bien con SQS y Lambda para flujos event-driven."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon SNS es un servicio de pub/sub para publicar mensajes y "
+                "distribuirlos a múltiples destinos."
+            ),
+            "para_que": (
+                "Se usa para notificaciones, alertas y flujos event-driven hacia email, "
+                "HTTP, SQS o Lambda."
+            ),
+            "sintaxis": "aws sns publish --topic-arn ... --message \"Alerta\"",
+            "ejemplo": (
+                "Enviar alertas cuando falla un proceso de datos y notificar a varios "
+                "suscriptores."
+            ),
+            "matiz": (
+                "Se integra bien con SQS y Lambda, pero requiere gobernar permisos "
+                "y seguridad de los temas."
+            ),
+        },
     },
     "eks": {
         "tooltip": "Servicio administrado de Kubernetes en AWS.",
-        "definition": (
-            "Amazon EKS ofrece clusters de Kubernetes gestionados. "
-            "Se usa para orquestar contenedores sin administrar el plano de control. "
-            "Ejemplo: desplegar microservicios en un cluster con autoescalado. "
-            "Matiz: hay costos por el control plane y requiere gestión de nodos."
-        ),
+        "definition_parts": {
+            "que_es": (
+                "Amazon EKS ofrece clusters de Kubernetes gestionados con el plano "
+                "de control administrado."
+            ),
+            "para_que": (
+                "Se usa para orquestar contenedores, microservicios y workloads "
+                "de larga duración con autoescalado."
+            ),
+            "sintaxis": "eksctl create cluster --name mi-cluster",
+            "ejemplo": (
+                "Desplegar microservicios en un cluster con HPA y balanceo de carga."
+            ),
+            "matiz": (
+                "Hay costos por el control plane y requiere gestionar nodos, redes "
+                "y permisos de Kubernetes."
+            ),
+        },
     },
     "cloud": {
         "tooltip": "Modelo de computación con recursos bajo demanda.",

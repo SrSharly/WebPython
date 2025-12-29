@@ -127,6 +127,11 @@ QFrame#CodeCard {
     border: 1px solid #e1e5ef;
     border-radius: 14px;
 }
+QFrame#CodeBox {
+    background: #0b1220;
+    border: 1px solid #111827;
+    border-radius: 10px;
+}
 QFrame#DefinitionPanel {
     background: #ffffff;
     border: 1px solid #d7dde8;
@@ -143,14 +148,13 @@ QLabel#DefinitionTerm {
     border-radius: 10px;
     font-weight: 600;
 }
-QTextEdit#CodeBlock {
-    background: #0f172a;
+QPlainTextEdit#CodeBlock {
+    background: transparent;
     color: #e2e8f0;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
+    border: none;
     font-family: "Consolas";
     font-size: 12px;
-    padding: 8px;
+    padding: 2px;
 }
 QToolTip {
     background-color: #1f2937;
@@ -286,6 +290,11 @@ QFrame#CodeCard {
     border: 1px solid #3a3a3a;
     border-radius: 14px;
 }
+QFrame#CodeBox {
+    background: #0b1220;
+    border: 1px solid #111827;
+    border-radius: 10px;
+}
 QFrame#DefinitionPanel {
     background: #2a2a2a;
     border: 1px solid #3a3a3a;
@@ -302,14 +311,13 @@ QLabel#DefinitionTerm {
     border-radius: 10px;
     font-weight: 700;
 }
-QTextEdit#CodeBlock {
-    background: #1e1e1e;
+QPlainTextEdit#CodeBlock {
+    background: transparent;
     color: #e6e6e6;
-    border: 1px solid #3a3a3a;
-    border-radius: 10px;
+    border: none;
     font-family: "Consolas";
     font-size: 12px;
-    padding: 8px;
+    padding: 2px;
 }
 QToolTip {
     background-color: #2a2a2a;

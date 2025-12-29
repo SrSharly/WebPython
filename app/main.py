@@ -429,6 +429,9 @@ class MainWindow(QMainWindow):
         in_code_block = False
         callout: dict[str, object] | None = None
         callout_list_items: list[str] = []
+        section_index = 0
+        callout_index = 0
+        list_mode = "default"
 
         callout_pattern = re.compile(
             r"^(?P<title>.+?)\s*\(CalloutBox:\s*(?P<variant>[a-z_]+)\s*\)$",
@@ -436,6 +439,7 @@ class MainWindow(QMainWindow):
         )
 
         def render_callout(title: str, variant: str, body_html: str) -> str:
+            nonlocal callout_index
             meta = {
                 "best_practice": {"label": "Buenas prácticas", "icon": "✅", "class": "best"},
                 "note": {"label": "Nota", "icon": "💡", "class": "note"},
@@ -447,8 +451,10 @@ class MainWindow(QMainWindow):
                 display_title = info["label"]
             else:
                 display_title = title or info["label"]
+            callout_index += 1
+            alt_class = " alt" if callout_index % 2 == 0 else ""
             return (
-                f"<div class=\"card callout {info['class']}\">"
+                f"<div class=\"card callout {info['class']}{alt_class}\">"
                 f"<div class=\"card-header\">"
                 f"<span class=\"card-icon\">{info['icon']}</span>"
                 f"<span class=\"card-title\">{html.escape(display_title)}</span>"
@@ -464,14 +470,23 @@ class MainWindow(QMainWindow):
                 "<span class=\"card-icon\">💻</span>"
                 "<span class=\"card-title\">Código</span>"
                 "</div>"
+                "<div class=\"card-body\">"
                 f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
+                "</div>"
                 "</div>"
             )
 
         def flush_list_items() -> None:
             nonlocal list_items
             if list_items:
-                chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
+                if list_mode == "pro":
+                    chunks.append(
+                        "<div class=\"pro-list\">"
+                        + "".join(f"<div class=\"pro-item\">{item}</div>" for item in list_items)
+                        + "</div>"
+                    )
+                else:
+                    chunks.append("<ul>" + "".join(f"<li>{item}</li>" for item in list_items) + "</ul>")
                 list_items = []
 
         def flush_callout_list() -> None:
@@ -519,6 +534,7 @@ class MainWindow(QMainWindow):
                 if callout is not None:
                     flush_callout()
                 title = stripped[4:].strip()
+                list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
                 match = callout_pattern.match(title)
                 if match:
                     callout = {
@@ -527,13 +543,26 @@ class MainWindow(QMainWindow):
                         "body": [],
                     }
                 else:
-                    chunks.append(f"<h3>{html.escape(title)}</h3>")
+                    if title.lower().startswith("paso") and ":" in title:
+                        step, detail = title.split(":", 1)
+                        chunks.append(
+                            "<h3 class=\"step-title\">"
+                            f"<span class=\"step-badge\">{html.escape(step.strip())}</span>"
+                            f"{html.escape(detail.strip())}</h3>"
+                        )
+                    else:
+                        chunks.append(f"<h3>{html.escape(title)}</h3>")
                 continue
             if stripped.startswith("## "):
                 flush_list_items()
                 if callout is not None:
                     flush_callout()
-                chunks.append(f"<h2>{html.escape(stripped[3:].strip())}</h2>")
+                if section_index > 0:
+                    chunks.append("<div class=\"section-divider\"></div>")
+                section_index += 1
+                title = stripped[3:].strip()
+                list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
+                chunks.append(f"<h2>{html.escape(title)}</h2>")
                 continue
             if stripped.startswith(("-", "*")):
                 if callout is not None:
@@ -579,7 +608,9 @@ class MainWindow(QMainWindow):
                 "<span class=\"card-icon\">💻</span>"
                 "<span class=\"card-title\">Código</span>"
                 "</div>"
+                "<div class=\"card-body\">"
                 f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
+                "</div>"
                 "</div>"
                 for title, code in resumen
             )
@@ -587,25 +618,35 @@ class MainWindow(QMainWindow):
             resumen_html = ""
 
         if self.current_theme == "dark":
+            theme_class = "theme-dark"
             text_color = "#e6e6e6"
+            heading_color = "#f8f0d4"
+            muted_text = "#cbd5e1"
             code_text = "#e5e7eb"
-            code_background = "#111827"
+            code_background = "#0f172a"
             code_border = "#1f2937"
             keyword_color = "#d6b86a"
             keyword_border = "#b8953d"
             keyword_hover = "#e6c87b"
-            card_border = "#3a3a3a"
-            card_header = "#f8f0d4"
+            card_border = "#2c2c2c"
+            card_bg = "#141414"
+            card_header = "#1f2937"
             accent_code = "#d4af37"
             accent_best = "#7cc992"
             accent_note = "#7aa2c7"
             accent_warn = "#d4a64a"
+            accent_definition = "#b294ff"
             bg_best = "#1f2a22"
             bg_note = "#1f2a3a"
             bg_warn = "#3a2f1f"
             bg_definition = "#2d2639"
+            divider = "#2f2f2f"
+            summary_bg = "#1a2433"
         else:
+            theme_class = "theme-light"
             text_color = "#1f2937"
+            heading_color = "#0f172a"
+            muted_text = "#4b5563"
             code_text = "#e2e8f0"
             code_background = "#0b1220"
             code_border = "#111827"
@@ -613,62 +654,128 @@ class MainWindow(QMainWindow):
             keyword_border = "#8aa0c8"
             keyword_hover = "#2f4c79"
             card_border = "#d7dde8"
-            card_header = "#1f2937"
+            card_bg = "#ffffff"
+            card_header = "#f3f6fb"
             accent_code = "#d4af37"
             accent_best = "#3f7a57"
             accent_note = "#4d6fa1"
             accent_warn = "#d4883a"
+            accent_definition = "#7a63d2"
             bg_best = "#f2f7ef"
             bg_note = "#eef4ff"
             bg_warn = "#fff3e2"
             bg_definition = "#f3f0ff"
+            divider = "#e2e8f0"
+            summary_bg = "#edf2ff"
+
+        summary_text = lesson.summary().strip()
+        summary_html = ""
+        if summary_text:
+            summary_html = (
+                "<div class=\"card summary-card\">"
+                "<div class=\"card-header\">"
+                "<span class=\"card-icon\">🧭</span>"
+                "<span class=\"card-title\">Resumen rápido</span>"
+                "</div>"
+                f"<div class=\"card-body\"><p>{html.escape(summary_text)}</p></div>"
+                "</div>"
+            )
 
         html_content = f"""
         <html>
         <head>
         <style>
-            body {{ font-family: 'Segoe UI'; color: {text_color}; }}
-            h1 {{ font-size: 22px; margin-bottom: 8px; }}
-            h2 {{ font-size: 18px; margin-top: 16px; }}
-            h3 {{ font-size: 16px; margin-top: 14px; }}
-            p {{ line-height: 1.5; color: {text_color}; }}
-            ul {{ margin-left: 18px; color: {text_color}; }}
+            body {{
+                font-family: 'Segoe UI';
+                color: {text_color};
+                margin: 0;
+                padding: 0;
+            }}
+            .content {{
+                max-width: 920px;
+                margin: 0 auto;
+                padding: 16px 18px 24px;
+            }}
+            h1 {{
+                font-size: 24px;
+                margin: 4px 0 12px;
+                color: {heading_color};
+            }}
+            h2 {{
+                font-size: 19px;
+                margin-top: 22px;
+                color: {heading_color};
+            }}
+            h3 {{
+                font-size: 16px;
+                margin-top: 14px;
+                color: {heading_color};
+            }}
+            p {{
+                line-height: 1.6;
+                color: {text_color};
+                margin: 8px 0;
+            }}
+            ul {{
+                margin: 10px 0 10px 22px;
+                color: {text_color};
+                padding: 0;
+            }}
+            li {{
+                margin-bottom: 6px;
+            }}
+            .section-divider {{
+                border-top: 1px solid {divider};
+                margin: 18px 0 8px;
+            }}
             .card {{
                 border-radius: 12px;
-                padding: 12px 14px;
+                padding: 0;
                 border: 1px solid {card_border};
-                margin: 12px 0;
+                margin: 16px auto;
+                max-width: 860px;
+                background: {card_bg};
+                overflow: hidden;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
             }}
             .card-header {{
                 display: flex;
                 align-items: center;
                 gap: 8px;
                 font-weight: 600;
-                margin-bottom: 10px;
-                color: {card_header};
+                padding: 10px 14px;
+                background: {card_header};
+                border-bottom: 1px solid {card_border};
+                color: {heading_color};
+            }}
+            .card-body {{
+                padding: 12px 14px 14px;
             }}
             .card-icon {{
                 font-size: 14px;
             }}
             .code-card {{
-                background: transparent;
                 border-left: 4px solid {accent_code};
             }}
             .callout.best {{
-                background: {bg_best};
                 border-left: 4px solid {accent_best};
             }}
             .callout.note {{
-                background: {bg_note};
                 border-left: 4px solid {accent_note};
             }}
             .callout.warn {{
-                background: {bg_warn};
                 border-left: 4px solid {accent_warn};
             }}
             .callout.definition {{
-                background: {bg_definition};
-                border-left: 4px solid {accent_note};
+                border-left: 4px solid {accent_definition};
+            }}
+            .callout.best .card-body {{ background: {bg_best}; }}
+            .callout.note .card-body {{ background: {bg_note}; }}
+            .callout.warn .card-body {{ background: {bg_warn}; }}
+            .callout.definition .card-body {{ background: {bg_definition}; }}
+            .callout.alt {{
+                border-left: none;
+                border-right: 4px solid {accent_note};
             }}
             .codebox {{
                 background: {code_background};
@@ -680,6 +787,7 @@ class MainWindow(QMainWindow):
                 font-size: 12px;
                 margin: 0;
                 white-space: pre-wrap;
+                overflow-x: auto;
             }}
             code {{ font-family: "Consolas"; }}
             a.kw {{
@@ -692,11 +800,46 @@ class MainWindow(QMainWindow):
                 color: {keyword_hover};
                 text-decoration-color: {keyword_hover};
             }}
+            .step-title {{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }}
+            .step-badge {{
+                display: inline-flex;
+                align-items: center;
+                padding: 2px 10px;
+                border-radius: 999px;
+                background: {card_header};
+                color: {heading_color};
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+            }}
+            .pro-list {{
+                display: grid;
+                gap: 10px;
+                margin: 10px 0;
+            }}
+            .pro-item {{
+                padding: 10px 12px;
+                border-radius: 10px;
+                border: 1px solid {card_border};
+                background: {card_header};
+                color: {text_color};
+            }}
+            .summary-card .card-body {{
+                background: {summary_bg};
+            }}
         </style>
         </head>
-        <body>
-            {sections_html}
-            {resumen_html}
+        <body class="{theme_class}">
+            <div class="content">
+                {summary_html}
+                {sections_html}
+                {resumen_html}
+            </div>
         </body>
         </html>
         """

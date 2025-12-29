@@ -1188,10 +1188,12 @@ GLOSSARY = {
     "python": {
         "tooltip": "Lenguaje de programación interpretado y multiplataforma.",
         "definition": (
-            "Python es un lenguaje de programación de alto nivel, legible y con una "
-            "gran comunidad. Se usa para desarrollo web, automatización, análisis de "
-            "datos, ciencia de datos y más. Ejemplo: print('Hola') imprime texto. "
-            "Matiz: su ecosistema de paquetes (pip) acelera el desarrollo."
+            "Python es un lenguaje de programación de alto nivel con una sintaxis "
+            "clara que prioriza la legibilidad. Se usa en automatización, desarrollo "
+            "web, ciencia de datos, scripting y aplicaciones de escritorio. "
+            "Ejemplo: print('Hola') imprime texto en la consola. "
+            "Matiz: su ecosistema de paquetes (pip) y su comunidad facilitan resolver "
+            "problemas comunes rápidamente."
         ),
     },
     "ciencia de datos": {
@@ -1201,73 +1203,123 @@ GLOSSARY = {
             "dominio para obtener conclusiones a partir de datos. Se usa para analizar "
             "tendencias, construir modelos predictivos y apoyar decisiones. "
             "Ejemplo: usar pandas y matplotlib para explorar un dataset de ventas. "
-            "Matiz: requiere limpieza de datos y validación de resultados."
+            "Matiz: requiere limpieza de datos, validación de resultados y comunicación "
+            "clara de los hallazgos."
         ),
     },
     "data science": {
         "tooltip": "Nombre en inglés de ciencia de datos.",
         "definition": (
-            "Data science es la disciplina que aplica técnicas estadísticas y de "
-            "programación para extraer conocimiento de datos. Se usa para exploración "
-            "de datos, modelado y comunicación de hallazgos. "
-            "Ejemplo: entrenar un modelo para predecir churn de clientes. "
-            "Matiz: la calidad del dato impacta directamente en la calidad del modelo."
+            "Data science aplica estadística, programación y comunicación para "
+            "extraer conocimiento de datos. Se usa para entender fenómenos, detectar "
+            "patrones, construir modelos y comunicar insights a negocio. "
+            "Ejemplo: analizar el churn de clientes y proponer acciones para reducirlo. "
+            "Matiz: la limpieza y la calidad de los datos son el punto de partida del "
+            "valor generado."
         ),
     },
     "data cience": {
         "tooltip": "Variante común con error de escritura de data science.",
         "definition": (
-            "Data cience suele referirse a data science (ciencia de datos). "
-            "Se usa para describir el análisis de datos con estadística y programación. "
-            "Ejemplo: limpieza de datos antes de entrenar un modelo. "
-            "Matiz: aunque esté mal escrito, apunta a la misma disciplina."
+            "Data cience es una escritura incorrecta de data science (ciencia de datos). "
+            "Se usa en búsquedas o conversaciones informales, pero el término correcto "
+            "es data science. Ejemplo: preparar datos, analizar tendencias y crear modelos. "
+            "Matiz: conviene corregirlo en documentación y presentaciones formales."
         ),
     },
     "machine learning": {
         "tooltip": "Rama de la IA que aprende patrones desde datos.",
         "definition": (
             "Machine learning es una rama de la inteligencia artificial que aprende "
-            "patrones a partir de datos para hacer predicciones o clasificaciones. "
-            "Se usa en recomendaciones, detección de fraude y visión por computador. "
-            "Ejemplo: un modelo que predice el precio de una casa. "
-            "Matiz: requiere datos representativos y evaluación con métricas."
+            "patrones desde datos para predecir, clasificar o recomendar. "
+            "Se usa en motores de recomendación, detección de fraude, visión y NLP. "
+            "Ejemplo: un modelo que predice el precio de una casa a partir de variables. "
+            "Matiz: requiere datos representativos, métricas claras y control de sesgos."
         ),
     },
     "full stack": {
         "tooltip": "Desarrollo que cubre frontend y backend.",
         "definition": (
-            "Full stack se refiere a construir aplicaciones completas, desde la "
-            "interfaz de usuario (frontend) hasta la lógica del servidor y la base "
-            "de datos (backend). Se usa en equipos pequeños o productos end-to-end. "
-            "Ejemplo: crear una web con React y una API con Python. "
-            "Matiz: requiere entender integración, seguridad y despliegue."
+            "Full stack describe a quien desarrolla toda la aplicación: interfaz "
+            "(frontend), servidor (backend) y base de datos. Se usa cuando se necesita "
+            "entregar un producto end-to-end en equipos pequeños o proyectos ágiles. "
+            "Ejemplo: una SPA con React, una API con Python y una base en PostgreSQL. "
+            "Matiz: exige entender integración, seguridad, rendimiento y despliegue."
         ),
     },
     "pyside": {
         "tooltip": "Bindings de Qt para crear interfaces gráficas en Python.",
         "definition": (
-            "PySide es un conjunto de bindings oficiales de Qt para Python. "
-            "Se usa para crear aplicaciones de escritorio con ventanas, botones y "
-            "layouts. Ejemplo: usar PySide6 para construir una GUI multiplataforma. "
-            "Matiz: ofrece señales y slots para la comunicación entre componentes."
+            "PySide es el conjunto oficial de bindings de Qt para Python. "
+            "Se usa para crear aplicaciones de escritorio con ventanas, formularios, "
+            "tablas y componentes interactivos. "
+            "Ejemplo: PySide6 para construir una GUI multiplataforma con Qt Designer. "
+            "Matiz: usa señales y slots para comunicar widgets de forma desacoplada."
         ),
     },
     "aws": {
         "tooltip": "Plataforma cloud de Amazon con múltiples servicios.",
         "definition": (
-            "AWS (Amazon Web Services) es una plataforma de servicios cloud. "
-            "Se usa para desplegar aplicaciones, almacenar datos y escalar sistemas. "
+            "AWS (Amazon Web Services) es la plataforma cloud de Amazon con servicios "
+            "de cómputo, almacenamiento, redes, datos e IA. Se usa para desplegar apps, "
+            "escalar sistemas y operar infraestructuras globales. "
             "Ejemplo: EC2 para servidores, S3 para almacenamiento, RDS para bases. "
-            "Matiz: el costo depende del uso y la región."
+            "Matiz: el costo es bajo demanda y depende de región, uso y arquitectura."
+        ),
+    },
+    "s3": {
+        "tooltip": "Servicio de almacenamiento de objetos en AWS.",
+        "definition": (
+            "Amazon S3 almacena archivos como objetos en buckets y está pensado para "
+            "durabilidad y escalabilidad. Se usa para backups, archivos estáticos y "
+            "data lakes. Ejemplo: guardar imágenes de una aplicación web. "
+            "Matiz: organiza por buckets y permisos; no es un sistema de archivos clásico."
+        ),
+    },
+    "ec2": {
+        "tooltip": "Servicio de máquinas virtuales en AWS.",
+        "definition": (
+            "Amazon EC2 ofrece instancias virtuales para ejecutar servidores. "
+            "Se usa cuando necesitas control total del sistema operativo. "
+            "Ejemplo: desplegar una API en una instancia Linux. "
+            "Matiz: hay que gestionar parches, escalado y seguridad."
+        ),
+    },
+    "rds": {
+        "tooltip": "Servicio administrado de bases de datos en AWS.",
+        "definition": (
+            "Amazon RDS provee bases de datos relacionales gestionadas (PostgreSQL, "
+            "MySQL, etc.). Se usa para evitar tareas de mantenimiento como backups. "
+            "Ejemplo: una base de datos transaccional para una app. "
+            "Matiz: simplifica la operación, pero limita ciertas configuraciones."
+        ),
+    },
+    "lambda": {
+        "tooltip": "Servicio serverless para ejecutar funciones en AWS.",
+        "definition": (
+            "AWS Lambda ejecuta funciones bajo demanda sin servidores visibles. "
+            "Se usa para tareas event-driven como procesar archivos o enviar notificaciones. "
+            "Ejemplo: procesar imágenes cuando se suben a S3. "
+            "Matiz: tiene límites de tiempo y memoria por ejecución."
+        ),
+    },
+    "sagemaker": {
+        "tooltip": "Servicio de AWS para construir y desplegar modelos de ML.",
+        "definition": (
+            "Amazon SageMaker es una plataforma administrada para entrenar, ajustar y "
+            "desplegar modelos de machine learning. Se usa para acelerar el ciclo de ML. "
+            "Ejemplo: entrenamiento distribuido de modelos y despliegue como endpoint. "
+            "Matiz: integra notebooks, pipelines y monitoreo del rendimiento."
         ),
     },
     "cloud": {
         "tooltip": "Modelo de computación con recursos bajo demanda.",
         "definition": (
             "La computación en la nube ofrece recursos (cómputo, almacenamiento, red) "
-            "bajo demanda y con pago por uso. Se usa para escalar sin comprar hardware. "
-            "Ejemplo: desplegar una app en un proveedor cloud. "
-            "Matiz: se gestiona con servicios IaaS, PaaS o SaaS."
+            "bajo demanda y con pago por uso. Se usa para escalar sin comprar hardware "
+            "y para desplegar rápido en múltiples regiones. "
+            "Ejemplo: publicar una app en un proveedor cloud con balanceo y backups. "
+            "Matiz: los modelos IaaS, PaaS y SaaS definen el nivel de control."
         ),
     },
     "iaas": {
@@ -1301,18 +1353,65 @@ GLOSSARY = {
         "tooltip": "Plataforma cloud de Microsoft.",
         "definition": (
             "Azure es la plataforma cloud de Microsoft con servicios de cómputo, "
-            "almacenamiento, datos e IA. Se usa para aplicaciones empresariales y "
-            "despliegues híbridos. Ejemplo: Azure Functions para serverless. "
-            "Matiz: integra herramientas de Microsoft como Active Directory."
+            "almacenamiento, datos, IA y soluciones empresariales. "
+            "Se usa para cargas híbridas, integración con entornos Windows y despliegues "
+            "a escala. Ejemplo: Azure Functions para serverless y Azure SQL Database. "
+            "Matiz: integra servicios como Active Directory y herramientas de Microsoft."
+        ),
+    },
+    "azure functions": {
+        "tooltip": "Servicio serverless de Azure para ejecutar funciones.",
+        "definition": (
+            "Azure Functions permite ejecutar código bajo demanda sin gestionar servidores. "
+            "Se usa para automatizaciones, APIs ligeras y flujos basados en eventos. "
+            "Ejemplo: procesar eventos de cola o disparar tareas programadas. "
+            "Matiz: ofrece distintos planes de escalado y límites por ejecución."
         ),
     },
     "gcp": {
         "tooltip": "Google Cloud Platform para servicios en la nube.",
         "definition": (
             "GCP es la plataforma cloud de Google con servicios de cómputo, datos y "
-            "machine learning. Se usa para análisis a gran escala y despliegues rápidos. "
+            "machine learning. Se usa para análisis a gran escala, procesamiento de "
+            "eventos y despliegues rápidos. "
             "Ejemplo: BigQuery para análisis y Cloud Run para contenedores. "
-            "Matiz: destaca por sus herramientas de datos."
+            "Matiz: destaca por sus herramientas de datos y analítica."
+        ),
+    },
+    "cloud storage": {
+        "tooltip": "Almacenamiento de objetos en Google Cloud.",
+        "definition": (
+            "Google Cloud Storage almacena objetos en buckets con alta durabilidad. "
+            "Se usa para datos estáticos, backups y data lakes. "
+            "Ejemplo: guardar archivos de un sistema de analítica. "
+            "Matiz: permite definir clases de almacenamiento según costo y acceso."
+        ),
+    },
+    "cloud run": {
+        "tooltip": "Servicio de GCP para ejecutar contenedores.",
+        "definition": (
+            "Cloud Run ejecuta contenedores HTTP de forma serverless. "
+            "Se usa para desplegar APIs y servicios sin administrar servidores. "
+            "Ejemplo: publicar un contenedor con FastAPI en GCP. "
+            "Matiz: escala a cero y se cobra por uso real."
+        ),
+    },
+    "bigquery": {
+        "tooltip": "Data warehouse administrado de Google Cloud.",
+        "definition": (
+            "BigQuery es un data warehouse serverless para consultas SQL a gran escala. "
+            "Se usa para analítica de grandes volúmenes de datos. "
+            "Ejemplo: consultas sobre terabytes de logs en segundos. "
+            "Matiz: cobra por almacenamiento y por volumen de datos consultados."
+        ),
+    },
+    "cloud sql": {
+        "tooltip": "Base de datos relacional administrada en GCP.",
+        "definition": (
+            "Cloud SQL es el servicio de bases de datos relacionales gestionadas de GCP. "
+            "Se usa para ejecutar PostgreSQL, MySQL o SQL Server sin administrar servidores. "
+            "Ejemplo: base transaccional para un backend web. "
+            "Matiz: ofrece backups automáticos y alta disponibilidad."
         ),
     },
     "serverless": {

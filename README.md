@@ -30,6 +30,14 @@ También puedes ejecutar el wrapper del root:
 python main.py
 ```
 
+## Si no arranca
+
+```bash
+python -c "import PySide6"
+python -m pip install -r requirements.txt
+python -m app
+```
+
 ## Añadir una lección
 
 1. Crea un archivo `.py` dentro de `app/lessons/<categoria>/`.

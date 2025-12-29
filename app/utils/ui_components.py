@@ -77,7 +77,8 @@ class CodeCard(QFrame):
                 run_btn.clicked.connect(lambda: run_callback(code, self.output_view, self.code_view))
             actions.addWidget(run_btn)
             self.run_button = run_btn
-            self.output_view = QTextEdit(readOnly=True)
+            self.output_view = QTextEdit()
+            self.output_view.setReadOnly(True)
             self.output_view.setPlaceholderText("Salida...")
             self.output_view.setMaximumHeight(120)
         actions.addStretch()

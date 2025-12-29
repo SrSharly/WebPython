@@ -164,7 +164,8 @@ TL;DR: Pandas usa NaN/NA para faltantes; detecta con isna y decide si imputar o 
             df.dropna().to_string(index=False),
         ]
         layout.addWidget(QLabel("Demo: estrategias de missing data."))
-        area = QTextEdit(readOnly=True)
+        area = QTextEdit()
+        area.setReadOnly(True)
         area.setText("\n".join(texto))
         layout.addWidget(area)
         return widget

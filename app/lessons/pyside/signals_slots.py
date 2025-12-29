@@ -167,7 +167,8 @@ TL;DR: Conecta señales a slots para reaccionar a eventos sin acoplar widgets.
         layout = QVBoxLayout(widget)
         info = QLabel("Demo: señales custom, contador y log.")
         contador = QLabel("Contador: 0")
-        log = QTextEdit(readOnly=True)
+        log = QTextEdit()
+        log.setReadOnly(True)
 
         emitter = _CounterEmitter()
         connected = {"value": True}

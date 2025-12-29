@@ -6,7 +6,7 @@ import sys
 from dataclasses import dataclass
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QKeySequence
+from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication,
     QGroupBox,
@@ -20,7 +20,6 @@ from PySide6.QtWidgets import (
     QScrollArea,
     QSizePolicy,
     QSplitter,
-    QShortcut,
     QTabWidget,
     QTextBrowser,
     QTextEdit,

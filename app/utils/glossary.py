@@ -21,6 +21,17 @@ TERMS = {
     "upper": "Método de strings que convierte a mayúsculas.",
     "len": "Función que devuelve la longitud de una colección.",
     "print": "Función que muestra texto en la salida estándar.",
+    "transacción": "Grupo de operaciones que se confirman o se revierten juntas.",
+    "cursor": "Objeto que permite recorrer los resultados de una consulta.",
+    "pool": "Conjunto de conexiones reutilizables para evitar abrir nuevas cada vez.",
+    "orm": "Técnica que mapea clases de Python a tablas de base de datos.",
+    "engine": "Componente de SQLAlchemy que sabe cómo conectarse a una base de datos.",
+    "session": "Unidad de trabajo que gestiona objetos y transacciones en ORM.",
+    "commit": "Acción que confirma los cambios pendientes en una transacción.",
+    "rollback": "Acción que revierte los cambios de una transacción.",
+    "sql injection": "Ataque que manipula SQL cuando se concatenan datos sin parámetros.",
+    "dsn": "Cadena que describe cómo conectarse a una base de datos.",
+    "warehouse": "Almacén de datos optimizado para análisis y reportes.",
 }
 
 _TERM_PATTERN = re.compile(

@@ -206,6 +206,61 @@ ValueError: I/O operation on closed file.
 
 **Cómo se corrige:** realiza la lectura dentro del bloque `with`.
 
+## Paso 7: encoding explícito para evitar caracteres rotos
+**Aprende esto:** declara siempre el `encoding` cuando leas o escribas texto.
+
+**Micro-ejemplo correcto**
+```py
+from pathlib import Path
+
+ruta = Path("datos/correos.txt")
+texto = ruta.read_text(encoding="utf-8")
+```
+
+**Micro-ejemplo incorrecto**
+```py
+from pathlib import Path
+
+ruta = Path("datos/correos.txt")
+texto = ruta.read_text()
+```
+
+**Error real**
+```
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xed in position 12: invalid continuation byte
+```
+
+**Cómo se corrige:** especifica `encoding` al leer o escribir y evita mezclar archivos en
+distintas codificaciones sin control.
+
+## Paso 8: permisos del sistema y rutas protegidas
+**Aprende esto:** algunas carpetas requieren permisos elevados.
+
+**Micro-ejemplo correcto**
+```py
+from pathlib import Path
+
+ruta = Path("salidas/reporte.txt")
+ruta.parent.mkdir(parents=True, exist_ok=True)
+ruta.write_text("ok\n", encoding="utf-8")
+```
+
+**Micro-ejemplo incorrecto**
+```py
+from pathlib import Path
+
+ruta = Path("/root/reporte.txt")
+ruta.write_text("ok\n", encoding="utf-8")
+```
+
+**Error real**
+```
+PermissionError: [Errno 13] Permission denied: '/root/reporte.txt'
+```
+
+**Cómo se corrige:** escribe en rutas donde tu usuario tenga permisos o ajusta permisos
+de forma segura.
+
 ## Ejemplo ampliado con contexto: copiar y limpiar texto
 **Aprende esto:** leer línea por línea y guardar solo lo útil.
 

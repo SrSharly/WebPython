@@ -10,6 +10,7 @@ class VariablesTiposLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
+    BADGES = ["⭐"]
     TAGS = ["variables", "tipos", "mutabilidad", "tipado-dinámico"]
 
     def summary(self) -> str:
@@ -190,6 +191,30 @@ No hay error, pero `upper()` devuelve un nuevo texto. El original no cambia.
 
 **Cómo se arregla**
 Guarda el resultado: `texto = texto.upper()`.
+
+## Paso 5.5: comprobar tipos con `isinstance`
+Antes de operar, confirma el tipo cuando los datos vienen de usuarios, archivos o APIs. `isinstance()` te evita suposiciones
+y reduce errores de conversión.
+
+**Así se escribe**
+```py
+valor = "12"
+if isinstance(valor, str):
+    numero = int(valor)
+```
+
+**Error típico (❌)**
+```py
+valor = "12"
+if isinstance(valor, "str"):
+    numero = int(valor)
+```
+
+**Qué significa el error**
+`TypeError: isinstance() arg 2 must be a type or tuple of types` porque el segundo argumento debe ser un tipo, no un texto.
+
+**Cómo se arregla**
+Usa el tipo real (`str`, `int`, `float`) o una tupla de tipos.
 
 ## Operaciones y métodos más útiles
 ### Strings (`str`)
@@ -610,6 +635,47 @@ No siempre falla, pero `==` compara valor, no identidad. Puede dar falsos positi
 
 **Cómo se arregla**
 Usa `is None` para comprobar ausencia de valor.
+
+## Ejemplo ampliado con contexto: limpiar datos de formulario
+**Aprende esto:** validar texto numérico, convertirlo con seguridad y evitar errores de tipo.
+
+**Haz esto (8–25 líneas con contexto):**
+```py
+entradas = ["12", "", "7.5", "abc", None]
+resultados = []
+
+for entrada in entradas:
+    if entrada is None or entrada == "":
+        resultados.append(0)
+        continue
+    if isinstance(entrada, str):
+        try:
+            numero = float(entrada)
+        except ValueError:
+            numero = 0
+    else:
+        numero = float(entrada)
+    resultados.append(numero)
+
+print(resultados)
+```
+
+**Verás esto (salida real):**
+```
+[12.0, 0, 7.5, 0, 0]
+```
+
+**Por qué funciona**
+Se validan vacíos y `None` primero; `isinstance()` decide si convertir desde texto; `try/except` captura entradas inválidas.
+
+**Lo típico que sale mal (errores reales + mensajes):**
+```py
+numero = float("abc")
+```
+```
+ValueError: could not convert string to float: 'abc'
+```
+Solución: usa validación previa o captura `ValueError`.
 
 ## Paso 7: resumen para evitar errores
 Antes de escribir una línea, piensa: ¿qué tipo es?, ¿necesito convertirlo?, ¿es mutable? Si respondes esas preguntas,

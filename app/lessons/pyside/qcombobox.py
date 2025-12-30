@@ -57,6 +57,106 @@ combo.currentIndexChanged.connect(lambda _: print(combo.currentText()))
 combo.setEditable(True)
 ```
 
+## Operaciones y métodos más útiles
+### QComboBox
+1) `addItems()` ⭐  
+Qué hace: agrega varios items.  
+Así se escribe:
+```py
+combo.addItems(["Rojo", "Verde"])
+```
+Error típico:
+```py
+combo.addItems("Rojo")
+```
+Verás esto: opciones en la lista.  
+Por qué funciona: espera un iterable de strings.  
+Lo típico que sale mal: pasar string y separar letras; olvidar limpiar antes de recargar.
+
+2) `currentText()` ⭐  
+Qué hace: devuelve el texto seleccionado.  
+Así se escribe:
+```py
+texto = combo.currentText()
+```
+Error típico:
+```py
+texto = combo.currentText
+```
+Verás esto: la opción actual.  
+Por qué funciona: lee el estado del combo.  
+Lo típico que sale mal: olvidar paréntesis; asumir que devuelve índice.
+
+3) `currentIndexChanged.connect()` ⭐  
+Qué hace: reacciona a cambios de selección.  
+Así se escribe:
+```py
+combo.currentIndexChanged.connect(lambda _: print(combo.currentText()))
+```
+Error típico:
+```py
+combo.currentIndexChanged.connect(print())
+```
+Verás esto: acción al cambiar.  
+Por qué funciona: conecta la señal a un slot.  
+Lo típico que sale mal: ejecutar la función al conectar; ignorar el argumento índice.
+
+4) `setEditable()`  
+Qué hace: permite escribir texto.  
+Así se escribe:
+```py
+combo.setEditable(True)
+```
+Error típico:
+```py
+combo.setEditable("True")
+```
+Verás esto: combo editable.  
+Por qué funciona: activa modo editable.  
+Lo típico que sale mal: pasar string; no validar el texto ingresado.
+
+5) `findText()`  
+Qué hace: busca el índice de un texto.  
+Así se escribe:
+```py
+indice = combo.findText("Verde")
+```
+Error típico:
+```py
+indice = combo.findText
+```
+Verás esto: índice o -1.  
+Por qué funciona: recorre los items.  
+Lo típico que sale mal: olvidar paréntesis; no manejar -1.
+
+6) `setCurrentIndex()`  
+Qué hace: selecciona por índice.  
+Así se escribe:
+```py
+combo.setCurrentIndex(0)
+```
+Error típico:
+```py
+combo.setCurrentIndex("0")
+```
+Verás esto: selección actualizada.  
+Por qué funciona: usa índice entero.  
+Lo típico que sale mal: pasar string; índice fuera de rango.
+
+7) `clear()`  
+Qué hace: elimina todos los items.  
+Así se escribe:
+```py
+combo.clear()
+```
+Error típico:
+```py
+combo.clear
+```
+Verás esto: combo vacío.  
+Por qué funciona: limpia la lista interna.  
+Lo típico que sale mal: olvidar paréntesis; limpiar sin repoblar.
+
 ## Mini-reto
 Mini-reto 1: Agrega un elemento “Otro” si el usuario escribe algo nuevo.
 Solución:

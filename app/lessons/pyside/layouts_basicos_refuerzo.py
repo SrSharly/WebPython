@@ -44,6 +44,106 @@ TL;DR: Los layouts organizan widgets y los spacers controlan el espacio sobrante
 - Evita posiciones absolutas para mantener responsividad.
 - Un widget sin layout no se ajusta al redimensionar.
 
+## Operaciones y métodos más útiles
+### Layouts (QVBoxLayout / QHBoxLayout / QGridLayout)
+1) `addWidget()` ⭐  
+Qué hace: añade un widget al layout.  
+Así se escribe:
+```py
+layout.addWidget(QLabel("Hola"))
+```
+Error típico:
+```py
+layout.addWidget
+```
+Verás esto: widget colocado en el layout.  
+Por qué funciona: el layout gestiona su posición.  
+Lo típico que sale mal: olvidar paréntesis; añadir sin parent.
+
+2) `addLayout()`  
+Qué hace: anida un layout dentro de otro.  
+Así se escribe:
+```py
+layout.addLayout(QHBoxLayout())
+```
+Error típico:
+```py
+layout.addLayout
+```
+Verás esto: layouts combinados.  
+Por qué funciona: permite composiciones.  
+Lo típico que sale mal: olvidar paréntesis; anidar sin orden claro.
+
+3) `addStretch()` ⭐  
+Qué hace: añade espacio flexible.  
+Así se escribe:
+```py
+layout.addStretch()
+```
+Error típico:
+```py
+layout.addStretch
+```
+Verás esto: widgets empujados.  
+Por qué funciona: inserta un stretch factor.  
+Lo típico que sale mal: olvidar paréntesis; usar sin entender el orden.
+
+4) `addWidget(row, col)` (QGridLayout)  
+Qué hace: posiciona en una grilla.  
+Así se escribe:
+```py
+grid.addWidget(QLabel("A"), 0, 0)
+```
+Error típico:
+```py
+grid.addWidget(QLabel("A"), "0", "0")
+```
+Verás esto: widget en fila 0, col 0.  
+Por qué funciona: usa índices enteros.  
+Lo típico que sale mal: pasar strings; mezclar filas/columnas.
+
+5) `setSpacing()`  
+Qué hace: controla separación.  
+Así se escribe:
+```py
+layout.setSpacing(8)
+```
+Error típico:
+```py
+layout.setSpacing("8")
+```
+Verás esto: espacio uniforme.  
+Por qué funciona: espera entero.  
+Lo típico que sale mal: pasar string; confiar en el valor por defecto.
+
+6) `setContentsMargins()`  
+Qué hace: ajusta márgenes internos.  
+Así se escribe:
+```py
+layout.setContentsMargins(10, 10, 10, 10)
+```
+Error típico:
+```py
+layout.setContentsMargins(10)
+```
+Verás esto: márgenes aplicados.  
+Por qué funciona: necesita cuatro valores.  
+Lo típico que sale mal: pasar pocos argumentos; márgenes inconsistentes.
+
+7) `setLayout()` ⭐  
+Qué hace: asigna el layout al widget contenedor.  
+Así se escribe:
+```py
+widget.setLayout(layout)
+```
+Error típico:
+```py
+widget.setLayout
+```
+Verás esto: layout activo.  
+Por qué funciona: el widget adopta el layout.  
+Lo típico que sale mal: olvidar paréntesis; usar el mismo layout en varios widgets.
+
 
 ## Micro-ejemplo incremental: widgets y ciclo de eventos
 

@@ -131,6 +131,434 @@ edad = persona["edad"]
 **Cómo se arregla**
 Verifica que la clave exista o usa `get` con un valor por defecto.
 
+## Operaciones y métodos más útiles
+### Listas (`list`)
+1) `append()` ⭐  
+Qué hace: agrega al final.  
+Así se escribe:
+```py
+frutas = ["manzana"]
+frutas.append("pera")
+```
+Error típico:
+```py
+frutas.append["pera"]
+```
+Verás esto: `["manzana", "pera"]`.  
+Por qué funciona: `append` muta la lista.  
+Lo típico que sale mal: olvidar paréntesis; pensar que devuelve una nueva lista.
+
+2) `extend()` ⭐  
+Qué hace: añade varios elementos.  
+Así se escribe:
+```py
+frutas = ["manzana"]
+frutas.extend(["pera", "uva"])
+```
+Error típico:
+```py
+frutas.extend("uva")
+```
+Verás esto: `["manzana", "pera", "uva"]`.  
+Por qué funciona: recorre el iterable.  
+Lo típico que sale mal: pasar string y separar por letras; confundir con `append`.
+
+3) `insert()`  
+Qué hace: inserta en índice.  
+Así se escribe:
+```py
+frutas = ["manzana", "uva"]
+frutas.insert(1, "pera")
+```
+Error típico:
+```py
+frutas.insert("1", "pera")
+```
+Verás esto: `["manzana", "pera", "uva"]`.  
+Por qué funciona: usa índice entero.  
+Lo típico que sale mal: índice fuera de rango; usar índice string.
+
+4) `pop()` ⭐  
+Qué hace: quita y devuelve elemento.  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+ultima = frutas.pop()
+```
+Error típico:
+```py
+frutas.pop(5)
+```
+Verás esto: `ultima = "pera"`.  
+Por qué funciona: elimina el elemento y lo retorna.  
+Lo típico que sale mal: `IndexError`; mutar durante iteración.
+
+5) `remove()`  
+Qué hace: elimina por valor.  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+frutas.remove("pera")
+```
+Error típico:
+```py
+frutas.remove("uva")
+```
+Verás esto: `["manzana"]`.  
+Por qué funciona: busca el valor y lo borra.  
+Lo típico que sale mal: `ValueError` si no existe; duplicados inesperados.
+
+6) `sort()` ⭐  
+Qué hace: ordena la lista.  
+Así se escribe:
+```py
+numeros = [3, 1, 2]
+numeros.sort()
+```
+Error típico:
+```py
+ordenados = numeros.sort()
+```
+Verás esto: `[1, 2, 3]`.  
+Por qué funciona: ordena en sitio y devuelve `None`.  
+Lo típico que sale mal: esperar nueva lista; mezclar tipos incompatibles.
+
+7) `len()` ⭐  
+Qué hace: cuenta elementos.  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+total = len(frutas)
+```
+Error típico:
+```py
+total = frutas.len()
+```
+Verás esto: `2`.  
+Por qué funciona: `len()` es función global.  
+Lo típico que sale mal: usar `.len()`; olvidar validar antes de indexar.
+
+### Diccionarios (`dict`)
+1) `get()` ⭐  
+Qué hace: lee sin `KeyError`.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+ciudad = persona.get("ciudad", "Desconocida")
+```
+Error típico:
+```py
+ciudad = persona["ciudad"]
+```
+Verás esto: `"Desconocida"`.  
+Por qué funciona: devuelve valor por defecto.  
+Lo típico que sale mal: olvidar default; confiar en claves que no existen.
+
+2) `keys()`  
+Qué hace: devuelve las claves.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+claves = list(persona.keys())
+```
+Error típico:
+```py
+claves = persona.keys
+```
+Verás esto: `["nombre"]`.  
+Por qué funciona: `keys()` crea una vista.  
+Lo típico que sale mal: olvidar paréntesis; asumir lista.
+
+3) `values()`  
+Qué hace: devuelve los valores.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+valores = list(persona.values())
+```
+Error típico:
+```py
+valores = persona.values
+```
+Verás esto: `["Ana"]`.  
+Por qué funciona: devuelve vista de valores.  
+Lo típico que sale mal: olvidar paréntesis; mutar dict mientras iteras.
+
+4) `items()` ⭐  
+Qué hace: pares clave-valor.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+pares = list(persona.items())
+```
+Error típico:
+```py
+pares = persona.items
+```
+Verás esto: `[("nombre", "Ana")]`.  
+Por qué funciona: expone pares.  
+Lo típico que sale mal: olvidar paréntesis; modificar dict durante iteración.
+
+5) `update()` ⭐  
+Qué hace: mezcla otro dict.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+persona.update({"edad": 30})
+```
+Error típico:
+```py
+persona.update("edad")
+```
+Verás esto: `{"nombre": "Ana", "edad": 30}`.  
+Por qué funciona: actualiza claves existentes o nuevas.  
+Lo típico que sale mal: pasar string; sobrescribir claves sin querer.
+
+6) `pop()`  
+Qué hace: elimina y devuelve una clave.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+nombre = persona.pop("nombre")
+```
+Error típico:
+```py
+persona.pop("edad")
+```
+Verás esto: `"Ana"`.  
+Por qué funciona: quita la clave y retorna su valor.  
+Lo típico que sale mal: `KeyError` si falta; eliminar claves necesarias.
+
+7) `setdefault()`  
+Qué hace: obtiene o crea clave.  
+Así se escribe:
+```py
+persona = {}
+persona.setdefault("rol", "cliente")
+```
+Error típico:
+```py
+persona.setdefault()
+```
+Verás esto: `{"rol": "cliente"}`.  
+Por qué funciona: crea si no existe.  
+Lo típico que sale mal: usarlo para actualizar siempre; olvidar el valor por defecto.
+
+8) `len()` ⭐  
+Qué hace: cuenta claves.  
+Así se escribe:
+```py
+persona = {"nombre": "Ana"}
+total = len(persona)
+```
+Error típico:
+```py
+total = persona.len()
+```
+Verás esto: `1`.  
+Por qué funciona: `len()` cuenta entradas.  
+Lo típico que sale mal: usar `.len()`; asumir que cuenta valores únicos.
+
+### Tuplas (`tuple`)
+1) `count()`  
+Qué hace: cuenta ocurrencias.  
+Así se escribe:
+```py
+coords = (1, 2, 1)
+total = coords.count(1)
+```
+Error típico:
+```py
+total = coords.count[1]
+```
+Verás esto: `2`.  
+Por qué funciona: busca el valor en la tupla.  
+Lo típico que sale mal: usar corchetes; confundir con `len`.
+
+2) `index()`  
+Qué hace: devuelve la posición de un valor.  
+Así se escribe:
+```py
+coords = (1, 2, 3)
+pos = coords.index(2)
+```
+Error típico:
+```py
+pos = coords.index(5)
+```
+Verás esto: `1`.  
+Por qué funciona: busca el primer índice.  
+Lo típico que sale mal: `ValueError` si no existe; pensar que devuelve todos los índices.
+
+3) `len()` ⭐  
+Qué hace: cuenta elementos.  
+Así se escribe:
+```py
+coords = (1, 2, 3)
+total = len(coords)
+```
+Error típico:
+```py
+total = coords.len()
+```
+Verás esto: `3`.  
+Por qué funciona: `len()` funciona con tuplas.  
+Lo típico que sale mal: usar `.len()`; olvidar que es inmutable.
+
+4) `in` ⭐  
+Qué hace: comprueba pertenencia.  
+Así se escribe:
+```py
+coords = (1, 2, 3)
+existe = 2 in coords
+```
+Error típico:
+```py
+existe = coords in 2
+```
+Verás esto: `True`.  
+Por qué funciona: `in` busca en la tupla.  
+Lo típico que sale mal: invertir el orden; esperar index de retorno.
+
+5) slicing  
+Qué hace: extrae porciones.  
+Así se escribe:
+```py
+coords = (1, 2, 3, 4)
+segmento = coords[1:3]
+```
+Error típico:
+```py
+segmento = coords[1, 3]
+```
+Verás esto: `(2, 3)`.  
+Por qué funciona: slicing crea una tupla nueva.  
+Lo típico que sale mal: usar coma en lugar de `:`; pensar que modifica en sitio.
+
+6) unpacking  
+Qué hace: asigna elementos a variables.  
+Así se escribe:
+```py
+coords = (1, 2)
+x, y = coords
+```
+Error típico:
+```py
+x, y, z = coords
+```
+Verás esto: `x = 1`, `y = 2`.  
+Por qué funciona: las cantidades deben coincidir.  
+Lo típico que sale mal: desempaquetar con distinto número; olvidar usar `_` para ignorar.
+
+### Conjuntos (`set`)
+1) `add()` ⭐  
+Qué hace: agrega un elemento.  
+Así se escribe:
+```py
+colores = {"rojo"}
+colores.add("azul")
+```
+Error típico:
+```py
+colores.add(["azul"])
+```
+Verás esto: `{"rojo", "azul"}`.  
+Por qué funciona: agrega elementos únicos.  
+Lo típico que sale mal: usar listas (no hashables); esperar orden.
+
+2) `update()`  
+Qué hace: agrega varios elementos.  
+Así se escribe:
+```py
+colores = {"rojo"}
+colores.update(["azul", "verde"])
+```
+Error típico:
+```py
+colores.update("azul")
+```
+Verás esto: `{"rojo", "azul", "verde"}`.  
+Por qué funciona: agrega cada elemento del iterable.  
+Lo típico que sale mal: pasar string y separar por letras; olvidar que no hay orden.
+
+3) `remove()` / `discard()` ⭐  
+Qué hace: elimina un elemento.  
+Así se escribe:
+```py
+colores = {"rojo", "azul"}
+colores.discard("rojo")
+```
+Error típico:
+```py
+colores.remove("verde")
+```
+Verás esto: `{"azul"}`.  
+Por qué funciona: `discard` no falla si no existe.  
+Lo típico que sale mal: `KeyError` con `remove`; asumir orden.
+
+4) `union()`  
+Qué hace: une conjuntos.  
+Así se escribe:
+```py
+a = {1, 2}
+b = {2, 3}
+resultado = a.union(b)
+```
+Error típico:
+```py
+resultado = a + b
+```
+Verás esto: `{1, 2, 3}`.  
+Por qué funciona: `union` combina elementos únicos.  
+Lo típico que sale mal: usar `+`; olvidar que devuelve un set nuevo.
+
+5) `intersection()`  
+Qué hace: elementos comunes.  
+Así se escribe:
+```py
+a = {1, 2}
+b = {2, 3}
+resultado = a.intersection(b)
+```
+Error típico:
+```py
+resultado = a.intersection()
+```
+Verás esto: `{2}`.  
+Por qué funciona: cruza ambos sets.  
+Lo típico que sale mal: olvidar el otro set; confundir con diferencia.
+
+6) `difference()`  
+Qué hace: resta elementos.  
+Así se escribe:
+```py
+a = {1, 2, 3}
+b = {2}
+resultado = a.difference(b)
+```
+Error típico:
+```py
+resultado = a.difference()
+```
+Verás esto: `{1, 3}`.  
+Por qué funciona: quita los del otro set.  
+Lo típico que sale mal: olvidar el argumento; suponer orden.
+
+7) `len()` ⭐  
+Qué hace: cuenta elementos únicos.  
+Así se escribe:
+```py
+colores = {"rojo", "azul"}
+total = len(colores)
+```
+Error típico:
+```py
+total = colores.len()
+```
+Verás esto: `2`.  
+Por qué funciona: cuenta elementos del set.  
+Lo típico que sale mal: usar `.len()`; asumir que el orden es estable.
+
 ## Paso 6: resumen para usar estructuras sin errores
 Recuerda: listas con `[]` e índices desde 0; diccionarios con `{}` y claves explícitas. Usa `append` con paréntesis y `get`
 para evitar errores por claves faltantes.

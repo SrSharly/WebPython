@@ -34,6 +34,107 @@ class KerasIntroLesson(Lesson):
 - Guarda modelos con model.save().
 - Usa TensorBoard para monitoreo.
 
+## Operaciones y métodos más útiles
+### Modelos Keras
+1) `compile()` ⭐  
+Qué hace: configura optimizador, loss y métricas.  
+Así se escribe:
+```py
+model.compile(optimizer="adam", loss="mse")
+```
+Error típico:
+```py
+model.compile("adam")
+```
+Verás esto: modelo listo para entrenar.  
+Por qué funciona: valida parámetros de entrenamiento.  
+Lo típico que sale mal: olvidar `loss`; pasar argumentos en orden incorrecto.
+
+2) `fit()` ⭐  
+Qué hace: entrena el modelo.  
+Así se escribe:
+```py
+history = model.fit(X_train, y_train, epochs=5)
+```
+Error típico:
+```py
+model.fit(X_train)
+```
+Verás esto: historial de entrenamiento.  
+Por qué funciona: ejecuta el loop de entrenamiento.  
+Lo típico que sale mal: X e y con longitudes distintas; entrenar sin compilar.
+
+3) `evaluate()` ⭐  
+Qué hace: evalúa con datos de test.  
+Así se escribe:
+```py
+loss, metric = model.evaluate(X_test, y_test)
+```
+Error típico:
+```py
+model.evaluate(X_test)
+```
+Verás esto: métricas del modelo.  
+Por qué funciona: calcula loss/métricas en test.  
+Lo típico que sale mal: olvidar `y_test`; usar datos vistos en train.
+
+4) `predict()` ⭐  
+Qué hace: genera predicciones.  
+Así se escribe:
+```py
+pred = model.predict(X_new)
+```
+Error típico:
+```py
+pred = model.predict()
+```
+Verás esto: array de predicciones.  
+Por qué funciona: aplica el modelo entrenado.  
+Lo típico que sale mal: llamar antes de `fit`; shape de entrada incorrecto.
+
+5) `summary()`  
+Qué hace: imprime arquitectura del modelo.  
+Así se escribe:
+```py
+model.summary()
+```
+Error típico:
+```py
+model.summary
+```
+Verás esto: capas y parámetros.  
+Por qué funciona: muestra la estructura interna.  
+Lo típico que sale mal: olvidar paréntesis; no definir input_shape.
+
+6) `save()`  
+Qué hace: guarda el modelo entrenado.  
+Así se escribe:
+```py
+model.save("modelo.keras")
+```
+Error típico:
+```py
+model.save()
+```
+Verás esto: archivo guardado.  
+Por qué funciona: serializa arquitectura y pesos.  
+Lo típico que sale mal: ruta inválida; olvidar guardar el optimizador.
+
+7) `load_model()`  
+Qué hace: carga un modelo guardado.  
+Así se escribe:
+```py
+from tensorflow import keras
+model = keras.models.load_model("modelo.keras")
+```
+Error típico:
+```py
+model = keras.models.load_model()
+```
+Verás esto: modelo listo para usar.  
+Por qué funciona: restaura arquitectura y pesos.  
+Lo típico que sale mal: ruta incorrecta; incompatibilidad de versión.
+
 
 ## Micro-ejemplo incremental: modelo y compilación
 

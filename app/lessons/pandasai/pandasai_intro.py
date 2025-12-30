@@ -34,6 +34,120 @@ class PandasAILesson(Lesson):
 - Limita el acceso a columnas sensibles.
 - Combina con filtros previos en pandas.
 
+## Operaciones y métodos más útiles
+### DataFrame / Series (pandas)
+1) `head()` ⭐  
+Qué hace: muestra primeras filas.  
+Así se escribe:
+```py
+df.head(3)
+```
+Error típico:
+```py
+df.head
+```
+Verás esto: filas iniciales.  
+Por qué funciona: inspección rápida.  
+Lo típico que sale mal: olvidar paréntesis; pensar que cambia el DataFrame.
+
+2) `info()` ⭐  
+Qué hace: resumen de tipos y nulos.  
+Así se escribe:
+```py
+df.info()
+```
+Error típico:
+```py
+df.info
+```
+Verás esto: tipos y conteos.  
+Por qué funciona: inspecciona columnas.  
+Lo típico que sale mal: confundir con `describe`; olvidar paréntesis.
+
+3) `describe()` ⭐  
+Qué hace: estadísticas básicas.  
+Así se escribe:
+```py
+df.describe()
+```
+Error típico:
+```py
+df.describe
+```
+Verás esto: media, percentiles.  
+Por qué funciona: calcula stats numéricas.  
+Lo típico que sale mal: esperar columnas no numéricas; olvidar paréntesis.
+
+4) `loc` ⭐  
+Qué hace: selección por etiquetas.  
+Así se escribe:
+```py
+df.loc[df["ventas"] > 10, "ventas"]
+```
+Error típico:
+```py
+df.loc[df["ventas"] > 10]["ventas"] = 0
+```
+Verás esto: serie filtrada.  
+Por qué funciona: selección segura.  
+Lo típico que sale mal: asignación encadenada; columnas mal escritas.
+
+5) `iloc` ⭐  
+Qué hace: selección por posición.  
+Así se escribe:
+```py
+df.iloc[0, 0]
+```
+Error típico:
+```py
+df.iloc["0", "0"]
+```
+Verás esto: un valor.  
+Por qué funciona: usa índices enteros.  
+Lo típico que sale mal: usar strings; salir de rango.
+
+6) `groupby()` ⭐  
+Qué hace: agrega por grupos.  
+Así se escribe:
+```py
+df.groupby("region")["ventas"].sum()
+```
+Error típico:
+```py
+df.groupby("region").sum["ventas"]
+```
+Verás esto: suma por región.  
+Por qué funciona: agrupa y agrega.  
+Lo típico que sale mal: olvidar paréntesis en `sum`; grupo inexistente.
+
+7) `dropna()` ⭐  
+Qué hace: elimina faltantes.  
+Así se escribe:
+```py
+df.dropna()
+```
+Error típico:
+```py
+df.dropna(axis="filas")
+```
+Verás esto: filas sin NaN.  
+Por qué funciona: elimina según eje.  
+Lo típico que sale mal: axis inválido; borrar demasiados datos.
+
+8) `fillna()` ⭐  
+Qué hace: rellena faltantes.  
+Así se escribe:
+```py
+df.fillna(0)
+```
+Error típico:
+```py
+df.fillna()
+```
+Verás esto: NaN reemplazados.  
+Por qué funciona: asigna un valor por defecto.  
+Lo típico que sale mal: olvidar el valor; mezclar tipos.
+
 
 ## Micro-ejemplo incremental: consulta guiada con PandasAI
 

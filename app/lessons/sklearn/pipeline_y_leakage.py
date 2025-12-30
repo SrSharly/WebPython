@@ -34,6 +34,9 @@ class PipelineLeakageLesson(Lesson):
 - Usa sklearn.set_config para visualizar pipelines.
 - Mantén pipelines simples y legibles.
 
+Nota rápida: si necesitas repasar `fit`, `predict`, `transform` o `fit_transform`, ver "Pipelines + ColumnTransformer" →
+"Operaciones y métodos más útiles".
+
 
 ## Micro-ejemplo incremental: entrenamiento y validación
 

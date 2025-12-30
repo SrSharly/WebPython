@@ -42,6 +42,122 @@ TL;DR: Usa QMessageBox y QFileDialog para comunicar y pedir confirmación al usu
 - No asumas permisos de escritura/lectura sin validar.
 - Mantén los diálogos simples y enfocados.
 
+## Operaciones y métodos más útiles
+### QMessageBox / QFileDialog
+1) `QMessageBox.information()` ⭐  
+Qué hace: muestra un diálogo informativo.  
+Así se escribe:
+```py
+QMessageBox.information(None, "Info", "Operación completada")
+```
+Error típico:
+```py
+QMessageBox.information
+```
+Verás esto: diálogo con mensaje.  
+Por qué funciona: crea un modal informativo.  
+Lo típico que sale mal: olvidar paréntesis; textos ambiguos.
+
+2) `QMessageBox.warning()` ⭐  
+Qué hace: muestra advertencia.  
+Así se escribe:
+```py
+QMessageBox.warning(None, "Cuidado", "Acción irreversible")
+```
+Error típico:
+```py
+QMessageBox.warning()
+```
+Verás esto: diálogo de advertencia.  
+Por qué funciona: usa icono de warning.  
+Lo típico que sale mal: usar warning para todo; olvidar el parent.
+
+3) `QMessageBox.critical()`  
+Qué hace: muestra error crítico.  
+Así se escribe:
+```py
+QMessageBox.critical(None, "Error", "Fallo al guardar")
+```
+Error típico:
+```py
+QMessageBox.critical
+```
+Verás esto: diálogo de error.  
+Por qué funciona: comunica fallos severos.  
+Lo típico que sale mal: mensajes sin solución; usarlo para errores menores.
+
+4) `QMessageBox.question()` ⭐  
+Qué hace: solicita confirmación.  
+Así se escribe:
+```py
+respuesta = QMessageBox.question(None, "Confirmar", "¿Eliminar?")
+```
+Error típico:
+```py
+respuesta = QMessageBox.question
+```
+Verás esto: botón elegido por el usuario.  
+Por qué funciona: devuelve el botón presionado.  
+Lo típico que sale mal: no validar el retorno; asumir siempre Yes.
+
+5) `QFileDialog.getOpenFileName()` ⭐  
+Qué hace: pide seleccionar un archivo.  
+Así se escribe:
+```py
+ruta, _ = QFileDialog.getOpenFileName(None, "Seleccionar", "", "*.txt")
+```
+Error típico:
+```py
+ruta = QFileDialog.getOpenFileName()
+```
+Verás esto: ruta o cadena vacía.  
+Por qué funciona: abre un selector nativo.  
+Lo típico que sale mal: no manejar cancelación; filtrar mal extensiones.
+
+6) `QFileDialog.getSaveFileName()`  
+Qué hace: pide ruta para guardar.  
+Así se escribe:
+```py
+ruta, _ = QFileDialog.getSaveFileName(None, "Guardar", "", "*.txt")
+```
+Error típico:
+```py
+ruta = QFileDialog.getSaveFileName()
+```
+Verás esto: ruta o cadena vacía.  
+Por qué funciona: devuelve la ruta elegida.  
+Lo típico que sale mal: no validar extensión; sobrescribir sin aviso.
+
+7) `QFileDialog.getExistingDirectory()`  
+Qué hace: selecciona carpeta.  
+Así se escribe:
+```py
+ruta = QFileDialog.getExistingDirectory(None, "Carpeta")
+```
+Error típico:
+```py
+ruta = QFileDialog.getExistingDirectory
+```
+Verás esto: ruta de carpeta.  
+Por qué funciona: abre selector de directorios.  
+Lo típico que sale mal: olvidar paréntesis; no validar permisos.
+
+8) `exec()`  
+Qué hace: muestra un diálogo personalizado.  
+Así se escribe:
+```py
+box = QMessageBox()
+box.setText("¿Continuar?")
+box.exec()
+```
+Error típico:
+```py
+box.exec
+```
+Verás esto: diálogo modal abierto.  
+Por qué funciona: inicia el loop modal.  
+Lo típico que sale mal: olvidar paréntesis; crear caja sin botones.
+
 
 ## Micro-ejemplo incremental: widgets y ciclo de eventos
 

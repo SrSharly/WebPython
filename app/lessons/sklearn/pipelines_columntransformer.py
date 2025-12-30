@@ -35,6 +35,120 @@ TL;DR: ColumnTransformer aplica transformaciones por tipo de columna y Pipeline 
 - Usa predict_proba si necesitas probabilidades.
 - Documenta columnas y tipos usados en el modelo.
 
+## Operaciones y métodos más útiles
+### Estimadores y pipelines (scikit-learn)
+1) `fit()` ⭐  
+Qué hace: entrena el modelo con datos.  
+Así se escribe:
+```py
+modelo.fit(X_train, y_train)
+```
+Error típico:
+```py
+modelo.fit(X_train)
+```
+Verás esto: error por faltar `y`.  
+Por qué funciona: aprende parámetros internos.  
+Lo típico que sale mal: usar `fit` con X e y de distinto tamaño; ajustar con datos ya filtrados del test.
+
+2) `predict()` ⭐  
+Qué hace: genera predicciones.  
+Así se escribe:
+```py
+pred = modelo.predict(X_test)
+```
+Error típico:
+```py
+pred = modelo.predict()
+```
+Verás esto: array de predicciones.  
+Por qué funciona: aplica el modelo entrenado.  
+Lo típico que sale mal: llamar antes de `fit`; columnas distintas al entrenamiento.
+
+3) `score()`  
+Qué hace: evalúa con métrica base.  
+Así se escribe:
+```py
+score = modelo.score(X_test, y_test)
+```
+Error típico:
+```py
+score = modelo.score(X_test)
+```
+Verás esto: un número de desempeño.  
+Por qué funciona: usa la métrica por defecto del estimador.  
+Lo típico que sale mal: olvidar `y_test`; usarla como única métrica.
+
+4) `transform()`  
+Qué hace: transforma datos (preprocesadores).  
+Así se escribe:
+```py
+X_proc = preprocesador.transform(X_test)
+```
+Error típico:
+```py
+X_proc = preprocesador.transform()
+```
+Verás esto: datos transformados.  
+Por qué funciona: aplica parámetros aprendidos en `fit`.  
+Lo típico que sale mal: llamar antes de `fit`; cambiar columnas.
+
+5) `fit_transform()` ⭐  
+Qué hace: ajusta y transforma en un paso.  
+Así se escribe:
+```py
+X_proc = preprocesador.fit_transform(X_train)
+```
+Error típico:
+```py
+X_proc = preprocesador.fit_transform(X_test)
+```
+Verás esto: datos transformados.  
+Por qué funciona: ajusta con entrenamiento y transforma.  
+Lo típico que sale mal: usarlo en test (leakage); mezclar train/test.
+
+6) `predict_proba()`  
+Qué hace: probabilidades por clase.  
+Así se escribe:
+```py
+proba = modelo.predict_proba(X_test)
+```
+Error típico:
+```py
+proba = modelo.predict_proba()
+```
+Verás esto: probabilidades por clase.  
+Por qué funciona: modelos de clasificación exponen probabilidades.  
+Lo típico que sale mal: usar en regresión; no calibrar probabilidades.
+
+7) `get_params()`  
+Qué hace: inspecciona hiperparámetros.  
+Así se escribe:
+```py
+params = modelo.get_params()
+```
+Error típico:
+```py
+params = modelo.get_params
+```
+Verás esto: dict de parámetros.  
+Por qué funciona: expone configuración del estimador.  
+Lo típico que sale mal: olvidar paréntesis; modificar params sin reentrenar.
+
+8) `set_params()`  
+Qué hace: actualiza hiperparámetros.  
+Así se escribe:
+```py
+modelo.set_params(C=1.0)
+```
+Error típico:
+```py
+modelo.set_params("C=1.0")
+```
+Verás esto: modelo reconfigurado.  
+Por qué funciona: valida nombres de parámetros.  
+Lo típico que sale mal: pasar string; olvidar volver a entrenar.
+
 
 ## Micro-ejemplo incremental: entrenamiento y validación
 

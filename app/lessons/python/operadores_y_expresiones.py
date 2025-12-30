@@ -152,6 +152,206 @@ TypeError: unsupported operand type(s) for &: 'bool' and 'bool'
 
 Explicación breve: usa `and`/`or` para lógica booleana. `&` es bitwise.
 
+## Operaciones y métodos más útiles
+### Números (`int` / `float`)
+1) `round()` ⭐  
+Qué hace: redondea un número.  
+Así se escribe:
+```py
+precio = 3.1416
+aprox = round(precio, 2)
+```
+Error típico:
+```py
+aprox = precio.round(2)
+```
+Verás esto: `3.14`.  
+Por qué funciona: `round()` es función global.  
+Lo típico que sale mal: esperar precisión exacta; redondear sin especificar decimales.
+
+2) `abs()` ⭐  
+Qué hace: valor absoluto.  
+Así se escribe:
+```py
+distancia = abs(-5)
+```
+Error típico:
+```py
+distancia = -5.abs()
+```
+Verás esto: `5`.  
+Por qué funciona: devuelve magnitud positiva.  
+Lo típico que sale mal: aplicar a `None`; olvidar signos en comparaciones.
+
+3) `int()` ⭐  
+Qué hace: convierte a entero.  
+Así se escribe:
+```py
+cantidad = int("10")
+```
+Error típico:
+```py
+cantidad = int("10.5")
+```
+Verás esto: `10`.  
+Por qué funciona: convierte texto numérico entero.  
+Lo típico que sale mal: `ValueError` con decimales; perder información.
+
+4) `float()`  
+Qué hace: convierte a flotante.  
+Así se escribe:
+```py
+precio = float("10.5")
+```
+Error típico:
+```py
+precio = float("10,5")
+```
+Verás esto: `10.5`.  
+Por qué funciona: usa punto decimal.  
+Lo típico que sale mal: usar coma; texto no numérico.
+
+5) `/` ⭐  
+Qué hace: división real.  
+Así se escribe:
+```py
+resultado = 5 / 2
+```
+Error típico:
+```py
+resultado = 5 / 0
+```
+Verás esto: `2.5`.  
+Por qué funciona: `/` siempre devuelve float.  
+Lo típico que sale mal: `ZeroDivisionError`; asumir int.
+
+6) `//`  
+Qué hace: división entera.  
+Así se escribe:
+```py
+resultado = 5 // 2
+```
+Error típico:
+```py
+resultado = 5 // 0
+```
+Verás esto: `2`.  
+Por qué funciona: descarta decimales.  
+Lo típico que sale mal: división por cero; confundir con `/`.
+
+7) `%`  
+Qué hace: resto.  
+Así se escribe:
+```py
+resto = 5 % 2
+```
+Error típico:
+```py
+resto = 5 % 0
+```
+Verás esto: `1`.  
+Por qué funciona: retorna residuo.  
+Lo típico que sale mal: división por cero; usar con floats sin entender precisión.
+
+8) `**`  
+Qué hace: potencia.  
+Así se escribe:
+```py
+cuadrado = 3 ** 2
+```
+Error típico:
+```py
+cuadrado = 3 ^ 2
+```
+Verás esto: `9`.  
+Por qué funciona: `**` es potencia.  
+Lo típico que sale mal: confundir con `^`; números grandes sin control.
+
+### Booleanos (`bool`)
+1) `bool()` ⭐  
+Qué hace: convierte a True/False.  
+Así se escribe:
+```py
+es_valido = bool("ok")
+```
+Error típico:
+```py
+es_valido = bool("0")
+```
+Verás esto: `True`.  
+Por qué funciona: cualquier string no vacío es True.  
+Lo típico que sale mal: creer que `"0"` es False; asumir que solo números cuentan.
+
+2) `and` ⭐  
+Qué hace: True si ambos son True.  
+Así se escribe:
+```py
+resultado = True and False
+```
+Error típico:
+```py
+resultado = True & False
+```
+Verás esto: `False`.  
+Por qué funciona: evalúa lógica booleana.  
+Lo típico que sale mal: usar `&`; olvidar paréntesis.
+
+3) `or` ⭐  
+Qué hace: True si alguno es True.  
+Así se escribe:
+```py
+resultado = True or False
+```
+Error típico:
+```py
+resultado = True | False
+```
+Verás esto: `True`.  
+Por qué funciona: corta al primer True.  
+Lo típico que sale mal: usar `|`; no entender short-circuit.
+
+4) `not` ⭐  
+Qué hace: invierte el booleano.  
+Así se escribe:
+```py
+resultado = not True
+```
+Error típico:
+```py
+resultado = not()
+```
+Verás esto: `False`.  
+Por qué funciona: niega la condición.  
+Lo típico que sale mal: olvidar el operando; confundir con `!=`.
+
+5) `any()`  
+Qué hace: True si alguno es True.  
+Así se escribe:
+```py
+resultado = any([False, True])
+```
+Error típico:
+```py
+resultado = any(False, True)
+```
+Verás esto: `True`.  
+Por qué funciona: evalúa iterables.  
+Lo típico que sale mal: pasar argumentos sueltos; usarlo en lista vacía sin querer.
+
+6) `all()`  
+Qué hace: True si todos son True.  
+Así se escribe:
+```py
+resultado = all([True, True])
+```
+Error típico:
+```py
+resultado = all(True, False)
+```
+Verás esto: `True`.  
+Por qué funciona: revisa todos los valores.  
+Lo típico que sale mal: pasar argumentos sueltos; `all([])` devuelve True.
+
 ## Prioridad de operadores (orden de evaluación)
 Si dudas del orden, usa paréntesis para claridad.
 ```

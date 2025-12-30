@@ -191,6 +191,403 @@ No hay error, pero `upper()` devuelve un nuevo texto. El original no cambia.
 **Cómo se arregla**
 Guarda el resultado: `texto = texto.upper()`.
 
+## Operaciones y métodos más útiles
+### Strings (`str`)
+1) `upper()` ⭐  
+Qué hace: convierte a mayúsculas.  
+Así se escribe:
+```py
+texto = "hola"
+resultado = texto.upper()
+```
+Error típico:
+```py
+resultado = texto.upper
+```
+Verás esto: `"HOLA"`.  
+Por qué funciona: crea un nuevo texto.  
+Lo típico que sale mal: olvidar reasignar; usarlo sobre `None`.
+
+2) `lower()` ⭐  
+Qué hace: convierte a minúsculas.  
+Así se escribe:
+```py
+texto = "HoLa"
+resultado = texto.lower()
+```
+Error típico:
+```py
+resultado = texto.lower
+```
+Verás esto: `"hola"`.  
+Por qué funciona: normaliza para comparar.  
+Lo típico que sale mal: no normalizar ambos lados; creer que muta.
+
+3) `strip()` ⭐  
+Qué hace: elimina espacios al inicio/fin.  
+Así se escribe:
+```py
+texto = "  hola  "
+resultado = texto.strip()
+```
+Error típico:
+```py
+resultado = texto.strip
+```
+Verás esto: `"hola"`.  
+Por qué funciona: recorta whitespace.  
+Lo típico que sale mal: esperar que quite espacios internos; no guardar el resultado.
+
+4) `replace()` ⭐  
+Qué hace: reemplaza un fragmento por otro.  
+Así se escribe:
+```py
+texto = "hola mundo"
+resultado = texto.replace("mundo", "Python")
+```
+Error típico:
+```py
+resultado = texto.replace("mundo")
+```
+Verás esto: `"hola Python"`.  
+Por qué funciona: genera un texto nuevo.  
+Lo típico que sale mal: olvidar el segundo argumento; creer que es in-place.
+
+5) `split()` ⭐  
+Qué hace: separa el texto en lista.  
+Así se escribe:
+```py
+texto = "a,b,c"
+partes = texto.split(",")
+```
+Error típico:
+```py
+partes = texto.split
+```
+Verás esto: `["a", "b", "c"]`.  
+Por qué funciona: corta por separador.  
+Lo típico que sale mal: confundir split con slicing; usar separador incorrecto.
+
+6) `join()`  
+Qué hace: une textos con separador.  
+Así se escribe:
+```py
+partes = ["a", "b", "c"]
+resultado = ",".join(partes)
+```
+Error típico:
+```py
+resultado = partes.join(",")
+```
+Verás esto: `"a,b,c"`.  
+Por qué funciona: `join` es método del separador.  
+Lo típico que sale mal: pasar elementos no string; invertir el orden.
+
+### Listas (`list`)
+1) `append()` ⭐  
+Qué hace: agrega un elemento al final.  
+Así se escribe:
+```py
+frutas = ["manzana"]
+frutas.append("pera")
+```
+Error típico:
+```py
+frutas.append
+```
+Verás esto: `["manzana", "pera"]`.  
+Por qué funciona: muta la lista en sitio.  
+Lo típico que sale mal: olvidar paréntesis; asumir que devuelve una lista nueva.
+
+2) `extend()` ⭐  
+Qué hace: agrega varios elementos.  
+Así se escribe:
+```py
+frutas = ["manzana"]
+frutas.extend(["pera", "uva"])
+```
+Error típico:
+```py
+frutas.extend("uva")
+```
+Verás esto: `["manzana", "pera", "uva"]`.  
+Por qué funciona: recorre el iterable y añade cada elemento.  
+Lo típico que sale mal: pasar un string y separar por caracteres; confundir con `append`.
+
+3) `insert()`  
+Qué hace: inserta en una posición.  
+Así se escribe:
+```py
+frutas = ["manzana", "uva"]
+frutas.insert(1, "pera")
+```
+Error típico:
+```py
+frutas.insert("1", "pera")
+```
+Verás esto: `["manzana", "pera", "uva"]`.  
+Por qué funciona: usa índice entero.  
+Lo típico que sale mal: índice fuera de rango; pasar índice como string.
+
+4) `pop()` ⭐  
+Qué hace: quita y devuelve el último (o por índice).  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+ultima = frutas.pop()
+```
+Error típico:
+```py
+frutas.pop(5)
+```
+Verás esto: `ultima = "pera"`.  
+Por qué funciona: elimina el elemento y lo retorna.  
+Lo típico que sale mal: `IndexError` por índice inválido; mutar lista mientras iteras.
+
+5) `remove()`  
+Qué hace: elimina el primer valor encontrado.  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+frutas.remove("pera")
+```
+Error típico:
+```py
+frutas.remove("uva")
+```
+Verás esto: `["manzana"]`.  
+Por qué funciona: busca el valor y lo elimina.  
+Lo típico que sale mal: `ValueError` si no existe; usarlo en listas con duplicados sin control.
+
+6) `sort()` ⭐  
+Qué hace: ordena la lista.  
+Así se escribe:
+```py
+numeros = [3, 1, 2]
+numeros.sort()
+```
+Error típico:
+```py
+ordenados = numeros.sort()
+```
+Verás esto: `[1, 2, 3]`.  
+Por qué funciona: ordena en sitio y devuelve `None`.  
+Lo típico que sale mal: esperar una lista nueva; mezclar tipos incompatibles.
+
+7) `len()` ⭐  
+Qué hace: cuenta elementos.  
+Así se escribe:
+```py
+frutas = ["manzana", "pera"]
+total = len(frutas)
+```
+Error típico:
+```py
+total = frutas.len()
+```
+Verás esto: `2`.  
+Por qué funciona: `len()` es función global.  
+Lo típico que sale mal: usar `.len()`; olvidar que es O(n) en algunas estructuras.
+
+### Números (`int` / `float`)
+1) `round()` ⭐  
+Qué hace: redondea.  
+Así se escribe:
+```py
+precio = 3.1416
+aprox = round(precio, 2)
+```
+Error típico:
+```py
+aprox = precio.round(2)
+```
+Verás esto: `3.14`.  
+Por qué funciona: `round()` es función global.  
+Lo típico que sale mal: esperar precisión exacta; usar demasiados decimales.
+
+2) `abs()` ⭐  
+Qué hace: valor absoluto.  
+Así se escribe:
+```py
+distancia = abs(-5)
+```
+Error típico:
+```py
+distancia = -5.abs()
+```
+Verás esto: `5`.  
+Por qué funciona: `abs()` retorna magnitud positiva.  
+Lo típico que sale mal: aplicar a `None`; olvidar el signo en comparaciones.
+
+3) `int()` ⭐  
+Qué hace: convierte a entero.  
+Así se escribe:
+```py
+cantidad = int("10")
+```
+Error típico:
+```py
+cantidad = int("10.5")
+```
+Verás esto: `10`.  
+Por qué funciona: transforma texto numérico.  
+Lo típico que sale mal: `ValueError` si el texto no es entero; perder decimales.
+
+4) `float()`  
+Qué hace: convierte a flotante.  
+Así se escribe:
+```py
+precio = float("10.5")
+```
+Error típico:
+```py
+precio = float("10,5")
+```
+Verás esto: `10.5`.  
+Por qué funciona: interpreta punto decimal.  
+Lo típico que sale mal: usar coma; `ValueError` con texto no numérico.
+
+5) `/` ⭐  
+Qué hace: división real (devuelve float).  
+Así se escribe:
+```py
+resultado = 5 / 2
+```
+Error típico:
+```py
+resultado = 5 / 0
+```
+Verás esto: `2.5`.  
+Por qué funciona: `/` siempre produce float.  
+Lo típico que sale mal: `ZeroDivisionError`; asumir entero.
+
+6) `//`  
+Qué hace: división entera.  
+Así se escribe:
+```py
+resultado = 5 // 2
+```
+Error típico:
+```py
+resultado = 5 // 0
+```
+Verás esto: `2`.  
+Por qué funciona: descarta la parte decimal.  
+Lo típico que sale mal: división por cero; confundir con `/`.
+
+7) `%`  
+Qué hace: resto de la división.  
+Así se escribe:
+```py
+resto = 5 % 2
+```
+Error típico:
+```py
+resto = 5 % 0
+```
+Verás esto: `1`.  
+Por qué funciona: devuelve el residuo.  
+Lo típico que sale mal: división por cero; usarlo con floats sin entender precisión.
+
+8) `**`  
+Qué hace: potencia.  
+Así se escribe:
+```py
+cuadrado = 3 ** 2
+```
+Error típico:
+```py
+cuadrado = 3 ^ 2
+```
+Verás esto: `9`.  
+Por qué funciona: `**` es potencia; `^` es XOR.  
+Lo típico que sale mal: confundir operadores; overflow conceptual en números grandes.
+
+### Booleanos (`bool`)
+1) `bool()` ⭐  
+Qué hace: convierte a booleano.  
+Así se escribe:
+```py
+es_valido = bool("ok")
+```
+Error típico:
+```py
+es_valido = bool("0")
+```
+Verás esto: `True`.  
+Por qué funciona: evalúa “verdad” de un valor.  
+Lo típico que sale mal: creer que `"0"` es False; asumir que solo números cuentan.
+
+2) `and` ⭐  
+Qué hace: devuelve True si ambos son True.  
+Así se escribe:
+```py
+resultado = True and False
+```
+Error típico:
+```py
+resultado = True & False
+```
+Verás esto: `False`.  
+Por qué funciona: evalúa lógica booleana.  
+Lo típico que sale mal: usar `&` en lugar de `and`; confiar en el resultado sin paréntesis.
+
+3) `or` ⭐  
+Qué hace: devuelve True si alguno es True.  
+Así se escribe:
+```py
+resultado = True or False
+```
+Error típico:
+```py
+resultado = True | False
+```
+Verás esto: `True`.  
+Por qué funciona: corta evaluación cuando encuentra True.  
+Lo típico que sale mal: usar `|`; no entender short-circuit.
+
+4) `not` ⭐  
+Qué hace: invierte el booleano.  
+Así se escribe:
+```py
+resultado = not True
+```
+Error típico:
+```py
+resultado = not()
+```
+Verás esto: `False`.  
+Por qué funciona: niega la condición.  
+Lo típico que sale mal: olvidar el operando; confundir con `!=`.
+
+5) `any()`  
+Qué hace: True si algún elemento es True.  
+Así se escribe:
+```py
+resultado = any([False, True])
+```
+Error típico:
+```py
+resultado = any(False, True)
+```
+Verás esto: `True`.  
+Por qué funciona: evalúa iterables.  
+Lo típico que sale mal: pasar argumentos sueltos; usarlo en lista vacía sin querer.
+
+6) `all()`  
+Qué hace: True si todos son True.  
+Así se escribe:
+```py
+resultado = all([True, True])
+```
+Error típico:
+```py
+resultado = all(True, False)
+```
+Verás esto: `True`.  
+Por qué funciona: revisa todos los valores.  
+Lo típico que sale mal: pasar argumentos sueltos; `all([])` devuelve True.
+
 ## Paso 6: None como ausencia real
 `None` significa “no hay valor” y se compara con `is None`.
 

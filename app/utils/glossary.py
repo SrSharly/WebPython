@@ -4140,6 +4140,96 @@ GLOSSARY = {
             "matiz": "requiere indicar la carpeta de destino.",
         },
     },
+    "async": {
+        "tooltip": "Palabra clave para declarar corutinas.",
+        "definition_parts": {
+            "que_es": "Palabra clave de Python para definir funciones asíncronas.",
+            "para_que": "para crear corutinas que pueden pausarse con await.",
+            "sintaxis": "async def nombre(): ...",
+            "ejemplo": "async def cargar(): return 1",
+            "matiz": "una función async devuelve una corutina si se llama.",
+        },
+    },
+    "await": {
+        "tooltip": "Operador que pausa una corutina hasta que otra termina.",
+        "definition_parts": {
+            "que_es": "Operador que espera el resultado de una corutina o awaitable.",
+            "para_que": "para coordinar tareas sin bloquear el event loop.",
+            "sintaxis": "resultado = await corutina()",
+            "ejemplo": "await asyncio.sleep(1)",
+            "matiz": "solo se usa dentro de funciones async.",
+        },
+    },
+    "corutina": {
+        "tooltip": "Función async que puede pausarse y reanudarse.",
+        "definition_parts": {
+            "que_es": "Una función declarada con async def.",
+            "para_que": "para ejecutar tareas concurrentes sin hilos.",
+            "sintaxis": "async def tarea(): ...",
+            "ejemplo": "async def leer(): return 'ok'",
+            "matiz": "debe ejecutarse con un event loop.",
+        },
+    },
+    "event loop": {
+        "tooltip": "Bucle central que ejecuta corutinas asíncronas.",
+        "definition_parts": {
+            "que_es": "Mecanismo de asyncio que programa y ejecuta tareas.",
+            "para_que": "para coordinar concurrencia sin bloquear el programa.",
+            "sintaxis": "asyncio.run(corutina())",
+            "ejemplo": "asyncio.run(main())",
+            "matiz": "normalmente hay un loop activo por proceso.",
+        },
+    },
+    "asyncio": {
+        "tooltip": "Módulo estándar de Python para programación asíncrona.",
+        "definition_parts": {
+            "que_es": "Librería estándar para event loop, tareas y corutinas.",
+            "para_que": "para construir aplicaciones concurrentes con async/await.",
+            "sintaxis": "import asyncio",
+            "ejemplo": "asyncio.run(main())",
+            "matiz": "no se mezcla con time.sleep en corutinas.",
+        },
+    },
+    "asyncio.run": {
+        "tooltip": "Función que ejecuta la corutina principal en un event loop.",
+        "definition_parts": {
+            "que_es": "Helper para crear, ejecutar y cerrar el event loop.",
+            "para_que": "para iniciar programas async desde código síncrono.",
+            "sintaxis": "asyncio.run(main())",
+            "ejemplo": "asyncio.run(main())",
+            "matiz": "espera una corutina, no la función sin llamar.",
+        },
+    },
+    "asyncio.sleep": {
+        "tooltip": "Pausa asíncrona sin bloquear el event loop.",
+        "definition_parts": {
+            "que_es": "Corutina que espera una cantidad de segundos.",
+            "para_que": "para simular tiempos de espera sin bloquear.",
+            "sintaxis": "await asyncio.sleep(1)",
+            "ejemplo": "await asyncio.sleep(0.5)",
+            "matiz": "requiere await dentro de async.",
+        },
+    },
+    "asyncio.gather": {
+        "tooltip": "Agrupa varias corutinas y espera todas.",
+        "definition_parts": {
+            "que_es": "Función que ejecuta varias corutinas en paralelo.",
+            "para_que": "para recopilar resultados de múltiples tareas.",
+            "sintaxis": "await asyncio.gather(coro1, coro2)",
+            "ejemplo": "await asyncio.gather(tarea_a(), tarea_b())",
+            "matiz": "devuelve una lista con los resultados en orden.",
+        },
+    },
+    "asyncio.create_task": {
+        "tooltip": "Registra una corutina como tarea en el event loop.",
+        "definition_parts": {
+            "que_es": "Función para programar una corutina como Task.",
+            "para_que": "para ejecutarla en segundo plano y luego await.",
+            "sintaxis": "tarea = asyncio.create_task(coro())",
+            "ejemplo": "tarea = asyncio.create_task(descargar())",
+            "matiz": "requiere un event loop en ejecución.",
+        },
+    },
 }
 
 def definition_text(data: dict[str, object]) -> str:

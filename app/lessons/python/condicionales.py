@@ -177,6 +177,270 @@ mayoría de errores al empezar.
 
 
 
+## Operaciones y métodos más útiles
+### Strings (`str`)
+1) `upper()` ⭐  
+Qué hace: convierte a mayúsculas.  
+Así se escribe:
+```py
+texto = "hola"
+resultado = texto.upper()
+```
+Error típico:
+```py
+resultado = texto.upper
+```
+Verás esto: `"HOLA"`.  
+Por qué funciona: `upper()` crea un texto nuevo con mayúsculas.  
+Lo típico que sale mal: olvidar paréntesis; creer que cambia el string original.
+
+2) `lower()` ⭐  
+Qué hace: convierte a minúsculas.  
+Así se escribe:
+```py
+texto = "HoLa"
+resultado = texto.lower()
+```
+Error típico:
+```py
+resultado = texto.lower
+```
+Verás esto: `"hola"`.  
+Por qué funciona: normaliza el texto para comparar.  
+Lo típico que sale mal: no normalizar ambos lados; asumir mutación in-place.
+
+3) `strip()` ⭐  
+Qué hace: quita espacios al inicio y final.  
+Así se escribe:
+```py
+texto = "  hola  "
+resultado = texto.strip()
+```
+Error típico:
+```py
+resultado = texto.strip
+```
+Verás esto: `"hola"`.  
+Por qué funciona: recorta whitespace en bordes.  
+Lo típico que sale mal: esperar que quite espacios internos; no guardar el resultado.
+
+4) `replace()` ⭐  
+Qué hace: reemplaza un fragmento por otro.  
+Así se escribe:
+```py
+texto = "hola mundo"
+resultado = texto.replace("mundo", "Python")
+```
+Error típico:
+```py
+resultado = texto.replace("mundo")
+```
+Verás esto: `"hola Python"`.  
+Por qué funciona: genera un string nuevo con reemplazo.  
+Lo típico que sale mal: olvidar el segundo argumento; creer que modifica en sitio.
+
+5) `split()` ⭐  
+Qué hace: separa el texto en una lista.  
+Así se escribe:
+```py
+texto = "a,b,c"
+partes = texto.split(",")
+```
+Error típico:
+```py
+partes = texto.split
+```
+Verás esto: `['a', 'b', 'c']`.  
+Por qué funciona: corta según el separador.  
+Lo típico que sale mal: confundir split con slicing; usar separador incorrecto.
+
+6) `join()`  
+Qué hace: une textos con un separador.  
+Así se escribe:
+```py
+partes = ["a", "b", "c"]
+resultado = ",".join(partes)
+```
+Error típico:
+```py
+resultado = partes.join(",")
+```
+Verás esto: `"a,b,c"`.  
+Por qué funciona: `join()` es método del separador.  
+Lo típico que sale mal: pasar elementos no string; invertir el orden.
+
+### Números (`int` / `float`)
+1) `round()` ⭐  
+Qué hace: redondea a n decimales.  
+Así se escribe:
+```py
+precio = 3.1416
+aprox = round(precio, 2)
+```
+Error típico:
+```py
+aprox = round("3.1416", 2)
+```
+Verás esto: `3.14`.  
+Por qué funciona: `round` opera sobre números.  
+Lo típico que sale mal: pasar strings; esperar más decimales sin indicar n.
+
+2) `abs()` ⭐  
+Qué hace: devuelve el valor absoluto.  
+Así se escribe:
+```py
+delta = abs(-5)
+```
+Error típico:
+```py
+delta = abs[-5]
+```
+Verás esto: `5`.  
+Por qué funciona: elimina el signo negativo.  
+Lo típico que sale mal: olvidar paréntesis; pasar texto no numérico.
+
+3) `int()` ⭐  
+Qué hace: convierte a entero (trunca decimales).  
+Así se escribe:
+```py
+cantidad = int("12")
+```
+Error típico:
+```py
+cantidad = int("12.5")
+```
+Verás esto: `12`.  
+Por qué funciona: `int` convierte strings numéricos enteros.  
+Lo típico que sale mal: usar strings con punto; asumir redondeo en vez de truncado.
+
+4) `float()` ⭐  
+Qué hace: convierte a flotante.  
+Así se escribe:
+```py
+valor = float("3.5")
+```
+Error típico:
+```py
+valor = float("tres")
+```
+Verás esto: `3.5`.  
+Por qué funciona: `float` interpreta strings numéricos.  
+Lo típico que sale mal: usar textos no numéricos; confundir coma con punto.
+
+5) `//` (división entera)  
+Qué hace: divide y descarta decimales.  
+Así se escribe:
+```py
+resultado = 7 // 2
+```
+Error típico:
+```py
+resultado = 7 // 0
+```
+Verás esto: `3`.  
+Por qué funciona: aplica división entera.  
+Lo típico que sale mal: división por cero; asumir que redondea (en realidad trunca).
+
+6) `%` (módulo)  
+Qué hace: devuelve el resto de una división.  
+Así se escribe:
+```py
+resto = 7 % 2
+```
+Error típico:
+```py
+resto = 7 % 0
+```
+Verás esto: `1`.  
+Por qué funciona: calcula el residuo.  
+Lo típico que sale mal: división por cero; usarlo con floats y esperar enteros.
+
+### Booleanos (`bool`)
+1) `bool()` ⭐  
+Qué hace: convierte un valor a True/False.  
+Así se escribe:
+```py
+activo = bool(1)
+```
+Error típico:
+```py
+activo = bool("0")
+```
+Verás esto: `True`.  
+Por qué funciona: cualquier string no vacío es True.  
+Lo típico que sale mal: asumir que "0" es False; no validar entradas.
+
+2) `not` ⭐  
+Qué hace: niega una condición.  
+Así se escribe:
+```py
+es_vacio = not True
+```
+Error típico:
+```py
+es_vacio = not
+```
+Verás esto: `False`.  
+Por qué funciona: invierte el valor booleano.  
+Lo típico que sale mal: usarlo sin operando; encadenar sin paréntesis.
+
+3) `and` ⭐  
+Qué hace: True solo si ambas condiciones son True.  
+Así se escribe:
+```py
+permitido = True and False
+```
+Error típico:
+```py
+permitido = True and
+```
+Verás esto: `False`.  
+Por qué funciona: evalúa ambas condiciones.  
+Lo típico que sale mal: olvidar el segundo operando; confiar en el orden sin paréntesis.
+
+4) `or` ⭐  
+Qué hace: True si alguna condición es True.  
+Así se escribe:
+```py
+permitido = False or True
+```
+Error típico:
+```py
+permitido = False or
+```
+Verás esto: `True`.  
+Por qué funciona: basta un True para pasar.  
+Lo típico que sale mal: olvidar el segundo operando; asumir que evalúa siempre ambas partes.
+
+5) `==` (comparación)  
+Qué hace: compara igualdad.  
+Así se escribe:
+```py
+es_cero = (0 == 0)
+```
+Error típico:
+```py
+es_cero = (0 = 0)
+```
+Verás esto: `True`.  
+Por qué funciona: `==` compara valores.  
+Lo típico que sale mal: usar `=` por accidente; comparar tipos incompatibles.
+
+6) `is` (identidad)  
+Qué hace: comprueba identidad, útil con `None`.  
+Así se escribe:
+```py
+valor = None
+es_nulo = valor is None
+```
+Error típico:
+```py
+es_nulo = valor == None
+```
+Verás esto: `True`.  
+Por qué funciona: `is` compara identidad exacta.  
+Lo típico que sale mal: usar `==` en lugar de `is`; comparar objetos mutables.
+
 ## Micro-ejemplo incremental: sintaxis y errores reales
 
 ### Así se escribe

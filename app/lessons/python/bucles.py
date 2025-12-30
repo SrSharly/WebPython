@@ -10,322 +10,368 @@ class BuclesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["for", "while", "range", "iteración"]
+    TAGS = ["bucles", "for", "while", "range", "break", "continue"]
 
     def summary(self) -> str:
-        return "Aprende a repetir tareas con for y while, controlar iteraciones y evitar bucles infinitos."
+        return (
+            "Aprende a repetir tareas con for y while, controlar ciclos con break/continue y evitar "
+            "bucles infinitos o errores de rango."
+        )
 
     def guide(self) -> str:
         return self.tutorial()
 
     def tutorial(self) -> str:
         return """
-## Introducción: repetir sin copiar
-Un bucle te permite repetir una acción sin escribirla muchas veces. Eso hace tu código más corto, más fácil de cambiar y más
-confiable. En Python, los bucles principales son `for` y `while`. El primero recorre colecciones; el segundo repite mientras
-se cumpla una condición.
+## Introducción: repetir sin duplicar
+Los bucles te permiten repetir acciones sin escribir la misma línea muchas veces. En Python los dos principales son `for` y
+`while`. Cada uno tiene su forma y sus errores típicos.
 
-En esta lección aprenderás desde cero cómo iterar listas, cómo usar `range`, cómo controlar un `while` y cómo detener una
-iteración con `break` o saltar con `continue`. También verás cómo evitar bucles infinitos y cómo hacer que cada iteración sea
-legible.
+En esta lección aprenderás la sintaxis básica con micro-snippets correctos e incorrectos, justo en el momento en que se
+presenta cada concepto.
 
-### Buenas prácticas (CalloutBox: best_practice)
-Piensa en qué cambia en cada vuelta. Si nada cambia, el bucle nunca termina. Define la variable de control con claridad.
+## Paso 1: for con range
+`for` recorre una secuencia. `range(n)` genera números desde 0 hasta n-1.
 
-## Paso 1: for para recorrer colecciones
-El bucle `for` recorre elementos uno por uno. Es perfecto para listas, tuplas, diccionarios y cadenas. No necesitas manejar
-índices manualmente si no son necesarios. Si necesitas el índice, puedes usar `enumerate`.
+**Así se escribe**
+```py
+for i in range(3):
+    print(i)
+```
 
-## Paso 2: range para contar
-`range` genera una secuencia de números. Es la forma estándar de contar repeticiones. Puedes indicar inicio, fin y paso.
-Recuerda que el límite superior no se incluye, lo cual es muy útil para iterar por índices.
+**Error típico (❌)**
+```py
+for i in range(3)
+    print(i)
+```
 
-## Paso 3: while para condiciones
-`while` repite mientras la condición sea verdadera. Es ideal cuando no sabes cuántas vueltas necesitas y la decisión depende
-de algo que cambia dentro del bucle. Siempre debes asegurarte de modificar la condición para evitar ciclos infinitos.
+**Qué significa el error**
+`SyntaxError` porque falta el `:` al final de la línea del `for`.
 
-### Nota (CalloutBox: note)
-`while` es poderoso, pero más propenso a errores. Si puedes expresar el recorrido con `for`, hazlo.
+**Cómo se arregla**
+Agrega `:` y mantén la indentación del bloque.
 
-## Paso 4: break y continue
-`break` detiene el bucle por completo. `continue` salta a la siguiente iteración. Son herramientas útiles para casos
-especiales, pero hay que usarlas con moderación para no ocultar la lógica principal.
+## Paso 2: while con condición
+`while` repite mientras una condición sea True. Necesitas actualizar la variable para evitar bucles infinitos.
 
-## Paso 5: recorrer diccionarios
-Cuando iteras un diccionario puedes recorrer claves, valores o ambos. Esto te permite procesar datos con significado, no
-solo con posición. Es más claro y evita errores de índice.
+**Así se escribe**
+```py
+contador = 0
+while contador < 3:
+    print(contador)
+    contador += 1
+```
 
-## Paso 6: legibilidad y control
-Un buen bucle debe leerse como una historia: “para cada producto, calcula el total”. Si el bucle es largo, considera extraer
-partes a funciones. La claridad es más importante que el ahorro de líneas.
+**Error típico (❌)**
+```py
+contador = 0
+while contador < 3:
+    print(contador)
+```
 
-### Advertencia (CalloutBox: warning)
-Evita modificar la lista que estás recorriendo. Eso puede saltarse elementos o generar resultados inesperados.
+**Qué significa el error**
+No hay error de sintaxis, pero el bucle se vuelve infinito porque `contador` nunca cambia.
 
-## Más allá (nivel pro)
-Los bucles son básicos, pero su uso define la calidad de tu código. Un bucle claro comunica intención y facilita pruebas.
-Un bucle confuso crea bugs silenciosos.
+**Cómo se arregla**
+Actualiza la variable dentro del bucle: `contador += 1`.
 
-### Consejos pro
-- Usa `enumerate` cuando necesites índice y valor a la vez.
-- Prefiere `for` sobre `while` si tienes una colección clara.
-- Usa `break` solo cuando sea una condición de salida evidente.
-- Si un bucle crece, divide el trabajo en funciones pequeñas.
-- En listas grandes, evita operaciones costosas dentro de cada iteración.
+## Paso 3: break para salir
+`break` corta el bucle cuando se cumple una condición específica.
+
+**Así se escribe**
+```py
+for numero in range(5):
+    if numero == 3:
+        break
+    print(numero)
+```
+
+**Error típico (❌)**
+```py
+for numero in range(5):
+    if numero == 3:
+    break
+```
+
+**Qué significa el error**
+`IndentationError` porque `break` debe estar indentado dentro del `if`.
+
+**Cómo se arregla**
+Indenta `break` al mismo nivel que el bloque del `if`.
+
+## Paso 4: continue para saltar
+`continue` salta a la siguiente iteración sin ejecutar el resto del bloque.
+
+**Así se escribe**
+```py
+for numero in range(5):
+    if numero == 2:
+        continue
+    print(numero)
+```
+
+**Error típico (❌)**
+```py
+for numero in range(5):
+    if numero == 2:
+        continue
+        print(numero)
+```
+
+**Qué significa el error**
+No hay error de sintaxis, pero `print` nunca se ejecuta en ese bloque porque `continue` lo salta.
+
+**Cómo se arregla**
+Coloca `continue` antes de lo que quieres omitir y el resto fuera del bloque o después del `if`.
+
+## Paso 5: resumen para bucles seguros
+Usa `for` con `range` para conteos y `while` para condiciones abiertas. En `while`, actualiza la variable siempre. Usa
+`break` y `continue` con cuidado y buena indentación.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
-                "Bucle infinito en while",
-                "Si la condición nunca cambia, el bucle no termina. Actualiza la variable de control.",
+                "Olvidar el : en for o while",
+                "`for i in range(3)` sin `:` produce `SyntaxError`.",
             ),
             (
-                "Olvidar que range no incluye el final",
-                "`range(5)` genera 0 a 4. Si esperas 5, debes usar `range(6)`.",
+                "No actualizar la variable en while",
+                "El bucle se vuelve infinito si la condición nunca cambia.",
             ),
             (
-                "Modificar la lista mientras iteras",
-                "Agregar o quitar elementos durante el recorrido puede saltarse elementos o romper el bucle.",
+                "Usar range con límite incorrecto",
+                "`range(3)` genera 0,1,2. Si esperas 3, ajusta el límite.",
             ),
             (
-                "Usar índices cuando no hace falta",
-                "Recorrer por índice es más verboso y propenso a errores. Usa el elemento directamente.",
+                "Olvidar la indentación",
+                "`IndentationError` ocurre si el bloque no está indentado.",
             ),
             (
-                "Confundir break con continue",
-                "`break` termina el bucle; `continue` solo salta esa vuelta.",
+                "Usar break fuera de un bucle",
+                "`SyntaxError` si `break` está fuera de un `for` o `while`.",
             ),
             (
-                "No inicializar la variable del while",
-                "Si la variable no existe antes del while, obtendrás un error de nombre.",
+                "Usar continue sin lógica",
+                "Si `continue` está al inicio, puedes saltarte todo el trabajo del bucle.",
             ),
             (
-                "Olvidar actualizar la variable del while",
-                "Sin actualización, la condición nunca cambia y el bucle se repite sin fin.",
+                "Modificar la lista que recorres",
+                "Cambiar la lista mientras iteras puede saltar elementos o duplicar resultados.",
             ),
             (
-                "Iterar sobre un dict sin saber qué devuelve",
-                "Iterar un diccionario devuelve claves, no valores. Usa `.items()` si necesitas ambos.",
+                "Olvidar inicializar contador",
+                "En `while`, si no inicializas, tendrás `NameError`.",
             ),
             (
-                "Reusar la variable del bucle",
-                "Si usas la misma variable fuera del bucle sin intención, puedes pisar valores.",
+                "Confundir range con índices",
+                "`range(len(lista))` da índices, no valores. Usa `for item in lista` cuando puedas.",
             ),
             (
-                "No controlar el paso en range",
-                "Si necesitas saltos, define el paso. `range(0, 10, 2)` evita cálculos manuales.",
+                "Usar else en loops sin entender",
+                "El else de un bucle se ejecuta si no hay break. Puede sorprender.",
             ),
             (
-                "Usar else del for sin entender",
-                "El else del for se ejecuta si no hubo break. Evita usarlo si no es claro.",
+                "Imprimir dentro del bucle sin control",
+                "Demasiadas impresiones hacen difícil leer la salida. Usa contadores o condiciones.",
             ),
             (
-                "Ignorar el rendimiento en bucles grandes",
-                "Operaciones pesadas en cada iteración pueden ralentizar el programa.",
+                "Comparar strings en while",
+                "Cuidado con mayúsculas/minúsculas. Normaliza antes de comparar.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "For sobre lista",
+                "For con range",
                 """# Aprende esto
-# Aprenderás a recorrer una lista con for.
-# Verás cómo procesar cada elemento.
-# Entenderás que no necesitas índices.
+# Aprenderás a repetir con range.
+# Verás cómo contar desde cero.
+# Entenderás la salida por iteración.
 #
 # Haz esto
-frutas = ["manzana", "pera", "uva"]  # Lista de frutas
-for fruta in frutas:  # Recorremos cada fruta
-    mensaje = f"Fruta: {fruta}"  # Construimos mensaje
-    print(mensaje)  # Mostramos el mensaje
+for i in range(3):  # Recorremos 0,1,2
+    print(i)  # Mostramos i
 #
 # Verás esto
-# Verás cada fruta en una línea.
+# Verás 0, 1, 2 en líneas separadas.
 #
 # Por qué funciona
-# for toma cada elemento de la lista en orden.
+# range(3) genera tres valores consecutivos.
 #
 # Lo típico que sale mal
-# - Usar índices sin necesidad.
-# - Cambiar la lista mientras se recorre.
+# - Olvidar el : en el for.
+# - Esperar que llegue hasta 3 incluido.
 """,
             ),
             (
-                "Range básico",
+                "For con lista",
                 """# Aprende esto
-# Aprenderás a usar range para contar.
-# Verás que el final no se incluye.
-# Entenderás cómo usarlo en un for.
+# Aprenderás a recorrer una lista.
+# Verás valores en cada iteración.
+# Entenderás la ventaja de iterar directo.
 #
 # Haz esto
-for numero in range(3):  # Generamos 0,1,2
-    print(numero)  # Mostramos el número
-suma = 0  # Iniciamos suma
-for valor in range(1, 4):  # Generamos 1,2,3
-    suma += valor  # Acumulamos suma
-print(suma)  # Mostramos la suma
+frutas = ["manzana", "pera", "uva"]  # Lista
+for fruta in frutas:  # Recorremos valores
+    print(fruta)  # Mostramos cada fruta
 #
 # Verás esto
-# Verás 0, 1, 2 y luego 6.
+# Verás cada fruta en su propia línea.
 #
 # Por qué funciona
-# range genera una secuencia de números.
+# El for toma cada elemento de la lista.
 #
 # Lo típico que sale mal
-# - Esperar que incluya el número final.
-# - Usar límites incorrectos.
+# - Modificar la lista mientras iteras.
+# - Usar índices cuando no hace falta.
 """,
             ),
             (
-                "Range con paso",
+                "While con contador",
                 """# Aprende esto
-# Aprenderás a usar un paso en range.
-# Verás cómo saltar números.
-# Entenderás la utilidad en series.
-#
-# Haz esto
-for numero in range(0, 10, 2):  # Saltamos de 2 en 2
-    print(numero)  # Mostramos el número
-contador = 0  # Iniciamos contador
-for numero in range(5, 0, -1):  # Cuenta regresiva
-    contador += numero  # Acumulamos suma
-print(contador)  # Mostramos la suma
-#
-# Verás esto
-# Verás 0, 2, 4, 6, 8 y luego 15.
-#
-# Por qué funciona
-# El tercer argumento de range define el paso.
-#
-# Lo típico que sale mal
-# - Usar un paso incorrecto.
-# - Olvidar que el límite sigue sin incluirse.
-""",
-            ),
-            (
-                "While con control",
-                """# Aprende esto
-# Aprenderás a usar while con una condición.
-# Verás cómo actualizar la variable.
+# Aprenderás a usar while con contador.
+# Verás la condición que se actualiza.
 # Entenderás cómo evitar bucles infinitos.
 #
 # Haz esto
-contador = 0  # Iniciamos contador
-while contador < 3:  # Condición de salida
-    print(contador)  # Mostramos contador
-    contador += 1  # Actualizamos contador
-print("Fin")  # Indicamos fin
+contador = 0  # Inicializamos
+while contador < 3:  # Condición
+    print(contador)  # Mostramos el valor
+    contador += 1  # Actualizamos
 #
 # Verás esto
-# Verás 0, 1, 2 y luego "Fin".
+# Verás 0, 1, 2 en líneas separadas.
 #
 # Por qué funciona
-# La condición cambia y el bucle termina.
+# El contador aumenta hasta que la condición falla.
 #
 # Lo típico que sale mal
-# - No actualizar contador.
-# - Usar una condición incorrecta.
+# - Olvidar contador += 1.
+# - Usar una condición que nunca cambia.
 """,
             ),
             (
-                "break en un for",
+                "break en bucle",
                 """# Aprende esto
-# Aprenderás a detener un bucle con break.
-# Verás cómo salir antes de tiempo.
-# Entenderás cuándo usarlo.
+# Aprenderás a salir de un bucle con break.
+# Verás el corte antes de completar range.
+# Entenderás la condición de salida.
 #
 # Haz esto
-numeros = [1, 4, 7, 10]  # Lista de números
-for numero in numeros:  # Recorremos la lista
-    if numero == 7:  # Condición de salida
-        print("Encontrado")  # Mensaje
-        break  # Salimos del bucle
-    print(numero)  # Mostramos número
+for numero in range(5):  # Recorremos 0-4
+    if numero == 3:  # Condición de salida
+        break  # Cortamos
+    print(numero)  # Mostramos el número
 #
 # Verás esto
-# Verás 1, 4 y luego "Encontrado".
+# Verás 0, 1, 2.
 #
 # Por qué funciona
-# break termina el bucle inmediatamente.
+# break detiene el bucle cuando numero == 3.
 #
 # Lo típico que sale mal
-# - Usar break sin necesidad.
-# - Olvidar que rompe el bucle completo.
+# - Indentar mal el break.
+# - Usar break sin condición clara.
 """,
             ),
             (
-                "continue en un for",
+                "continue en bucle",
                 """# Aprende esto
 # Aprenderás a saltar una iteración con continue.
-# Verás cómo omitir ciertos casos.
-# Entenderás la diferencia con break.
+# Verás cómo omitir un valor específico.
+# Entenderás su efecto en el flujo.
 #
 # Haz esto
-numeros = [1, 2, 3, 4]  # Lista de números
-for numero in numeros:  # Recorremos la lista
-    if numero % 2 == 0:  # Si es par
+for numero in range(5):  # Recorremos 0-4
+    if numero == 2:  # Valor a omitir
         continue  # Saltamos
-    print(numero)  # Mostramos impares
+    print(numero)  # Mostramos el resto
 #
 # Verás esto
-# Verás 1 y 3.
+# Verás 0, 1, 3, 4.
 #
 # Por qué funciona
-# continue omite el resto y pasa a la siguiente vuelta.
+# continue salta solo la iteración actual.
 #
 # Lo típico que sale mal
-# - Usar continue y olvidar lógica posterior.
-# - Saltar casos sin darse cuenta.
+# - Poner continue después del trabajo útil.
+# - Olvidar que el resto del bloque se omite.
 """,
             ),
             (
-                "Enumerate",
+                "Sumar con acumulador",
                 """# Aprende esto
-# Aprenderás a usar enumerate para índice y valor.
-# Verás cómo evitar range(len()).
-# Entenderás la claridad que aporta.
+# Aprenderás a acumular valores en un bucle.
+# Verás cómo sumar una serie.
+# Entenderás el patrón acumulador.
 #
 # Haz esto
-nombres = ["Ana", "Luis", "Marta"]  # Lista de nombres
-for indice, nombre in enumerate(nombres):  # Índice y valor
-    mensaje = f"{indice}: {nombre}"  # Mensaje con índice
-    print(mensaje)  # Mostramos el mensaje
+total = 0  # Acumulador
+for numero in range(1, 4):  # 1,2,3
+    total += numero  # Sumamos
+print(total)  # Mostramos el total
 #
 # Verás esto
-# Verás 0: Ana, 1: Luis, 2: Marta.
+# Verás 6.
 #
 # Por qué funciona
-# enumerate entrega índice y valor a la vez.
+# total guarda la suma acumulada.
 #
 # Lo típico que sale mal
-# - Olvidar desempaquetar los dos valores.
-# - Revertir el orden de índice y valor.
+# - No inicializar total en 0.
+# - Usar range incorrecto.
 """,
             ),
             (
-                "Recorrer diccionarios",
+                "Buscar con while",
                 """# Aprende esto
-# Aprenderás a iterar claves y valores de un dict.
-# Verás cómo usar items().
-# Entenderás cómo construir mensajes.
+# Aprenderás a buscar un valor con while.
+# Verás cómo detenerte cuando lo encuentras.
+# Entenderás el uso de banderas.
 #
 # Haz esto
-precios = {"pan": 2, "leche": 3}  # Diccionario de precios
-for producto, precio in precios.items():  # Clave y valor
-    mensaje = f"{producto}: {precio}"  # Construimos mensaje
-    print(mensaje)  # Mostramos el mensaje
+objetivo = 3  # Valor objetivo
+actual = 0  # Valor inicial
+while actual <= 5:  # Repetimos
+    if actual == objetivo:  # Si encontramos
+        print("Encontrado")  # Mensaje
+        break  # Salimos
+    actual += 1  # Actualizamos
 #
 # Verás esto
-# Verás "pan: 2" y "leche: 3".
+# Verás "Encontrado".
 #
 # Por qué funciona
-# items() entrega pares clave-valor.
+# El bucle termina cuando se cumple la condición.
 #
 # Lo típico que sale mal
-# - Iterar solo por claves y olvidar el valor.
-# - Modificar el dict dentro del bucle.
+# - Olvidar el break y seguir iterando.
+# - No actualizar actual y entrar en bucle infinito.
+""",
+            ),
+            (
+                "Iterar con índice",
+                """# Aprende esto
+# Aprenderás a usar índices con range(len()).
+# Verás cómo acceder por posición.
+# Entenderás cuándo es necesario.
+#
+# Haz esto
+nombres = ["Ana", "Luis", "Marta"]  # Lista
+for i in range(len(nombres)):  # Índices
+    print(i, nombres[i])  # Índice y valor
+#
+# Verás esto
+# Verás 0 Ana, 1 Luis, 2 Marta.
+#
+# Por qué funciona
+# range(len()) recorre posiciones válidas.
+#
+# Lo típico que sale mal
+# - Usar len y luego acceder fuera de rango.
+# - Usar índices cuando no hace falta.
 """,
             ),
         ]
@@ -333,47 +379,48 @@ for producto, precio in precios.items():  # Clave y valor
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Imprime los números del 1 al 5 usando range.",
-                "hints": ["Usa range(1, 6)."],
-                "solution": """for numero in range(1, 6):
-    print(numero)""",
+                "question": "Imprime los números del 0 al 4 usando for y range.",
+                "hints": ["Usa range(5).", "Recuerda el : en el for."],
+                "solution": """for i in range(5):
+    print(i)""",
             },
             {
-                "question": "Recorre una lista de nombres y muestra cada uno.",
-                "hints": ["Usa for nombre in nombres."],
-                "solution": """nombres = ["Ana", "Luis"]
-for nombre in nombres:
-    print(nombre)""",
+                "question": "Recorre una lista de tres colores e imprime cada uno.",
+                "hints": ["Usa for color in colores.", "Define la lista antes."],
+                "solution": """colores = ["rojo", "verde", "azul"]
+for color in colores:
+    print(color)""",
             },
             {
-                "question": "Crea un while que cuente de 0 a 2.",
-                "hints": ["Actualiza el contador dentro del bucle."],
-                "solution": """contador = 0
-while contador <= 2:
+                "question": "Usa while para contar de 1 a 3.",
+                "hints": ["Inicializa un contador.", "Actualiza el contador dentro del bucle."],
+                "solution": """contador = 1
+while contador <= 3:
     print(contador)
     contador += 1""",
             },
             {
-                "question": "Usa break para detener un bucle cuando encuentres el número 3.",
-                "hints": ["Compara el número dentro del for."],
-                "solution": """for numero in [1, 2, 3, 4]:
-    if numero == 3:
+                "question": "Detén un bucle for cuando el número sea 2 usando break.",
+                "hints": ["Compara con ==.", "Coloca break dentro del if."],
+                "solution": """for numero in range(5):
+    if numero == 2:
         break
     print(numero)""",
             },
             {
-                "question": "Usa continue para imprimir solo números impares del 1 al 5.",
-                "hints": ["Comprueba si es par y salta."],
-                "solution": """for numero in range(1, 6):
-    if numero % 2 == 0:
+                "question": "Salta el número 3 en un for usando continue.",
+                "hints": ["Usa if numero == 3.", "continue salta la iteración."],
+                "solution": """for numero in range(5):
+    if numero == 3:
         continue
     print(numero)""",
             },
             {
-                "question": "Recorre un diccionario de edades y muestra nombre y edad.",
-                "hints": ["Usa items() en el for."],
-                "solution": """edades = {"Ana": 30, "Luis": 28}
-for nombre, edad in edades.items():
-    print(nombre, edad)""",
+                "question": "Suma los números del 1 al 4 con un acumulador.",
+                "hints": ["Inicializa total en 0.", "Suma en cada iteración."],
+                "solution": """total = 0
+for numero in range(1, 5):
+    total += numero
+print(total)""",
             },
         ]

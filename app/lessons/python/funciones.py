@@ -14,8 +14,8 @@ class FuncionesLesson(Lesson):
 
     def summary(self) -> str:
         return (
-            "Aprende a crear funciones claras, con parámetros, valores de retorno y reglas de alcance para reutilizar "
-            "tu lógica sin repetir código."
+            "Aprende a crear funciones claras con parámetros y return, y evita errores comunes como "
+            "olvidar devolver valores o confundir print con return."
         )
 
     def guide(self) -> str:
@@ -23,313 +23,369 @@ class FuncionesLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: las funciones son herramientas reutilizables
-Una función es un bloque de código con nombre que puedes ejecutar cuando lo necesites. Sirve para evitar repetir lógica,
-organizar el flujo y describir intenciones. En lugar de copiar y pegar, defines una función y la llamas las veces que sea
-necesario. Esto hace que tu código sea más corto, más claro y más fácil de probar.
+## Introducción: funciones para reutilizar y ordenar
+Una función es un bloque de código con nombre que puedes reutilizar. Te permite dividir problemas en pasos pequeños y
+predecibles. La sintaxis tiene tres piezas: `def`, parámetros y `return`.
 
-En esta lección aprenderás desde cero cómo definir funciones, cómo pasar parámetros, cómo devolver resultados y cómo entender
-el alcance de las variables. También verás valores por defecto y cómo escribir funciones con responsabilidades pequeñas.
+En esta lección aprenderás a crear funciones desde cero con micro-snippets correctos e incorrectos para cada concepto.
 
-### Buenas prácticas (CalloutBox: best_practice)
-Una función debe hacer una sola cosa bien. Si hace demasiadas cosas, es difícil de entender y de reutilizar.
+## Paso 1: definir una función con def
+`def` crea una función y los paréntesis contienen los parámetros.
 
-## Paso 1: definir y llamar una función
-La palabra clave `def` crea una función. Dentro del bloque defines qué hace. Luego la llamas con su nombre seguido de
-paréntesis. Si no la llamas, el código dentro no se ejecuta.
+**Así se escribe**
+```py
+def saludar(nombre):
+    print(f"Hola {nombre}")
+```
 
-## Paso 2: parámetros de entrada
-Los parámetros son valores que recibe la función para trabajar. Permiten que una función sea flexible. En vez de usar
-variables globales, pasas lo que necesitas como parámetros. Esto hace que la función sea más clara y fácil de probar.
+**Error típico (❌)**
+```py
+def saludar nombre:
+    print("Hola")
+```
 
-## Paso 3: return y resultados
-Una función puede devolver un valor con `return`. Ese valor se puede guardar en una variable o usar directamente. Si no
-usas `return`, la función devuelve `None`. Entender esta diferencia es clave para evitar errores.
+**Qué significa el error**
+`SyntaxError` porque faltan paréntesis alrededor de los parámetros.
 
-### Nota (CalloutBox: note)
-`print` muestra algo en pantalla, pero no devuelve un valor. Si necesitas usar el resultado después, usa `return`.
+**Cómo se arregla**
+Agrega paréntesis: `def saludar(nombre):`.
 
-## Paso 4: valores por defecto
-Puedes definir valores por defecto para parámetros. Esto hace que la función sea más cómoda de usar porque puedes omitir
-argumentos cuando el valor por defecto es suficiente. Aun así, debes evitar valores mutables como listas por defecto.
+## Paso 2: parámetros y argumentos
+Los parámetros son nombres dentro de la función; los argumentos son los valores que pasas al llamarla.
 
-## Paso 5: alcance de variables
-Las variables que se crean dentro de una función son locales. No existen fuera de ella. Esto evita conflictos y te obliga a
-pasar información de forma explícita. Si necesitas reutilizar un valor fuera, debes devolverlo con `return`.
+**Así se escribe**
+```py
+def sumar(a, b):
+    return a + b
 
-### Advertencia (CalloutBox: warning)
-No uses variables globales para compartir estado entre funciones si puedes evitarlo. Es una fuente común de bugs.
+resultado = sumar(2, 3)
+```
 
-## Paso 6: diseñar funciones legibles
-Una función con un nombre claro y parámetros simples se entiende sin leer su implementación. Si el nombre suena como una
-acción (“calcular_total”, “validar_email”), probablemente estás haciendo lo correcto.
+**Error típico (❌)**
+```py
+def sumar(a, b):
+    return a + b
 
-## Más allá (nivel pro)
-Las funciones son el lenguaje del diseño de software. Dividir bien tu lógica permite probar, reutilizar y refactorizar sin
-miedo. No se trata de tener muchas funciones, sino de tener funciones con un propósito claro.
+resultado = sumar(2)
+```
 
-### Consejos pro
-- Prefiere funciones pequeñas con nombres de acción.
-- Separa la lógica de cálculo de la lógica de impresión.
-- Evita parámetros con demasiada responsabilidad: mejor varios parámetros claros.
-- Documenta con un comentario corto si la función no es obvia.
-- Si una función crece, divide en subfunciones y reutiliza.
+**Qué significa el error**
+`TypeError` indica que falta un argumento requerido.
+
+**Cómo se arregla**
+Pasa todos los argumentos necesarios o define valores por defecto.
+
+## Paso 3: return y valores de salida
+`return` envía un resultado al exterior. Si no lo usas, la función devuelve `None`.
+
+**Así se escribe**
+```py
+def area_cuadrado(lado):
+    return lado * lado
+```
+
+**Error típico (❌)**
+```py
+def area_cuadrado(lado):
+    lado * lado
+```
+
+**Qué significa el error**
+No hay error de sintaxis, pero la función devuelve `None` porque no hay `return`.
+
+**Cómo se arregla**
+Agrega `return` para devolver el resultado.
+
+## Paso 4: no confundir print con return
+`print` muestra en pantalla, `return` entrega un valor para seguir trabajando.
+
+**Así se escribe**
+```py
+def duplicar(n):
+    return n * 2
+
+resultado = duplicar(4)
+```
+
+**Error típico (❌)**
+```py
+def duplicar(n):
+    print(n * 2)
+
+resultado = duplicar(4)
+```
+
+**Qué significa el error**
+La función imprime el resultado pero devuelve `None`. `resultado` queda vacío.
+
+**Cómo se arregla**
+Usa `return` cuando necesitas guardar o reutilizar el valor.
+
+## Paso 5: resumen para funciones claras
+Define la función con `def`, recibe parámetros, calcula y devuelve con `return`. Usa `print` solo para mostrar, no para
+pasar datos a otras partes del programa.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
-                "Olvidar llamar la función",
-                "Definirla no la ejecuta. Debes llamarla con paréntesis.",
+                "Olvidar los paréntesis en def",
+                "`def saludar nombre:` provoca `SyntaxError`. Los parámetros van entre paréntesis.",
+            ),
+            (
+                "Olvidar el return",
+                "Si no hay `return`, la función devuelve `None` aunque calcule algo.",
             ),
             (
                 "Confundir print con return",
-                "`print` muestra, `return` devuelve. Si necesitas el resultado, debes usar return.",
+                "Imprimir no devuelve. Usa `return` cuando necesitas el valor.",
             ),
             (
-                "Usar variables globales innecesarias",
-                "Las variables globales ocultan dependencias y hacen difícil seguir el flujo.",
+                "No pasar argumentos necesarios",
+                "`TypeError` ocurre si faltan argumentos requeridos.",
             ),
             (
-                "No pasar parámetros",
-                "Si la función depende de variables externas, se vuelve frágil y difícil de probar.",
+                "Pasar más argumentos de los necesarios",
+                "También genera `TypeError`. Revisa la firma de la función.",
             ),
             (
-                "Valores por defecto mutables",
-                "Usar `[]` o `{}` como default comparte el mismo objeto entre llamadas.",
+                "Usar nombres poco claros",
+                "Parámetros como `x` o `y` dificultan la lectura. Usa nombres descriptivos.",
             ),
             (
-                "No devolver nada",
-                "Si olvidas `return`, la función devuelve None y tu resultado se pierde.",
+                "Modificar variables globales sin control",
+                "Evita efectos secundarios: usa parámetros y valores devueltos.",
             ),
             (
-                "Demasiadas responsabilidades",
-                "Una función que hace muchas cosas es difícil de entender y mantener.",
+                "No documentar qué devuelve",
+                "Si no queda claro el tipo de retorno, el uso se vuelve confuso.",
             ),
             (
-                "Sobrescribir variables",
-                "Reusar nombres de variables con otro propósito dentro de la función confunde la lectura.",
+                "Repetir código en lugar de función",
+                "Si repites bloques iguales, conviene crear una función.",
             ),
             (
-                "No documentar parámetros",
-                "Si no está claro qué se espera, la función se usa mal.",
+                "No usar valores por defecto",
+                "Si un argumento es opcional, define un valor por defecto para evitar errores.",
             ),
             (
-                "Olvidar el orden de argumentos",
-                "Si pasas argumentos por posición, debes respetar el orden definido.",
+                "Devolver múltiples cosas sin estructura",
+                "Si devuelves varias cosas, considera usar tuplas y documentar el orden.",
             ),
             (
-                "Retornar tipos inconsistentes",
-                "Si a veces devuelves int y otras str, el código que consume la función se rompe.",
-            ),
-            (
-                "Modificar argumentos mutables",
-                "Si alteras una lista recibida, puedes afectar datos fuera de la función sin querer.",
+                "Llamar a la función antes de definirla",
+                "En Python debes definir la función antes de usarla en el flujo.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "Función simple",
+                "Función básica",
                 """# Aprende esto
-# Aprenderás a definir y llamar una función.
-# Verás que el código no se ejecuta hasta llamarla.
-# Entenderás la estructura básica con def.
+# Aprenderás a definir una función simple.
+# Verás cómo recibir un parámetro.
+# Entenderás dónde se imprime el resultado.
 #
 # Haz esto
-def saludar():  # Definimos la función
-    print("Hola")  # Mostramos un saludo
-saludar()  # Llamamos a la función
-saludar()  # Llamamos otra vez
-#
-# Verás esto
-# Verás "Hola" dos veces.
-#
-# Por qué funciona
-# La función se ejecuta cada vez que la llamas.
-#
-# Lo típico que sale mal
-# - Definir la función y olvidar llamarla.
-# - No respetar la indentación.
-""",
-            ),
-            (
-                "Parámetros de entrada",
-                """# Aprende esto
-# Aprenderás a pasar parámetros a una función.
-# Verás cómo usar esos valores dentro.
-# Entenderás la diferencia entre dato y lógica.
-#
-# Haz esto
-def saludar(nombre):  # Definimos parámetro
-    mensaje = f"Hola {nombre}"  # Construimos mensaje
-    print(mensaje)  # Mostramos mensaje
-saludar("Ana")  # Llamamos con un nombre
-saludar("Luis")  # Llamamos con otro nombre
-#
-# Verás esto
-# Verás dos saludos distintos.
-#
-# Por qué funciona
-# El parámetro recibe el valor al llamar la función.
-#
-# Lo típico que sale mal
-# - Llamar sin argumentos.
-# - Reusar nombres ambiguos.
-""",
-            ),
-            (
-                "Return para resultados",
-                """# Aprende esto
-# Aprenderás a devolver un valor con return.
-# Verás cómo usar el resultado fuera.
-# Entenderás que print no devuelve.
-#
-# Haz esto
-def sumar(a, b):  # Definimos función
-    resultado = a + b  # Sumamos
-    return resultado  # Devolvemos resultado
-suma = sumar(3, 4)  # Guardamos el retorno
-print(suma)  # Mostramos el resultado
-#
-# Verás esto
-# Verás 7.
-#
-# Por qué funciona
-# return envía el resultado al código que llamó.
-#
-# Lo típico que sale mal
-# - Usar print esperando un retorno.
-# - Olvidar return y obtener None.
-""",
-            ),
-            (
-                "Valores por defecto",
-                """# Aprende esto
-# Aprenderás a usar parámetros con default.
-# Verás cómo omitir un argumento.
-# Entenderás cuándo usar defaults.
-#
-# Haz esto
-def saludar(nombre, saludo="Hola"):  # Default en saludo
-    mensaje = f"{saludo} {nombre}"  # Construimos mensaje
-    print(mensaje)  # Mostramos mensaje
-saludar("Ana")  # Usa el default
-saludar("Luis", "Buenas")  # Cambiamos el saludo
-#
-# Verás esto
-# Verás "Hola Ana" y "Buenas Luis".
-#
-# Por qué funciona
-# El parámetro default se usa si no se pasa valor.
-#
-# Lo típico que sale mal
-# - Usar listas como default.
-# - Reordenar parámetros con default mal.
-""",
-            ),
-            (
-                "Alcance de variables",
-                """# Aprende esto
-# Aprenderás que las variables internas son locales.
-# Verás que no existen fuera de la función.
-# Entenderás la importancia de return.
-#
-# Haz esto
-def calcular_total(precio, cantidad):  # Definimos función
-    total = precio * cantidad  # Variable local
-    return total  # Devolvemos total
-resultado = calcular_total(5, 3)  # Guardamos retorno
-print(resultado)  # Mostramos resultado
-#
-# Verás esto
-# Verás 15.
-#
-# Por qué funciona
-# total vive dentro de la función y se retorna.
-#
-# Lo típico que sale mal
-# - Intentar usar total fuera sin retornarlo.
-# - Depender de variables globales.
-""",
-            ),
-            (
-                "Funciones con listas",
-                """# Aprende esto
-# Aprenderás a recibir listas en funciones.
-# Verás cómo calcular un resultado.
-# Entenderás la diferencia entre mutar y retornar.
-#
-# Haz esto
-def contar_items(items):  # Recibimos una lista
-    cantidad = len(items)  # Contamos elementos
-    return cantidad  # Devolvemos cantidad
-lista = ["a", "b", "c"]  # Lista de ejemplo
-resultado = contar_items(lista)  # Llamamos la función
-print(resultado)  # Mostramos resultado
-#
-# Verás esto
-# Verás 3.
-#
-# Por qué funciona
-# La función usa len y devuelve un valor.
-#
-# Lo típico que sale mal
-# - Modificar la lista sin intención.
-# - No retornar el resultado.
-""",
-            ),
-            (
-                "Combinar funciones",
-                """# Aprende esto
-# Aprenderás a componer funciones pequeñas.
-# Verás cómo reutilizar resultados.
-# Entenderás el flujo paso a paso.
-#
-# Haz esto
-def total_con_impuesto(total):  # Calculamos impuesto
-    return total * 1.18  # Devolvemos con impuesto
+def saludar(nombre):  # Definimos la función
+    print(f"Hola {nombre}")  # Mensaje
 
-def calcular_compra(precio, cantidad):  # Calculamos subtotal
-    subtotal = precio * cantidad  # Subtotal
-    return total_con_impuesto(subtotal)  # Llamamos otra función
-resultado = calcular_compra(10, 2)  # Ejecutamos
-print(resultado)  # Mostramos resultado
+saludar("Ana")  # Llamamos la función
 #
 # Verás esto
-# Verás 23.6.
+# Verás "Hola Ana".
 #
 # Por qué funciona
-# Una función llama a otra y reutiliza su lógica.
+# La función recibe el nombre y lo usa en el print.
 #
 # Lo típico que sale mal
-# - Mezclar demasiada lógica en una sola función.
-# - No devolver el valor intermedio.
+# - Olvidar los paréntesis en def.
+# - Llamar la función sin argumentos.
 """,
             ),
             (
-                "Retornos consistentes",
+                "Función con return",
                 """# Aprende esto
-# Aprenderás a mantener retornos consistentes.
-# Verás que siempre devolvemos el mismo tipo.
-# Entenderás por qué eso evita errores.
+# Aprenderás a devolver un valor.
+# Verás cómo usar el resultado.
+# Entenderás la diferencia con print.
 #
 # Haz esto
-def es_mayor(edad):  # Función booleana
-    return edad >= 18  # Retornamos True o False
-resultado = es_mayor(20)  # Guardamos el retorno
-print(resultado)  # Mostramos resultado
+def sumar(a, b):  # Definimos la función
+    return a + b  # Devolvemos la suma
+
+resultado = sumar(2, 3)  # Guardamos el resultado
+print(resultado)  # Mostramos
 #
 # Verás esto
-# Verás True.
+# Verás 5.
 #
 # Por qué funciona
-# La función siempre devuelve un booleano.
+# return envía el valor a quien llama.
 #
 # Lo típico que sale mal
-# - Devolver int en algunos casos y bool en otros.
 # - Usar print en lugar de return.
+# - No guardar el resultado.
+""",
+            ),
+            (
+                "Parámetros por defecto",
+                """# Aprende esto
+# Aprenderás a definir valores por defecto.
+# Verás cómo omitir argumentos.
+# Entenderás la flexibilidad.
+#
+# Haz esto
+def saludar(nombre, prefijo="Hola"):  # Valor por defecto
+    return f"{prefijo} {nombre}"  # Construimos mensaje
+
+print(saludar("Ana"))  # Usamos valor por defecto
+print(saludar("Luis", "Buenos días"))  # Usamos prefijo
+#
+# Verás esto
+# Verás "Hola Ana" y "Buenos días Luis".
+#
+# Por qué funciona
+# Si no pasas prefijo, se usa el valor por defecto.
+#
+# Lo típico que sale mal
+# - Poner el parámetro con defecto antes de uno obligatorio.
+# - Olvidar que el valor por defecto se evalúa una vez.
+""",
+            ),
+            (
+                "Devolver None sin querer",
+                """# Aprende esto
+# Aprenderás qué pasa si no devuelves valor.
+# Verás el resultado None.
+# Entenderás por qué hay que usar return.
+#
+# Haz esto
+def cuadrado(n):  # Función
+    n * n  # Calculamos pero no devolvemos
+
+resultado = cuadrado(4)  # Guardamos
+print(resultado)  # Mostramos
+#
+# Verás esto
+# Verás None.
+#
+# Por qué funciona
+# Sin return, Python devuelve None.
+#
+# Lo típico que sale mal
+# - Creer que una expresión se devuelve sola.
+# - No revisar el valor de resultado.
+""",
+            ),
+            (
+                "Return vs print",
+                """# Aprende esto
+# Aprenderás la diferencia entre imprimir y devolver.
+# Verás cómo usar el valor fuera de la función.
+# Entenderás la reutilización.
+#
+# Haz esto
+def duplicar(n):  # Función
+    return n * 2  # Devolvemos
+
+valor = duplicar(5)  # Guardamos
+print(valor)  # Mostramos
+#
+# Verás esto
+# Verás 10.
+#
+# Por qué funciona
+# El valor devuelto se guarda en valor.
+#
+# Lo típico que sale mal
+# - Usar print en la función y esperar un return.
+# - No capturar el resultado.
+""",
+            ),
+            (
+                "Función con validación",
+                """# Aprende esto
+# Aprenderás a validar dentro de una función.
+# Verás un return temprano.
+# Entenderás cómo manejar errores simples.
+#
+# Haz esto
+def dividir(a, b):  # Función
+    if b == 0:  # Validación
+        return None  # Evitamos error
+    return a / b  # Devolvemos resultado
+
+print(dividir(10, 2))  # Caso válido
+print(dividir(10, 0))  # Caso inválido
+#
+# Verás esto
+# Verás 5.0 y None.
+#
+# Por qué funciona
+# Se evita la división por cero con un return temprano.
+#
+# Lo típico que sale mal
+# - Olvidar la validación y lanzar ZeroDivisionError.
+# - Devolver valores inconsistentes sin documentar.
+""",
+            ),
+            (
+                "Reutilizar funciones",
+                """# Aprende esto
+# Aprenderás a reutilizar funciones en varios lugares.
+# Verás cómo evitar duplicación.
+# Entenderás el beneficio del diseño modular.
+#
+# Haz esto
+def precio_con_iva(precio, iva):  # Función
+    return precio * (1 + iva)  # Calculamos
+
+producto_a = precio_con_iva(10, 0.21)  # Primer uso
+producto_b = precio_con_iva(20, 0.21)  # Segundo uso
+print(producto_a)  # Mostramos
+print(producto_b)  # Mostramos
+#
+# Verás esto
+# Verás 12.1 y 24.2.
+#
+# Por qué funciona
+# La lógica está en una función reutilizable.
+#
+# Lo típico que sale mal
+# - Repetir el cálculo en lugar de usar la función.
+# - Mezclar unidades sin documentarlas.
+""",
+            ),
+            (
+                "Funciones pequeñas",
+                """# Aprende esto
+# Aprenderás a dividir tareas en funciones pequeñas.
+# Verás una función que calcula y otra que muestra.
+# Entenderás la claridad que aporta.
+#
+# Haz esto
+def calcular_total(precio, cantidad):  # Función de cálculo
+    return precio * cantidad  # Total
+
+
+def mostrar_total(total):  # Función de presentación
+    print(f"Total: {total}")  # Mensaje
+
+
+valor = calcular_total(5, 3)  # Calculamos
+mostrar_total(valor)  # Mostramos
+#
+# Verás esto
+# Verás "Total: 15".
+#
+# Por qué funciona
+# Separar cálculo y presentación mejora la claridad.
+#
+# Lo típico que sale mal
+# - Poner todo en una sola función gigante.
+# - Mezclar print y return sin necesidad.
 """,
             ),
         ]
@@ -345,45 +401,47 @@ print(resultado)  # Mostramos resultado
 saludar("Ana")""",
             },
             {
-                "question": "Crea una función `sumar` que devuelva la suma de dos números.",
-                "hints": ["Usa return.", "Guarda el resultado en una variable."],
+                "question": "Crea una función `sumar` que reciba dos números y devuelva la suma.",
+                "hints": ["Usa return.", "Guarda el resultado al llamar."],
                 "solution": """def sumar(a, b):
     return a + b
 
-resultado = sumar(3, 5)
+resultado = sumar(2, 3)
 print(resultado)""",
             },
             {
-                "question": "Crea una función con parámetro por defecto para saludar.",
-                "hints": ["Define saludo=\"Hola\".", "Permite cambiarlo."] ,
-                "solution": """def saludar(nombre, saludo="Hola"):
-    print(f"{saludo} {nombre}")
+                "question": "Define una función `cuadrado` y muestra el resultado de elevar 5 al cuadrado.",
+                "hints": ["Usa return.", "Llama la función con 5."],
+                "solution": """def cuadrado(n):
+    return n * n
 
-saludar("Luis")
-saludar("Ana", "Buenas")""",
+print(cuadrado(5))""",
             },
             {
-                "question": "Crea una función que calcule el total con impuesto (18%).",
-                "hints": ["Multiplica por 1.18.", "Devuelve el resultado."],
-                "solution": """def total_con_impuesto(total):
-    return total * 1.18
+                "question": "Crea una función con un parámetro por defecto para el prefijo del saludo.",
+                "hints": ["Agrega prefijo=\"Hola\".", "Devuelve el texto."],
+                "solution": """def saludar(nombre, prefijo="Hola"):
+    return f"{prefijo} {nombre}"
 
-print(total_con_impuesto(100))""",
+print(saludar("Ana"))""",
             },
             {
-                "question": "Crea una función que reciba una lista y devuelva su longitud.",
-                "hints": ["Usa len().", "Devuelve el valor."],
-                "solution": """def contar(lista):
-    return len(lista)
+                "question": "Escribe una función `duplicar` que devuelva el doble y guarda el resultado.",
+                "hints": ["No uses print en la función.", "Usa return."],
+                "solution": """def duplicar(n):
+    return n * 2
 
-print(contar([1, 2, 3]))""",
+resultado = duplicar(4)
+print(resultado)""",
             },
             {
-                "question": "Crea una función que devuelva True si un número es par.",
-                "hints": ["Usa el operador %.", "Retorna un booleano."],
-                "solution": """def es_par(numero):
-    return numero % 2 == 0
+                "question": "Crea una función `dividir` que devuelva None si el divisor es 0.",
+                "hints": ["Usa if b == 0.", "Retorna None en ese caso."],
+                "solution": """def dividir(a, b):
+    if b == 0:
+        return None
+    return a / b
 
-print(es_par(4))""",
+print(dividir(10, 0))""",
             },
         ]

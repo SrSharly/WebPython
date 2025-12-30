@@ -10,12 +10,12 @@ class EstructurasDatosLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["listas", "tuplas", "diccionarios", "sets"]
+    TAGS = ["listas", "diccionarios", "colecciones", "datos"]
 
     def summary(self) -> str:
         return (
-            "Aprende a elegir entre listas, tuplas, diccionarios y sets. Entiende qué guardar, "
-            "cómo acceder y por qué cada estructura existe."
+            "Aprende a usar listas y diccionarios desde cero: cómo crear, acceder, agregar elementos y "
+            "evitar errores típicos como IndexError o KeyError."
         )
 
     def guide(self) -> str:
@@ -23,341 +23,359 @@ class EstructurasDatosLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: elegir bien evita código confuso
-En Python, las estructuras de datos te permiten organizar información: una lista guarda elementos en orden, una tupla guarda
-valores fijos, un diccionario relaciona claves con valores y un set guarda elementos únicos sin orden. Elegir la estructura
-correcta no es un detalle menor: define cómo accedes a los datos, cómo los modificas y qué tan fácil es entender tu código.
+## Introducción: guardar colecciones de datos
+Cuando tienes más de un dato relacionado, necesitas una estructura para guardarlos juntos. Las listas guardan elementos
+ordenados; los diccionarios guardan pares clave-valor. Ambos son fundamentales en Python.
 
-Este tutorial parte desde cero: verás qué problema resuelve cada estructura, cómo se crea, cómo se accede a sus datos y cómo
-elegir una u otra según el caso. También aprenderás sobre mutabilidad, duplicados y rendimiento básico sin entrar en temas
-avanzados. La meta es que no adivines: que sepas qué usar y por qué.
+En esta lección aprenderás la sintaxis básica con micro-snippets correctos e incorrectos.
 
-### Buenas prácticas (CalloutBox: best_practice)
-Si necesitas orden, usa listas o tuplas. Si necesitas claves con significado, usa diccionarios. Si necesitas unicidad, usa
-sets. Esa regla simple te ayuda a elegir el 80% del tiempo.
+## Paso 1: listas con []
+Las listas se crean con corchetes y pueden contener varios elementos.
 
-## Paso 1: listas para colecciones ordenadas y mutables
-Una lista es una colección ordenada. Puedes acceder por índice y modificar elementos. Es la estructura más común porque es
-flexible: puedes agregar, quitar y reorganizar. Si tienes una lista de tareas o productos, una lista es la elección natural.
+**Así se escribe**
+```py
+frutas = ["manzana", "pera", "uva"]
+```
 
-Aprenderás a crear listas, a usar índices y a modificar elementos sin perder el orden. También entenderás qué significa que
-sea mutable: los cambios ocurren en el mismo objeto.
+**Error típico (❌)**
+```py
+frutas = ("manzana", "pera", "uva")
+```
 
-## Paso 2: tuplas para grupos fijos
-Una tupla es similar a una lista, pero inmutable. Se usa cuando los datos forman un grupo fijo que no quieres modificar.
-Por ejemplo, coordenadas `(x, y)` o un registro con valores que no deben cambiar en el flujo.
+**Qué significa el error**
+No es un error de Python, pero has creado una tupla, no una lista. Las tuplas no se modifican.
 
-Al ser inmutable, una tupla es más segura para representar datos que no deberían alterarse. También comunica intención: si
-ves una tupla, asumes que sus valores son estables.
+**Cómo se arregla**
+Usa corchetes `[]` cuando necesites una lista mutable.
 
-## Paso 3: diccionarios para relacionar claves y valores
-Un diccionario permite mapear una clave a un valor. Esta es la estructura más útil cuando cada dato tiene un nombre o
-identificador. En vez de recordar que un elemento está en el índice 2, puedes escribir `cliente["nombre"]`.
+## Paso 2: agregar con append
+`append` agrega un elemento al final de la lista.
 
-Aprenderás a crear diccionarios, acceder por clave y actualizar valores. Este patrón es esencial en proyectos reales porque
-te permite trabajar con datos “etiquetados”.
+**Así se escribe**
+```py
+frutas = ["manzana", "pera"]
+frutas.append("uva")
+```
 
-### Nota (CalloutBox: note)
-Una clave de diccionario debe ser inmutable (por ejemplo, un string o una tupla). Las listas no pueden ser claves.
+**Error típico (❌)**
+```py
+frutas = ["manzana", "pera"]
+frutas.append["uva"]
+```
 
-## Paso 4: sets para unicidad y operaciones rápidas
-Un set guarda elementos únicos sin orden. Es ideal para eliminar duplicados o comprobar pertenencia de forma eficiente. Si
-necesitas saber si algo “está o no está”, un set suele ser la mejor opción.
+**Qué significa el error**
+`TypeError` porque `append` es un método y debe llamarse con paréntesis.
 
-Los sets también permiten operaciones como unión e intersección, que son útiles para comparar grupos.
+**Cómo se arregla**
+Usa `frutas.append("uva")` con paréntesis.
 
-## Paso 5: escoger la estructura adecuada
-No todas las estructuras sirven para lo mismo. Si el orden importa, usa lista o tupla. Si necesitas claves con significado,
-usa diccionario. Si solo quieres unicidad, usa set. En la práctica, muchas soluciones combinan estas estructuras. Lo
-importante es que cada elección tenga un motivo claro.
+## Paso 3: indexar elementos
+Accedes a un elemento con índices desde 0.
 
-## Paso 6: mutabilidad y alias en estructuras
-Listas y diccionarios son mutables. Si compartes la misma estructura entre variables, los cambios se reflejan en todas. Las
-estructuras inmutables como tuplas ayudan a prevenir modificaciones accidentales. Esta idea también es clave al pasar datos
-entre funciones.
+**Así se escribe**
+```py
+frutas = ["manzana", "pera"]
+primera = frutas[0]
+```
 
-### Advertencia (CalloutBox: warning)
-Cuando duplicas una lista o un diccionario con `copy()`, solo copias el primer nivel. Si hay estructuras internas, siguen
-compartidas.
+**Error típico (❌)**
+```py
+frutas = ["manzana", "pera"]
+tercera = frutas[2]
+```
 
-## Más allá (nivel pro)
-Elegir bien una estructura es un acto de diseño. Un diccionario puede hacer que tu código sea autoexplicativo; un set puede
-mejorar rendimiento sin cambiar el resultado. Cuando domines las opciones básicas, podrás construir modelos de datos claros
-para tu aplicación.
+**Qué significa el error**
+`IndexError` indica que el índice está fuera de rango.
 
-### Consejos pro
-- Usa tuplas para representar datos que no deben cambiar, como coordenadas o fechas fijas.
-- En diccionarios, define claves consistentes y documentadas; evita claves mágicas.
-- Convierte listas a sets para eliminar duplicados y luego vuelve a lista si necesitas orden.
-- Prefiere listas de diccionarios cuando tengas registros con múltiples campos.
-- Cuando compartas estructuras mutables entre funciones, documenta si se modifican en sitio.
+**Cómo se arregla**
+Usa índices válidos y revisa `len(frutas)`.
+
+## Paso 4: diccionarios con {}
+Los diccionarios guardan pares clave-valor.
+
+**Así se escribe**
+```py
+persona = {"nombre": "Ana", "edad": 30}
+```
+
+**Error típico (❌)**
+```py
+persona = {"nombre", "Ana"}
+```
+
+**Qué significa el error**
+No es un diccionario, es un conjunto (`set`). Falta el `:` entre clave y valor.
+
+**Cómo se arregla**
+Escribe `clave: valor` dentro de `{}`.
+
+## Paso 5: acceder por clave y usar get
+Accede a valores con `diccionario[clave]`. Si la clave no existe, puedes usar `.get()`.
+
+**Así se escribe**
+```py
+persona = {"nombre": "Ana", "edad": 30}
+edad = persona["edad"]
+ciudad = persona.get("ciudad", "Desconocida")
+```
+
+**Error típico (❌)**
+```py
+persona = {"nombre": "Ana"}
+edad = persona["edad"]
+```
+
+**Qué significa el error**
+`KeyError` aparece porque la clave no existe.
+
+**Cómo se arregla**
+Verifica que la clave exista o usa `get` con un valor por defecto.
+
+## Paso 6: resumen para usar estructuras sin errores
+Recuerda: listas con `[]` e índices desde 0; diccionarios con `{}` y claves explícitas. Usa `append` con paréntesis y `get`
+para evitar errores por claves faltantes.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
-                "Usar lista cuando se necesita diccionario",
-                "Si accedes por nombres, un diccionario es más claro que recordar índices.",
+                "Confundir lista con tupla",
+                "`(1, 2)` crea una tupla. Usa `[]` si necesitas modificarla.",
             ),
             (
-                "Olvidar que las listas son mutables",
-                "Modificar una lista compartida afecta a todas las referencias. Haz copias si necesitas aislamiento.",
+                "Olvidar paréntesis en append",
+                "`append` es un método. Sin paréntesis obtienes un error de tipo.",
             ),
             (
-                "Intentar cambiar una tupla",
-                "Las tuplas son inmutables. Si necesitas cambiar valores, usa una lista.",
+                "IndexError por índice fuera de rango",
+                "Acceder a `lista[3]` cuando solo hay 3 elementos falla. Usa `len` para validar.",
             ),
             (
-                "Usar listas como claves en dict",
-                "Las listas no son hashables. Convierte a tupla si necesitas usarla como clave.",
+                "Confundir dict con set",
+                "`{""a"", ""b""}` crea un set. Un diccionario necesita `:`.",
             ),
             (
-                "Asumir orden en un set",
-                "Los sets no garantizan orden. Si lo necesitas, usa una lista y ordena.",
+                "KeyError por clave inexistente",
+                "Si la clave no existe, usar `diccionario[clave]` falla. Usa `.get`.",
             ),
             (
-                "Duplicar listas con *",
-                "`[[0]] * 3` crea referencias repetidas. Modificar una afecta a todas.",
+                "Modificar una lista mientras iteras",
+                "Puedes saltarte elementos. Crea una copia si necesitas modificar.",
             ),
             (
-                "No validar claves inexistentes",
-                "Acceder a una clave que no existe genera error. Usa `.get()` si no estás seguro.",
+                "Usar índices negativos sin querer",
+                "`lista[-1]` da el último elemento. Asegúrate de querer ese comportamiento.",
             ),
             (
-                "Confundir append con extend",
-                "append agrega un elemento; extend agrega varios. Usarlos mal produce listas anidadas.",
+                "Asumir orden en diccionarios antiguos",
+                "En versiones muy antiguas el orden no estaba garantizado. Evita depender de él.",
             ),
             (
-                "No entender la diferencia entre lista y tupla",
-                "Las tuplas son para datos fijos; las listas para datos que cambian.",
+                "Guardar tipos mezclados sin intención",
+                "Mezclar int y str en una lista sin motivo puede complicar el procesamiento.",
             ),
             (
-                "Modificar dict mientras iteras",
-                "Cambiar un diccionario durante un bucle puede causar errores. Crea una copia si necesitas hacerlo.",
+                "No manejar listas vacías",
+                "Acceder a índice 0 en una lista vacía siempre falla.",
             ),
             (
-                "Perder unicidad al usar listas",
-                "Si el dato no debe repetirse, usa set para evitar duplicados.",
+                "Reutilizar claves en dict",
+                "Si repites una clave, se sobrescribe el valor anterior.",
             ),
             (
-                "No copiar estructuras anidadas",
-                "`copy()` no duplica estructuras internas. Cambios profundos pueden propagarse sin querer.",
+                "Confundir copy con copia profunda",
+                "`copy()` en listas solo copia el primer nivel.",
+            ),
+            (
+                "No usar get con valor por defecto",
+                "Si esperas una clave opcional, usa `.get(""clave"", valor)`.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "Crear y usar listas",
+                "Crear una lista",
                 """# Aprende esto
-# Aprenderás a crear listas y acceder por índice.
-# Verás cómo modificar un elemento.
-# Entenderás que la lista mantiene el orden.
+# Aprenderás a crear una lista con corchetes.
+# Verás varios elementos en orden.
+# Entenderás cómo se guarda la colección.
 #
 # Haz esto
-tareas = ["comprar", "leer", "estudiar"]  # Lista inicial
-primera = tareas[0]  # Tomamos el primer elemento
-print(primera)  # Mostramos el primer elemento
-tareas[1] = "descansar"  # Modificamos el segundo elemento
-print(tareas)  # Mostramos la lista actualizada
-cantidad = len(tareas)  # Contamos elementos
-print(cantidad)  # Mostramos la cantidad
+frutas = ["manzana", "pera", "uva"]  # Lista de frutas
+print(frutas)  # Mostramos la lista
 #
 # Verás esto
-# Verás el primer elemento y la lista modificada.
+# Verás ['manzana', 'pera', 'uva'].
 #
 # Por qué funciona
-# Las listas guardan orden y permiten acceso por índice.
+# Los corchetes definen una lista mutable.
 #
 # Lo típico que sale mal
-# - Usar un índice fuera del rango.
+# - Usar paréntesis y crear una tupla.
+# - Olvidar las comas entre elementos.
+""",
+            ),
+            (
+                "Append en listas",
+                """# Aprende esto
+# Aprenderás a añadir elementos con append.
+# Verás cómo crece la lista.
+# Entenderás que append modifica en sitio.
+#
+# Haz esto
+frutas = ["manzana", "pera"]  # Lista inicial
+frutas.append("uva")  # Agregamos una fruta
+print(frutas)  # Mostramos la lista
+#
+# Verás esto
+# Verás ['manzana', 'pera', 'uva'].
+#
+# Por qué funciona
+# append agrega al final sin crear otra lista.
+#
+# Lo típico que sale mal
+# - Escribir append con corchetes.
+# - Esperar que append devuelva una lista nueva.
+""",
+            ),
+            (
+                "Acceso por índice",
+                """# Aprende esto
+# Aprenderás a acceder a elementos por índice.
+# Verás que el índice empieza en 0.
+# Entenderás el uso de len.
+#
+# Haz esto
+frutas = ["manzana", "pera", "uva"]  # Lista
+primera = frutas[0]  # Primer elemento
+ultima = frutas[-1]  # Último elemento
+print(primera)  # Mostramos
+print(ultima)  # Mostramos
+#
+# Verás esto
+# Verás "manzana" y "uva".
+#
+# Por qué funciona
+# Los índices positivos y negativos apuntan a posiciones válidas.
+#
+# Lo típico que sale mal
+# - Usar un índice fuera de rango.
 # - Olvidar que el índice empieza en 0.
 """,
             ),
             (
-                "Tuplas para datos fijos",
+                "Modificar una lista",
                 """# Aprende esto
-# Aprenderás a usar tuplas para valores fijos.
-# Verás cómo acceder a sus posiciones.
-# Entenderás que no se pueden modificar.
+# Aprenderás a reemplazar un elemento.
+# Verás cómo cambia la lista en sitio.
+# Entenderás la mutabilidad.
 #
 # Haz esto
-coordenada = (10, 20)  # Tupla con dos valores
-x = coordenada[0]  # Extraemos x
-y = coordenada[1]  # Extraemos y
-print(x)  # Mostramos x
-print(y)  # Mostramos y
-etiqueta = f"({x}, {y})"  # Construimos una etiqueta
-print(etiqueta)  # Mostramos la etiqueta
+frutas = ["manzana", "pera", "uva"]  # Lista
+frutas[1] = "kiwi"  # Reemplazamos
+print(frutas)  # Mostramos
 #
 # Verás esto
-# Verás 10, 20 y "(10, 20)".
+# Verás ['manzana', 'kiwi', 'uva'].
 #
 # Por qué funciona
-# Las tuplas son ordenadas e inmutables.
+# Las listas son mutables y admiten asignación por índice.
 #
 # Lo típico que sale mal
-# - Intentar cambiar una tupla.
-# - Tratarla como lista mutable.
+# - Usar un índice fuera de rango.
+# - Esperar que las tuplas permitan esto.
 """,
             ),
             (
-                "Diccionarios con claves",
+                "Crear un diccionario",
                 """# Aprende esto
-# Aprenderás a crear diccionarios con claves.
-# Verás cómo acceder y actualizar valores.
-# Entenderás que las claves dan significado.
+# Aprenderás a crear un diccionario con claves.
+# Verás pares clave-valor.
+# Entenderás la sintaxis con :.
 #
 # Haz esto
-cliente = {"nombre": "Ana", "edad": 30}  # Diccionario base
-nombre = cliente["nombre"]  # Accedemos por clave
-print(nombre)  # Mostramos el nombre
-cliente["edad"] = 31  # Actualizamos la edad
-print(cliente)  # Mostramos el diccionario
-existe = "email" in cliente  # Verificamos una clave
-print(existe)  # Mostramos el resultado
+persona = {"nombre": "Ana", "edad": 30}  # Diccionario
+print(persona)  # Mostramos
 #
 # Verás esto
-# Verás el nombre, el diccionario actualizado y False.
+# Verás {'nombre': 'Ana', 'edad': 30}.
 #
 # Por qué funciona
-# Las claves permiten acceso directo a cada valor.
+# Cada clave tiene asociado un valor.
 #
 # Lo típico que sale mal
-# - Usar claves inconsistentes.
-# - Acceder a una clave que no existe.
+# - Olvidar el : y crear un set.
+# - Repetir claves y sobrescribir valores.
 """,
             ),
             (
-                "Diccionarios con get",
+                "Acceso por clave",
                 """# Aprende esto
-# Aprenderás a usar get para evitar errores.
-# Verás cómo definir un valor por defecto.
-# Entenderás cuándo usarlo.
+# Aprenderás a leer valores por clave.
+# Verás cómo usar un diccionario real.
+# Entenderás la lectura directa.
 #
 # Haz esto
-producto = {"nombre": "Pan", "precio": 2.5}  # Diccionario base
-categoria = producto.get("categoria", "sin categoría")  # Valor por defecto
-print(categoria)  # Mostramos la categoría
-precio = producto.get("precio", 0)  # Obtenemos precio
-print(precio)  # Mostramos el precio
-mensaje = f"{producto['nombre']} cuesta {precio}"  # Mensaje final
-print(mensaje)  # Mostramos el mensaje
+persona = {"nombre": "Ana", "edad": 30}  # Diccionario
+nombre = persona["nombre"]  # Accedemos a la clave
+print(nombre)  # Mostramos
 #
 # Verás esto
-# Verás "sin categoría", 2.5 y el mensaje final.
+# Verás "Ana".
 #
 # Por qué funciona
-# get devuelve un valor por defecto si falta la clave.
+# La clave existe y devuelve su valor asociado.
 #
 # Lo típico que sale mal
-# - Usar [] cuando no estás seguro de la clave.
-# - Olvidar definir el valor por defecto.
+# - Usar una clave inexistente y tener KeyError.
+# - Usar el nombre de la clave sin comillas.
 """,
             ),
             (
-                "Sets para unicidad",
+                "Acceso seguro con get",
                 """# Aprende esto
-# Aprenderás a crear sets para eliminar duplicados.
-# Verás cómo comprobar pertenencia.
-# Entenderás que no hay orden.
+# Aprenderás a evitar KeyError con get.
+# Verás un valor por defecto.
+# Entenderás la seguridad del acceso.
 #
 # Haz esto
-etiquetas = {"python", "datos", "python"}  # Set con duplicados
-print(etiquetas)  # Mostramos el set sin duplicados
-existe = "python" in etiquetas  # Comprobamos pertenencia
-print(existe)  # Mostramos el resultado
-etiquetas.add("bases")  # Agregamos una etiqueta
-print(etiquetas)  # Mostramos el set actualizado
+persona = {"nombre": "Ana", "edad": 30}  # Diccionario
+ciudad = persona.get("ciudad", "Desconocida")  # Valor seguro
+print(ciudad)  # Mostramos
 #
 # Verás esto
-# Verás un set sin duplicados y el resultado True.
+# Verás "Desconocida".
 #
 # Por qué funciona
-# Los sets guardan elementos únicos.
+# get devuelve un valor por defecto si la clave falta.
 #
 # Lo típico que sale mal
-# - Esperar que mantenga el orden de inserción.
-# - Usar listas dentro de un set.
+# - Usar persona["ciudad"] y lanzar KeyError.
+# - Olvidar el valor por defecto.
 """,
             ),
             (
-                "Operaciones con sets",
+                "Recorrer un diccionario",
                 """# Aprende esto
-# Aprenderás a hacer unión e intersección.
-# Verás cómo comparar grupos.
-# Entenderás la utilidad práctica.
+# Aprenderás a recorrer claves y valores.
+# Verás cómo imprimirlos juntos.
+# Entenderás items().
 #
 # Haz esto
-grupo_a = {"ana", "luis", "maria"}  # Primer grupo
-grupo_b = {"maria", "pablo"}  # Segundo grupo
-union = grupo_a | grupo_b  # Unión de grupos
-interseccion = grupo_a & grupo_b  # Intersección
-print(union)  # Mostramos la unión
-print(interseccion)  # Mostramos la intersección
+persona = {"nombre": "Ana", "edad": 30}  # Diccionario
+for clave, valor in persona.items():  # Recorremos pares
+    print(clave, valor)  # Mostramos
 #
 # Verás esto
-# Verás todos los nombres y luego solo los comunes.
+# Verás "nombre Ana" y "edad 30".
 #
 # Por qué funciona
-# | y & aplican operaciones de conjunto.
+# items() devuelve pares clave-valor.
 #
 # Lo típico que sale mal
-# - Intentar usar + con sets.
-# - Olvidar que el orden no existe.
-""",
-            ),
-            (
-                "Combinar estructuras",
-                """# Aprende esto
-# Aprenderás a usar listas de diccionarios.
-# Verás cómo acceder a datos por clave.
-# Entenderás la utilidad en registros.
-#
-# Haz esto
-usuarios = [
-    {"nombre": "Ana", "rol": "admin"},  # Primer usuario
-    {"nombre": "Luis", "rol": "viewer"},  # Segundo usuario
-]  # Lista de diccionarios
-primer_rol = usuarios[0]["rol"]  # Accedemos al rol del primero
-print(primer_rol)  # Mostramos el rol
-usuarios[1]["rol"] = "editor"  # Actualizamos rol
-print(usuarios)  # Mostramos la lista actualizada
-#
-# Verás esto
-# Verás "admin" y luego la lista con el rol actualizado.
-#
-# Por qué funciona
-# Combinamos orden de lista con claves de diccionario.
-#
-# Lo típico que sale mal
-# - Olvidar el índice correcto.
-# - Cambiar la estructura y romper accesos.
-""",
-            ),
-            (
-                "Copias superficiales",
-                """# Aprende esto
-# Aprenderás qué es una copia superficial.
-# Verás cómo afecta a estructuras anidadas.
-# Entenderás cuándo necesitas otra estrategia.
-#
-# Haz esto
-original = [[1, 2], [3, 4]]  # Lista anidada
-copia = original.copy()  # Copia superficial
-copia[0].append(99)  # Modificamos la lista interna
-print(original)  # Mostramos original
-print(copia)  # Mostramos copia
-#
-# Verás esto
-# Verás que ambas listas cambian.
-#
-# Por qué funciona
-# copy() no duplica las listas internas.
-#
-# Lo típico que sale mal
-# - Creer que copy() es profundo.
-# - No planear cómo aislar cambios.
+# - Iterar solo claves y olvidar los valores.
+# - Modificar el diccionario mientras iteras.
 """,
             ),
         ]
@@ -365,46 +383,43 @@ print(copia)  # Mostramos copia
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Crea una lista de 3 colores y muestra el segundo.",
-                "hints": ["Usa índice 1 para el segundo elemento."],
+                "question": "Crea una lista con tres números y muestra el primero.",
+                "hints": ["Usa corchetes.", "El primer índice es 0."],
+                "solution": """numeros = [1, 2, 3]
+print(numeros[0])""",
+            },
+            {
+                "question": "Agrega un elemento al final de una lista usando append().",
+                "hints": ["append lleva paréntesis.", "Modifica la lista en sitio."],
+                "solution": """frutas = ["manzana", "pera"]
+frutas.append("uva")
+print(frutas)""",
+            },
+            {
+                "question": "Reemplaza el segundo elemento de una lista por otro valor.",
+                "hints": ["Usa índice 1.", "Asigna con =."],
                 "solution": """colores = ["rojo", "verde", "azul"]
-print(colores[1])""",
+colores[1] = "negro"
+print(colores)""",
             },
             {
-                "question": "Crea una tupla con (ciudad, país) y muestra ambos valores.",
-                "hints": ["Accede con índices 0 y 1."],
-                "solution": """ubicacion = ("Lima", "Perú")
-print(ubicacion[0])
-print(ubicacion[1])""",
-            },
-            {
-                "question": "Crea un diccionario con `nombre` y `edad` y actualiza la edad.",
-                "hints": ["Asigna un nuevo valor a la clave `edad`."],
+                "question": "Crea un diccionario con nombre y edad, luego imprime la edad.",
+                "hints": ["Usa clave: valor.", "Accede con diccionario[\"edad\"]."],
                 "solution": """persona = {"nombre": "Ana", "edad": 30}
-persona["edad"] = 31
-print(persona)""",
+print(persona["edad"])""",
             },
             {
-                "question": "Usa un set para eliminar duplicados de una lista de números.",
-                "hints": ["Convierte la lista a set.", "Luego imprime el set."],
-                "solution": """numeros = [1, 2, 2, 3]
-unicos = set(numeros)
-print(unicos)""",
+                "question": "Accede a una clave que puede faltar usando get con valor por defecto.",
+                "hints": ["Usa .get(\"clave\", \"valor\").", "Imprime el resultado."],
+                "solution": """persona = {"nombre": "Ana"}
+ciudad = persona.get("ciudad", "Desconocida")
+print(ciudad)""",
             },
             {
-                "question": "Crea una lista de diccionarios con dos productos y muestra el nombre del primero.",
-                "hints": ["Accede con [0][""nombre""]"],
-                "solution": """productos = [
-    {"nombre": "Pan", "precio": 2},
-    {"nombre": "Leche", "precio": 3},
-]
-print(productos[0]["nombre"])""",
-            },
-            {
-                "question": "Crea un diccionario y usa get para una clave que no existe.",
-                "hints": ["Pasa un valor por defecto a get."],
-                "solution": """datos = {"a": 1}
-valor = datos.get("b", 0)
-print(valor)""",
+                "question": "Recorre un diccionario y muestra clave y valor en cada línea.",
+                "hints": ["Usa items().", "Desempaqueta clave y valor."],
+                "solution": """persona = {"nombre": "Ana", "edad": 30}
+for clave, valor in persona.items():
+    print(clave, valor)""",
             },
         ]

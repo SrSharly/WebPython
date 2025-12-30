@@ -162,7 +162,7 @@ print("Hola", nombre)
 ### Error típico: asumir que input devuelve número
 ```py
 edad = input("Edad: ")
-edad_en_10 = edad + 10
+edad_en_10 = edad + 10  # TypeError: sumar str con int
 ```
 
 ```py
@@ -183,7 +183,7 @@ frutas.append("uva")
 **Error típico (❌)**
 ```py
 texto = "hola"
-texto.upper()
+texto.upper()  # Error lógico: no reasignas resultado
 ```
 
 **Qué significa el error**
@@ -196,6 +196,11 @@ Guarda el resultado: `texto = texto.upper()`.
 Antes de operar, confirma el tipo cuando los datos vienen de usuarios, archivos o APIs. `isinstance()` te evita suposiciones
 y reduce errores de conversión.
 
+**Qué es y para qué sirve**
+- Es una función incorporada que valida tipos en tiempo de ejecución.
+- Devuelve `True` o `False` según el tipo recibido.
+- Sintaxis: `isinstance(objeto, tipo_o_tuple_de_tipos) -> bool`
+
 **Así se escribe**
 ```py
 valor = "12"
@@ -206,7 +211,7 @@ if isinstance(valor, str):
 **Error típico (❌)**
 ```py
 valor = "12"
-if isinstance(valor, "str"):
+if isinstance(valor, "str"):  # TypeError: segundo argumento no es tipo
     numero = int(valor)
 ```
 

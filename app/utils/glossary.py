@@ -4480,6 +4480,8 @@ def register_auto_terms(auto_terms: dict[str, dict[str, object]]) -> None:
             GLOSSARY[term] = data
     for term, data in auto_terms.items():
         TERMS.setdefault(term, definition_text(GLOSSARY[term]))
+    KEYWORDS.clear()
+    KEYWORDS.extend(GLOSSARY.keys())
 
 
 TERMS = {term: definition_text(data) for term, data in GLOSSARY.items()}

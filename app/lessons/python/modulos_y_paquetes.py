@@ -31,17 +31,19 @@ mantener el proyecto claro.
 
 ## Paso 1: qué es un módulo
 Un módulo es un archivo `.py` con funciones, clases o constantes reutilizables.
+`math` es un módulo estándar y se importa con `import modulo`.
+Luego accedes con punto: `modulo.funcion()`. Por ejemplo, `math.sqrt` llama a la función `sqrt` dentro de `math`.
 
 **Micro-ejemplo correcto**
 ```py
-import math
+import math  # Importa el módulo estándar math
 
-resultado = math.sqrt(9)
+resultado = math.sqrt(9)  # Llama a sqrt() dentro del módulo math
 ```
 
 **Micro-ejemplo incorrecto**
 ```py
-resultado = math.sqrt(9)
+resultado = math.sqrt(9)  # NameError: falta importar math
 ```
 
 **Error real**
@@ -64,7 +66,7 @@ from .utilidades import limpiar_texto
 
 **Micro-ejemplo incorrecto**
 ```py
-from mi_paquete import limpiar_texto
+from mi_paquete import limpiar_texto  # ModuleNotFoundError: paquete no encontrado
 ```
 
 **Error real**
@@ -87,7 +89,7 @@ print(sqrt(16))
 
 **Micro-ejemplo incorrecto**
 ```py
-from math import squareroot
+from math import squareroot  # ImportError: nombre no existe
 ```
 
 **Error real**
@@ -112,7 +114,7 @@ print(m.sqrt(9))
 ```py
 import math as m
 
-print(math.pi)
+print(math.pi)  # NameError: usar alias m
 ```
 
 **Error real**
@@ -155,7 +157,7 @@ principal. Así `main.py` importa desde el paquete sin conocer la estructura int
 ### 5) Lo típico que sale mal
 1) Ejecutar desde una carpeta distinta:
 ```py
-from mi_app import total_con_impuesto
+from mi_app import total_con_impuesto  # ModuleNotFoundError: ruta incorrecta
 ```
 ```py
 ModuleNotFoundError: No module named 'mi_app'

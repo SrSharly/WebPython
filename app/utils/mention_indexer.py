@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 import builtins
 import re
 from typing import Iterable
+from urllib.parse import unquote
 
 from app.lesson_base import Lesson
 from app.utils.library_catalog import LIBRARIES
@@ -126,6 +127,8 @@ _ATTR_RE = re.compile(
     r"(?P<object>(?:\"[^\"]*\"|'[^']*'|\[[^\]]*\]|\{[^\}]*\}|\b[A-Za-z_]\w*\b))\.(?P<name>[A-Za-z_]\w*)\b(?!\s*\()"
 )
 _FUNC_CALL_RE = re.compile(r"(?<!\.)\b([A-Za-z_]\w*)\s*\(")
+_TIP_ANCHOR_RE = re.compile(r"tip:([A-Za-z0-9:_\.\-%]+)")
+_KW_MARK_RE = re.compile(r"class\s*=\s*[\"'][^\"']*\bkw\b[^\"']*[\"'][^>]*>([^<]+)")
 
 _BUILTIN_FUNCTIONS = {
     name.lower()
@@ -215,6 +218,32 @@ def _detect_lesson_types(lesson: Lesson) -> set[str]:
 
 def _extract_mentions_from_text(text: str, terms: dict[MentionKey, MentionedTerm]) -> set[MentionKey]:
     found: set[MentionKey] = set()
+    for match in _TIP_ANCHOR_RE.finditer(text):
+        term_id = unquote(match.group(1)).strip().lower()
+        if term_id:
+            key = _add_term(
+                terms,
+                kind="explicit",
+                namespace="manual",
+                owner=None,
+                name=term_id,
+                aliases={term_id},
+            )
+            found.add(key)
+
+    for match in _KW_MARK_RE.finditer(text):
+        term_text = match.group(1).strip()
+        if term_text:
+            term_id = term_text.lower()
+            key = _add_term(
+                terms,
+                kind="explicit",
+                namespace="manual",
+                owner=None,
+                name=term_id,
+                aliases={term_text, term_id},
+            )
+            found.add(key)
     for match in _LIB_CALL_RE.finditer(text):
         prefix = match.group("prefix")
         if prefix not in _LIB_ALIAS_MAP:
@@ -396,6 +425,8 @@ def resolve_mention_index(glossary: dict[str, dict[str, object]]) -> ResolvedMen
     def build_term_id(key: MentionKey) -> str:
         if key.name in glossary:
             return key.name
+        if key.kind == "explicit":
+            return key.name
         if key.kind == "method":
             owner = key.owner or "unknown"
             return f"method:{owner}.{key.name}"
@@ -423,15 +454,13 @@ def resolve_mention_index(glossary: dict[str, dict[str, object]]) -> ResolvedMen
         }
         if term_id not in glossary:
             auto_terms[term_id] = {
-                "tooltip": (
-                    "Término mencionado en las lecciones. Abre el panel para ver su explicación."
-                ),
+                "tooltip": "Término detectado en las lecciones. Abre para ver detalles.",
                 "definition_parts": {
                     "que_es": "Pendiente de documentar.",
-                    "para_que": "Pendiente de documentar.",
                     "sintaxis": "Pendiente de documentar.",
                     "ejemplo": "Pendiente de documentar.",
                     "error_tipico": "Pendiente de documentar.",
+                    "ver_tambien": "Pendiente de documentar.",
                 },
             }
 

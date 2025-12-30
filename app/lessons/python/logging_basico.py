@@ -171,6 +171,32 @@ logger.inf("mensaje")
 AttributeError: 'Logger' object has no attribute 'inf'
 ```
 
+## logger.exception: úsalo dentro de except
+`logger.exception` incluye el traceback **solo** cuando hay una excepción activa.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+try:
+    1 / 0
+except ZeroDivisionError:
+    logger.exception("Falló la división")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.exception("fallo")
+```
+
+Error real:
+```py
+NameError: name 'logger' is not defined
+```
+
+Cómo se arregla: crea el logger y úsalo dentro de un bloque `except`.
+
 ## Nota preventiva: basicConfig solo aplica una vez
 Si llamas `logging.basicConfig(...)` varias veces, solo la primera tiene efecto.
 Si necesitas reconfigurar, hazlo en un punto central del programa.

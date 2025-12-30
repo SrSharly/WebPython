@@ -159,6 +159,53 @@ FileNotFoundError: [Errno 2] No such file or directory: 'config/app.ini'
 
 **Cómo se corrige:** valida con `exists()` o crea el archivo con `write_text()`.
 
+## Paso 5: crear archivos sin sobrescribir (modo "x")
+**Aprende esto:** el modo `"x"` crea el archivo y falla si ya existe, evitando pérdida de datos.
+
+**Micro-ejemplo correcto**
+```py
+with open("reportes/enero.txt", "x", encoding="utf-8") as archivo:
+    archivo.write("Reporte creado\n")
+```
+
+**Micro-ejemplo incorrecto**
+```py
+with open("reportes/enero.txt", "x", encoding="utf-8") as archivo:
+    archivo.write("Intento duplicado\n")
+```
+
+**Error real**
+```
+FileExistsError: [Errno 17] File exists: 'reportes/enero.txt'
+```
+
+**Cómo se corrige:** usa `"a"` si quieres agregar o elimina el archivo previo si necesitas regenerarlo.
+
+## Paso 6: leer línea por línea sin cargar todo
+**Aprende esto:** iterar el archivo evita cargarlo completo en memoria.
+
+**Micro-ejemplo correcto**
+```py
+with open("logs/app.log", "r", encoding="utf-8") as archivo:
+    for linea in archivo:
+        print(linea.strip())
+```
+
+**Micro-ejemplo incorrecto**
+```py
+with open("logs/app.log", "r", encoding="utf-8") as archivo:
+    pass
+
+archivo.read()
+```
+
+**Error real**
+```
+ValueError: I/O operation on closed file.
+```
+
+**Cómo se corrige:** realiza la lectura dentro del bloque `with`.
+
 ## Ejemplo ampliado con contexto: copiar y limpiar texto
 **Aprende esto:** leer línea por línea y guardar solo lo útil.
 
@@ -197,9 +244,11 @@ Solución: convierte la lista a texto con `"\n".join(limpias)`.
 ## Checklist final
 - ¿Usaste `with` para cerrar el archivo automáticamente?
 - ¿Elegiste el modo correcto (`r`, `w`, `a`)?
+- ¿Necesitabas `"x"` para evitar sobrescribir un archivo existente?
 - ¿Construiste rutas con `Path`?
 - ¿Validaste existencia con `exists()`?
 - ¿Definiste `encoding="utf-8"` para evitar caracteres raros?
+- ¿Leíste por líneas si el archivo es grande?
 
 """.strip()
 
@@ -220,6 +269,10 @@ Solución: convierte la lista a texto con `"\n".join(limpias)`.
             (
                 "Leer sin comprobar existencia",
                 "Valida con exists() para evitar FileNotFoundError.",
+            ),
+            (
+                "Leer fuera del bloque with",
+                "El archivo ya está cerrado; mueve la lectura dentro del with.",
             ),
         ]
 
@@ -251,6 +304,11 @@ ruta.write_text("Reporte listo\n", encoding="utf-8")""",
 
 ruta = Path("config.ini")
 print(ruta.exists())""",
+            ),
+            (
+                "Crear un archivo solo si no existe",
+                """with open("reporte.txt", "x", encoding="utf-8") as archivo:
+    archivo.write("Reporte inicial\\n")""",
             ),
         ]
 

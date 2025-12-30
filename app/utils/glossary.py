@@ -2271,6 +2271,62 @@ GLOSSARY = {
             ),
         },
     },
+    "json": {
+        "tooltip": "Formato de texto para intercambio de datos estructurados.",
+        "definition_parts": {
+            "que_es": (
+                "JSON (JavaScript Object Notation) es un formato de texto para "
+                "representar objetos y listas con comillas dobles."
+            ),
+            "para_que": (
+                "Enviar datos entre APIs, guardar configuraciones y serializar "
+                "estructuras simples."
+            ),
+            "sintaxis": "import json",
+            "ejemplo": "json.dumps({'ok': True}) produce un string JSON.",
+            "matiz": "No acepta sets ni comentarios; todo debe ser JSON válido.",
+        },
+    },
+    "json.dumps": {
+        "tooltip": "Función que convierte objetos Python a texto JSON.",
+        "definition_parts": {
+            "que_es": "Serializa dicts/listas a un string JSON.",
+            "para_que": "Enviar datos por red o guardar JSON como texto.",
+            "sintaxis": "texto = json.dumps(datos, indent=2)",
+            "ejemplo": "json.dumps({'a': 1}) -> '{\"a\": 1}'",
+            "matiz": "Solo acepta tipos JSON válidos (dict, list, str, int, float, bool, None).",
+        },
+    },
+    "json.loads": {
+        "tooltip": "Función que convierte texto JSON a objetos Python.",
+        "definition_parts": {
+            "que_es": "Convierte un string JSON en dicts/listas de Python.",
+            "para_que": "Leer JSON recibido desde archivos o APIs.",
+            "sintaxis": "datos = json.loads(texto)",
+            "ejemplo": "json.loads('{\"a\": 1}') -> {'a': 1}",
+            "matiz": "Lanza JSONDecodeError si el texto no es JSON válido.",
+        },
+    },
+    "json.dump": {
+        "tooltip": "Función que escribe JSON en un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Serializa datos y los escribe directo en un archivo.",
+            "para_que": "Guardar JSON sin llamar a write() manualmente.",
+            "sintaxis": "json.dump(datos, archivo, indent=2)",
+            "ejemplo": "json.dump({'ok': True}, archivo)",
+            "matiz": "El archivo debe estar abierto en modo escritura.",
+        },
+    },
+    "json.load": {
+        "tooltip": "Función que lee JSON desde un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Lee un archivo y devuelve los datos como dict/list.",
+            "para_que": "Cargar JSON directo desde archivos.",
+            "sintaxis": "datos = json.load(archivo)",
+            "ejemplo": "with open('data.json') as f: datos = json.load(f)",
+            "matiz": "El archivo debe estar abierto en modo lectura.",
+        },
+    },
     "kernel": {
         "tooltip": "Proceso que ejecuta el código en un notebook.",
         "definition_parts": {

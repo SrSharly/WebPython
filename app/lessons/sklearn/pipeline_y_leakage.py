@@ -37,6 +37,32 @@ class PipelineLeakageLesson(Lesson):
 Nota rápida: si necesitas repasar `fit`, `predict`, `transform` o `fit_transform`, ver "Pipelines + ColumnTransformer" →
 "Operaciones y métodos más útiles".
 
+## Micro-ejemplo: split con tamaños compatibles
+
+### Así se escribe
+```py
+from sklearn.model_selection import train_test_split
+
+X = [[1], [2], [3]]
+y = [0, 1, 0]
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+```
+
+### Error típico: longitudes distintas al dividir
+```py
+from sklearn.model_selection import train_test_split
+
+X = [[1], [2], [3]]
+y = [0, 1]
+train_test_split(X, y)
+```
+
+```py
+ValueError: Found input variables with inconsistent numbers of samples: [3, 2]
+```
+
+Explicación breve: X e y deben tener la misma cantidad de filas antes de dividir.
+
 
 ## Micro-ejemplo incremental: entrenamiento y validación
 

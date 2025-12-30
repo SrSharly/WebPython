@@ -135,6 +135,31 @@ Verás esto: permite NA en enteros.
 Por qué funciona: tipos extendidos aceptan NA.  
 Lo típico que sale mal: perder NA con int nativo; tipos incompatibles.
 
+## Micro-ejemplo: validar faltantes por columna
+
+### Así se escribe
+```py
+import pandas as pd
+
+df = pd.DataFrame({"producto": ["A", "B"], "precio": [10, None]})
+faltantes = df["precio"].isna()
+print(faltantes)
+```
+
+### Error típico: usar una columna equivocada
+```py
+import pandas as pd
+
+df = pd.DataFrame({"producto": ["A", "B"], "precio": [10, None]})
+faltantes = df["coste"].isna()
+```
+
+```py
+KeyError: 'coste'
+```
+
+Explicación breve: la columna debe existir antes de evaluar faltantes.
+
 
 ## Micro-ejemplo incremental: DataFrame en contexto
 

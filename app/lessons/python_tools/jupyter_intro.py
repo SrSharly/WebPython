@@ -682,6 +682,25 @@ Verás esto: columna en tipo `int`.
 Por qué funciona: `astype` convierte dtype.  
 Lo típico que sale mal: usar dtype inválido; convertir con valores no compatibles.
 
+## Micro-ejemplo: orden de ejecución de celdas
+
+### Así se escribe
+```py
+total = 10
+resultado = total + 5
+```
+
+### Error típico: usar una variable antes de definirla
+```py
+resultado = total + 5
+```
+
+```py
+NameError: name 'total' is not defined
+```
+
+Explicación breve: en Jupyter el orden de ejecución importa; corre la celda donde defines `total`.
+
 ## Micro-ejemplo incremental: celdas y comandos en Jupyter
 
 ### Así se escribe

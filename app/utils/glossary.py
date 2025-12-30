@@ -237,6 +237,62 @@ GLOSSARY = {
             "error_tipico": "comparar floats con == por problemas de precisión.",
         },
     },
+    "print": {
+        "tooltip": "Función que muestra valores en la salida estándar.",
+        "definition_parts": {
+            "que_es": "Función incorporada que imprime texto o valores en pantalla.",
+            "para_que": (
+                "Depurar, mostrar resultados o comunicar estados al usuario."
+            ),
+            "sintaxis": "print(valor1, valor2)",
+            "ejemplo": "print('Hola', 42).",
+            "matiz": "Acepta varios argumentos y agrega un salto de línea al final.",
+        },
+    },
+    "input": {
+        "tooltip": "Función que lee texto desde la entrada estándar.",
+        "definition_parts": {
+            "que_es": "Función incorporada que solicita datos al usuario.",
+            "para_que": "Recibir texto escrito por el usuario en consola.",
+            "sintaxis": "texto = input('Pregunta: ')",
+            "ejemplo": "nombre = input('Nombre: ').",
+            "matiz": "Siempre devuelve un `str`, incluso si el usuario escribe números.",
+        },
+    },
+    "len": {
+        "tooltip": "Función que devuelve la longitud de una colección.",
+        "definition_parts": {
+            "que_es": "Función incorporada que cuenta elementos en una colección.",
+            "para_que": "Saber el tamaño de listas, strings, tuplas u otras colecciones.",
+            "sintaxis": "cantidad = len(coleccion)",
+            "ejemplo": "len([1, 2, 3]) devuelve 3.",
+            "matiz": "No modifica la colección; solo devuelve un número.",
+        },
+    },
+    "range": {
+        "tooltip": "Función que genera una secuencia de enteros.",
+        "definition_parts": {
+            "que_es": (
+                "Función incorporada que crea una secuencia iterable de números."
+            ),
+            "para_que": "Iterar un número de veces en bucles for.",
+            "sintaxis": "range(inicio, fin, paso)",
+            "ejemplo": "for i in range(3): ...",
+            "matiz": "El valor de fin no se incluye.",
+        },
+    },
+    "open": {
+        "tooltip": "Función que abre archivos y devuelve un manejador.",
+        "definition_parts": {
+            "que_es": (
+                "Función incorporada que abre un archivo en un modo específico."
+            ),
+            "para_que": "Leer o escribir archivos en disco.",
+            "sintaxis": "archivo = open('ruta.txt', 'r')",
+            "ejemplo": "with open('datos.txt') as f: ...",
+            "matiz": "Usa `with` para asegurar el cierre automático.",
+        },
+    },
     "str": {
         "tooltip": "Tipo de texto (cadena de caracteres).",
         "definition_parts": {

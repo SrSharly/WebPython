@@ -371,6 +371,34 @@ SQLite maneja transacciones automáticamente con `with`, pero puedes controlarla
 - Agrega tests para tu capa de datos.
 - Aprende a migrar el esquema sin perder datos.
 
+## Micro-ejemplo: placeholders y parámetros
+
+### Así se escribe
+```py
+import sqlite3
+
+conexion = sqlite3.connect(":memory:")
+cursor = conexion.cursor()
+cursor.execute("CREATE TABLE productos (id INTEGER, nombre TEXT)")
+cursor.execute("INSERT INTO productos VALUES (?, ?)", (1, "Teclado"))
+```
+
+### Error típico: número de parámetros incorrecto
+```py
+import sqlite3
+
+conexion = sqlite3.connect(":memory:")
+cursor = conexion.cursor()
+cursor.execute("CREATE TABLE productos (id INTEGER, nombre TEXT)")
+cursor.execute("INSERT INTO productos VALUES (?, ?)", (1,))
+```
+
+```py
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 2, and there are 1 supplied.
+```
+
+Explicación breve: cada `?` necesita un valor en la tupla de parámetros.
+
 
 ## Micro-ejemplo incremental: conexión y consulta segura
 

@@ -142,6 +142,33 @@ Verás esto: gradientes reiniciados.
 Por qué funciona: evita acumulación.  
 Lo típico que sale mal: olvidar llamarlo; limpiar después del backward.
 
+## Micro-ejemplo: `backward` necesita un escalar
+
+### Así se escribe
+```py
+import torch
+
+x = torch.tensor(2.0, requires_grad=True)
+y = x * 3
+y.backward()
+print(x.grad)
+```
+
+### Error típico: salida no escalar
+```py
+import torch
+
+x = torch.tensor([1.0, 2.0], requires_grad=True)
+y = x * 2
+y.backward()
+```
+
+```py
+RuntimeError: grad can be implicitly created only for scalar outputs
+```
+
+Explicación breve: usa `y.sum().backward()` cuando el resultado es un vector.
+
 
 ## Micro-ejemplo incremental: tensores y gradientes
 

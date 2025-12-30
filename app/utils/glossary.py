@@ -2048,6 +2048,76 @@ GLOSSARY = {
             ),
         },
     },
+    "seaborn": {
+        "tooltip": "Librería de visualización estadística construida sobre Matplotlib.",
+        "definition_parts": {
+            "que_es": (
+                "Seaborn proporciona funciones de alto nivel para gráficos estadísticos "
+                "con estilos listos para usar."
+            ),
+            "para_que": (
+                "Sirve para explorar relaciones, distribuciones y comparaciones con "
+                "gráficos rápidos y consistentes."
+            ),
+            "sintaxis": "import seaborn",
+            "ejemplo": "seaborn.scatterplot(x=[1, 2], y=[3, 4])",
+            "matiz": (
+                "Se integra con Matplotlib, por lo que puedes personalizar títulos y "
+                "etiquetas con plt.title o plt.xlabel."
+            ),
+        },
+    },
+    "seaborn.set_theme": {
+        "tooltip": "Función que define el estilo global de Seaborn.",
+        "definition_parts": {
+            "que_es": (
+                "set_theme configura colores, fuentes y cuadrículas para todos los "
+                "gráficos posteriores."
+            ),
+            "para_que": (
+                "Se usa para mantener consistencia visual entre múltiples gráficos."
+            ),
+            "sintaxis": "seaborn.set_theme(style='whitegrid')",
+            "ejemplo": "seaborn.set_theme(style='darkgrid')",
+            "matiz": (
+                "Si defines un tema después de crear un gráfico, no afectará a ese "
+                "gráfico ya renderizado."
+            ),
+        },
+    },
+    "seaborn.scatterplot": {
+        "tooltip": "Función de Seaborn para gráficos de dispersión.",
+        "definition_parts": {
+            "que_es": (
+                "scatterplot dibuja puntos para comparar dos variables numéricas."
+            ),
+            "para_que": (
+                "Permite detectar tendencias, clusters o relaciones entre variables."
+            ),
+            "sintaxis": "seaborn.scatterplot(x=[1, 2], y=[3, 4])",
+            "ejemplo": "seaborn.scatterplot(x=horas, y=progreso)",
+            "matiz": (
+                "Las listas `x` e `y` deben tener la misma longitud para evitar errores."
+            ),
+        },
+    },
+    "seaborn.histplot": {
+        "tooltip": "Función de Seaborn para histogramas.",
+        "definition_parts": {
+            "que_es": (
+                "histplot muestra la distribución de valores numéricos en bins."
+            ),
+            "para_que": (
+                "Ayuda a entender concentraciones, dispersión y sesgos en los datos."
+            ),
+            "sintaxis": "seaborn.histplot(data=[10, 12, 14])",
+            "ejemplo": "seaborn.histplot(data=ventas, color='steelblue')",
+            "matiz": (
+                "Si pasas strings en lugar de números, Seaborn no puede calcular "
+                "la distribución."
+            ),
+        },
+    },
     "pyplot": {
         "tooltip": "Submódulo de Matplotlib con una API simple para graficar.",
         "definition_parts": {

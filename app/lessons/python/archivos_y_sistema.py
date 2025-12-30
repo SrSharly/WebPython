@@ -91,6 +91,29 @@ ResourceWarning: unclosed file
 
 **Cómo se corrige:** usa `with` para asegurar `close()` automático.
 
+## Paso 1.5: especifica encoding para evitar errores raros
+Cuando un archivo tiene tildes o emojis, el encoding importa. Define `encoding="utf-8"`
+para leer y escribir sin sorpresas.
+
+**Micro-ejemplo correcto**
+```py
+with open("datos.txt", "r", encoding="utf-8") as archivo:
+    contenido = archivo.read()
+```
+
+**Micro-ejemplo incorrecto**
+```py
+with open("datos.txt", "r", encoding="ascii") as archivo:
+    contenido = archivo.read()
+```
+
+**Error real**
+```
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 10: ordinal not in range(128)
+```
+
+**Cómo se corrige:** usa `encoding="utf-8"` si el archivo tiene caracteres no ASCII.
+
 ## Paso 2: modos de apertura y lo que realmente hacen
 - `"r"`: lee (falla si no existe).
 - `"w"`: escribe y **borra** el contenido anterior.

@@ -120,6 +120,36 @@ NameError: name 'logger' is not defined
 
 Cómo se arregla: define el logger y usa el formato perezoso con `%s`.
 
+## Registrar logs en archivo sin perderlos
+Guardar logs en un archivo te permite auditar errores después de que el programa termina.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    filename="app.log",
+    format="%(levelname)s:%(name)s:%(message)s",
+)
+logger = logging.getLogger("app")
+logger.info("Registro persistente en archivo")
+```
+
+Micro-ejemplo incorrecto:
+```py
+import logging
+
+logging.basicConfig(filename=123)
+```
+
+Error real:
+```py
+TypeError: expected str, bytes or os.PathLike object, not int
+```
+
+Cómo se arregla: usa una ruta válida en `filename`, por ejemplo `"app.log"`.
+
 ## Ejemplo principal: configurar y registrar eventos reales
 ### 1) Aprende esto
 Registrar eventos útiles y coherentes para entender qué pasó sin leer el código.

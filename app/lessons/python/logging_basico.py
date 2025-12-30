@@ -255,6 +255,32 @@ Los mensajes DEBUG no aparecen porque el primer basicConfig ya fijó el nivel.
 
 Cómo se arregla: define la configuración una sola vez.
 
+## Usa un logger por módulo (y evita prints en librerías)
+En módulos reutilizables, crea un logger con nombre y deja que la app principal
+decida el nivel y el formato.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("ventas.reporte")
+logger.info("Se generó el reporte")
+```
+
+Micro-ejemplo incorrecto:
+```py
+def generar_reporte():
+    print("Se generó el reporte")
+```
+
+Error real:
+```py
+No hay error de Python, pero el mensaje se pierde si nadie ve la consola.
+```
+
+Cómo se arregla: usa `logging.getLogger(...)` y deja que el consumidor configure
+`basicConfig` o handlers en un punto único.
+
 ## Registrar logs en archivo (sin perderlos en consola)
 Si quieres que los mensajes queden guardados, configura un archivo de salida.
 

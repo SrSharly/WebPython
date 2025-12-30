@@ -145,6 +145,30 @@ NameError: name 'logger' is not defined
 
 Cómo se arregla: define el logger y usa el formato perezoso con `%s`.
 
+## Cambiar el nivel en tiempo real con logger.setLevel
+`logger.setLevel` te permite elevar o reducir el nivel cuando necesitas más detalle.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+logger.setLevel(logging.DEBUG)
+logger.debug("Ahora sí se verá este detalle")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.setlevel(logging.DEBUG)
+```
+
+Error real:
+```py
+AttributeError: 'Logger' object has no attribute 'setlevel'
+```
+
+Cómo se arregla: usa `setLevel` con mayúscula correcta.
+
 ## Registrar logs en archivo sin perderlos
 Guardar logs en un archivo te permite auditar errores después de que el programa termina.
 

@@ -2048,6 +2048,82 @@ GLOSSARY = {
             ),
         },
     },
+    "plotly": {
+        "tooltip": "Librería para crear gráficas interactivas en Python.",
+        "definition_parts": {
+            "que_es": (
+                "Plotly es una librería de visualización interactiva con gráficos "
+                "que pueden mostrarse en navegador o notebooks."
+            ),
+            "para_que": (
+                "Se usa para explorar datos, compartir dashboards y obtener "
+                "visualizaciones interactivas."
+            ),
+            "sintaxis": "import plotly.express as px",
+            "ejemplo": "fig = px.line(x=[1, 2], y=[3, 4])",
+            "matiz": "Plotly Express ofrece una API rápida para casos comunes.",
+        },
+    },
+    "plotly.express": {
+        "tooltip": "API rápida de Plotly para crear gráficos.",
+        "definition_parts": {
+            "que_es": "Submódulo con funciones simples como line, bar o scatter.",
+            "para_que": "para crear visualizaciones rápidas con pocas líneas.",
+            "sintaxis": "import plotly.express as px",
+            "ejemplo": "px.bar(x=['A', 'B'], y=[10, 20])",
+            "matiz": "Devuelve figuras Plotly que puedes personalizar con update_layout.",
+        },
+    },
+    "px.line": {
+        "tooltip": "Crea una gráfica de línea con Plotly Express.",
+        "definition_parts": {
+            "que_es": "Función para dibujar una línea conectando puntos.",
+            "para_que": "para visualizar tendencias en series temporales o secuencias.",
+            "sintaxis": "px.line(x=[...], y=[...])",
+            "ejemplo": "px.line(x=[1, 2, 3], y=[2, 4, 6])",
+            "matiz": "x e y deben tener la misma cantidad de elementos.",
+        },
+    },
+    "px.bar": {
+        "tooltip": "Crea una gráfica de barras con Plotly Express.",
+        "definition_parts": {
+            "que_es": "Función para comparar categorías mediante barras.",
+            "para_que": "para contrastar valores por categoría.",
+            "sintaxis": "px.bar(x=[...], y=[...])",
+            "ejemplo": "px.bar(x=['A', 'B'], y=[10, 20])",
+            "matiz": "Usa labels para aclarar qué representan los ejes.",
+        },
+    },
+    "px.scatter": {
+        "tooltip": "Crea una gráfica de dispersión con Plotly Express.",
+        "definition_parts": {
+            "que_es": "Función para mostrar puntos en un plano cartesiano.",
+            "para_que": "para explorar relaciones entre dos variables numéricas.",
+            "sintaxis": "px.scatter(x=[...], y=[...])",
+            "ejemplo": "px.scatter(x=[1, 2, 3], y=[3, 2, 5])",
+            "matiz": "Puedes agregar color o tamaño para variables adicionales.",
+        },
+    },
+    "fig.update_layout": {
+        "tooltip": "Actualiza el layout de una figura Plotly.",
+        "definition_parts": {
+            "que_es": "Método que ajusta título, márgenes y estilo general.",
+            "para_que": "para personalizar la apariencia final de la gráfica.",
+            "sintaxis": "fig.update_layout(title='Título')",
+            "ejemplo": "fig.update_layout(yaxis_title='Unidades')",
+            "matiz": "Acepta argumentos nombrados o diccionarios.",
+        },
+    },
+    "fig.show": {
+        "tooltip": "Renderiza una figura Plotly.",
+        "definition_parts": {
+            "que_es": "Método que muestra la figura en el navegador o notebook.",
+            "para_que": "para visualizar el resultado interactivo.",
+            "sintaxis": "fig.show()",
+            "ejemplo": "fig.show()",
+            "matiz": "Si no lo llamas, no se renderiza en scripts.",
+        },
+    },
     "pyplot": {
         "tooltip": "Submódulo de Matplotlib con una API simple para graficar.",
         "definition_parts": {
@@ -3893,6 +3969,36 @@ GLOSSARY = {
             "para_que": "para advertencias que no detienen la ejecución.",
             "sintaxis": "logger.warning('mensaje')",
             "ejemplo": "logger.warning('Saldo bajo')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.addhandler": {
+        "tooltip": "Añade un handler a un logger.",
+        "definition_parts": {
+            "que_es": "Método que registra un handler en el logger.",
+            "para_que": "para enviar logs a consola, archivos u otros destinos.",
+            "sintaxis": "logger.addHandler(handler)",
+            "ejemplo": "logger.addHandler(logging.StreamHandler())",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.setlevel": {
+        "tooltip": "Define el nivel de un logger.",
+        "definition_parts": {
+            "que_es": "Método que ajusta el nivel mínimo que acepta el logger.",
+            "para_que": "para mostrar más o menos detalle según el entorno.",
+            "sintaxis": "logger.setLevel(logging.INFO)",
+            "ejemplo": "logger.setLevel(logging.DEBUG)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "handler.setlevel": {
+        "tooltip": "Define el nivel de un handler.",
+        "definition_parts": {
+            "que_es": "Método que ajusta el nivel mínimo del handler.",
+            "para_que": "para filtrar mensajes por destino.",
+            "sintaxis": "handler.setLevel(logging.WARNING)",
+            "ejemplo": "handler.setLevel(logging.ERROR)",
             "matiz": "pendiente de ampliar.",
         },
     },

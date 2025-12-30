@@ -19,7 +19,6 @@ from PySide6.QtWidgets import (
     QListWidget,
     QListWidgetItem,
     QMainWindow,
-    QPlainTextEdit,
     QPushButton,
     QScrollArea,
     QSizePolicy,
@@ -37,7 +36,7 @@ from app.lesson_base import Lesson
 from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
 from app.ui.library_reference_view import LibraryReferenceView
-from app.utils.code_runner import SnippetRunner
+from app.ui.method_reference_view import MethodReferenceView
 from app.utils.glossary import GLOSSARY, definition_text, register_auto_terms
 from app.utils.mention_indexer import (
     build_mention_index,
@@ -50,7 +49,6 @@ from app.utils.mention_indexer import (
 from app.utils.theme import apply_theme, toggle_theme
 from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
-from app.utils.ui_components import CodeCard
 from app.utils.ui_helpers import badge
 from app.utils.validators import warn_if_short_example
 
@@ -65,6 +63,7 @@ class LessonEntry:
     info_subcategory: str
     info_level: str
     info_tags: list[str]
+    info_badges: list[str]
     lesson_cls: type[Lesson]
     instance: Lesson
     search_text: str
@@ -78,7 +77,6 @@ class MainWindow(QMainWindow):
         self.current_theme = theme_name
         self.setWindowTitle("Pythonpedia")
         self.resize(1280, 800)
-        self.runner = SnippetRunner()
 
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Buscar por título, tags o contenido...")
@@ -97,8 +95,6 @@ class MainWindow(QMainWindow):
         self.tree.itemSelectionChanged.connect(self._on_tree_selection)
 
         self.tabs = QTabWidget()
-        self.summary_view = QTextEdit()
-        self.summary_view.setReadOnly(True)
         self.guide_text = QTextBrowser()
         self.guide_text.setLineWrapMode(QTextEdit.WidgetWidth)
         self.guide_text.setOpenExternalLinks(False)
@@ -135,23 +131,16 @@ class MainWindow(QMainWindow):
         self.exercises_scroll.setWidgetResizable(True)
         self.exercises_scroll.setWidget(self.exercises_container)
 
-        self.demo_container = QWidget()
-        self.demo_layout = QVBoxLayout(self.demo_container)
-        self.demo_layout.setAlignment(Qt.AlignTop)
-        self.demo_scroll = QScrollArea()
-        self.demo_scroll.setWidgetResizable(True)
-        self.demo_scroll.setWidget(self.demo_container)
-
         self.glossary_view = GlossaryView()
         self.glossary_view.termSelected.connect(self._on_term_pinned)
+        self.method_reference_view = MethodReferenceView()
+        self.method_reference_view.termSelected.connect(self._on_term_pinned)
         self.library_reference_view = LibraryReferenceView()
 
         self.tabs.addTab(self.guide_scroll, "Tutorial")
-        self.tabs.addTab(self.summary_view, "Resumen")
         self.tabs.addTab(pitfalls_panel, "Errores típicos")
-        self.tabs.addTab(self.examples_scroll, "Ejemplos")
         self.tabs.addTab(self.exercises_scroll, "Ejercicios")
-        self.tabs.addTab(self.demo_scroll, "Demo")
+        self.tabs.addTab(self.method_reference_view, "Métodos y funciones")
         self.tabs.addTab(self.glossary_view, "Glosario")
         self.tabs.addTab(self.library_reference_view, "Librerías")
 
@@ -305,6 +294,7 @@ class MainWindow(QMainWindow):
                 info_subcategory=info.subcategory,
                 info_level=info.level,
                 info_tags=info.tags,
+                info_badges=self._extract_lesson_badges(info.lesson_cls),
                 lesson_cls=info.lesson_cls,
                 instance=instance,
                 search_text=search_text,
@@ -321,6 +311,11 @@ class MainWindow(QMainWindow):
                 resolved.term_labels,
                 resolved.term_related,
             )
+            self.method_reference_view.load_terms(
+                GLOSSARY,
+                resolved.term_meta,
+                resolved.term_labels,
+            )
 
         categories: dict[str, QTreeWidgetItem] = {}
         subcategories: dict[tuple[str, str], QTreeWidgetItem] = {}
@@ -336,7 +331,8 @@ class MainWindow(QMainWindow):
                 sub_item = QTreeWidgetItem([entry.info_subcategory])
                 subcategories[sub_key] = sub_item
                 category_item.addChild(sub_item)
-            lesson_item = QTreeWidgetItem([entry.info_title])
+            badge_prefix = self._badge_prefix(entry.info_badges)
+            lesson_item = QTreeWidgetItem([f"{badge_prefix}{entry.info_title}"])
             lesson_item.setData(0, Qt.UserRole, entry)
             sub_item.addChild(lesson_item)
 
@@ -352,6 +348,25 @@ class MainWindow(QMainWindow):
         details = "\n".join(f"{module}: {error}" for module, error in errors)
         self.load_errors_label.setText(details)
         self.load_errors_box.setVisible(True)
+
+    def _extract_lesson_badges(self, lesson_cls: type[Lesson]) -> list[str]:
+        badges = list(getattr(lesson_cls, "BADGES", []) or [])
+        lesson_badge = str(getattr(lesson_cls, "LESSON_BADGE", "") or "")
+        for icon in ("⭐", "🧠"):
+            if icon in lesson_badge and icon not in badges:
+                badges.append(icon)
+        return badges
+
+    def _badge_prefix(self, badges: list[str]) -> str:
+        has_star = "⭐" in badges
+        has_pro = "🧠" in badges
+        if has_star and has_pro:
+            return "⭐🧠 "
+        if has_star:
+            return "⭐ "
+        if has_pro:
+            return "🧠 "
+        return ""
 
     def _select_first(self) -> None:
         first_item = self.tree.topLevelItem(0)
@@ -433,12 +448,10 @@ class MainWindow(QMainWindow):
         if reqs:
             self.badge_layout.addWidget(badge("Requiere: " + ", ".join(reqs), "#c05621"))
 
-        self.summary_view.setPlainText(lesson.summary())
         self._render_guide(lesson)
         self._render_pitfalls(lesson)
-        self._render_examples(lesson)
         self._render_exercises(lesson)
-        self._render_demo(lesson)
+        self._scroll_to_top()
 
     def _clear_badges(self) -> None:
         while self.badge_layout.count():
@@ -681,20 +694,7 @@ class MainWindow(QMainWindow):
             sections_html = f"<h1>Tutorial paso a paso</h1>{self._guide_html_from_text(lesson.tutorial())}"
 
         mentioned_html = self._mentioned_methods_html(lesson)
-
-        examples = lesson.code_examples()
-        if examples:
-            resumen = examples[:2]
-            resumen_html = "<h2>Resumen de ejemplos</h2>" + "".join(
-                f"<h3>{html.escape(title)}</h3>"
-                f"<div class=\"code-card\">"
-                "<div class=\"code-head\">Código</div>"
-                f"<pre class=\"code-body\">{html.escape(code)}</pre>"
-                "</div>"
-                for title, code in resumen
-            )
-        else:
-            resumen_html = ""
+        examples_html = self._examples_html(lesson)
 
         if self.current_theme == "dark":
             theme_class = "theme-dark"
@@ -965,7 +965,7 @@ class MainWindow(QMainWindow):
                 {summary_html}
                 {sections_html}
                 {mentioned_html}
-                {resumen_html}
+                {examples_html}
             </div>
         </body>
         </html>
@@ -975,6 +975,22 @@ class MainWindow(QMainWindow):
         self.guide_text.document().setTextWidth(self.guide_text.viewport().width())
         content_height = int(self.guide_text.document().size().height())
         self.guide_text.setMinimumHeight(content_height + 40)
+
+    def _examples_html(self, lesson: Lesson) -> str:
+        examples = lesson.code_examples()
+        if not examples:
+            return ""
+        example_blocks = []
+        for title, code in examples:
+            warn_if_short_example(code, f"Lesson: {lesson.TITLE} - {title}")
+            example_blocks.append(
+                f"<h3>{html.escape(title)}</h3>"
+                "<div class=\"code-card\">"
+                "<div class=\"code-head\">Código</div>"
+                f"<pre class=\"code-body\">{html.escape(code)}</pre>"
+                "</div>"
+            )
+        return "<h2>Ejemplos guiados</h2>" + "".join(example_blocks)
 
     def _mentioned_methods_html(self, lesson: Lesson) -> str:
         term_ids = get_lesson_terms(lesson)
@@ -1037,38 +1053,18 @@ class MainWindow(QMainWindow):
         if self.pitfalls_list.count() > 0:
             self.pitfalls_list.setCurrentRow(0)
 
+    def _scroll_to_top(self) -> None:
+        if self.guide_scroll.verticalScrollBar():
+            self.guide_scroll.verticalScrollBar().setValue(0)
+        if self.exercises_scroll.verticalScrollBar():
+            self.exercises_scroll.verticalScrollBar().setValue(0)
+
     def _on_pitfall_selected(self, current: QListWidgetItem, _previous: QListWidgetItem | None = None) -> None:
         if current is None:
             self.pitfall_detail.clear()
             return
         detail = current.data(Qt.UserRole)
         self.pitfall_detail.setPlainText(detail)
-
-    def _render_examples(self, lesson: Lesson) -> None:
-        self._clear_layout(self.examples_layout)
-        for title, code in lesson.code_examples():
-            warn_if_short_example(code, f"Lesson: {lesson.TITLE} - {title}")
-            can_run, reason = self.runner.can_run(code)
-            callback = self._run_snippet if can_run else None
-            card = CodeCard(title, code, show_run=True, run_callback=callback)
-            if card.output_view is not None and not can_run:
-                card.output_view.setPlainText(reason or "No se puede ejecutar este snippet.")
-                if card.run_button is not None:
-                    card.run_button.setToolTip(reason or "No se puede ejecutar este snippet.")
-            self.examples_layout.addWidget(card)
-
-        self.examples_layout.addStretch()
-
-    def _run_snippet(
-        self, code: str, output_view: QPlainTextEdit | None, _code_view: QPlainTextEdit
-    ) -> None:
-        if output_view is None:
-            return
-        result = self.runner.run(code)
-        if result.ok:
-            output_view.setPlainText(result.output or "(Sin salida)")
-        else:
-            output_view.setPlainText(f"Error: {result.error}\n{result.output}")
 
     def _render_exercises(self, lesson: Lesson) -> None:
         self._clear_layout(self.exercises_layout)
@@ -1110,16 +1106,6 @@ class MainWindow(QMainWindow):
             self.exercises_layout.addWidget(box)
 
         self.exercises_layout.addStretch()
-
-    def _render_demo(self, lesson: Lesson) -> None:
-        self._clear_layout(self.demo_layout)
-        demo_widget = lesson.build_demo()
-        if demo_widget is None:
-            note = QLabel("No hay demo disponible para esta lección.")
-            note.setWordWrap(True)
-            self.demo_layout.addWidget(note)
-        else:
-            self.demo_layout.addWidget(demo_widget)
 
     def _update_theme_toggle(self) -> None:
         if self.current_theme == "dark":

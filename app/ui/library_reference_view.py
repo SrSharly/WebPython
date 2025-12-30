@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 
 from app.utils.library_catalog import LIBRARIES
 from app.utils.library_search import build_search_text, iter_library_items
+from app.utils.validators import warn_if_short_example
 from app.utils.ui_components import CodeCard
 from app.utils.ui_helpers import badge
 
@@ -270,10 +271,32 @@ class LibraryReferenceView(QWidget):
         self.detail_what.setText(item["what"])
         self.detail_when.setText(self._format_bullets(item.get("when", [])))
         self.detail_pitfalls.setText(self._format_bullets(item.get("pitfalls", [])))
-        self.example_card.code_view.setPlainText(item["example"])
+        self.example_card.code_view.setPlainText(self._format_examples(item.get("examples", [])))
 
     def _format_bullets(self, items: list[str]) -> str:
         return "\n".join(f"• {value}" for value in items) if items else "-"
+
+    def _format_examples(self, examples: list[dict]) -> str:
+        if not examples:
+            return ""
+        total = len(examples)
+        example = examples[0]
+        warn_if_short_example(example.get("do", ""), f"Library: {example.get('title', '')}")
+        pitfalls = example.get("pitfalls", [])
+        pitfalls_text = "\n".join(f"- {pitfall}" for pitfall in pitfalls) if pitfalls else "-"
+        return (
+            f"Ejemplo 1 de {total}: {example.get('title', 'Ejemplo')}\n\n"
+            "Aprende esto\n"
+            f"{example.get('learn', '')}\n\n"
+            "Haz esto\n"
+            f"{example.get('do', '')}\n\n"
+            "Verás esto\n"
+            f"{example.get('see', '')}\n\n"
+            "Por qué funciona\n"
+            f"{example.get('why', '')}\n\n"
+            "Lo típico que sale mal\n"
+            f"{pitfalls_text}"
+        )
 
     def _clear_detail_panel(self) -> None:
         self.detail_title.setText("No hay resultados")

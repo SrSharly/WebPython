@@ -163,6 +163,28 @@ print(next(it))  # 1
   Úsalo cuando necesites avanzar de a uno con precisión.
   Evítalo en recorridos normales: `for` es más seguro y claro.
 
+## Micro-ejemplo: un generador no es indexable
+
+### Así se escribe
+```py
+generador = (n for n in [1, 2, 3])
+for valor in generador:
+    print(valor)
+```
+
+### Error típico: intentar usar índices
+```py
+generador = (n for n in [1, 2, 3])
+primero = generador[0]
+```
+
+```py
+TypeError: 'generator' object is not subscriptable
+```
+
+Explicación breve: un generador produce valores al iterar, no permite acceso por índice.
+Solución: recórrelo con `for` o conviértelo en lista si necesitas índices.
+
 
 ## Micro-ejemplo incremental: sintaxis y errores reales
 

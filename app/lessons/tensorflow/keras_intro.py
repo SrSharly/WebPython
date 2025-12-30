@@ -135,6 +135,30 @@ Verás esto: modelo listo para usar.
 Por qué funciona: restaura arquitectura y pesos.  
 Lo típico que sale mal: ruta incorrecta; incompatibilidad de versión.
 
+## Micro-ejemplo: datos con la misma longitud
+
+### Así se escribe
+```py
+import numpy as np
+
+x = np.array([[1.0], [2.0], [3.0]])
+y = np.array([2.0, 4.0, 6.0])
+```
+
+### Error típico: longitudes distintas en x e y
+```py
+import numpy as np
+
+x = np.array([[1.0], [2.0], [3.0]])
+y = np.array([2.0, 4.0])
+```
+
+```py
+ValueError: Data cardinality is ambiguous. Make sure all arrays contain the same number of samples.
+```
+
+Explicación breve: cada fila de x necesita su etiqueta correspondiente en y.
+
 
 ## Micro-ejemplo incremental: modelo y compilación
 

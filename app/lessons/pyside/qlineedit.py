@@ -186,6 +186,29 @@ Nota: usa setMaxLength para evitar textos demasiado largos.
 ## Advertencia
 Advertencia: si el input es contraseña, usa Password para ocultar caracteres.
 
+## Micro-ejemplo: `text()` devuelve `str`
+
+### Así se escribe
+```py
+line = QLineEdit()
+line.setText("21")
+edad = int(line.text())
+```
+
+### Error típico: sumar sin convertir
+```py
+line = QLineEdit()
+line.setText("21")
+edad = line.text()
+edad + 1
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: convierte a `int` si vas a hacer cálculos.
+
 ## Checklist final
 - Creo un QLineEdit y muestro placeholder.
 - Manejo textChanged y returnPressed.

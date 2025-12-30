@@ -799,6 +799,27 @@ class Silenciador:  # context manager
   Úsalo para medir bloques de código en desarrollo.
   Evítalo en producción si ya tienes herramientas de observabilidad.
 
+## Micro-ejemplo: `with` requiere `as`
+
+### Así se escribe
+```py
+with open("datos.txt") as archivo:
+    pass
+```
+
+### Error típico: olvidar `as`
+```py
+with open("datos.txt") archivo:
+    pass
+```
+
+```py
+SyntaxError: invalid syntax
+```
+
+Explicación breve: `with` necesita la forma `with recurso as nombre`.
+Solución: agrega `as` para capturar el manejador y usarlo dentro del bloque.
+
 
 ## Micro-ejemplo incremental: sintaxis y errores reales
 

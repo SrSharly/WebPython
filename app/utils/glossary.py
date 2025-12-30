@@ -528,6 +528,67 @@ GLOSSARY = {
             "matiz": "si no la manejas, el programa se detiene.",
         },
     },
+    "raise": {
+        "tooltip": "Palabra clave para lanzar una excepción manualmente.",
+        "definition_parts": {
+            "que_es": "raise crea y lanza una excepción de forma explícita.",
+            "para_que": "para señalar datos inválidos o estados imposibles.",
+            "sintaxis": "raise ValueError('mensaje')",
+            "ejemplo": "if edad < 0: raise ValueError('Edad inválida')",
+            "matiz": "debe lanzar una excepción real, no un string.",
+            "error_tipico": "usar raise 'mensaje' y provocar TypeError.",
+        },
+    },
+    "ValueError": {
+        "tooltip": "Excepción para valores con tipo correcto pero contenido inválido.",
+        "definition_parts": {
+            "que_es": "ValueError aparece cuando un valor no cumple el formato esperado.",
+            "para_que": "para señalar conversiones fallidas o datos fuera de rango.",
+            "sintaxis": "int('x')",
+            "ejemplo": "int('x') lanza ValueError.",
+            "matiz": "se usa cuando el tipo es válido pero el valor no.",
+        },
+    },
+    "TypeError": {
+        "tooltip": "Excepción para operaciones con tipos incompatibles.",
+        "definition_parts": {
+            "que_es": "TypeError ocurre cuando combinas tipos incorrectos.",
+            "para_que": "para detectar usos inválidos de operadores o funciones.",
+            "sintaxis": "'hola' + 3",
+            "ejemplo": "'hola' + 3 lanza TypeError.",
+            "matiz": "revísalo cuando pasas datos con tipo incorrecto.",
+        },
+    },
+    "ZeroDivisionError": {
+        "tooltip": "Excepción por dividir entre cero.",
+        "definition_parts": {
+            "que_es": "ZeroDivisionError aparece cuando divides por 0.",
+            "para_que": "para detener operaciones matemáticas inválidas.",
+            "sintaxis": "10 / 0",
+            "ejemplo": "10 / 0 lanza ZeroDivisionError.",
+            "matiz": "valida el denominador antes de dividir.",
+        },
+    },
+    "RuntimeError": {
+        "tooltip": "Excepción genérica para errores en tiempo de ejecución.",
+        "definition_parts": {
+            "que_es": "RuntimeError indica un fallo que no encaja en otras categorías.",
+            "para_que": "para envolver errores cuando necesitas un mensaje de dominio.",
+            "sintaxis": "raise RuntimeError('Mensaje')",
+            "ejemplo": "raise RuntimeError('Entrada inválida').",
+            "matiz": "usa ValueError cuando sea más específico.",
+        },
+    },
+    "else": {
+        "tooltip": "Bloque que se ejecuta cuando no ocurre el error.",
+        "definition_parts": {
+            "que_es": "else en try/except se ejecuta solo si no hubo excepción.",
+            "para_que": "para separar el camino exitoso del manejo de errores.",
+            "sintaxis": "try: ... except Error: ... else: ...",
+            "ejemplo": "else: resultados.append(valor).",
+            "matiz": "requiere un except o finally antes.",
+        },
+    },
     "try": {
         "tooltip": "Bloque para capturar errores potenciales.",
         "definition_parts": {

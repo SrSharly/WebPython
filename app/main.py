@@ -41,10 +41,10 @@ from app.utils.code_runner import SnippetRunner
 from app.utils.glossary import GLOSSARY, definition_text, register_auto_terms
 from app.utils.mention_indexer import (
     build_mention_index,
-    get_lesson_owner_terms,
-    get_lesson_types,
-    get_term_label,
     get_related_terms,
+    get_lesson_terms,
+    get_term_label,
+    get_term_meta,
     resolve_mention_index,
 )
 from app.utils.theme import apply_theme, toggle_theme
@@ -460,6 +460,24 @@ class MainWindow(QMainWindow):
         subsection_index = 0
         list_mode = "default"
         paragraph_lines: list[str] = []
+        skip_section_level: int | None = None
+
+        def normalize_title(title: str) -> str:
+            cleaned = title.lower().strip()
+            return (
+                cleaned.replace("á", "a")
+                .replace("é", "e")
+                .replace("í", "i")
+                .replace("ó", "o")
+                .replace("ú", "u")
+            )
+
+        def should_skip_section(title: str) -> bool:
+            normalized = normalize_title(title)
+            return (
+                "operaciones y metodos mas utiles" in normalized
+                or "metodos mencionados" in normalized
+            )
 
         callout_pattern = re.compile(
             r"^(?P<title>.+?)\s*\(CalloutBox:\s*(?P<variant>[a-z_]+)\s*\)$",
@@ -567,35 +585,52 @@ class MainWindow(QMainWindow):
             if in_code_block:
                 code_lines.append(line)
                 continue
-            if stripped.startswith("### "):
-                flush_paragraph()
-                flush_list_items()
-                if callout is not None:
-                    flush_callout()
-                if subsection_index > 0:
-                    chunks.append("<div class=\"subsection-divider\"></div>")
-                subsection_index += 1
-                title = stripped[4:].strip()
-                list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
-                match = callout_pattern.match(title)
-                if match:
-                    callout = {
-                        "title": match.group("title").strip(),
-                        "variant": match.group("variant").strip().lower(),
-                        "body": [],
-                    }
-                else:
-                    if title.lower().startswith("paso") and ":" in title:
-                        step, detail = title.split(":", 1)
-                        chunks.append(
-                            "<h3 class=\"step-title\">"
-                            f"<span class=\"step-badge\">{html.escape(step.strip())}</span>"
-                            f"{html.escape(detail.strip())}</h3>"
-                        )
+            if stripped.startswith(("## ", "### ")):
+                level = 2 if stripped.startswith("## ") else 3
+                title = stripped[3 if level == 2 else 4 :].strip()
+                if skip_section_level is not None:
+                    if level <= skip_section_level:
+                        skip_section_level = None
                     else:
-                        chunks.append(f"<h3>{html.escape(title)}</h3>")
-                continue
-            if stripped.startswith("## "):
+                        continue
+                if should_skip_section(title):
+                    flush_paragraph()
+                    flush_list_items()
+                    if callout is not None:
+                        flush_callout()
+                    skip_section_level = level
+                    continue
+                if level == 3:
+                    flush_paragraph()
+                    flush_list_items()
+                    if callout is not None:
+                        flush_callout()
+                    if subsection_index > 0:
+                        chunks.append("<div class=\"subsection-divider\"></div>")
+                    subsection_index += 1
+                    list_mode = (
+                        "pro"
+                        if "consejo" in title.lower() and "pro" in title.lower()
+                        else "default"
+                    )
+                    match = callout_pattern.match(title)
+                    if match:
+                        callout = {
+                            "title": match.group("title").strip(),
+                            "variant": match.group("variant").strip().lower(),
+                            "body": [],
+                        }
+                    else:
+                        if title.lower().startswith("paso") and ":" in title:
+                            step, detail = title.split(":", 1)
+                            chunks.append(
+                                "<h3 class=\"step-title\">"
+                                f"<span class=\"step-badge\">{html.escape(step.strip())}</span>"
+                                f"{html.escape(detail.strip())}</h3>"
+                            )
+                        else:
+                            chunks.append(f"<h3>{html.escape(title)}</h3>")
+                    continue
                 flush_paragraph()
                 flush_list_items()
                 if callout is not None:
@@ -604,9 +639,14 @@ class MainWindow(QMainWindow):
                     chunks.append("<div class=\"section-divider\"></div>")
                 section_index += 1
                 subsection_index = 0
-                title = stripped[3:].strip()
-                list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
+                list_mode = (
+                    "pro"
+                    if "consejo" in title.lower() and "pro" in title.lower()
+                    else "default"
+                )
                 chunks.append(f"<h2>{html.escape(title)}</h2>")
+                continue
+            if skip_section_level is not None:
                 continue
             if stripped.startswith(("-", "*")):
                 flush_paragraph()
@@ -849,7 +889,7 @@ class MainWindow(QMainWindow):
                 color: {keyword_color};
                 text-decoration: underline dotted {keyword_border};
                 text-underline-offset: 3px;
-                cursor: help;
+                cursor: pointer;
             }}
             a.kw:hover {{
                 color: {keyword_hover};
@@ -887,25 +927,36 @@ class MainWindow(QMainWindow):
             .summary-card .card-body {{
                 background: {summary_bg};
             }}
-            details.mentioned-methods {{
+            .method-index.card {{
                 border: 1px dashed {divider};
-                border-radius: 10px;
-                padding: 10px 12px;
+                border-radius: 12px;
                 margin: 16px 0;
                 background: {card_bg};
+                overflow: hidden;
             }}
-            details.mentioned-methods summary {{
-                cursor: pointer;
+            .method-index .card-header {{
+                background: {card_header};
+                padding: 8px 12px;
                 font-weight: 600;
                 color: {heading_color};
-                margin-bottom: 8px;
             }}
-            .mentioned-owner {{
-                margin-top: 8px;
+            .method-index .card-body {{
+                padding: 8px 12px 10px;
             }}
-            .mentioned-owner h3 {{
-                margin: 10px 0 6px;
-                font-size: 15px;
+            .method-index-group {{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                align-items: center;
+                margin-bottom: 6px;
+            }}
+            .method-index-group:last-child {{
+                margin-bottom: 0;
+            }}
+            .method-index-owner {{
+                font-weight: 600;
+                color: {heading_color};
+                margin-right: 4px;
             }}
         </style>
         </head>
@@ -926,42 +977,54 @@ class MainWindow(QMainWindow):
         self.guide_text.setMinimumHeight(content_height + 40)
 
     def _mentioned_methods_html(self, lesson: Lesson) -> str:
-        lesson_types = get_lesson_types(lesson)
-        if not lesson_types:
-            return ""
-        owner_terms = get_lesson_owner_terms(lesson)
-        if not owner_terms:
+        term_ids = get_lesson_terms(lesson)
+        if not term_ids:
             return ""
 
-        sections: list[str] = []
-        for owner in sorted(owner_terms):
-            if owner not in lesson_types:
-                continue
-            term_ids = owner_terms.get(owner, set())
-            if not term_ids:
-                continue
-            items = []
-            for term_id in sorted(term_ids, key=lambda tid: get_term_label(tid).lower()):
-                label = get_term_label(term_id)
-                items.append(
-                    f'<li><a href="tip:{quote(term_id)}" class="kw">{html.escape(label)}</a></li>'
-                )
-            if items:
-                sections.append(
-                    f"<div class=\"mentioned-owner\">"
-                    f"<h3>{html.escape(owner)}</h3>"
-                    f"<ul>{''.join(items)}</ul>"
-                    "</div>"
-                )
+        method_ids: list[str] = []
+        function_ids: list[str] = []
+        for term_id in term_ids:
+            meta = get_term_meta(term_id)
+            kind = meta.get("kind")
+            if kind == "method":
+                method_ids.append(term_id)
+            elif kind in {"function", "builtin"}:
+                function_ids.append(term_id)
 
-        if not sections:
+        if not method_ids and not function_ids:
             return ""
+
+        groups: list[tuple[str, list[str]]] = []
+        owner_map: dict[str, list[str]] = {}
+        for term_id in method_ids:
+            owner = get_term_meta(term_id).get("owner") or "métodos"
+            owner_map.setdefault(owner, []).append(term_id)
+        for owner in sorted(owner_map):
+            groups.append((owner, owner_map[owner]))
+        if function_ids:
+            groups.append(("funciones", function_ids))
+
+        total = sum(len(group_terms) for _group, group_terms in groups)
+        group_html: list[str] = []
+        for group, group_terms in groups:
+            links = " ".join(
+                f'<a href="tip:{quote(term_id)}" class="kw">{html.escape(get_term_label(term_id))}</a>'
+                for term_id in sorted(group_terms, key=lambda tid: get_term_label(tid).lower())
+            )
+            group_label = f"{group} ({len(group_terms)})"
+            group_html.append(
+                "<div class=\"method-index-group\">"
+                f"<span class=\"method-index-owner\">{html.escape(group_label)}:</span>"
+                f"{links}"
+                "</div>"
+            )
 
         return (
-            "<details class=\"mentioned-methods\">"
-            "<summary>Métodos mencionados en esta lección (expandir)</summary>"
-            + "".join(sections)
-            + "</details>"
+            "<div class=\"method-index card\">"
+            f"<div class=\"card-header\">Métodos/funciones mencionados en esta lección ({total})</div>"
+            "<div class=\"card-body\">"
+            + "".join(group_html)
+            + "</div></div>"
         )
 
     def _render_pitfalls(self, lesson: Lesson) -> None:

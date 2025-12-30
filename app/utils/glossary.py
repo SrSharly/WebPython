@@ -2567,6 +2567,66 @@ GLOSSARY = {
             ),
         },
     },
+    "fastapi.fastapi": {
+        "tooltip": "Clase principal para crear una app FastAPI.",
+        "definition_parts": {
+            "que_es": "Clase que instancia la aplicación FastAPI.",
+            "para_que": "para registrar rutas, middleware y configuración general.",
+            "sintaxis": "app = FastAPI()",
+            "ejemplo": "from fastapi import FastAPI; app = FastAPI()",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "app.get": {
+        "tooltip": "Decorador para rutas GET en FastAPI.",
+        "definition_parts": {
+            "que_es": "Decorador que registra un endpoint HTTP GET.",
+            "para_que": "para exponer rutas de lectura o consulta.",
+            "sintaxis": "@app.get('/ruta')",
+            "ejemplo": "@app.get('/estado')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "app.post": {
+        "tooltip": "Decorador para rutas POST en FastAPI.",
+        "definition_parts": {
+            "que_es": "Decorador que registra un endpoint HTTP POST.",
+            "para_que": "para crear recursos o procesar datos enviados.",
+            "sintaxis": "@app.post('/ruta')",
+            "ejemplo": "@app.post('/usuarios')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "pydantic.basemodel": {
+        "tooltip": "Clase base para modelos de validación.",
+        "definition_parts": {
+            "que_es": "Clase de Pydantic para definir esquemas de datos tipados.",
+            "para_que": "para validar y convertir datos de entrada en APIs.",
+            "sintaxis": "class Modelo(BaseModel): ...",
+            "ejemplo": "class Usuario(BaseModel): nombre: str",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "uvicorn": {
+        "tooltip": "Servidor ASGI para aplicaciones Python.",
+        "definition_parts": {
+            "que_es": "Servidor ASGI ligero usado para correr apps como FastAPI.",
+            "para_que": "para servir APIs en desarrollo o producción.",
+            "sintaxis": "import uvicorn",
+            "ejemplo": "uvicorn.run('main:app', reload=True)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "uvicorn.run": {
+        "tooltip": "Ejecuta una app ASGI con Uvicorn.",
+        "definition_parts": {
+            "que_es": "Función que arranca el servidor Uvicorn.",
+            "para_que": "para iniciar una app FastAPI en local.",
+            "sintaxis": "uvicorn.run('main:app', reload=True)",
+            "ejemplo": "uvicorn.run('main:app', host='0.0.0.0')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
     "django": {
         "tooltip": "Framework web completo para Python.",
         "definition_parts": {

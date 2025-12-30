@@ -293,6 +293,50 @@ GLOSSARY = {
             "matiz": "Usa `with` para asegurar el cierre automático.",
         },
     },
+    "read": {
+        "tooltip": "Método para leer contenido de un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método del manejador de archivo que devuelve texto o bytes.",
+            "para_que": "Leer todo el contenido o solo una parte específica.",
+            "sintaxis": "texto = archivo.read() o archivo.read(10)",
+            "ejemplo": "with open('a.txt') as f: contenido = f.read().",
+            "matiz": (
+                "Si pasas un número, lee esa cantidad de caracteres; si no, lee todo."
+            ),
+        },
+    },
+    "write": {
+        "tooltip": "Método para escribir texto en un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método del manejador de archivo que guarda texto o bytes.",
+            "para_que": "Escribir líneas, reportes o datos en un archivo.",
+            "sintaxis": "archivo.write('línea\\n')",
+            "ejemplo": "with open('a.txt', 'w') as f: f.write('Hola').",
+            "matiz": (
+                "Si el archivo está en modo lectura, lanzarás un error de escritura."
+            ),
+        },
+    },
+    "FileNotFoundError": {
+        "tooltip": "Error al intentar abrir un archivo inexistente.",
+        "definition_parts": {
+            "que_es": "Excepción lanzada cuando la ruta del archivo no existe.",
+            "para_que": "Avisar que debes crear el archivo o corregir la ruta.",
+            "sintaxis": "try: open('x.txt') except FileNotFoundError: ...",
+            "ejemplo": "open('no_existe.txt', 'r') lanza FileNotFoundError.",
+            "matiz": "Es común en lectura; usa 'w' o 'a' si necesitas crear el archivo.",
+        },
+    },
+    "UnsupportedOperation": {
+        "tooltip": "Error al usar una operación no permitida en un archivo.",
+        "definition_parts": {
+            "que_es": "Excepción lanzada cuando el modo del archivo no permite la operación.",
+            "para_que": "Indicar que el archivo no se puede leer o escribir con ese modo.",
+            "sintaxis": "archivo = open('a.txt', 'r'); archivo.write('x')",
+            "ejemplo": "open('a.txt', 'r').write('x') lanza UnsupportedOperation.",
+            "matiz": "Se evita usando el modo correcto ('r', 'w', 'a').",
+        },
+    },
     "str": {
         "tooltip": "Tipo de texto (cadena de caracteres).",
         "definition_parts": {

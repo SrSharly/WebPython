@@ -95,6 +95,31 @@ NameError: name 'logger' is not defined
 
 Cómo se arregla: crea el logger con `logging.getLogger(...)` antes de usarlo.
 
+## WARNING vs ERROR (no todo es un fallo crítico)
+`WARNING` alerta sobre algo raro pero recuperable. `ERROR` indica fallo real.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("app")
+logger.warning("Respuesta lenta del servicio")
+logger.error("No se pudo guardar el pedido")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.warn("respuesta lenta")
+```
+
+Error real:
+```py
+AttributeError: 'Logger' object has no attribute 'warn'
+```
+
+Cómo se arregla: usa `logger.warning(...)`, no `logger.warn(...)`.
+
 ## Formateo perezoso para no gastar CPU de más
 Cuando usas `%s` en logging, el formateo se evalúa solo si el mensaje se va a emitir.
 

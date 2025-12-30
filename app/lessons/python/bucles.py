@@ -51,6 +51,27 @@ for i in range(3)
 **Cómo se arregla**
 Agrega `:` y mantén la indentación del bloque.
 
+### Micro-ejemplo: range con inicio y paso
+Cuando necesitas saltos o empezar en otro valor, usa `range(inicio, fin, paso)`.
+
+**Así se escribe**
+```py
+for i in range(2, 10, 2):
+    print(i)
+```
+
+**Error típico (❌)**
+```py
+for i in range(1, 5, 0):
+    print(i)
+```
+
+**Qué significa el error**
+`ValueError: range() arg 3 must not be zero` porque el paso no puede ser 0.
+
+**Cómo se arregla**
+Usa un paso distinto de cero, por ejemplo `range(1, 5, 1)` o `range(1, 5, -1)` si vas hacia atrás.
+
 ## Paso 2: while con condición
 `while` repite mientras una condición sea True. Necesitas actualizar la variable para evitar bucles infinitos.
 

@@ -630,6 +630,42 @@ GLOSSARY = {
             "matiz": "El valor de fin no se incluye.",
         },
     },
+    "enumerate": {
+        "tooltip": "Función que devuelve pares índice-valor al iterar.",
+        "definition_parts": {
+            "que_es": (
+                "Función incorporada que envuelve un iterable y produce parejas "
+                "(índice, valor)."
+            ),
+            "para_que": (
+                "Recorrer una lista mientras conservas la posición sin crear un "
+                "contador manual."
+            ),
+            "sintaxis": "enumerate(iterable, start=0)",
+            "ejemplo": "for i, valor in enumerate(lista, start=1): ...",
+            "matiz": "El índice comienza en 0 por defecto, pero puedes cambiarlo con start.",
+            "error_tipico": (
+                "intentar desempaquetar dos valores sin usar enumerate y recibir "
+                "ValueError."
+            ),
+        },
+    },
+    "zip": {
+        "tooltip": "Función que combina elementos de varios iterables.",
+        "definition_parts": {
+            "que_es": (
+                "Función incorporada que agrupa elementos en tuplas, una por cada "
+                "iterable proporcionado."
+            ),
+            "para_que": "Recorrer listas en paralelo y sincronizar columnas de datos.",
+            "sintaxis": "zip(iterable1, iterable2, ...)",
+            "ejemplo": "for nombre, edad in zip(nombres, edades): ...",
+            "matiz": "Se detiene cuando el iterable más corto se agota.",
+            "error_tipico": (
+                "pasar un solo iterable y tratar de desempaquetar dos valores."
+            ),
+        },
+    },
     "open": {
         "tooltip": "Función que abre archivos y devuelve un manejador.",
         "definition_parts": {

@@ -10,12 +10,12 @@ class CondicionalesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["if", "else", "elif", "comparaciones"]
+    TAGS = ["if", "elif", "else", "comparaciones"]
 
     def summary(self) -> str:
         return (
-            "Aprende a tomar decisiones con if/elif/else, a comparar valores y a escribir "
-            "condiciones claras que eviten errores comunes."
+            "Aprende desde cero cómo tomar decisiones con if, elif y else, "
+            "usando comparaciones claras y evitando errores comunes."
         )
 
     def guide(self) -> str:
@@ -23,402 +23,514 @@ class CondicionalesLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: tomar decisiones es programar
-Los condicionales permiten ejecutar código solo cuando se cumple una condición. Con ellos controlas flujos:
-validar datos, decidir descuentos o elegir rutas de ejecución.
+## Introducción: decidir es el corazón de un programa
+Un programa útil toma decisiones: mostrar un mensaje si hay stock, validar una edad, aplicar un descuento o detener una
+acción. En Python, esas decisiones se expresan con `if`, `elif` y `else`. La clave es escribir condiciones claras y
+predecibles. En esta lección aprenderás a construir condicionales paso a paso, con ejemplos contextualizados y errores
+comunes explicados.
 
-## Paso 1: if básico
-El bloque `if` se ejecuta solo si la condición es verdadera.
+## Paso 1: Condición simple con if
+El condicional más simple evalúa una condición y ejecuta un bloque si es verdadera.
 
 **Aprende esto**
-- Aprenderás a evaluar una condición simple.
-- Verás cómo ejecutar un bloque cuando se cumple.
+- Aprenderás a usar `if` con una comparación básica.
+- Verás cómo construir un mensaje según el resultado.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
-edad = 20  # Edad del usuario
-es_mayor = edad >= 18  # Comparamos con 18
-if es_mayor:  # Si es verdadero
-    mensaje = "Puede ingresar"  # Definimos el mensaje
-else:  # En caso contrario
-    mensaje = "No puede ingresar"  # Mensaje alternativo
-print(mensaje)  # Mostramos el resultado
+stock = 5  # Unidades disponibles
+umbral = 3  # Mínimo requerido
+hay_stock = stock > umbral  # Evaluamos la condición
+mensaje = "Stock suficiente"  # Mensaje base
+if hay_stock:  # Si hay stock, mostramos el mensaje
+    print(mensaje)  # Mostramos el mensaje
+print(hay_stock)  # Mostramos el booleano
+print(stock)  # Mostramos el stock
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Puede ingresar`.
+Verás el mensaje de stock suficiente y el booleano `True`.
 
 **Por qué funciona**
-`edad >= 18` devuelve True y el bloque `if` se ejecuta.
+La comparación `stock > umbral` devuelve `True`. El bloque `if` se ejecuta solo cuando la condición es verdadera.
 
 **Lo típico que sale mal**
-- Usar `=` en lugar de `==` en comparaciones.
-- Olvidar el `else` cuando necesitas cubrir ambos casos.
+- Usar `=` en lugar de `==` dentro de una condición.
+- Confundir el orden de la comparación.
 
-## Paso 2: elif para múltiples caminos
-`elif` permite evaluar varias condiciones sin usar múltiples `if` separados.
+## Paso 2: if/else para dos caminos
+Cuando hay dos posibilidades claras, `else` ayuda a cubrir el caso contrario.
+
+**Aprende esto**
+- Aprenderás a usar `else` para cubrir el caso negativo.
+- Verás cómo evitar mensajes ambiguos.
+
+**Haz esto**
+print("ok")  # Confirmamos
+```
+edad = 17  # Edad del usuario
+mayor_edad = edad >= 18  # Evaluamos si es mayor
+if mayor_edad:  # Si es mayor
+    mensaje = "Acceso permitido"  # Mensaje positivo
+else:  # Si no es mayor
+    mensaje = "Acceso restringido"  # Mensaje negativo
+print(mensaje)  # Mostramos el resultado
+print(mayor_edad)  # Mostramos el booleano
+print("ok")  # Confirmamos
+```
+
+**Verás esto**
+Verás `Acceso restringido` y `False`.
+
+**Por qué funciona**
+`>=` evalúa si la edad alcanza el mínimo. El `else` cubre el caso opuesto sin necesidad de otra condición.
+
+**Lo típico que sale mal**
+- Olvidar el `else` y no cubrir el caso negativo.
+- Invertir la comparación y mostrar el mensaje incorrecto.
+
+## Paso 3: elif para múltiples condiciones
+`elif` permite evaluar múltiples condiciones de forma ordenada.
 
 **Aprende esto**
 - Aprenderás a encadenar condiciones con `elif`.
-- Verás cómo elegir un único camino.
+- Verás por qué el orden de evaluación importa.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
-puntaje = 75  # Puntaje del examen
-if puntaje >= 90:  # Primera condición
+puntaje = 82  # Puntaje obtenido
+if puntaje >= 90:  # Primer rango
     nivel = "Excelente"  # Nivel alto
-elif puntaje >= 70:  # Segunda condición
+elif puntaje >= 70:  # Segundo rango
     nivel = "Aprobado"  # Nivel medio
-else:  # Si no cumple ninguna
-    nivel = "Reprobado"  # Nivel bajo
+else:  # Resto de casos
+    nivel = "Reforzar"  # Nivel bajo
 print(nivel)  # Mostramos el nivel
+print(puntaje)  # Mostramos el puntaje
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Aprobado`.
+Verás `Aprobado` y el puntaje `82`.
 
 **Por qué funciona**
-Python evalúa de arriba hacia abajo y se queda con la primera condición verdadera.
+Python evalúa de arriba hacia abajo y usa el primer bloque verdadero. Por eso el orden de las condiciones es clave.
 
 **Lo típico que sale mal**
-- Colocar condiciones más generales primero y bloquear las específicas.
-- Repetir `if` separados y obtener múltiples resultados.
+- Poner primero la condición más general y bloquear las siguientes.
+- Olvidar el `else` y dejar casos sin cubrir.
 
-## Paso 3: Comparaciones y operadores lógicos
-Puedes combinar condiciones con `and`, `or` y `not`.
-
-**Aprende esto**
-- Aprenderás a combinar comparaciones en una sola condición.
-- Verás cómo controlar dos requisitos a la vez.
-
-**Haz esto**
-```
-edad = 22  # Edad del usuario
-saldo = 50  # Saldo disponible
-es_adulto = edad >= 18  # Condición 1
-saldo_suficiente = saldo >= 30  # Condición 2
-if es_adulto and saldo_suficiente:  # Ambas condiciones
-    estado = "Compra permitida"  # Mensaje positivo
-else:  # Si alguna falla
-    estado = "Compra rechazada"  # Mensaje negativo
-print(estado)  # Mostramos el estado
-```
-
-**Verás esto**
-Verás `Compra permitida`.
-
-**Por qué funciona**
-`and` exige que ambas condiciones sean True. Si alguna es False, se ejecuta el else.
-
-**Lo típico que sale mal**
-- Usar `or` cuando necesitas que todas se cumplan.
-- No separar condiciones en variables y perder claridad.
-
-## Paso 4: Comparar cadenas de texto
-Comparar strings es común en menús y validaciones.
+## Paso 4: Operadores lógicos (and/or)
+Combinar condiciones te permite decisiones más específicas.
 
 **Aprende esto**
-- Aprenderás a comparar texto con seguridad.
-- Verás cómo normalizar para evitar errores por mayúsculas.
+- Aprenderás a combinar condiciones con `and` y `or`.
+- Verás cómo construir reglas más reales.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
-entrada = "  Si "  # Texto del usuario
-respuesta = entrada.strip().lower()  # Normalizamos
-if respuesta == "si":  # Comparamos con texto esperado
-    mensaje = "Confirmado"  # Resultado positivo
-else:  # Si no coincide
-    mensaje = "Cancelado"  # Resultado negativo
+precio = 120  # Precio del producto
+es_cliente = True  # Indica si es cliente
+aplica_descuento = precio > 100 and es_cliente  # Reglas combinadas
+if aplica_descuento:  # Si aplica descuento
+    mensaje = "Descuento aplicado"  # Mensaje
+else:  # Si no aplica
+    mensaje = "Sin descuento"  # Mensaje
 print(mensaje)  # Mostramos el mensaje
+print(aplica_descuento)  # Mostramos el booleano
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Confirmado`.
+Verás `Descuento aplicado` y `True`.
 
 **Por qué funciona**
-`strip` elimina espacios y `lower` unifica el texto para compararlo con seguridad.
+`and` exige que ambas condiciones sean verdaderas. Como el precio es alto y es cliente, la condición se cumple.
 
 **Lo típico que sale mal**
-- Comparar texto sin limpiar espacios.
-- Olvidar normalizar mayúsculas.
+- Usar `and` cuando necesitas `or`.
+- No agrupar condiciones y obtener resultados inesperados.
 
-## Paso 5: Condiciones con rangos
-A veces necesitas verificar si algo está entre dos valores.
+## Paso 5: Pertenencia e identidad
+A veces necesitas saber si un valor está dentro de una colección o si algo es `None`.
 
 **Aprende esto**
-- Aprenderás a usar comparaciones encadenadas.
-- Verás cómo validar rangos de forma legible.
+- Aprenderás a usar `in` para pertenencia.
+- Verás cómo comparar con `is` cuando hay `None`.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
-temperatura = 23  # Temperatura actual
-if 20 <= temperatura <= 25:  # Comprobamos rango
-    estado = "Confort"  # Estado adecuado
-else:  # Fuera del rango
-    estado = "Ajustar"  # Mensaje de ajuste
-print(estado)  # Mostramos el estado
+roles = ["admin", "editor"]  # Roles permitidos
+rol = "editor"  # Rol actual
+es_valido = rol in roles  # Verificamos pertenencia
+resultado = None  # Aún no hay resultado
+if es_valido:  # Si el rol es válido
+    resultado = "Acceso"  # Asignamos resultado
+print(es_valido)  # Mostramos el booleano
+print(resultado is None)  # Verificamos si sigue vacío
+print(resultado)  # Mostramos el resultado
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Confort`.
+Verás `True`, `False` y el texto `Acceso`.
 
 **Por qué funciona**
-Python permite comparar un valor dentro de un rango con una sola expresión.
+`in` revisa pertenencia en la lista y `is` compara identidad con `None`, que es un valor especial único.
 
 **Lo típico que sale mal**
-- Separar el rango en dos condiciones y olvidarse de una.
-- Usar límites incorrectos.
+- Usar `== None` en lugar de `is None`.
+- Buscar pertenencia en una lista sin normalizar texto.
 
-## Más allá (nivel pro)
-Las condiciones complejas se vuelven más legibles si nombras cada parte.
+## Paso 6: Condiciones con valores "truthy"
+Python considera ciertos valores como verdaderos o falsos sin comparaciones explícitas.
 
 **Aprende esto**
-- Aprenderás a escribir condiciones complejas sin perder claridad.
-- Verás cómo reutilizar una condición en varios lugares.
+- Aprenderás qué significa truthy y falsy.
+- Verás cómo usarlo con cuidado en condicionales.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
-edad = 19  # Edad del usuario
-puntos = 85  # Puntos acumulados
-es_adulto = edad >= 18  # Condición reutilizable
-tiene_puntos = puntos >= 80  # Otra condición
-aprobado = es_adulto and tiene_puntos  # Condición compuesta
-print(aprobado)  # Mostramos el resultado
+lista = []  # Lista vacía
+mensaje = "Lista vacía"  # Mensaje base
+if lista:  # La lista vacía es falsy
+    mensaje = "Lista con datos"  # Mensaje alterno
+print(mensaje)  # Mostramos el mensaje
+lista.append("dato")  # Agregamos un dato
+if lista:  # Ahora la lista es truthy
+    print("Lista con datos")  # Mostramos el mensaje
+print(len(lista))  # Mostramos la cantidad
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `True`.
+Verás `Lista vacía`, luego `Lista con datos` y el número 1.
 
 **Por qué funciona**
-Separar condiciones en variables hace el código más legible y fácil de probar.
+Las colecciones vacías son falsy y las no vacías son truthy. Esto simplifica ciertas validaciones.
 
 **Lo típico que sale mal**
-- Escribir condiciones largas en una sola línea sin claridad.
+- Usar truthy sin entender qué valores cuentan como falsy.
+- Confundir una lista vacía con `None`.
+
+## Más allá (nivel pro): condiciones legibles y validación
+En proyectos reales conviene escribir condiciones claras y pequeñas funciones para validar datos.
+
+**Aprende esto**
+- Aprenderás a combinar condiciones con nombres legibles.
+- Verás cómo evitar condicionales gigantes usando variables intermedias.
+
+**Haz esto**
+print("ok")  # Confirmamos
+```
+edad = 20  # Edad del usuario
+acepta_terminos = True  # Indicador de aceptación
+es_mayor = edad >= 18  # Condición 1
+puede_ingresar = es_mayor and acepta_terminos  # Condición final
+mensaje = "Acceso" if puede_ingresar else "Bloqueado"  # Mensaje final
+print(puede_ingresar)  # Mostramos el booleano
+print(mensaje)  # Mostramos el mensaje
+print("ok")  # Confirmamos
+```
+
+**Verás esto**
+Verás `True` y `Acceso`.
+
+**Por qué funciona**
+Separar condiciones en variables con nombre hace el código más legible y reduce errores al combinar lógica.
+
+**Lo típico que sale mal**
+- Escribir condiciones largas sin nombres y perder claridad.
 - Repetir la misma condición en varios lugares.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
-            ("Usar = en comparaciones", "El operador de comparación es ==, no =."),
-            ("Olvidar else", "Si necesitas un camino alterno, agrega else."),
-            ("Orden incorrecto en elif", "Coloca primero las condiciones más específicas."),
-            ("Comparar texto sin normalizar", "Usa strip() y lower() para comparar strings."),
-            ("Confundir and/or", "and exige ambas condiciones; or permite cualquiera."),
-            ("Condiciones demasiado largas", "Divide la lógica en variables con nombres claros."),
-            ("Usar if repetidos", "Encadena con elif para evitar múltiples ejecuciones."),
-            ("Olvidar paréntesis en lógica compleja", "Asegura el orden correcto de evaluación."),
-            ("Comparar None con ==", "Usa is None para comprobar ausencia de valor."),
-            ("Usar valores mágicos", "Guarda límites en variables con nombres claros."),
-            ("Ignorar el rango inclusivo", "En 20 <= x <= 25, los límites se incluyen."),
+            (
+                "Usar = en lugar de ==",
+                "El operador = asigna, no compara; causa errores de sintaxis.",
+            ),
+            (
+                "Orden incorrecto en elif",
+                "Una condición general primero puede ocultar casos específicos.",
+            ),
+            (
+                "Olvidar else",
+                "Dejar casos sin cubrir crea resultados silenciosos.",
+            ),
+            (
+                "Comparar con None usando ==",
+                "La comparación correcta es `is None`.",
+            ),
+            (
+                "No normalizar texto",
+                "Comparar strings sin lower() produce resultados inconsistentes.",
+            ),
+            (
+                "Confundir and/or",
+                "and requiere ambas condiciones; or solo una.",
+            ),
+            (
+                "No agrupar condiciones",
+                "Falta de paréntesis puede cambiar la lógica.",
+            ),
+            (
+                "Usar truthy sin claridad",
+                "No todos saben que una lista vacía es falsy.",
+            ),
+            (
+                "Comparar floats directamente",
+                "Comparaciones exactas pueden fallar por precisión.",
+            ),
+            (
+                "No validar rangos",
+                "Olvidar rangos causa decisiones incorrectas.",
+            ),
+            (
+                "Confundir identidad con igualdad",
+                "is compara identidad, no valores.",
+            ),
+            (
+                "Repetir condiciones",
+                "Duplicar lógica aumenta el riesgo de inconsistencias.",
+            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "if/else básico",
+                "if simple",
                 """# Aprende esto
-# Aprenderás a tomar una decisión simple.
-# Verás cómo usar else para el caso contrario.
+# Aprenderás a usar un if básico.
+# Verás cómo una condición controla un bloque.
+# Practicarás con un caso de stock.
 #
 # Haz esto
-edad = 20  # Edad del usuario
-es_mayor = edad >= 18  # Condición booleana
-if es_mayor:  # Si es verdadero
-    mensaje = "Puede ingresar"  # Mensaje positivo
-else:  # Caso contrario
-    mensaje = "No puede ingresar"  # Mensaje negativo
-print(mensaje)  # Mostramos el resultado
+stock = 5  # Unidades disponibles
+umbral = 3  # Mínimo requerido
+hay_stock = stock > umbral  # Evaluamos condición
+mensaje = "Stock suficiente"  # Mensaje base
+if hay_stock:  # Si hay stock
+    print(mensaje)  # Mostramos el mensaje
+print(hay_stock)  # Mostramos el booleano
+print(stock)  # Mostramos el stock
 #
 # Verás esto
-# Verás "Puede ingresar".
+# Verás el mensaje y True.
 #
 # Por qué funciona
-# La condición es True y el bloque if se ejecuta.
+# La condición se evalúa y el bloque se ejecuta si es verdadera.
 #
 # Lo típico que sale mal
 # - Usar = en lugar de ==.
-# - Olvidar el else cuando aplica.
+# - Confundir el orden de la comparación.
 """,
             ),
             (
-                "elif con rangos",
+                "if/else",
                 """# Aprende esto
-# Aprenderás a evaluar varias condiciones.
-# Verás cómo elegir un solo resultado.
+# Aprenderás a cubrir dos caminos con else.
+# Verás mensajes claros en cada caso.
+# Evitarás resultados ambiguos.
 #
 # Haz esto
-puntaje = 75  # Puntaje del examen
-if puntaje >= 90:  # Primer nivel
+edad = 17  # Edad
+mayor_edad = edad >= 18  # Evaluamos condición
+if mayor_edad:  # Si es mayor
+    mensaje = "Acceso permitido"  # Mensaje positivo
+else:  # Si no es mayor
+    mensaje = "Acceso restringido"  # Mensaje negativo
+print(mensaje)  # Mostramos el mensaje
+print(mayor_edad)  # Mostramos el booleano
+#
+# Verás esto
+# Verás "Acceso restringido" y False.
+#
+# Por qué funciona
+# else cubre el caso en que la condición es falsa.
+#
+# Lo típico que sale mal
+# - Olvidar el else.
+# - Invertir la comparación.
+""",
+            ),
+            (
+                "elif para rangos",
+                """# Aprende esto
+# Aprenderás a usar elif con rangos.
+# Verás cómo el orden afecta el resultado.
+# Practicarás con niveles de puntaje.
+#
+# Haz esto
+puntaje = 82  # Puntaje
+if puntaje >= 90:  # Alto
     nivel = "Excelente"  # Nivel alto
-elif puntaje >= 70:  # Segundo nivel
+elif puntaje >= 70:  # Medio
     nivel = "Aprobado"  # Nivel medio
-else:  # Caso restante
-    nivel = "Reprobado"  # Nivel bajo
+else:  # Bajo
+    nivel = "Reforzar"  # Nivel bajo
 print(nivel)  # Mostramos el nivel
+print(puntaje)  # Mostramos el puntaje
 #
 # Verás esto
-# Verás "Aprobado".
+# Verás "Aprobado" y 82.
 #
 # Por qué funciona
-# Se ejecuta la primera condición verdadera.
+# Python evalúa en orden y toma el primer bloque verdadero.
 #
 # Lo típico que sale mal
-# - Ordenar mal las condiciones.
-# - Usar if separados en lugar de elif.
+# - Poner primero la condición más general.
+# - Dejar casos sin cubrir.
 """,
             ),
             (
-                "Condiciones con and",
+                "Operadores lógicos",
                 """# Aprende esto
-# Aprenderás a combinar dos requisitos.
-# Verás cómo usar and para exigir ambos.
+# Aprenderás a combinar condiciones con and.
+# Verás cómo construir reglas reales.
+# Confirmarás el resultado con un booleano.
 #
 # Haz esto
-edad = 22  # Edad del usuario
-saldo = 50  # Saldo disponible
-es_adulto = edad >= 18  # Condición 1
-saldo_ok = saldo >= 30  # Condición 2
-if es_adulto and saldo_ok:  # Ambas condiciones
-    estado = "Compra permitida"  # Resultado positivo
-else:  # Si falla alguna
-    estado = "Compra rechazada"  # Resultado negativo
-print(estado)  # Mostramos el resultado
-#
-# Verás esto
-# Verás "Compra permitida".
-#
-# Por qué funciona
-# and exige que ambas condiciones sean True.
-#
-# Lo típico que sale mal
-# - Usar or en lugar de and.
-# - No separar condiciones en variables.
-""",
-            ),
-            (
-                "Comparación de texto",
-                """# Aprende esto
-# Aprenderás a comparar texto con normalización.
-# Verás cómo evitar errores por espacios.
-#
-# Haz esto
-entrada = "  Si "  # Texto del usuario
-respuesta = entrada.strip().lower()  # Normalizamos
-if respuesta == "si":  # Comparamos con el esperado
-    mensaje = "Confirmado"  # Resultado positivo
+precio = 120  # Precio del producto
+es_cliente = True  # Indicador de cliente
+aplica_descuento = precio > 100 and es_cliente  # Regla combinada
+if aplica_descuento:  # Si aplica descuento
+    mensaje = "Descuento aplicado"  # Mensaje
 else:  # Caso contrario
-    mensaje = "Cancelado"  # Resultado negativo
+    mensaje = "Sin descuento"  # Mensaje
+print(mensaje)  # Mostramos mensaje
+print(aplica_descuento)  # Mostramos booleano
+#
+# Verás esto
+# Verás "Descuento aplicado" y True.
+#
+# Por qué funciona
+# and requiere que ambas condiciones sean verdaderas.
+#
+# Lo típico que sale mal
+# - Usar and cuando corresponde or.
+# - No agrupar condiciones.
+""",
+            ),
+            (
+                "Pertenencia con in",
+                """# Aprende esto
+# Aprenderás a verificar pertenencia en listas.
+# Verás cómo usar in de forma clara.
+# Crearás un mensaje basado en la validación.
+#
+# Haz esto
+roles = ["admin", "editor"]  # Roles permitidos
+rol = "editor"  # Rol actual
+es_valido = rol in roles  # Verificamos pertenencia
+mensaje = "Rol válido" if es_valido else "Rol inválido"  # Mensaje
+rol_mayus = rol.upper()  # Normalizamos para mostrar
+print(es_valido)  # Mostramos booleano
+print(mensaje)  # Mostramos mensaje
+print(len(roles))  # Mostramos cantidad
+print(rol_mayus)  # Mostramos el rol en mayúsculas
+#
+# Verás esto
+# Verás True y "Rol válido".
+#
+# Por qué funciona
+# in revisa si el valor está en la colección.
+#
+# Lo típico que sale mal
+# - No normalizar texto antes de comparar.
+# - Confundir in con igualdad.
+""",
+            ),
+            (
+                "Comparar con None",
+                """# Aprende esto
+# Aprenderás a usar is con None.
+# Verás cómo actualizar un resultado.
+# Evitarás comparar con ==.
+#
+# Haz esto
+resultado = None  # Aún no hay resultado
+valor = 5  # Valor base
+resultado = valor * 2  # Calculamos resultado
+es_nulo = resultado is None  # Verificamos si es None
+mensaje = "Sin resultado" if es_nulo else "Con resultado"  # Mensaje
+print(es_nulo)  # Mostramos booleano
+print(resultado)  # Mostramos resultado
+print(resultado is not None)  # Confirmamos que existe
 print(mensaje)  # Mostramos el mensaje
 #
 # Verás esto
-# Verás "Confirmado".
+# Verás False, 10 y True.
 #
 # Por qué funciona
-# strip y lower limpian el texto antes de comparar.
+# None es un singleton y se compara con is.
 #
 # Lo típico que sale mal
-# - Comparar sin limpiar.
-# - Olvidar lower.
+# - Usar == None.
+# - Confundir None con 0.
 """,
             ),
             (
-                "Rango con comparación encadenada",
+                "Truthy y falsy",
                 """# Aprende esto
-# Aprenderás a validar rangos con una sola expresión.
-# Verás cómo crear un estado legible.
+# Aprenderás a usar truthy con listas.
+# Verás cómo una lista vacía es falsy.
+# Confirmarás con len.
 #
 # Haz esto
-temperatura = 23  # Temperatura actual
-if 20 <= temperatura <= 25:  # Validamos rango
-    estado = "Confort"  # Estado adecuado
-else:  # Fuera del rango
-    estado = "Ajustar"  # Mensaje alternativo
-print(estado)  # Mostramos el estado
+lista = []  # Lista vacía
+mensaje = "Lista vacía"  # Mensaje base
+if lista:  # Lista vacía es falsy
+    mensaje = "Lista con datos"  # Mensaje alterno
+print(mensaje)  # Mostramos mensaje
+lista.append("dato")  # Agregamos un dato
+if lista:  # Ahora es truthy
+    print("Lista con datos")  # Mostramos mensaje
+print(len(lista))  # Cantidad
 #
 # Verás esto
-# Verás "Confort".
+# Verás "Lista vacía", luego "Lista con datos" y 1.
 #
 # Por qué funciona
-# La comparación encadenada verifica ambos límites.
+# Colecciones vacías son falsy; no vacías son truthy.
 #
 # Lo típico que sale mal
-# - Separar en dos condiciones y olvidar una.
-# - Usar límites incorrectos.
+# - Confundir lista vacía con None.
+# - Usar truthy sin claridad.
 """,
             ),
             (
-                "Operador or",
+                "Condición con variable intermedia",
                 """# Aprende esto
-# Aprenderás a permitir varias opciones válidas.
-# Verás cómo usar or para aceptar cualquiera.
+# Aprenderás a usar variables para claridad.
+# Verás cómo una condición se vuelve más legible.
+# Evitarás condicionales gigantes.
 #
 # Haz esto
-metodo = "tarjeta"  # Método de pago
-if metodo == "tarjeta" or metodo == "transferencia":  # Opciones válidas
-    mensaje = "Pago aceptado"  # Resultado positivo
-else:  # Opción no válida
-    mensaje = "Pago rechazado"  # Resultado negativo
-print(mensaje)  # Mostramos el mensaje
+edad = 20  # Edad
+acepta_terminos = True  # Acepta términos
+es_mayor = edad >= 18  # Condición de edad
+puede_ingresar = es_mayor and acepta_terminos  # Condición final
+mensaje = "Acceso" if puede_ingresar else "Bloqueado"  # Mensaje
+print(puede_ingresar)  # Mostramos booleano
+print(mensaje)  # Mostramos mensaje
+print(es_mayor)  # Mostramos condición base
 #
 # Verás esto
-# Verás "Pago aceptado".
+# Verás True, "Acceso" y True.
 #
 # Por qué funciona
-# or permite que cualquiera de las condiciones sea True.
+# Separar condiciones mejora la lectura y reduce errores.
 #
 # Lo típico que sale mal
-# - Usar and cuando solo se necesita una opción.
-# - No cubrir el else.
-""",
-            ),
-            (
-                "Negación con not",
-                """# Aprende esto
-# Aprenderás a negar una condición.
-# Verás cómo interpretar not en el flujo.
-#
-# Haz esto
-activo = False  # Estado inicial
-if not activo:  # Negamos la condición
-    mensaje = "Cuenta inactiva"  # Mensaje de alerta
-else:  # Si está activa
-    mensaje = "Cuenta activa"  # Mensaje positivo
-print(mensaje)  # Mostramos el resultado
-#
-# Verás esto
-# Verás "Cuenta inactiva".
-#
-# Por qué funciona
-# not invierte el valor booleano.
-#
-# Lo típico que sale mal
-# - Usar not con condiciones confusas.
-# - Doble negación innecesaria.
-""",
-            ),
-            (
-                "Condición compuesta legible",
-                """# Aprende esto
-# Aprenderás a dividir condiciones complejas.
-# Verás cómo reutilizar variables booleanas.
-#
-# Haz esto
-edad = 19  # Edad del usuario
-puntos = 85  # Puntos acumulados
-es_adulto = edad >= 18  # Condición 1
-puntaje_ok = puntos >= 80  # Condición 2
-aprobado = es_adulto and puntaje_ok  # Condición compuesta
-print(aprobado)  # Mostramos el resultado
-#
-# Verás esto
-# Verás True.
-#
-# Por qué funciona
-# Las variables booleanas hacen la condición más clara.
-#
-# Lo típico que sale mal
-# - Escribir todo en una sola línea.
-# - Repetir condiciones en varios lugares.
+# - Repetir la misma condición varias veces.
+# - Usar nombres poco claros en variables lógicas.
 """,
             ),
         ]
@@ -426,34 +538,34 @@ print(aprobado)  # Mostramos el resultado
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Crea una condición que imprima 'Adulto' si edad >= 18.",
-                "hints": ["Usa if"],
-                "solution": "edad = 20\nif edad >= 18:\n    print('Adulto')",
+                "question": "Crea un if que muestre 'Mayor' si edad >= 18.",
+                "hints": ["Usa >="],
+                "solution": "edad = 20\nif edad >= 18:\n    print('Mayor')",
             },
             {
-                "question": "Usa elif para clasificar un puntaje en alto, medio o bajo.",
-                "hints": [">= 90, >= 70, else"],
-                "solution": "puntaje = 75\nif puntaje >= 90:\n    print('Alto')\nelif puntaje >= 70:\n    print('Medio')\nelse:\n    print('Bajo')",
+                "question": "Usa if/else para mostrar 'Aprobado' o 'Reprobado' según nota >= 60.",
+                "hints": ["Usa else"],
+                "solution": "nota = 55\nif nota >= 60:\n    print('Aprobado')\nelse:\n    print('Reprobado')",
             },
             {
-                "question": "Valida que un usuario sea mayor de edad y tenga saldo suficiente.",
+                "question": "Crea un if/elif/else para rangos de temperatura.",
+                "hints": ["Usa tres rangos"],
+                "solution": "temp = 18\nif temp >= 30:\n    print('Calor')\nelif temp >= 20:\n    print('Templado')\nelse:\n    print('Frío')",
+            },
+            {
+                "question": "Combina dos condiciones con and.",
                 "hints": ["Usa and"],
-                "solution": "edad = 20\nsaldo = 50\nif edad >= 18 and saldo >= 30:\n    print('Ok')",
+                "solution": "precio = 120\nes_cliente = True\nif precio > 100 and es_cliente:\n    print('Descuento')",
             },
             {
-                "question": "Normaliza una respuesta y compara si es 'si'.",
-                "hints": ["Usa strip y lower"],
-                "solution": "respuesta = ' Si '\ntexto = respuesta.strip().lower()\nif texto == 'si':\n    print('Confirmado')",
+                "question": "Verifica si 'admin' está en una lista de roles.",
+                "hints": ["Usa in"],
+                "solution": "roles = ['admin', 'editor']\nprint('admin' in roles)",
             },
             {
-                "question": "Verifica si un valor está entre 10 y 20.",
-                "hints": ["Usa comparación encadenada"],
-                "solution": "valor = 15\nif 10 <= valor <= 20:\n    print('En rango')",
-            },
-            {
-                "question": "Acepta método de pago 'tarjeta' o 'transferencia'.",
-                "hints": ["Usa or"],
-                "solution": "metodo = 'tarjeta'\nif metodo == 'tarjeta' or metodo == 'transferencia':\n    print('Aceptado')",
+                "question": "Comprueba si una variable es None usando is.",
+                "hints": ["Usa is None"],
+                "solution": "resultado = None\nif resultado is None:\n    print('Sin resultado')",
             },
         ]
 

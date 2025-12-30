@@ -189,6 +189,175 @@ GLOSSARY = {
             "matiz": "None no es lo mismo que 0, '' o False.",
         },
     },
+    "typing": {
+        "tooltip": "Módulo estándar para declarar y documentar tipos.",
+        "definition_parts": {
+            "que_es": (
+                "typing es el módulo que define constructores como Optional, Literal, "
+                "TypedDict, Protocol o TypeVar."
+            ),
+            "para_que": (
+                "Sirve para comunicar contratos, ayudar a los type checkers y "
+                "documentar APIs sin cambiar el runtime."
+            ),
+            "sintaxis": "from typing import Optional, TypedDict",
+            "ejemplo": "from typing import Optional define tipos opcionales.",
+            "matiz": (
+                "Los tipos no validan en tiempo de ejecución salvo que agregues "
+                "checks manuales."
+            ),
+        },
+    },
+    "type hint": {
+        "tooltip": "Anotación que describe el tipo esperado.",
+        "definition_parts": {
+            "que_es": (
+                "Un type hint es una anotación (o pista) que describe el tipo de un "
+                "valor o retorno."
+            ),
+            "para_que": (
+                "Mejorar la legibilidad, habilitar análisis estático y documentar "
+                "interfaces."
+            ),
+            "sintaxis": "def total(valores: list[int]) -> int: ...",
+            "ejemplo": "nombre: str = 'Ana'",
+            "matiz": (
+                "Son opcionales y no obligan al intérprete, pero sí a los chequeadores."
+            ),
+        },
+    },
+    "type checker": {
+        "tooltip": "Herramienta que valida tipos de forma estática.",
+        "definition_parts": {
+            "que_es": (
+                "Un type checker analiza tu código y detecta incompatibilidades de tipos."
+            ),
+            "para_que": (
+                "Atrapar errores antes de ejecutar, especialmente en proyectos grandes."
+            ),
+            "sintaxis": "Ejemplos: mypy, pyright, pyre",
+            "ejemplo": "mypy detecta si pasas str donde se espera int.",
+            "matiz": (
+                "El checker no ejecuta el código; interpreta anotaciones y flujos."
+            ),
+        },
+    },
+    "optional": {
+        "tooltip": "Tipo que permite un valor o None.",
+        "definition_parts": {
+            "que_es": "Optional[T] equivale a Union[T, None].",
+            "para_que": (
+                "Modelar valores que pueden faltar o no estar disponibles aún."
+            ),
+            "sintaxis": "from typing import Optional\nvalor: Optional[int] = None",
+            "ejemplo": "def buscar() -> Optional[str]: ...",
+            "matiz": (
+                "Si el valor no puede ser None, no lo marques como Optional."
+            ),
+        },
+    },
+    "union": {
+        "tooltip": "Tipo que acepta múltiples alternativas.",
+        "definition_parts": {
+            "que_es": "Union[A, B] acepta valores de tipo A o B.",
+            "para_que": (
+                "Expresar entradas flexibles, como int o float, sin perder claridad."
+            ),
+            "sintaxis": "from typing import Union\nvalor: Union[int, float]",
+            "ejemplo": "def convertir(x: Union[int, float]) -> float: ...",
+            "matiz": "Uniones muy grandes dificultan la lectura y el mantenimiento.",
+        },
+    },
+    "literal": {
+        "tooltip": "Tipo que restringe valores posibles.",
+        "definition_parts": {
+            "que_es": (
+                "Literal define un conjunto finito de valores válidos."
+            ),
+            "para_que": (
+                "Evitar strings mágicos y garantizar modos o flags controlados."
+            ),
+            "sintaxis": "from typing import Literal\nColor = Literal['rojo', 'azul']",
+            "ejemplo": "def pintar(color: Literal['rojo', 'azul']) -> str: ...",
+            "matiz": (
+                "La restricción la aplica el checker; en runtime puedes validar manualmente."
+            ),
+        },
+    },
+    "typeddict": {
+        "tooltip": "Tipo que describe dicts con claves fijas.",
+        "definition_parts": {
+            "que_es": (
+                "TypedDict describe la forma esperada de un diccionario con claves y tipos."
+            ),
+            "para_que": (
+                "Modelar datos tipo JSON y validar presencia de claves en análisis estático."
+            ),
+            "sintaxis": "class Usuario(TypedDict): nombre: str",
+            "ejemplo": "usuario: Usuario = {'nombre': 'Ana'}",
+            "matiz": "No valida en runtime salvo que agregues comprobaciones.",
+        },
+    },
+    "protocol": {
+        "tooltip": "Interfaz estructural para duck typing tipado.",
+        "definition_parts": {
+            "que_es": (
+                "Protocol define un contrato basado en métodos/atributos, no en herencia."
+            ),
+            "para_que": (
+                "Aceptar cualquier objeto que cumpla la interfaz sin depender de clases."
+            ),
+            "sintaxis": "class Escribible(Protocol): def escribir(self, t: str) -> None: ...",
+            "ejemplo": "def exportar(x: Escribible) -> None: ...",
+            "matiz": "Ideal para inyección de dependencias y testing.",
+        },
+    },
+    "sequence": {
+        "tooltip": "Tipo abstracto para secuencias indexables.",
+        "definition_parts": {
+            "que_es": "Sequence representa listas, tuplas y otros iterables indexables.",
+            "para_que": (
+                "Recibir colecciones sin forzar a que sean list."
+            ),
+            "sintaxis": "from typing import Sequence\nvalores: Sequence[int]",
+            "ejemplo": "def total(xs: Sequence[int]) -> int: ...",
+            "matiz": "Usa Sequence si no necesitas mutar la colección.",
+        },
+    },
+    "mapping": {
+        "tooltip": "Tipo abstracto para diccionarios y mapas.",
+        "definition_parts": {
+            "que_es": "Mapping describe objetos con claves y valores (como dict).",
+            "para_que": "Evitar depender de dict cuando solo necesitas lectura.",
+            "sintaxis": "from typing import Mapping\ncfg: Mapping[str, str]",
+            "ejemplo": "def leer(cfg: Mapping[str, str]) -> str: ...",
+            "matiz": "Mapping no garantiza mutabilidad; es más general que dict.",
+        },
+    },
+    "callable": {
+        "tooltip": "Tipo para objetos invocables (funciones o lambdas).",
+        "definition_parts": {
+            "que_es": "Callable describe una firma: argumentos y tipo de retorno.",
+            "para_que": (
+                "Tipar callbacks, funciones de orden superior y estrategias."
+            ),
+            "sintaxis": "from typing import Callable\nfn: Callable[[int], int]",
+            "ejemplo": "def aplicar(x: int, fn: Callable[[int], int]) -> int: ...",
+            "matiz": "Si omites la firma, pierdes información útil para el checker.",
+        },
+    },
+    "typevar": {
+        "tooltip": "Variable de tipo para genéricos.",
+        "definition_parts": {
+            "que_es": "TypeVar define un tipo genérico reutilizable.",
+            "para_que": (
+                "Escribir funciones o clases que preservan el tipo de entrada."
+            ),
+            "sintaxis": "from typing import TypeVar\nT = TypeVar('T')",
+            "ejemplo": "def primero(valores: list[T]) -> T: ...",
+            "matiz": "Puedes restringirlo con bound o constraints si hace falta.",
+        },
+    },
     "bool": {
         "tooltip": "Tipo de dato lógico con valores True o False.",
         "definition_parts": {

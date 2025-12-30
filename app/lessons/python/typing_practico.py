@@ -11,6 +11,7 @@ class TypingPracticoLesson(Lesson):
     SUBCATEGORY = "Buenas prácticas"
     LEVEL = "Intermedio"
     TAGS = ["typing", "Optional", "Protocol", "TypeVar", "hints"]
+    LESSON_BADGE = "🧠 PRO"
 
     def summary(self) -> str:
         return (
@@ -33,6 +34,132 @@ TL;DR: Usa typing para describir contratos y detectar problemas antes de ejecuta
 - Usa comentarios de tipo para casos complejos.
 - type checkers detectan incompatibilidades de forma estática.
 - Mantén hints simples y consistentes en toda la API.
+
+Lección: 🧠 PRO (tipado gradual en código real).
+
+## Contratos de tipos en acción (ejemplo amplio)
+Aprende esto: describe estructuras de datos con TypedDict y restringe valores con Literal.
+
+Haz esto (ejemplo con contexto):
+```py
+from typing import Literal, Sequence, TypedDict
+
+class Usuario(TypedDict):
+    nombre: str
+    rol: Literal["admin", "lector"]
+    tags: Sequence[str]
+
+def resumen(usuario: Usuario) -> str:
+    etiquetas = ", ".join(usuario["tags"])
+    return f"{usuario['nombre']} ({usuario['rol']}) -> {etiquetas}"
+
+usuario: Usuario = {"nombre": "Ana", "rol": "admin", "tags": ["docs", "qa"]}
+print(resumen(usuario))
+```
+
+Verás esto (salida real):
+```
+Ana (admin) -> docs, qa
+```
+
+Por qué funciona:
+- `TypedDict` garantiza que las claves existan.
+- `Literal` restringe el campo `rol` a dos valores válidos.
+- `Sequence[str]` permite pasar listas o tuplas sin copiar.
+
+Lo típico que sale mal (errores reales + mensajes):
+```py
+usuario = {"nombre": "Ana"}  # falta "rol" y "tags"
+print(usuario["rol"])
+```
+
+```py
+KeyError: 'rol'
+```
+
+## Optional y None (micro-ejemplos)
+Sintaxis clave: `Optional[int]` indica que puede ser `int` o `None`.
+
+Micro-ejemplo correcto:
+```py
+from typing import Optional
+
+def doble(valor: Optional[int]) -> int:
+    return valor * 2 if valor is not None else 0
+```
+
+Micro-ejemplo incorrecto:
+```py
+from typing import Optional
+
+valor: Optional[int] = None
+print(valor + 1)
+```
+
+Error real:
+```py
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+```
+
+Corrección: valida `None` con `is None` antes de operar.
+
+## Literal (micro-ejemplos)
+Sintaxis clave: `Literal["rojo", "azul"]` limita valores posibles.
+
+Micro-ejemplo correcto:
+```py
+from typing import Literal
+
+def pintar(color: Literal["rojo", "azul"]) -> str:
+    return f"Pintando {color}"
+```
+
+Micro-ejemplo incorrecto:
+```py
+from typing import Literal
+
+def pintar(color: Literal["rojo", "azul"]) -> str:
+    if color not in ("rojo", "azul"):
+        raise ValueError("color inválido")
+    return f"Pintando {color}"
+
+pintar("verde")
+```
+
+Error real:
+```py
+ValueError: color inválido
+```
+
+Corrección: usa uno de los valores permitidos por el `Literal`.
+
+## Callable (micro-ejemplos)
+Sintaxis clave: `Callable[[int], int]` describe funciones con firma.
+
+Micro-ejemplo correcto:
+```py
+from typing import Callable
+
+def aplicar(valor: int, fn: Callable[[int], int]) -> int:
+    return fn(valor)
+```
+
+Micro-ejemplo incorrecto:
+```py
+from typing import Callable
+
+def aplicar(valor: int, fn: Callable[[int], int]) -> int:
+    return fn(valor)
+
+aplicar(3, lambda x, y: x + y)
+```
+
+Error real:
+```py
+TypeError: <lambda>() missing 1 required positional argument: 'y'
+```
+
+Corrección: respeta la firma declarada en `Callable`.
 
 
 ## Operaciones y métodos más útiles

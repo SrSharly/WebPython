@@ -1879,6 +1879,79 @@ GLOSSARY = {
             ),
         },
     },
+    "ndarray": {
+        "tooltip": "Tipo de array n-dimensional usado por NumPy.",
+        "definition_parts": {
+            "que_es": "Estructura de datos central de NumPy para almacenar números.",
+            "para_que": (
+                "Se usa para representar vectores, matrices y tensores con operaciones "
+                "vectorizadas."
+            ),
+            "sintaxis": "np.array([1, 2, 3]) -> ndarray",
+            "ejemplo": "np.array([1, 2, 3]).shape",
+            "matiz": "No es lo mismo que una lista: está optimizado para números.",
+        },
+    },
+    "shape": {
+        "tooltip": "Tupla que describe las dimensiones de un array.",
+        "definition_parts": {
+            "que_es": "Atributo que indica filas/columnas o dimensiones de un ndarray.",
+            "para_que": "Ayuda a validar tamaños antes de indexar o reestructurar.",
+            "sintaxis": "arreglo.shape",
+            "ejemplo": "np.array([1, 2, 3]).shape devuelve (3,).",
+            "matiz": "No es una función; es un atributo del array.",
+        },
+    },
+    "np.array": {
+        "tooltip": "Función de NumPy para crear arrays.",
+        "definition_parts": {
+            "que_es": "Convierte listas o tuplas en un ndarray.",
+            "para_que": "Crear estructuras numéricas para operar de forma vectorizada.",
+            "sintaxis": "np.array([1, 2, 3])",
+            "ejemplo": "np.array([1, 2, 3]) * 2",
+            "matiz": "Si mezclas tipos, NumPy convierte a un tipo común.",
+        },
+    },
+    "np.zeros": {
+        "tooltip": "Función de NumPy para crear arrays llenos de ceros.",
+        "definition_parts": {
+            "que_es": "Genera un ndarray con todos los valores inicializados a 0.",
+            "para_que": "Reservar espacio para cálculos numéricos.",
+            "sintaxis": "np.zeros(4)",
+            "ejemplo": "np.zeros(3) -> array([0., 0., 0.])",
+            "matiz": "Acepta dimensiones y dtype opcional.",
+        },
+    },
+    "np.arange": {
+        "tooltip": "Función de NumPy para crear secuencias numéricas.",
+        "definition_parts": {
+            "que_es": "Crea un array con valores equidistantes.",
+            "para_que": "Generar rangos numéricos sin bucles.",
+            "sintaxis": "np.arange(inicio, fin, paso)",
+            "ejemplo": "np.arange(1, 5) -> array([1, 2, 3, 4])",
+            "matiz": "El límite final no se incluye.",
+        },
+    },
+    "np.sum": {
+        "tooltip": "Función de NumPy que suma elementos de un array.",
+        "definition_parts": {
+            "que_es": "Reduce un array a un valor sumando sus elementos.",
+            "para_que": "Obtener totales de forma rápida.",
+            "sintaxis": "np.sum(arreglo)",
+            "ejemplo": "np.sum(np.array([1, 2, 3])) -> 6",
+            "matiz": "Permite sumar por ejes con axis.",
+        },
+    },
+    "np.mean": {
+        "tooltip": "Función de NumPy que calcula la media.",
+        "definition_parts": {
+            "que_es": "Promedia los valores de un array.",
+            "para_que": "Obtener estadísticas descriptivas rápidas.",
+            "sintaxis": "np.mean(arreglo)",
+            "ejemplo": "np.mean(np.array([10, 20, 30])) -> 20.0",
+            "matiz": "Si hay NaN, valida o limpia los datos antes de promediar.",
+        },
+    },
     "jupyter": {
         "tooltip": "Entorno de notebooks interactivos para código y texto.",
         "definition_parts": {

@@ -26,13 +26,13 @@ class Lesson(QWidget):
         return None
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
-        raise NotImplementedError
+        return []
 
     def code_examples(self) -> list[tuple[str, str]]:
-        raise NotImplementedError
+        return []
 
     def exercises(self) -> list[dict]:
-        raise NotImplementedError
+        return []
 
     def requirements(self) -> list[str]:
         return []

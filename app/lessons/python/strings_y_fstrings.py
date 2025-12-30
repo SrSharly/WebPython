@@ -52,7 +52,7 @@ frase = "Me gusta Python
 Cierra la comilla o usa el tipo de comilla que no aparezca dentro del texto.
 
 ## Paso 2: escapes para comillas y caracteres especiales
-Cuando necesitas comillas dentro del texto, usa `\` para escapar.
+Cuando necesitas comillas dentro del texto, usa `\\` para escapar.
 
 **Así se escribe**
 ```py
@@ -585,9 +585,9 @@ print(mensaje)  # Mostramos el mensaje
 # Entenderás su uso en plantillas.
 #
 # Haz esto
-plantilla = """Hola {nombre}
+plantilla = '''Hola {nombre}
 Gracias por tu compra.
-Saludos."""  # Plantilla multilínea
+Saludos.'''  # Plantilla multilínea
 print(plantilla)  # Mostramos la plantilla
 #
 # Verás esto

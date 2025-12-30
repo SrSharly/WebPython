@@ -408,6 +408,74 @@ SyntaxError: expected 'except' or 'finally' block
 
 Corrección: `else` solo existe si antes declaraste `except` o `finally`.
 
+## Paso 3.1: Orden y agrupación de excepciones
+Cuando manejas varios errores, el orden importa: captura primero los más específicos.
+Si necesitas capturar varios tipos a la vez, usa una tupla.
+
+Micro-ejemplo correcto:
+```py
+try:
+    numero = int(None)
+except (TypeError, ValueError) as exc:
+    print("Entrada inválida:", exc)
+```
+
+Micro-ejemplo incorrecto:
+```py
+try:
+    numero = int(None)
+except ValueError, TypeError:
+    print("Entrada inválida")
+```
+
+Error real:
+```
+SyntaxError: multiple exception types must be parenthesized
+```
+
+Corrección: agrupa con paréntesis: `except (ValueError, TypeError):`.
+
+## Ejemplo ampliado con contexto: validar entradas mixtas
+**Aprende esto:** cómo manejar tipos y valores incorrectos sin detener el flujo del programa.
+
+**Haz esto (ejemplo completo con contexto):**
+```py
+datos = ["4", None, "x", "8"]
+convertidos = []
+
+for item in datos:
+    try:
+        numero = int(item)
+    except TypeError:
+        print(f"Tipo inválido: {item}")
+    except ValueError:
+        print(f"Valor inválido: {item}")
+    else:
+        convertidos.append(numero)
+
+print("Convertidos:", convertidos)
+```
+
+**Verás esto (salida real):**
+```
+Tipo inválido: None
+Valor inválido: x
+Convertidos: [4, 8]
+```
+
+**Por qué funciona:** `TypeError` ocurre con `None`, `ValueError` con texto no numérico.
+Al separar los errores, los mensajes son más claros.
+
+**Lo típico que sale mal (con error real):**
+```py
+except Exception:
+    print("Error")
+```
+```
+TypeError: 'NoneType' object cannot be interpreted as an integer
+```
+Solución: captura errores específicos antes de `Exception` para no ocultar la causa real.
+
 ## Paso 4: Lanzar errores propios con raise
 Si detectas un dato inválido, puedes lanzar una excepción con `raise`.
 ```
@@ -584,6 +652,10 @@ Explicación breve: valida `None` con `is None` antes de usarlo.
                 "Solución: captura tipos específicos (ValueError, ZeroDivisionError) para no ocultar errores.",
             ),
             (
+                "Orden incorrecto en except",
+                "Solución: captura primero errores específicos y deja Exception como último recurso.",
+            ),
+            (
                 "Usar except vacío",
                 "Solución: indica el error exacto y muestra un mensaje útil con print().",
             ),
@@ -705,6 +777,20 @@ print(cantidad)  # print muestra el resultado""",
                     "    int('abc')\n"
                     "except ValueError as exc:\n"
                     "    raise RuntimeError('Entrada inválida') from exc"
+                ),
+            },
+            {
+                "question": "Convierte una lista de valores y captura TypeError y ValueError juntos.",
+                "hints": ["Usa except (TypeError, ValueError)", "Acumula los válidos en una lista"],
+                "solution": (
+                    "def convertir_lista(valores):\n"
+                    "    convertidos = []\n"
+                    "    for item in valores:\n"
+                    "        try:\n"
+                    "            convertidos.append(int(item))\n"
+                    "        except (TypeError, ValueError):\n"
+                    "            print('Entrada inválida:', item)\n"
+                    "    return convertidos"
                 ),
             },
         ]

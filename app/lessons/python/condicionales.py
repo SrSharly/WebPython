@@ -10,11 +10,12 @@ class CondicionalesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["if", "elif", "else", "booleanos"]
+    TAGS = ["condicionales", "if", "elif", "else", "booleanos"]
 
     def summary(self) -> str:
         return (
-            "Aprende a tomar decisiones con if/elif/else, comparaciones claras y lógica booleana sin confusiones."
+            "Aprende a tomar decisiones con if/elif/else, escribir condiciones legibles y evitar "
+            "errores típicos de comparación e indentación."
         )
 
     def guide(self) -> str:
@@ -22,118 +23,192 @@ class CondicionalesLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: decidir es programar
-La mayoría de los programas existen para decidir algo: si un usuario tiene acceso, si un pago es válido, si se debe mostrar
-un mensaje u otro. Los condicionales son la herramienta para expresar esas decisiones. Aprender a escribir condiciones claras
-te ahorra errores y evita comportamientos inesperados.
+## Introducción: decidir en función de datos
+Los condicionales permiten que tu programa elija rutas distintas según un valor. En Python, la sintaxis es clara pero
+estricta: necesitas `if`, `elif` y `else`, y la indentación es obligatoria.
 
-En esta lección aprenderás desde cero cómo usar `if`, `elif` y `else`, cómo comparar valores, cómo combinar condiciones y
-cómo interpretar booleanos. También verás la importancia de la indentación, porque en Python el bloque se define por el
-espaciado. Al final tendrás un conjunto de patrones para tomar decisiones con seguridad.
+En esta lección aprenderás la sintaxis paso a paso con micro-snippets correctos e incorrectos, para que veas el error en el
+momento exacto en que suele aparecer.
 
-### Nota (CalloutBox: note)
-Los condicionales se leen como preguntas. Si la pregunta está mal formulada, la respuesta del programa también lo estará.
+## Paso 1: sintaxis básica de if
+Un `if` evalúa una condición booleana y ejecuta un bloque indentado.
 
-## Paso 1: la estructura básica if/else
-El `if` ejecuta un bloque si la condición es verdadera. El `else` se usa cuando la condición no se cumple. Esta estructura
-básica cubre decisiones binarias: sí/no, válido/no válido, permitido/bloqueado.
+**Así se escribe**
+```py
+edad = 20
+if edad >= 18:
+    print("Mayor de edad")
+```
 
-Es importante que la condición sea una expresión booleana. Puedes usar comparaciones como `==`, `!=`, `>`, `<` o comprobar
-si una variable ya es `True` o `False`.
+**Error típico (❌)**
+```py
+edad = 20
+if edad >= 18
+    print("Mayor de edad")
+```
 
-## Paso 2: múltiples caminos con elif
-Cuando hay más de dos posibilidades, `elif` te permite agregar caminos intermedios. El flujo se evalúa de arriba hacia abajo
-y solo el primer bloque verdadero se ejecuta. Esto hace que el orden sea importante.
+**Qué significa el error**
+`SyntaxError` aparece porque falta el `:` al final de la línea del `if`.
 
-Aprenderás a ordenar condiciones de lo más específico a lo más general para que el resultado sea predecible.
+**Cómo se arregla**
+Agrega `:` y mantén la indentación del bloque.
 
-## Paso 3: comparaciones claras
-Comparar números es directo, pero comparar texto requiere cuidado con mayúsculas, espacios y formatos. También aprenderás a
-comparar con `None` usando `is None` para evitar errores de identidad.
+## Paso 2: elif y else para más casos
+`elif` permite evaluar otra condición si la anterior no se cumplió, y `else` cubre el caso final.
 
-Es una buena práctica asignar nombres descriptivos a las condiciones. Si el nombre explica la lógica, el `if` se vuelve
-legible como una frase.
+**Así se escribe**
+```py
+nota = 7
+if nota >= 9:
+    resultado = "Excelente"
+elif nota >= 5:
+    resultado = "Aprobado"
+else:
+    resultado = "Reprobado"
+```
 
-### Buenas prácticas (CalloutBox: best_practice)
-Si una condición es larga, guárdala en una variable con nombre claro. Eso hace que el `if` sea fácil de leer y depurar.
+**Error típico (❌)**
+```py
+nota = 7
+if nota >= 9:
+    resultado = "Excelente"
+else nota >= 5:
+    resultado = "Aprobado"
+```
 
-## Paso 4: lógica booleana (and, or, not)
-Las palabras clave `and`, `or` y `not` permiten combinar condiciones. `and` exige que ambas sean verdaderas; `or` basta con
-una; `not` invierte el resultado. Con esta lógica puedes representar reglas reales: “si hay saldo y el usuario está activo”.
+**Qué significa el error**
+`SyntaxError` indica que `else` no lleva condición. Debe ser `elif` cuando hay condición.
 
-## Paso 5: valores verdaderos y falsos
-En Python, algunos valores se consideran falsos: `0`, `""`, `[]`, `None`. Aprender este detalle te ayuda a escribir
-condiciones más naturales: `if lista:` en lugar de `if len(lista) > 0`. Aun así, hay momentos donde la comparación explícita
-es más clara. La regla es: claridad antes que atajos.
+**Cómo se arregla**
+Cambia `else` por `elif` si quieres evaluar otra condición.
 
-## Paso 6: orden y legibilidad
-Si el orden de las condiciones no es correcto, puedes tener bugs silenciosos. Por ejemplo, si evalúas “mayor de edad” antes
-que “menor de 12”, el caso de 10 años nunca se ejecutará. Ordena de más específico a más general.
+## Paso 3: indentación obligatoria
+La indentación define el bloque que pertenece al `if`. Si no indentas, Python no sabe qué ejecutar.
 
-### Advertencia (CalloutBox: warning)
-Evita condiciones imposibles o redundantes. Si una condición siempre es verdadera, tu `else` nunca se ejecutará.
+**Así se escribe**
+```py
+activo = True
+if activo:
+    print("Activo")
+```
 
-## Más allá (nivel pro)
-En proyectos reales, los condicionales definen reglas de negocio. Una pequeña ambigüedad puede convertirse en un error
-costoso. Por eso, invertir tiempo en claridad es una decisión pro.
+**Error típico (❌)**
+```py
+activo = True
+if activo:
+print("Activo")
+```
 
-### Consejos pro
-- Nombra condiciones complejas: `es_mayor = edad >= 18` mejora lectura y pruebas.
-- Agrupa reglas con paréntesis para evitar confusiones en `and` y `or`.
-- Prefiere comparaciones explícitas cuando un valor puede ser `0` o `""`.
-- Ordena `elif` de más específico a más general y documenta la intención.
-- Si la lógica crece, considera moverla a una función con nombre descriptivo.
+**Qué significa el error**
+`IndentationError` indica que el bloque no está indentado correctamente.
+
+**Cómo se arregla**
+Indenta el bloque con cuatro espacios.
+
+## Paso 4: comparación correcta
+Para comparar valores usa `==`. `=` es asignación y no funciona dentro de una condición.
+
+**Así se escribe**
+```py
+color = "rojo"
+if color == "rojo":
+    print("Semáforo en rojo")
+```
+
+**Error típico (❌)**
+```py
+color = "rojo"
+if color = "rojo":
+    print("Semáforo en rojo")
+```
+
+**Qué significa el error**
+`SyntaxError` aparece porque `=` no es válido en una condición. Solo `==` compara.
+
+**Cómo se arregla**
+Usa `==` para comparar y reserva `=` para asignar.
+
+## Paso 5: condiciones legibles
+Condiciones claras se leen como frases: “si hay saldo”, “si está activo”. Evita comparaciones innecesarias.
+
+**Así se escribe**
+```py
+saldo = 50
+if saldo:
+    print("Hay saldo")
+```
+
+**Error típico (❌)**
+```py
+saldo = 0
+if saldo == True:
+    print("Hay saldo")
+```
+
+**Qué significa el error**
+No hay error de sintaxis, pero la comparación es confusa y puede fallar con valores no booleanos.
+
+**Cómo se arregla**
+Deja que Python evalúe la verdad del valor con `if saldo:`.
+
+## Paso 6: resumen para decidir sin errores
+Recuerda: `if` requiere `:`, la indentación es parte de la sintaxis y la comparación se hace con `==`. Con eso evitas la
+mayoría de errores al empezar.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
-                "Olvidar los dos puntos",
-                "Cada `if`, `elif` y `else` termina con `:`. Sin eso, Python marca error de sintaxis.",
+                "Olvidar el dos puntos",
+                "`if condicion` sin `:` provoca `SyntaxError`. Siempre termina la línea con `:`.",
             ),
             (
-                "Indentación incorrecta",
-                "Si el bloque no está indentado, Python no sabe qué pertenece al `if`.",
+                "No indentar el bloque",
+                "`IndentationError` ocurre cuando el bloque no está indentado con espacios.",
             ),
             (
                 "Usar = en lugar de ==",
-                "`=` asigna, `==` compara. Mezclarlos cambia el significado de la condición.",
+                "`if x = 3` da `SyntaxError`. Usa `==` para comparar.",
             ),
             (
-                "Comparar con None usando ==",
-                "Para `None` se recomienda `is None` para comparar identidad.",
+                "Usar else con condición",
+                "`else condicion:` no existe. Si hay condición, usa `elif`.",
             ),
             (
-                "Condiciones demasiado largas",
-                "Cuando una condición ocupa varias líneas sin nombre, se vuelve difícil de entender y depurar.",
+                "Comparar con True o False",
+                "`if activo == True` es redundante. Usa `if activo:`.",
             ),
             (
-                "Orden incorrecto en elif",
-                "Si pones un caso general primero, los casos específicos nunca se ejecutan.",
+                "Condiciones demasiado complejas",
+                "Si la condición es larga, guarda partes en variables para legibilidad.",
             ),
             (
-                "Confiar en valores falsy sin intención",
-                "`0` y `""` son falsos. Si esos valores son válidos, debes comparar explícitamente.",
+                "Olvidar cubrir el caso else",
+                "Si no hay else, algunos caminos quedan sin manejar y el flujo se vuelve incierto.",
             ),
             (
-                "No cubrir todos los casos",
-                "Si no hay `else` y ninguna condición se cumple, puede faltar un comportamiento esperado.",
+                "Confundir igualdad con identidad",
+                "Usa `==` para comparar valores y `is` para comparar `None`.",
             ),
             (
-                "Confundir and/or",
-                "`and` exige ambas condiciones; `or` basta con una. Usarlos mal cambia la lógica.",
+                "Usar strings vacíos sin considerar",
+                "Un string vacío es falso. Asegúrate de que eso sea lo que quieres.",
             ),
             (
-                "Usar not sin paréntesis",
-                "`not` cambia la prioridad. Si la expresión es larga, usa paréntesis para claridad.",
+                "Mutar datos dentro del if sin control",
+                "Si modificas listas dentro del if, documenta el efecto para evitar sorpresas.",
             ),
             (
-                "Comparar strings con espacios",
-                "Un espacio extra cambia el resultado. Usa `strip()` si el texto viene de entrada.",
+                "Olvidar paréntesis en comparaciones múltiples",
+                "En expresiones largas, usa paréntesis para evitar lógica incorrecta.",
             ),
             (
-                "No imprimir para depurar",
-                "Cuando un `if` no entra, imprime valores y tipos para confirmar la condición.",
+                "No usar elif para rangos",
+                "Si usas varios if independientes, pueden ejecutarse varios bloques.",
+            ),
+            (
+                "Comparar números como texto",
+                "`""10"" > ""2""` es True por orden alfabético. Convierte a int primero.",
             ),
         ]
 
@@ -142,205 +217,202 @@ costoso. Por eso, invertir tiempo en claridad es una decisión pro.
             (
                 "If básico",
                 """# Aprende esto
-# Aprenderás a usar if con una condición simple.
-# Verás cómo entra o no en el bloque.
-# Entenderás la importancia de la indentación.
+# Aprenderás a ejecutar un bloque cuando se cumple una condición.
+# Verás cómo se usa la indentación.
+# Entenderás la lectura de un if simple.
 #
 # Haz esto
-edad = 20  # Guardamos la edad
-if edad >= 18:  # Comprobamos mayoría de edad
-    print("Acceso permitido")  # Mostramos mensaje
-else:  # Caso contrario
-    print("Acceso denegado")  # Mostramos mensaje
+edad = 20  # Definimos la edad
+if edad >= 18:  # Comprobamos si es mayor
+    mensaje = "Mayor de edad"  # Texto de salida
+    print(mensaje)  # Mostramos el mensaje
 #
 # Verás esto
-# Verás "Acceso permitido".
+# Verás "Mayor de edad".
 #
 # Por qué funciona
-# La condición es verdadera y ejecuta el bloque if.
+# La condición es True y el bloque indentado se ejecuta.
 #
 # Lo típico que sale mal
-# - Olvidar los dos puntos.
+# - Olvidar el : al final del if.
 # - No indentar el bloque.
 """,
             ),
             (
-                "If con comparación de texto",
+                "If/else",
                 """# Aprende esto
-# Aprenderás a comparar texto con ==.
-# Verás cómo afecta mayúsculas y espacios.
-# Entenderás la necesidad de normalizar.
+# Aprenderás a manejar dos caminos con else.
+# Verás cómo cubrir el caso contrario.
+# Entenderás la estructura completa.
 #
 # Haz esto
-estado = "activo"  # Estado actual
-if estado == "activo":  # Comparamos texto
-    print("Usuario activo")  # Mostramos mensaje
+saldo = 0  # Saldo inicial
+if saldo > 0:  # Comprobamos si hay saldo
+    mensaje = "Hay saldo"  # Texto positivo
 else:  # Caso contrario
-    print("Usuario inactivo")  # Mostramos mensaje
+    mensaje = "Sin saldo"  # Texto negativo
+print(mensaje)  # Mostramos el mensaje
 #
 # Verás esto
-# Verás "Usuario activo".
+# Verás "Sin saldo".
 #
 # Por qué funciona
-# == compara el contenido exacto del string.
+# La condición es False, así que se ejecuta else.
 #
 # Lo típico que sale mal
-# - Comparar sin normalizar mayúsculas.
-# - Incluir espacios invisibles.
+# - Escribir else con condición.
+# - Usar if separados y ejecutar ambos bloques.
 """,
             ),
             (
-                "Elif para varias opciones",
+                "If/elif/else",
                 """# Aprende esto
-# Aprenderás a usar elif con varios casos.
-# Verás cómo se evalúan en orden.
-# Entenderás el flujo de arriba hacia abajo.
+# Aprenderás a evaluar rangos con elif.
+# Verás cómo se encadenan condiciones.
+# Entenderás el primer bloque que se cumple.
 #
 # Haz esto
-nota = 7  # Nota del estudiante
-if nota >= 9:  # Caso excelente
-    resultado = "Excelente"  # Guardamos resultado
-elif nota >= 7:  # Caso aprobado
-    resultado = "Aprobado"  # Guardamos resultado
-else:  # Caso desaprobado
-    resultado = "Reprobado"  # Guardamos resultado
-print(resultado)  # Mostramos resultado
+nota = 7  # Nota obtenida
+if nota >= 9:  # Primer rango
+    resultado = "Excelente"  # Texto 1
+elif nota >= 5:  # Segundo rango
+    resultado = "Aprobado"  # Texto 2
+else:  # Último caso
+    resultado = "Reprobado"  # Texto 3
+print(resultado)  # Mostramos el resultado
 #
 # Verás esto
 # Verás "Aprobado".
 #
 # Por qué funciona
-# El primer elif verdadero detiene la evaluación.
+# El primer if falla y el elif se cumple.
 #
 # Lo típico que sale mal
-# - Ordenar mal los rangos.
-# - Olvidar el else final.
+# - Olvidar elif y usar else mal.
+# - Ordenar rangos de forma incorrecta.
 """,
             ),
             (
-                "Combinar condiciones con and",
+                "Comparaciones correctas",
                 """# Aprende esto
-# Aprenderás a usar and para dos condiciones.
-# Verás que ambas deben ser True.
-# Entenderás cómo validar reglas múltiples.
+# Aprenderás a comparar con ==.
+# Verás la diferencia con asignar.
+# Entenderás el uso en condiciones.
 #
 # Haz esto
-saldo = 50  # Saldo disponible
-activo = True  # Estado del usuario
-if saldo >= 20 and activo:  # Ambas condiciones
-    print("Compra permitida")  # Mostramos mensaje
-else:  # Caso contrario
-    print("Compra denegada")  # Mostramos mensaje
+estado = "activo"  # Estado actual
+if estado == "activo":  # Comparamos valores
+    print("Usuario activo")  # Mensaje
 #
 # Verás esto
-# Verás "Compra permitida".
+# Verás "Usuario activo".
 #
 # Por qué funciona
-# and exige que saldo y activo sean verdaderos.
+# == compara el valor del string.
 #
 # Lo típico que sale mal
-# - Usar and cuando era or.
-# - Olvidar convertir a booleanos.
+# - Usar = en lugar de ==.
+# - Comparar con mayúsculas distintas.
 """,
             ),
             (
-                "Condiciones con or",
+                "Condición booleana directa",
                 """# Aprende esto
-# Aprenderás a usar or para alternativas.
-# Verás que basta una condición verdadera.
-# Entenderás la lógica de permisos.
+# Aprenderás a usar un booleano directamente.
+# Verás una condición legible.
+# Entenderás que no hace falta == True.
 #
 # Haz esto
-es_admin = False  # Rol admin
-es_editor = True  # Rol editor
-if es_admin or es_editor:  # Al menos uno
-    print("Acceso a edición")  # Mostramos mensaje
-else:  # Caso contrario
-    print("Sin permisos")  # Mostramos mensaje
+activo = True  # Estado
+if activo:  # Usamos el booleano directo
+    print("Activo")  # Mensaje
 #
 # Verás esto
-# Verás "Acceso a edición".
+# Verás "Activo".
 #
 # Por qué funciona
-# or evalúa verdadero si alguna condición lo es.
+# True evalúa a verdadero en el if.
 #
 # Lo típico que sale mal
-# - Usar or cuando se necesitaban ambas condiciones.
-# - No agrupar condiciones complejas.
+# - Comparar con True y hacer el código ruidoso.
+# - Asumir que cualquier valor es booleano.
 """,
             ),
             (
-                "Usar not",
+                "Condiciones con strings vacíos",
                 """# Aprende esto
-# Aprenderás a invertir una condición con not.
-# Verás cómo leerlo como negación.
-# Entenderás cuándo ayuda a la claridad.
+# Aprenderás a evaluar textos vacíos.
+# Verás el uso en validaciones.
+# Entenderás valores truthy y falsy.
 #
 # Haz esto
-mantenimiento = False  # Estado del sistema
-if not mantenimiento:  # Negamos el estado
-    print("Sistema disponible")  # Mostramos mensaje
-else:  # Caso contrario
-    print("Sistema en mantenimiento")  # Mostramos mensaje
+nombre = ""  # Texto vacío
+if nombre:  # Evaluamos si hay texto
+    print("Nombre válido")  # Mensaje si hay texto
+else:  # Caso vacío
+    print("Nombre vacío")  # Mensaje si no hay texto
 #
 # Verás esto
-# Verás "Sistema disponible".
+# Verás "Nombre vacío".
 #
 # Por qué funciona
-# not invierte el booleano.
+# Un string vacío es falsy.
 #
 # Lo típico que sale mal
-# - Usar not sin paréntesis en expresiones largas.
-# - Leer la condición al revés.
+# - Comparar con "" en lugar de usar la verdad del valor.
+# - Olvidar el else y no mostrar nada.
 """,
             ),
             (
-                "Comparar con None",
+                "Combinación con and",
                 """# Aprende esto
-# Aprenderás a comprobar ausencia con None.
-# Verás el uso correcto de is None.
-# Entenderás por qué es identidad.
+# Aprenderás a combinar condiciones con and.
+# Verás cómo se leen como una frase.
+# Entenderás el orden lógico.
 #
 # Haz esto
-resultado = None  # Aún no calculado
-if resultado is None:  # Comprobamos ausencia
-    resultado = 10  # Asignamos un valor
-print(resultado)  # Mostramos resultado
+edad = 20  # Edad
+permiso = True  # Tiene permiso
+if edad >= 18 and permiso:  # Ambas condiciones
+    print("Puede entrar")  # Mensaje
 #
 # Verás esto
-# Verás 10.
+# Verás "Puede entrar".
 #
 # Por qué funciona
-# is None verifica identidad de ausencia.
+# Ambas condiciones son True.
 #
 # Lo típico que sale mal
-# - Usar == con None sin necesidad.
-# - Confundir None con 0.
+# - Mezclar and/or sin paréntesis.
+# - Olvidar una de las condiciones.
 """,
             ),
             (
-                "Condiciones con listas",
+                "Rangos con elif ordenado",
                 """# Aprende esto
-# Aprenderás a usar listas en condiciones.
-# Verás valores falsy y truthy.
-# Entenderás cuándo es más claro usar len().
+# Aprenderás a ordenar rangos correctamente.
+# Verás cómo evitar condiciones solapadas.
+# Entenderás la importancia del orden.
 #
 # Haz esto
-pendientes = ["tarea1", "tarea2"]  # Lista de tareas
-if pendientes:  # Lista no vacía
-    print("Hay tareas")  # Mostramos mensaje
-else:  # Lista vacía
-    print("No hay tareas")  # Mostramos mensaje
+puntaje = 85  # Puntaje
+if puntaje >= 90:  # Rango alto
+    nivel = "A"  # Nivel A
+elif puntaje >= 80:  # Rango medio
+    nivel = "B"  # Nivel B
+else:  # Rango bajo
+    nivel = "C"  # Nivel C
+print(nivel)  # Mostramos el nivel
 #
 # Verás esto
-# Verás "Hay tareas".
+# Verás "B".
 #
 # Por qué funciona
-# Una lista no vacía es True.
+# El primer if falla y el segundo se cumple.
 #
 # Lo típico que sale mal
-# - Usar esta forma cuando 0 es un valor válido.
-# - Confundir lista vacía con None.
+# - Poner el rango menor primero.
+# - Usar varios if y ejecutar más de un bloque.
 """,
             ),
         ]
@@ -348,55 +420,54 @@ else:  # Lista vacía
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Escribe un if que muestre 'Mayor de edad' si edad >= 18, si no 'Menor de edad'.",
-                "hints": ["Usa if/else.", "No olvides los dos puntos."],
+                "question": "Crea una variable `edad` y muestra 'Mayor' si es >= 18, si no 'Menor'.",
+                "hints": ["Usa if/else.", "Recuerda el : y la indentación."],
                 "solution": """edad = 16
 if edad >= 18:
-    print("Mayor de edad")
+    print("Mayor")
 else:
-    print("Menor de edad")""",
+    print("Menor")""",
             },
             {
-                "question": "Usa elif para clasificar una nota: >= 9 Excelente, >= 7 Aprobado, si no Reprobado.",
-                "hints": ["Ordena de mayor a menor.", "Usa elif."],
-                "solution": """nota = 8
+                "question": "Crea un sistema de notas con if/elif/else: 9-10 Excelente, 5-8 Aprobado, resto Reprobado.",
+                "hints": ["Ordena los rangos de mayor a menor.", "Usa elif para el segundo rango."],
+                "solution": """nota = 7
 if nota >= 9:
     print("Excelente")
-elif nota >= 7:
+elif nota >= 5:
     print("Aprobado")
 else:
     print("Reprobado")""",
             },
             {
-                "question": "Crea una condición con and que valide saldo >= 50 y usuario activo.",
-                "hints": ["Define saldo y activo.", "Usa and."],
-                "solution": """saldo = 60
-activo = True
-if saldo >= 50 and activo:
-    print("Pago permitido")""",
+                "question": "Comprueba si una variable `activo` es verdadera y muestra un mensaje.",
+                "hints": ["No compares con True.", "Usa if activo:."],
+                "solution": """activo = True
+if activo:
+    print("Activo")""",
             },
             {
-                "question": "Crea una condición con or para permitir acceso si es_admin o es_editor.",
-                "hints": ["Usa or.", "Imprime un mensaje."],
-                "solution": """es_admin = False
-es_editor = True
-if es_admin or es_editor:
-    print("Acceso permitido")""",
-            },
-            {
-                "question": "Usa not para mostrar un mensaje si no hay mantenimiento.",
-                "hints": ["Define mantenimiento = False.", "Usa not en el if."],
-                "solution": """mantenimiento = False
-if not mantenimiento:
-    print("Disponible")""",
-            },
-            {
-                "question": "Comprueba si una lista está vacía y muestra un mensaje.",
-                "hints": ["Usa if lista.", "Una lista vacía es False."],
-                "solution": """items = []
-if items:
-    print("Hay items")
+                "question": "Valida que un string `nombre` no esté vacío y muestra un mensaje en ambos casos.",
+                "hints": ["Un string vacío es falsy.", "Usa else para el caso vacío."],
+                "solution": """nombre = ""
+if nombre:
+    print("Nombre válido")
 else:
-    print("Lista vacía")""",
+    print("Nombre vacío")""",
+            },
+            {
+                "question": "Usa una condición con and: edad >= 18 y permiso True para mostrar 'Puede entrar'.",
+                "hints": ["Define edad y permiso.", "Usa and entre condiciones."],
+                "solution": """edad = 20
+permiso = True
+if edad >= 18 and permiso:
+    print("Puede entrar")""",
+            },
+            {
+                "question": "Crea una variable `color` y muestra un mensaje solo si es igual a 'rojo'.",
+                "hints": ["Usa == para comparar.", "No uses = en el if."],
+                "solution": """color = "rojo"
+if color == "rojo":
+    print("Semáforo en rojo")""",
             },
         ]

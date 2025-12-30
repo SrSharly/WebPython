@@ -24,91 +24,161 @@ class VariablesTiposLesson(Lesson):
     def tutorial(self) -> str:
         return """
 ## Introducción: por qué variables y tipos importan desde el primer día
-Una variable es un nombre que apunta a un dato. Esa idea tan simple es la base de todo lo que harás en Python. Si lo
-piensas como una etiqueta, entiendes por qué al cambiar el contenido la etiqueta sigue siendo la misma y por qué dos
-etiquetas pueden apuntar al mismo dato sin que te des cuenta. Los tipos, en cambio, describen la forma del dato y lo que
-puedes hacer con él. Un número se suma, un texto se concatena, una lista se modifica en sitio. Mezclar estos comportamientos
-sin entenderlos es lo que produce los errores más comunes al empezar.
+Una variable es un nombre que apunta a un dato. Esa idea es la base de todo lo que harás en Python. Los tipos describen la
+forma del dato y lo que puedes hacer con él: un número se suma, un texto se concatena, una lista se modifica. Entender esto
+te evita errores típicos cuando empiezas.
 
-En este tutorial vas a construir esa base paso a paso. Aprenderás a nombrar variables con intención, a reconocer tipos
-básicos, a convertir datos cuando vienen como texto, y a distinguir entre objetos mutables e inmutables. También verás cómo
-detectar alias, hacer copias correctas y trabajar con `None` sin confundirlo con un valor real. Al final tendrás un mapa claro
-para leer y escribir código sin adivinar.
+En este tutorial vas a construir esa base paso a paso. Verás cómo asignar variables, cómo distinguir tipos básicos, cómo
+convertir datos que vienen como texto y cómo trabajar con `None`. Cada concepto viene con un micro-ejemplo correcto y un
+error típico, para que aprendas la sintaxis en el momento exacto.
 
 ### Buenas prácticas (CalloutBox: best_practice)
-Nombrar tus variables con intención evita comentarios innecesarios. Un nombre bien elegido explica el propósito, y eso te
-ayuda a ti y a cualquier otra persona que lea tu código a entender el flujo sin suposiciones.
+Nombrar tus variables con intención evita comentarios innecesarios. Un nombre claro explica el propósito y reduce errores.
 
-## Paso 1: nombrar datos con intención
-Cuando le das nombre a un dato, estás documentando una decisión. Si el nombre es claro, la línea se entiende sin contexto.
-Si el nombre es confuso, el código se vuelve frágil. La meta es que cada variable te cuente qué guarda y para qué la usas.
+## Paso 1: asignación y nombres claros
+Asignar es guardar un dato con `=`. Tu variable debe explicar lo que contiene.
 
-Piensa en una variable como una nota adhesiva: la nota dice “precio_total” y el objeto real es el número. Si cambias el
-número, la nota sigue diciendo lo mismo. Esa idea te ayudará también cuando trabajes con listas y diccionarios.
+**Así se escribe**
+```py
+precio_total = 120
+cliente = "Ana"
+```
 
-## Paso 2: reconocer tipos básicos
-Python tiene tipos básicos como `int`, `float`, `str` y `bool`. Reconocerlos te permite escoger operaciones seguras. Un
-`int` se suma, un `str` se concatena, un `bool` se usa para decidir. Cuando el tipo no está claro, es mejor inspeccionarlo con
-`type()` o con una impresión controlada antes de avanzar.
+**Error típico (❌)**
+```py
+precio_total == 120
+```
 
-Este paso también te enseña a ser explícito al mezclar datos. Si necesitas unir texto y número, conviertes el número a texto.
-Si necesitas sumar dos cosas, aseguras que ambas sean números. Este hábito te ahorra errores en tiempo de ejecución.
+**Qué significa el error**
+`==` compara, no asigna. Si lo usas en una asignación, Python lo interpreta como una comparación aislada.
 
-### Nota (CalloutBox: note)
-Python es dinámico: puedes reasignar una variable con otro tipo. Eso no significa que sea buena idea. Mantener el tipo
-consistente hace que el código sea más fácil de seguir y de depurar.
+**Cómo se arregla**
+Usa `=` para asignar y reserva `==` para comparaciones.
 
-## Paso 3: conversiones explícitas cuando el dato viene como texto
-Muchos datos llegan como texto: entradas de usuario, archivos, respuestas de red. Antes de hacer cálculos necesitas convertir
-ese texto a un número. Una conversión explícita también te permite atrapar errores, porque si el texto no es numérico,
-Python te lo dirá inmediatamente.
+## Paso 2: strings y comillas
+Los textos (`str`) se escriben entre comillas simples o dobles. Si no pones comillas, Python busca una variable con ese
+nombre.
 
-La regla práctica es: primero conviertes, luego calculas, y al final presentas el resultado como texto. Separar esas fases
-te ayuda a verificar cada paso en lugar de hacerlo todo en una sola línea y perder visibilidad.
+**Así se escribe**
+```py
+saludo = "Hola"
+nombre = 'Lucía'
+```
 
-## Paso 4: mutabilidad e inmutabilidad en la práctica
-Los textos (`str`) son inmutables: cada cambio crea un texto nuevo. Las listas, en cambio, son mutables: puedes agregar,
-quitar o cambiar elementos sin crear una nueva lista. Esto afecta cómo lees resultados y por qué una función puede alterar
-la lista que le pasaste.
+**Error típico (❌)**
+```py
+saludo = "Hola
+```
 
-Cuando usas métodos como `append`, modificas el mismo objeto. Cuando usas métodos de texto como `upper`, obtienes una copia
-nueva. Aprender esa diferencia evita sorpresas al revisar tu salida.
+**Qué significa el error**
+`SyntaxError` indica que la cadena no se cerró. Python llegó al fin de línea sin encontrar la comilla final.
 
-### Advertencia (CalloutBox: warning)
-Si dos variables apuntan a la misma lista, cualquier modificación se verá en ambas. Esa es la raíz de muchos bugs en código
-inicial.
+**Cómo se arregla**
+Cierra siempre las comillas o usa el tipo de comillas que no se repita dentro del texto.
 
-## Paso 5: alias y copias, el origen de los cambios “misteriosos”
-Cuando haces `b = a`, no creas una copia: solo creas una segunda etiqueta. Eso se llama alias. Si quieres una lista nueva
-con los mismos valores, debes copiarla. Para listas simples puedes usar `copy()` o slicing. Para estructuras anidadas
-necesitarás copias más profundas, pero por ahora la idea clave es: alias y copia no son lo mismo.
+**Error típico (❌)**
+```py
+saludo = Hola
+```
 
-Esta distinción también te prepara para entender por qué algunas funciones parecen “modificar” cosas sin devolver nada:
-cuando reciben un objeto mutable, pueden cambiarlo directamente.
+**Qué significa el error**
+`NameError` aparece porque `Hola` no está definido como variable. Python no lo interpreta como texto.
 
-## Paso 6: None y valores booleanos
-`None` significa “no hay valor”. No es 0, no es una cadena vacía. Es un marcador explícito para indicar que algo aún no se
-ha calculado o no existe. Por eso se compara con `is None`, que verifica identidad, no igualdad de valor.
+**Cómo se arregla**
+Encierra el texto entre comillas: `"Hola"` o `'Hola'`.
 
-Los booleanos (`True` y `False`) son otro tipo básico. Usarlos con claridad te permite escribir condiciones que se leen como
-frases: “si está activo”, “si hay saldo”, “si hay elementos”. Evita comparar con `True` directamente si no lo necesitas.
+## Paso 3: números int y float
+Los enteros (`int`) no tienen decimales. Los flotantes (`float`) sí. Esto cambia cómo se muestran y se calculan.
 
-## Paso 7: resumen mental para evitar errores
-Piensa en tres preguntas antes de escribir una línea: ¿qué tipo es?, ¿es mutable?, ¿necesito convertir? Si respondes esas
-preguntas, puedes evitar la mayoría de errores típicos del inicio. Cuando tengas dudas, imprime el valor y su tipo. No es un
-truco de novatos, es una técnica útil incluso para personas con experiencia.
+**Así se escribe**
+```py
+edad = 30
+altura = 1.75
+```
+
+**Error típico (❌)**
+```py
+altura = 1,75
+```
+
+**Qué significa el error**
+Python interpreta `1,75` como una tupla, no como un número. Es un error lógico más que de sintaxis.
+
+**Cómo se arregla**
+Usa el punto como separador decimal: `1.75`.
+
+## Paso 4: concatenación de texto y números
+No puedes sumar texto con número directamente. Debes convertir el número a texto.
+
+**Así se escribe**
+```py
+edad = 30
+mensaje = "Edad: " + str(edad)
+```
+
+**Error típico (❌)**
+```py
+edad = 30
+mensaje = "Edad: " + edad
+```
+
+**Qué significa el error**
+`TypeError` indica que `str` e `int` no se pueden sumar. Son tipos distintos.
+
+**Cómo se arregla**
+Convierte el número a texto con `str()` o usa f-strings.
+
+## Paso 5: mutabilidad rápida: listas vs strings
+Las listas se pueden modificar en sitio; los strings no. Esa diferencia afecta cómo copias y cómo reasignas.
+
+**Así se escribe**
+```py
+frutas = ["manzana", "pera"]
+frutas.append("uva")
+```
+
+**Error típico (❌)**
+```py
+texto = "hola"
+texto.upper()
+```
+
+**Qué significa el error**
+No hay error, pero `upper()` devuelve un nuevo texto. El original no cambia.
+
+**Cómo se arregla**
+Guarda el resultado: `texto = texto.upper()`.
+
+## Paso 6: None como ausencia real
+`None` significa “no hay valor” y se compara con `is None`.
+
+**Así se escribe**
+```py
+resultado = None
+if resultado is None:
+    resultado = 10
+```
+
+**Error típico (❌)**
+```py
+resultado = None
+if resultado == None:
+    resultado = 10
+```
+
+**Qué significa el error**
+No siempre falla, pero `==` compara valor, no identidad. Puede dar falsos positivos en objetos complejos.
+
+**Cómo se arregla**
+Usa `is None` para comprobar ausencia de valor.
+
+## Paso 7: resumen para evitar errores
+Antes de escribir una línea, piensa: ¿qué tipo es?, ¿necesito convertirlo?, ¿es mutable? Si respondes esas preguntas,
+reduces la mayoría de errores de inicio.
 
 ## Más allá (nivel pro)
-Cuando tu código crece, las variables no solo guardan datos: también cuentan historias. Las decisiones de tipo y mutabilidad
-impactan el diseño entero de tus funciones y estructuras. En lugar de adivinar, puedes apoyarte en patrones simples para
-mantener claridad.
-
-### Consejos pro
-- Usa nombres que indiquen unidades: `precio_eur`, `edad_anios`, `duracion_seg`. Te ayuda a detectar mezclas peligrosas.
-- Separa datos “crudos” de datos “procesados”, por ejemplo `texto_entrada` y `edad_int`.
-- Prefiere `None` como marcador y evita valores mágicos como `-1` si eso no está documentado.
-- Cuando compartas listas entre funciones, documenta si se modifican en sitio o no.
-- Si necesitas copiar estructuras anidadas, considera `copy.deepcopy` y explica por qué.
+Los tipos influyen en cómo diseñas funciones y estructuras. Ser explícito con nombres, conversiones y mutabilidad ayuda a
+que tu código escale sin sorpresas.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -119,7 +189,15 @@ mantener claridad.
             ),
             (
                 "Concatenar texto y número",
-                "`\"Edad: \" + 30` falla porque str e int no se suman. Convierte con `str(30)` antes de unir.",
+                "`\"Edad: \" + 30` falla con `TypeError`. Convierte con `str(30)` o usa f-strings.",
+            ),
+            (
+                "No cerrar comillas en strings",
+                "`SyntaxError` aparece si abres una comilla y no la cierras. Revisa la línea y el tipo de comilla usado.",
+            ),
+            (
+                "Usar texto sin comillas",
+                "`NameError` ocurre cuando escribes `Hola` sin comillas. Python cree que es una variable.",
             ),
             (
                 "Cambiar el tipo sin intención",
@@ -151,7 +229,7 @@ mantener claridad.
             ),
             (
                 "Operar con texto numérico sin convertir",
-                "`""10"" + ""5""` concatena, no suma. Convierte a int si quieres cálculo real.",
+                "`\"10\" + \"5\"` concatena, no suma. Convierte a int si quieres cálculo real.",
             ),
             (
                 "Usar `bool` como número sin querer",

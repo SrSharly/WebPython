@@ -3021,6 +3021,66 @@ GLOSSARY = {
             "matiz": "requiere configuración y observabilidad para operar bien.",
         },
     },
+    "logging": {
+        "tooltip": "Módulo estándar para registrar eventos en una app.",
+        "definition_parts": {
+            "que_es": "Librería estándar de Python para registrar mensajes y errores.",
+            "para_que": "para observar el comportamiento del programa sin depender de prints.",
+            "sintaxis": "import logging",
+            "ejemplo": "logging.basicConfig(level=logging.INFO)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logging.basicconfig": {
+        "tooltip": "Configura el logging global básico.",
+        "definition_parts": {
+            "que_es": "Función que define nivel y formato global del logging.",
+            "para_que": "para establecer una configuración inicial sencilla.",
+            "sintaxis": "logging.basicConfig(level=logging.INFO, format='...')",
+            "ejemplo": "logging.basicConfig(level=logging.INFO)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logging.getlogger": {
+        "tooltip": "Obtiene un logger con nombre.",
+        "definition_parts": {
+            "que_es": "Función que devuelve un logger identificado por nombre.",
+            "para_que": "para agrupar mensajes por módulo o dominio.",
+            "sintaxis": "logger = logging.getLogger('app')",
+            "ejemplo": "logger = logging.getLogger('ventas')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.info": {
+        "tooltip": "Registra un mensaje informativo.",
+        "definition_parts": {
+            "que_es": "Método del logger para mensajes de nivel INFO.",
+            "para_que": "para registrar pasos esperados del flujo.",
+            "sintaxis": "logger.info('mensaje')",
+            "ejemplo": "logger.info('Inicio')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.error": {
+        "tooltip": "Registra un mensaje de error.",
+        "definition_parts": {
+            "que_es": "Método del logger para mensajes de nivel ERROR.",
+            "para_que": "para registrar fallos que requieren atención.",
+            "sintaxis": "logger.error('mensaje')",
+            "ejemplo": "logger.error('Falló la conexión')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.exception": {
+        "tooltip": "Registra un error con traceback.",
+        "definition_parts": {
+            "que_es": "Método del logger que incluye el traceback de la excepción actual.",
+            "para_que": "para depurar errores con contexto completo.",
+            "sintaxis": "logger.exception('mensaje')",
+            "ejemplo": "logger.exception('Error al calcular')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
 }
 
 def definition_text(data: dict[str, object]) -> str:

@@ -199,6 +199,169 @@ Los mensajes DEBUG no aparecen porque el primer basicConfig ya fijó el nivel.
 
 Cómo se arregla: define la configuración una sola vez.
 
+## Handlers: consola vs archivo (y por qué importa)
+Un handler decide **a dónde** se envía el log. Lo típico es consola + archivo.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+archivo = logging.FileHandler("app.log", encoding="utf-8")
+logger.addHandler(archivo)
+logger.warning("Esto queda en el archivo")
+```
+
+Micro-ejemplo incorrecto:
+```py
+archivo = logging.FileHandler("app.log")
+logger.addHandler(archivo)
+```
+
+Error real:
+```py
+NameError: name 'logger' is not defined
+```
+
+Cómo se arregla: crea el logger antes de añadir handlers.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+consola = logging.StreamHandler()
+logger.addHandler(consola)
+logger.info("También se ve en consola")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.addHandler("consola")
+```
+
+Error real:
+```py
+TypeError: Handler expected, got str
+```
+
+Cómo se arregla: añade un handler real como `logging.StreamHandler()`.
+
+## Formato detallado con Formatter
+Un `Formatter` define **cómo** se ve cada línea de log.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+consola = logging.StreamHandler()
+formato = logging.Formatter("%(levelname)s:%(name)s:%(message)s")
+consola.setFormatter(formato)
+logger.addHandler(consola)
+logger.error("Mensaje formateado")
+```
+
+Micro-ejemplo incorrecto:
+```py
+formato = logging.Formatter
+consola.setFormatter(formato)
+```
+
+Error real:
+```py
+TypeError: expected Formatter instance, got type
+```
+
+Cómo se arregla: instancia `logging.Formatter(...)`.
+
+## Jerarquía de loggers y propagate
+Los loggers heredan configuración por nombre. `app.db` hereda de `app`.
+Si `logger.propagate = True`, el mensaje sube al logger padre.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(level=logging.INFO)
+root = logging.getLogger("app")
+child = logging.getLogger("app.db")
+child.info("Usa la configuración del padre")
+```
+
+Micro-ejemplo incorrecto:
+```py
+child = logging.getLogger("app.db")
+child.propagate("no")
+```
+
+Error real:
+```py
+TypeError: 'bool' object is not callable
+```
+
+Cómo se arregla: `child.propagate = False` (es una propiedad booleana).
+
+## Ejemplo ampliado: consola + archivo + niveles distintos
+### 1) Aprende esto
+Separar logs en consola y archivo te permite revisar errores reales sin perder detalles.
+
+### 2) Haz esto
+```py
+import logging
+
+logger = logging.getLogger("app")
+logger.setLevel(logging.DEBUG)
+
+consola = logging.StreamHandler()
+consola.setLevel(logging.INFO)
+
+archivo = logging.FileHandler("app.log", encoding="utf-8")
+archivo.setLevel(logging.DEBUG)
+
+formato = logging.Formatter("%(levelname)s:%(name)s:%(message)s")
+consola.setFormatter(formato)
+archivo.setFormatter(formato)
+
+logger.addHandler(consola)
+logger.addHandler(archivo)
+
+logger.debug("Detalle solo en archivo")
+logger.info("Mensaje visible en consola y archivo")
+```
+
+### 3) Verás esto
+```text
+INFO:app:Mensaje visible en consola y archivo
+```
+
+### 4) Por qué funciona
+Cada handler filtra por nivel y usa su formato. El logger principal controla
+qué mensajes pueden pasar, y los handlers deciden dónde se imprimen.
+
+### 5) Lo típico que sale mal
+1) Olvidar el nivel del logger:
+```py
+logger = logging.getLogger("app")
+logger.addHandler(logging.StreamHandler())
+logger.debug("No aparece")
+```
+```text
+El DEBUG no aparece porque el logger por defecto filtra por WARNING.
+```
+
+2) Añadir handlers duplicados:
+```py
+logger.addHandler(logging.StreamHandler())
+logger.addHandler(logging.StreamHandler())
+logger.info("Se duplica")
+```
+```text
+El mensaje aparece dos veces porque tienes dos handlers iguales.
+```
+
+Cómo se arregla: define niveles y añade handlers una sola vez.
+
 ## Errores típicos rápidos
 - Configurar `basicConfig` después de crear loggers y pensar que afecta el formato.
 - Usar `logger.error` para todo y perder la diferencia entre advertencias y errores.

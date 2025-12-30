@@ -3518,6 +3518,106 @@ GLOSSARY = {
             "matiz": "pendiente de ampliar.",
         },
     },
+    "logger.warning": {
+        "tooltip": "Registra un aviso (WARNING).",
+        "definition_parts": {
+            "que_es": "Método del logger para mensajes de nivel WARNING.",
+            "para_que": "para advertencias que no detienen la ejecución.",
+            "sintaxis": "logger.warning('mensaje')",
+            "ejemplo": "logger.warning('Saldo bajo')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logger.propagate": {
+        "tooltip": "Controla si un logger propaga mensajes.",
+        "definition_parts": {
+            "que_es": "Propiedad booleana que decide si el logger envía mensajes al padre.",
+            "para_que": "para evitar duplicados cuando hay handlers en la jerarquía.",
+            "sintaxis": "logger.propagate = False",
+            "ejemplo": "logger.propagate = True",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logging.filehandler": {
+        "tooltip": "Handler que escribe logs en un archivo.",
+        "definition_parts": {
+            "que_es": "Clase que envía mensajes de logging a un archivo.",
+            "para_que": "para guardar trazas y auditorías persistentes.",
+            "sintaxis": "handler = logging.FileHandler('app.log')",
+            "ejemplo": "logging.FileHandler('app.log', encoding='utf-8')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logging.streamhandler": {
+        "tooltip": "Handler que envía logs a consola o stream.",
+        "definition_parts": {
+            "que_es": "Clase que escribe logs en stdout/stderr u otro stream.",
+            "para_que": "para ver mensajes en consola o redirigirlos.",
+            "sintaxis": "handler = logging.StreamHandler()",
+            "ejemplo": "logging.StreamHandler()",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "logging.formatter": {
+        "tooltip": "Define el formato de los mensajes de logging.",
+        "definition_parts": {
+            "que_es": "Clase que aplica formato a cada registro de log.",
+            "para_que": "para controlar nivel, nombre y mensaje en la salida.",
+            "sintaxis": "logging.Formatter('%(levelname)s:%(message)s')",
+            "ejemplo": "logging.Formatter('%(levelname)s:%(name)s:%(message)s')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "typer": {
+        "tooltip": "Librería para construir CLIs tipadas.",
+        "definition_parts": {
+            "que_es": "Typer es una librería basada en typer/click para crear CLIs con anotaciones.",
+            "para_que": "para generar comandos, ayuda automática y validación de tipos.",
+            "sintaxis": "import typer",
+            "ejemplo": "app = typer.Typer()",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "typer.typer": {
+        "tooltip": "Crea una app CLI con Typer.",
+        "definition_parts": {
+            "que_es": "Clase principal para agrupar comandos.",
+            "para_que": "para definir subcomandos y opciones en una CLI.",
+            "sintaxis": "app = typer.Typer()",
+            "ejemplo": "app = typer.Typer(add_completion=False)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "typer.argument": {
+        "tooltip": "Define un argumento posicional.",
+        "definition_parts": {
+            "que_es": "Función que configura argumentos obligatorios o con validación.",
+            "para_que": "para declarar parámetros posicionales con reglas.",
+            "sintaxis": "typer.Argument(..., min=1)",
+            "ejemplo": "personas: int = typer.Argument(..., min=1)",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "typer.option": {
+        "tooltip": "Define una opción de línea de comando.",
+        "definition_parts": {
+            "que_es": "Función que declara una opción con valor por defecto y flags.",
+            "para_que": "para crear parámetros opcionales con `--banderas`.",
+            "sintaxis": "typer.Option(False, '--verbose')",
+            "ejemplo": "ciudad: str = typer.Option('Lima', '--ciudad')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "typer.echo": {
+        "tooltip": "Imprime texto con soporte CLI.",
+        "definition_parts": {
+            "que_es": "Función para imprimir mensajes con soporte adicional de consola.",
+            "para_que": "para emitir salida coherente en apps CLI.",
+            "sintaxis": "typer.echo('mensaje')",
+            "ejemplo": "typer.echo('Proceso terminado')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
     "regex": {
         "tooltip": "Patrones para buscar y validar texto.",
         "definition_parts": {

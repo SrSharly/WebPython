@@ -2029,6 +2029,108 @@ GLOSSARY = {
             ),
         },
     },
+    "matplotlib": {
+        "tooltip": "Librería de Python para visualización de datos.",
+        "definition_parts": {
+            "que_es": (
+                "Matplotlib es una librería de visualización que permite crear "
+                "gráficas 2D y personalizar estilos."
+            ),
+            "para_que": (
+                "Se usa para comunicar resultados, explorar datos y generar reportes "
+                "con gráficos reproducibles."
+            ),
+            "sintaxis": "import matplotlib.pyplot as plt",
+            "ejemplo": "plt.plot([1, 2, 3], [2, 4, 6]); plt.show()",
+            "matiz": (
+                "Aunque tiene una API extensa, el flujo típico es crear la gráfica "
+                "y luego mostrarla con plt.show()."
+            ),
+        },
+    },
+    "pyplot": {
+        "tooltip": "Submódulo de Matplotlib con una API simple para graficar.",
+        "definition_parts": {
+            "que_es": (
+                "pyplot es el submódulo que ofrece funciones como plot, title o show."
+            ),
+            "para_que": (
+                "Permite crear gráficos rápidos con una sintaxis compacta."
+            ),
+            "sintaxis": "import matplotlib.pyplot as plt",
+            "ejemplo": "plt.title('Ventas'); plt.xlabel('Mes')",
+            "matiz": (
+                "Su API es conveniente para scripts, pero también existe el estilo "
+                "orientado a objetos con Figure y Axes."
+            ),
+        },
+    },
+    "plt.plot": {
+        "tooltip": "Función de pyplot para trazar líneas o puntos.",
+        "definition_parts": {
+            "que_es": (
+                "plt.plot dibuja una serie de datos conectados por una línea."
+            ),
+            "para_que": (
+                "Se usa para visualizar tendencias, comparaciones y cambios en el tiempo."
+            ),
+            "sintaxis": "plt.plot(x, y, marker='o')",
+            "ejemplo": "plt.plot([1, 2], [3, 5])",
+            "matiz": (
+                "x e y deben tener la misma longitud para evitar errores de dimensión."
+            ),
+        },
+    },
+    "plt.show": {
+        "tooltip": "Función que muestra la figura en pantalla.",
+        "definition_parts": {
+            "que_es": (
+                "plt.show abre una ventana con la gráfica generada."
+            ),
+            "para_que": (
+                "Permite visualizar el resultado del script de forma interactiva."
+            ),
+            "sintaxis": "plt.show()",
+            "ejemplo": "plt.plot([1, 2, 3], [2, 4, 6]); plt.show()",
+            "matiz": (
+                "En notebooks suele renderizar automáticamente, pero en scripts es necesario."
+            ),
+        },
+    },
+    "plt.title": {
+        "tooltip": "Función que define el título de la gráfica.",
+        "definition_parts": {
+            "que_es": (
+                "plt.title asigna un texto descriptivo a la gráfica."
+            ),
+            "para_que": (
+                "Ayuda a interpretar rápidamente lo que representa la figura."
+            ),
+            "sintaxis": "plt.title('Ventas 2024')",
+            "ejemplo": "plt.title('Ventas mensuales')",
+            "matiz": "Requiere un texto; llamarla sin argumento lanza TypeError.",
+        },
+    },
+    "plt.xlabel": {
+        "tooltip": "Función que define la etiqueta del eje X.",
+        "definition_parts": {
+            "que_es": "plt.xlabel establece el nombre del eje horizontal.",
+            "para_que": "Hace explícita la variable que se grafica en X.",
+            "sintaxis": "plt.xlabel('Mes')",
+            "ejemplo": "plt.xlabel('Tiempo (s)')",
+            "matiz": "Mejora la legibilidad cuando el eje tiene categorías.",
+        },
+    },
+    "plt.ylabel": {
+        "tooltip": "Función que define la etiqueta del eje Y.",
+        "definition_parts": {
+            "que_es": "plt.ylabel establece el nombre del eje vertical.",
+            "para_que": "Aclara qué magnitud se está midiendo en Y.",
+            "sintaxis": "plt.ylabel('Unidades')",
+            "ejemplo": "plt.ylabel('Temperatura (°C)')",
+            "matiz": "Es clave cuando comparas series con valores similares.",
+        },
+    },
     "ndarray": {
         "tooltip": "Tipo de array n-dimensional usado por NumPy.",
         "definition_parts": {

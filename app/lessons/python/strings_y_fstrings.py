@@ -159,6 +159,60 @@ Usa `:.2f` para dos decimales o revisa la sintaxis del formato.
 ## Paso 7: resumen para escribir textos confiables
 Para textos simples, `+` es suficiente. Para textos con variables, usa f-strings. Para comillas internas, usa escapes o
 cambia el tipo de comilla. Con esas reglas evitas la mayoría de errores.
+
+
+
+## Micro-ejemplo incremental: sintaxis y errores reales
+
+### Así se escribe
+```py
+numero = 6
+resultado = numero * 2
+mensaje = "Doble: " + str(resultado)
+print(mensaje)
+
+estado = True
+valor = None
+if valor is None and estado:
+    valor = 0
+```
+
+### Error típico: concatenar texto y número
+```py
+numero = 6
+mensaje = "Doble: " + numero
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: convierte el número con `str()` o usa f-strings.
+
+### Error típico: operar con texto como número
+```py
+numero = "6"
+resultado = numero / 2
+```
+
+```py
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+```
+
+Explicación breve: convierte el texto a `int` o `float` antes de dividir.
+
+### Error típico: operar con None
+```py
+valor = None
+resultado = valor + 1
+```
+
+```py
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+```
+
+Explicación breve: valida `None` con `is None` antes de usarlo.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

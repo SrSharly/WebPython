@@ -92,6 +92,43 @@ Advertencia: si usas HTML, configura el formato como RichText.
 - QLineEdit
 - QPushButton
 - QComboBox
+
+
+## Micro-ejemplo incremental: widgets y ciclo de eventos
+
+### Así se escribe
+```py
+app = QApplication([])
+label = QLabel("Hola Qt")
+label.show()
+app.exec()
+```
+
+### Error típico: crear un widget antes de QApplication
+```py
+label = QLabel("Hola Qt")
+app = QApplication([])
+```
+
+```py
+QWidget: Must construct a QApplication before a QWidget
+```
+
+Explicación breve: el motor de Qt necesita `QApplication` antes de cualquier widget.
+
+### Error típico: olvidar mostrar el widget
+```py
+app = QApplication([])
+label = QLabel("Hola Qt")
+app.exec()
+```
+
+```py
+(no window appears)
+```
+
+Explicación breve: si no llamas a `show()`, el widget no se pinta en pantalla.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

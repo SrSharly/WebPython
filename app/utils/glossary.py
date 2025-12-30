@@ -3768,6 +3768,56 @@ GLOSSARY = {
             "matiz": "pendiente de ampliar.",
         },
     },
+    "rich": {
+        "tooltip": "Librería para imprimir texto con estilo en terminal.",
+        "definition_parts": {
+            "que_es": "Rich es una librería de Python para texto con colores y layouts.",
+            "para_que": "para mejorar la legibilidad de CLIs con estilos y paneles.",
+            "sintaxis": "from rich import print",
+            "ejemplo": "print('[bold green]OK[/]')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "rich.print": {
+        "tooltip": "Imprime texto con estilos de Rich.",
+        "definition_parts": {
+            "que_es": "Función de Rich que interpreta markup en la salida.",
+            "para_que": "para imprimir texto con colores y estilos rápidos.",
+            "sintaxis": "from rich import print; print('[bold]texto[/]')",
+            "ejemplo": "print('[cyan]Proceso[/]')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "rich.console.console": {
+        "tooltip": "Clase Console para salida avanzada en terminal.",
+        "definition_parts": {
+            "que_es": "Clase principal de Rich para imprimir objetos estilizados.",
+            "para_que": "para controlar salida, estilos y objetos Rich.",
+            "sintaxis": "from rich.console import Console; console = Console()",
+            "ejemplo": "console = Console()",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "console.print": {
+        "tooltip": "Imprime usando una instancia de Console.",
+        "definition_parts": {
+            "que_es": "Método de Console que imprime texto u objetos Rich.",
+            "para_que": "para renderizar paneles, tablas y texto con estilo.",
+            "sintaxis": "console.print('mensaje')",
+            "ejemplo": "console.print('OK')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "rich.panel.panel": {
+        "tooltip": "Panel para destacar texto con un recuadro.",
+        "definition_parts": {
+            "que_es": "Clase de Rich que envuelve texto en un panel con borde.",
+            "para_que": "para resaltar mensajes o estados en la terminal.",
+            "sintaxis": "from rich.panel import Panel; Panel('texto', title='Estado')",
+            "ejemplo": "Panel('Listo', title='OK')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
     "regex": {
         "tooltip": "Patrones para buscar y validar texto.",
         "definition_parts": {

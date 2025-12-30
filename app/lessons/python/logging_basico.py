@@ -21,6 +21,8 @@ class LoggingBasicoLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
+⭐ LECCIÓN ESTRELLA
+
 ## ¿Por qué usar logging?
 `logging` es la librería estándar para registrar eventos (información, advertencias y errores).
 Te da control sobre el nivel de detalle y sobre el formato de los mensajes.
@@ -54,6 +56,27 @@ Micro-ejemplo correcto:
 ```py
 import logging
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("app")
+logger.debug("Detalle útil para depuración")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.debig("detalle")
+```
+
+Error real:
+```py
+AttributeError: 'Logger' object has no attribute 'debig'
+```
+
+Cómo se arregla: usa el método correcto `logger.debug(...)`.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("app")
 logger.info("No se verá")
@@ -71,6 +94,31 @@ NameError: name 'logger' is not defined
 ```
 
 Cómo se arregla: crea el logger con `logging.getLogger(...)` antes de usarlo.
+
+## Formateo perezoso para no gastar CPU de más
+Cuando usas `%s` en logging, el formateo se evalúa solo si el mensaje se va a emitir.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("app")
+usuario = "Nora"
+logger.info("Usuario activo: %s", usuario)
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger.info("Usuario activo: " + usuario)
+```
+
+Error real:
+```py
+NameError: name 'logger' is not defined
+```
+
+Cómo se arregla: define el logger y usa el formato perezoso con `%s`.
 
 ## Ejemplo principal: configurar y registrar eventos reales
 ### 1) Aprende esto

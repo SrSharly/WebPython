@@ -3246,6 +3246,106 @@ GLOSSARY = {
             "matiz": "pendiente de ampliar.",
         },
     },
+    "logger.debug": {
+        "tooltip": "Registra un mensaje de depuración.",
+        "definition_parts": {
+            "que_es": "Método del logger para mensajes de nivel DEBUG.",
+            "para_que": "para inspeccionar detalles durante el desarrollo.",
+            "sintaxis": "logger.debug('detalle')",
+            "ejemplo": "logger.debug('Payload recibido')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "regex": {
+        "tooltip": "Patrones para buscar y validar texto.",
+        "definition_parts": {
+            "que_es": "Regex (expresión regular) es un patrón que describe texto.",
+            "para_que": "para buscar, validar formatos y extraer partes de cadenas.",
+            "sintaxis": "re.search(r'patron', texto)",
+            "ejemplo": "re.search(r'\\d+', 'Pedido 123')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "expresión regular": {
+        "tooltip": "Patrón que describe texto (regex).",
+        "definition_parts": {
+            "que_es": "Una expresión regular es un patrón para texto.",
+            "para_que": "para validar, buscar y extraer información en cadenas.",
+            "sintaxis": "re.findall(r'[A-Z]\\d+', texto)",
+            "ejemplo": "re.findall(r'#\\w+', 'Hola #python')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "re": {
+        "tooltip": "Módulo estándar para expresiones regulares.",
+        "definition_parts": {
+            "que_es": "Librería estándar de Python para trabajar con regex.",
+            "para_que": "para buscar y extraer patrones en texto.",
+            "sintaxis": "import re",
+            "ejemplo": "re.search(r'\\d+', 'ID 42')",
+            "matiz": "pendiente de ampliar.",
+        },
+    },
+    "re.search": {
+        "tooltip": "Busca una coincidencia en el texto.",
+        "definition_parts": {
+            "que_es": "Función que encuentra la primera coincidencia de un patrón.",
+            "para_que": "para validar o localizar un fragmento en una cadena.",
+            "sintaxis": "re.search(patron, texto)",
+            "ejemplo": "re.search(r'\\d+', 'ID 42')",
+            "matiz": "devuelve None si no hay coincidencia.",
+        },
+    },
+    "re.findall": {
+        "tooltip": "Devuelve todas las coincidencias del patrón.",
+        "definition_parts": {
+            "que_es": "Función que obtiene todas las coincidencias en una lista.",
+            "para_que": "para extraer todos los fragmentos que cumplen un patrón.",
+            "sintaxis": "re.findall(patron, texto)",
+            "ejemplo": "re.findall(r'[A-Z]\\d+', 'A12 B34')",
+            "matiz": "si hay grupos, devuelve tuplas por coincidencia.",
+        },
+    },
+    "re.compile": {
+        "tooltip": "Compila un patrón regex para reutilizarlo.",
+        "definition_parts": {
+            "que_es": "Función que precompila un patrón regex.",
+            "para_que": "para reutilizar el patrón muchas veces con mejor rendimiento.",
+            "sintaxis": "patron = re.compile(r'\\w+')",
+            "ejemplo": "patron = re.compile(r'\\b\\w+\\b')",
+            "matiz": "el resultado es un patrón con métodos como findall.",
+        },
+    },
+    "pattern.findall": {
+        "tooltip": "Busca todas las coincidencias con un patrón compilado.",
+        "definition_parts": {
+            "que_es": "Método del patrón compilado que devuelve todas las coincidencias.",
+            "para_que": "para reutilizar un patrón sin recompilarlo cada vez.",
+            "sintaxis": "patron.findall(texto)",
+            "ejemplo": "patron.findall('hola mundo')",
+            "matiz": "requiere pasar el texto como argumento.",
+        },
+    },
+    "match.group": {
+        "tooltip": "Devuelve un grupo capturado en una coincidencia.",
+        "definition_parts": {
+            "que_es": "Método del objeto match para obtener grupos por índice.",
+            "para_que": "para extraer partes específicas del texto coincidente.",
+            "sintaxis": "coincidencia.group(1)",
+            "ejemplo": "re.search(r'(\\d+)', 'ID 42').group(1)",
+            "matiz": "lanza error si la coincidencia es None.",
+        },
+    },
+    "re.dotall": {
+        "tooltip": "Hace que . incluya saltos de línea.",
+        "definition_parts": {
+            "que_es": "Bandera de regex que permite que '.' coincida con '\\n'.",
+            "para_que": "para buscar texto multilínea sin perder saltos de línea.",
+            "sintaxis": "re.search(patron, texto, re.DOTALL)",
+            "ejemplo": "re.search(r'a.*b', 'a\\n b', re.DOTALL)",
+            "matiz": "se pasa como flag a las funciones re.",
+        },
+    },
 }
 
 def definition_text(data: dict[str, object]) -> str:

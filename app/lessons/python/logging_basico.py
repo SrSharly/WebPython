@@ -280,6 +280,36 @@ Los mensajes DEBUG no aparecen porque el primer basicConfig ya fijó el nivel.
 
 Cómo se arregla: define la configuración una sola vez.
 
+## Evita logs duplicados al añadir handlers repetidos
+Si agregas un handler en una función que se llama muchas veces, acabarás con
+mensajes repetidos.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+if not logger.handlers:
+    logger.addHandler(logging.StreamHandler())
+```
+
+Micro-ejemplo incorrecto:
+```py
+import logging
+
+logger = logging.getLogger("app")
+logger.addHandler(logging.StreamHandler())
+logger.addHandler(logging.StreamHandler())
+```
+
+Error real (no hay excepción, pero verás mensajes duplicados):
+```text
+INFO:app:Mensaje
+INFO:app:Mensaje
+```
+
+Cómo se arregla: agrega handlers una sola vez o verifica `logger.handlers`.
+
 ## Usa un logger por módulo (y evita prints en librerías)
 En módulos reutilizables, crea un logger con nombre y deja que la app principal
 decida el nivel y el formato.

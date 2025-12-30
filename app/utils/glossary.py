@@ -3280,6 +3280,88 @@ GLOSSARY = {
             ),
         },
     },
+    "seaborn": {
+        "tooltip": "Librería de visualización estadística basada en matplotlib.",
+        "definition_parts": {
+            "que_es": (
+                "Seaborn es una librería que simplifica la creación de gráficos con "
+                "datos tabulares y aplica estilos coherentes por defecto."
+            ),
+            "para_que": (
+                "Sirve para explorar relaciones, distribuciones y comparaciones "
+                "entre variables con menos código."
+            ),
+            "sintaxis": "import seaborn",
+            "ejemplo": (
+                "seaborn.scatterplot(data=df, x='edad', y='altura')"
+            ),
+            "matiz": (
+                "Funciona encima de matplotlib, así que puedes usar plt.show() "
+                "para visualizar la figura."
+            ),
+        },
+    },
+    "scatterplot": {
+        "tooltip": "Función de Seaborn para dispersión entre dos variables.",
+        "definition_parts": {
+            "que_es": (
+                "scatterplot crea un gráfico de puntos para ver la relación entre "
+                "dos variables numéricas."
+            ),
+            "para_que": (
+                "Ayuda a detectar tendencias, agrupaciones y posibles outliers."
+            ),
+            "sintaxis": "seaborn.scatterplot(data=df, x='x', y='y')",
+            "ejemplo": (
+                "seaborn.scatterplot(data=df, x='edad', y='altura')"
+            ),
+            "matiz": (
+                "Los nombres de columna deben existir en el DataFrame, o verás "
+                "errores de interpretación."
+            ),
+        },
+    },
+    "relplot": {
+        "tooltip": "Función de Seaborn para relaciones con facetas o categorías.",
+        "definition_parts": {
+            "que_es": (
+                "relplot crea una figura completa para comparar relaciones usando "
+                "hue, size o col."
+            ),
+            "para_que": (
+                "Permite comparar categorías o paneles sin configurar manualmente "
+                "subplots."
+            ),
+            "sintaxis": "seaborn.relplot(data=df, x='x', y='y', hue='cat')",
+            "ejemplo": (
+                "seaborn.relplot(data=df, x='mes', y='ventas', hue='region')"
+            ),
+            "matiz": (
+                "Si usas kind='line' o kind='scatter', Seaborn elegirá el tipo de "
+                "gráfica adecuado."
+            ),
+        },
+    },
+    "set_theme": {
+        "tooltip": "Función de Seaborn para definir el estilo visual global.",
+        "definition_parts": {
+            "que_es": (
+                "set_theme configura el estilo de fondo, paleta y tamaños para todas "
+                "las gráficas."
+            ),
+            "para_que": (
+                "Evita repetir configuración en cada gráfico y mantiene consistencia "
+                "visual."
+            ),
+            "sintaxis": "seaborn.set_theme(style='whitegrid')",
+            "ejemplo": (
+                "seaborn.set_theme(style='whitegrid', palette='deep')"
+            ),
+            "matiz": (
+                "Afecta a toda la sesión actual, no solo a un gráfico."
+            ),
+        },
+    },
     "sqs": {
         "tooltip": "Cola de mensajes administrada de AWS.",
         "definition_parts": {

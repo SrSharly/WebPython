@@ -57,6 +57,92 @@ btn.toggled.connect(lambda estado: print(estado))
 btn.setEnabled(False)
 ```
 
+## Operaciones y métodos más útiles
+### QPushButton
+1) `setText()` ⭐  
+Qué hace: cambia el texto del botón.  
+Así se escribe:
+```py
+btn.setText("Listo")
+```
+Error típico:
+```py
+btn.setText
+```
+Verás esto: texto actualizado.  
+Por qué funciona: asigna la etiqueta.  
+Lo típico que sale mal: olvidar paréntesis; pasar tipos no string sin convertir.
+
+2) `text()`  
+Qué hace: lee el texto actual.  
+Así se escribe:
+```py
+titulo = btn.text()
+```
+Error típico:
+```py
+titulo = btn.text
+```
+Verás esto: texto del botón.  
+Por qué funciona: expone el estado actual.  
+Lo típico que sale mal: olvidar paréntesis; asumir que cambia el texto.
+
+3) `clicked.connect()` ⭐  
+Qué hace: conecta el clic a una acción.  
+Así se escribe:
+```py
+btn.clicked.connect(lambda: print("OK"))
+```
+Error típico:
+```py
+btn.clicked.connect(print())
+```
+Verás esto: acción al hacer clic.  
+Por qué funciona: conecta la señal al slot.  
+Lo típico que sale mal: ejecutar la función en lugar de pasarla; olvidar argumentos.
+
+4) `setEnabled()` ⭐  
+Qué hace: habilita o deshabilita el botón.  
+Así se escribe:
+```py
+btn.setEnabled(False)
+```
+Error típico:
+```py
+btn.setEnabled("False")
+```
+Verás esto: botón deshabilitado.  
+Por qué funciona: espera booleano.  
+Lo típico que sale mal: pasar string; olvidar re-habilitar.
+
+5) `setCheckable()`  
+Qué hace: permite estado on/off.  
+Así se escribe:
+```py
+btn.setCheckable(True)
+```
+Error típico:
+```py
+btn.setCheckable("True")
+```
+Verás esto: botón con estado.  
+Por qué funciona: habilita el modo checkable.  
+Lo típico que sale mal: pasar string; no gestionar toggled.
+
+6) `isChecked()`  
+Qué hace: consulta el estado.  
+Así se escribe:
+```py
+estado = btn.isChecked()
+```
+Error típico:
+```py
+estado = btn.isChecked
+```
+Verás esto: `True` o `False`.  
+Por qué funciona: devuelve el estado actual.  
+Lo típico que sale mal: olvidar paréntesis; usarlo sin setCheckable.
+
 ## Mini-reto
 Mini-reto 1: Crea un botón que cambie su texto a “Listo” cuando se haga clic.
 Solución:

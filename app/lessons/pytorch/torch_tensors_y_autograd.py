@@ -34,6 +34,114 @@ class TorchTensorsAutogradLesson(Lesson):
 - Usa torch.cuda.is_available() para comprobar GPU.
 - autograd construye un grafo dinámico en cada forward.
 
+## Operaciones y métodos más útiles
+### Tensores (PyTorch)
+1) `.shape` ⭐  
+Qué hace: devuelve la forma del tensor.  
+Así se escribe:
+```py
+t = torch.tensor([[1, 2], [3, 4]])
+forma = t.shape
+```
+Error típico:
+```py
+forma = t.shape()
+```
+Verás esto: `torch.Size([2, 2])`.  
+Por qué funciona: `shape` es un atributo.  
+Lo típico que sale mal: llamarlo como función; asumir orden distinto.
+
+2) `.dtype` ⭐  
+Qué hace: muestra el tipo de datos.  
+Así se escribe:
+```py
+t = torch.tensor([1, 2])
+tipo = t.dtype
+```
+Error típico:
+```py
+tipo = t.dtype()
+```
+Verás esto: `torch.int64`.  
+Por qué funciona: `dtype` es atributo.  
+Lo típico que sale mal: mezclar tipos sin convertir; asumir float por defecto.
+
+3) `.to(device)` ⭐  
+Qué hace: mueve el tensor a CPU/GPU.  
+Así se escribe:
+```py
+device = "cuda" if torch.cuda.is_available() else "cpu"
+t = t.to(device)
+```
+Error típico:
+```py
+t = t.to("gpu")
+```
+Verás esto: tensor en el dispositivo indicado.  
+Por qué funciona: PyTorch reconoce "cpu"/"cuda".  
+Lo típico que sale mal: usar string inválido; mezclar tensores en dispositivos distintos.
+
+4) `.backward()` ⭐  
+Qué hace: calcula gradientes.  
+Así se escribe:
+```py
+x = torch.tensor([2.0], requires_grad=True)
+y = x ** 2
+y.backward()
+```
+Error típico:
+```py
+y = x * 2
+y.backward()
+```
+Verás esto: `x.grad` con el gradiente.  
+Por qué funciona: autograd recorre el grafo.  
+Lo típico que sale mal: usar en tensor no escalar; olvidar `requires_grad=True`.
+
+5) `torch.no_grad()` ⭐  
+Qué hace: desactiva gradientes temporalmente.  
+Así se escribe:
+```py
+with torch.no_grad():
+    y = x * 2
+```
+Error típico:
+```py
+torch.no_grad()
+y = x * 2
+```
+Verás esto: operaciones sin gradientes.  
+Por qué funciona: el contexto desactiva autograd.  
+Lo típico que sale mal: olvidar el bloque `with`; esperar gradientes después.
+
+6) `.item()`  
+Qué hace: convierte tensor escalar a número Python.  
+Así se escribe:
+```py
+valor = x.item()
+```
+Error típico:
+```py
+valor = x.item
+```
+Verás esto: número Python.  
+Por qué funciona: extrae el valor escalar.  
+Lo típico que sale mal: usarlo en tensores no escalares; olvidar paréntesis.
+
+7) `zero_grad()`  
+Qué hace: limpia gradientes del optimizador.  
+Así se escribe:
+```py
+optimizer.zero_grad()
+```
+Error típico:
+```py
+optimizer.zero_grad
+```
+Verás esto: gradientes reiniciados.  
+Por qué funciona: evita acumulación.  
+Lo típico que sale mal: olvidar llamarlo; limpiar después del backward.
+
 
 ## Micro-ejemplo incremental: tensores y gradientes
 

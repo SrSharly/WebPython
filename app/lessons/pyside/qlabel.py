@@ -59,6 +59,92 @@ label.setTextFormat(Qt.RichText)
 label.setText("Estado: procesando")
 ```
 
+## Operaciones y métodos más útiles
+### QLabel
+1) `setText()` ⭐  
+Qué hace: cambia el texto mostrado.  
+Así se escribe:
+```py
+label.setText("Listo")
+```
+Error típico:
+```py
+label.setText
+```
+Verás esto: el texto actualizado.  
+Por qué funciona: asigna un nuevo contenido.  
+Lo típico que sale mal: olvidar paréntesis; pasar tipos no string sin convertir.
+
+2) `text()` ⭐  
+Qué hace: devuelve el texto actual.  
+Así se escribe:
+```py
+contenido = label.text()
+```
+Error típico:
+```py
+contenido = label.text
+```
+Verás esto: el texto actual.  
+Por qué funciona: lee el estado del widget.  
+Lo típico que sale mal: olvidar paréntesis; asumir que cambia el texto.
+
+3) `setAlignment()` ⭐  
+Qué hace: alinea el contenido.  
+Así se escribe:
+```py
+label.setAlignment(Qt.AlignCenter)
+```
+Error típico:
+```py
+label.setAlignment("center")
+```
+Verás esto: texto centrado.  
+Por qué funciona: usa flags de Qt.  
+Lo típico que sale mal: pasar string; olvidar importar Qt.
+
+4) `setWordWrap()`  
+Qué hace: activa salto de línea automático.  
+Así se escribe:
+```py
+label.setWordWrap(True)
+```
+Error típico:
+```py
+label.setWordWrap("True")
+```
+Verás esto: texto envuelto.  
+Por qué funciona: espera booleano.  
+Lo típico que sale mal: pasar string; esperar wrap por defecto.
+
+5) `setTextFormat()`  
+Qué hace: define formato del texto (Plain/Rich).  
+Así se escribe:
+```py
+label.setTextFormat(Qt.RichText)
+```
+Error típico:
+```py
+label.setTextFormat("RichText")
+```
+Verás esto: HTML interpretado.  
+Por qué funciona: usa enums de Qt.  
+Lo típico que sale mal: usar string; olvidar RichText con HTML.
+
+6) `setStyleSheet()`  
+Qué hace: aplica estilos CSS.  
+Así se escribe:
+```py
+label.setStyleSheet("color: #1b5e20;")
+```
+Error típico:
+```py
+label.setStyleSheet(color="#1b5e20")
+```
+Verás esto: color aplicado.  
+Por qué funciona: acepta string CSS.  
+Lo típico que sale mal: pasar kwargs; errores de sintaxis CSS.
+
 ## Mini-reto
 Mini-reto 1: Crea un QLabel que muestre “Listo” en verde.
 Solución:

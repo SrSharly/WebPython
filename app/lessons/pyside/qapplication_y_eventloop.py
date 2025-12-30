@@ -39,6 +39,92 @@ class QApplicationEventLoopLesson(Lesson):
 - El event loop también maneja input del usuario.
 - Usa señales para comunicar entre widgets.
 
+## Operaciones y métodos más útiles
+### QApplication / event loop
+1) `exec()` ⭐  
+Qué hace: inicia el event loop.  
+Así se escribe:
+```py
+app.exec()
+```
+Error típico:
+```py
+app.exec
+```
+Verás esto: la UI queda activa.  
+Por qué funciona: entra al bucle de eventos.  
+Lo típico que sale mal: olvidar paréntesis; no usar `sys.exit`.
+
+2) `quit()` ⭐  
+Qué hace: cierra la aplicación.  
+Así se escribe:
+```py
+app.quit()
+```
+Error típico:
+```py
+app.quit
+```
+Verás esto: la app se cierra.  
+Por qué funciona: solicita terminar el loop.  
+Lo típico que sale mal: llamar en un hilo no UI; esperar cierre inmediato sin eventos.
+
+3) `processEvents()`  
+Qué hace: procesa eventos pendientes.  
+Así se escribe:
+```py
+app.processEvents()
+```
+Error típico:
+```py
+app.processEvents
+```
+Verás esto: UI se actualiza.  
+Por qué funciona: vacía la cola de eventos.  
+Lo típico que sale mal: llamarlo en bucles largos; abusar y causar reentradas.
+
+4) `instance()`  
+Qué hace: obtiene la instancia global.  
+Así se escribe:
+```py
+app = QApplication.instance()
+```
+Error típico:
+```py
+app = QApplication.instance
+```
+Verás esto: instancia o None.  
+Por qué funciona: Qt mantiene singleton.  
+Lo típico que sale mal: olvidar paréntesis; asumir que siempre existe.
+
+5) `setQuitOnLastWindowClosed()`  
+Qué hace: controla cierre al cerrar última ventana.  
+Así se escribe:
+```py
+app.setQuitOnLastWindowClosed(True)
+```
+Error típico:
+```py
+app.setQuitOnLastWindowClosed("True")
+```
+Verás esto: cierre automático configurado.  
+Por qué funciona: ajusta política de cierre.  
+Lo típico que sale mal: pasar string; olvidar configurar en apps con tray.
+
+6) `QTimer.singleShot()`  
+Qué hace: ejecuta una acción diferida.  
+Así se escribe:
+```py
+QTimer.singleShot(1000, lambda: print("tick"))
+```
+Error típico:
+```py
+QTimer.singleShot(1000)
+```
+Verás esto: acción tras 1s.  
+Por qué funciona: agenda un evento en el loop.  
+Lo típico que sale mal: olvidar la función; usar tiempos muy largos sin feedback.
+
 
 ## Micro-ejemplo incremental: widgets y ciclo de eventos
 

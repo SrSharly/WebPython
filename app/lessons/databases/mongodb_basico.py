@@ -24,6 +24,120 @@ class MongoDBBasicoLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
+## Operaciones y métodos más útiles
+### Colecciones (MongoDB)
+1) `find()` ⭐  
+Qué hace: devuelve documentos que coinciden.  
+Así se escribe:
+```py
+coleccion.find({"activo": True})
+```
+Error típico:
+```py
+coleccion.find
+```
+Verás esto: un cursor iterable.  
+Por qué funciona: aplica el filtro de consulta.  
+Lo típico que sale mal: olvidar paréntesis; asumir que devuelve lista directa.
+
+2) `find_one()`  
+Qué hace: devuelve un solo documento.  
+Así se escribe:
+```py
+doc = coleccion.find_one({"email": "a@b.com"})
+```
+Error típico:
+```py
+doc = coleccion.find_one
+```
+Verás esto: un dict o `None`.  
+Por qué funciona: obtiene el primer match.  
+Lo típico que sale mal: no validar `None`; filtros mal definidos.
+
+3) `insert_one()` ⭐  
+Qué hace: inserta un documento.  
+Así se escribe:
+```py
+coleccion.insert_one({"nombre": "Ana"})
+```
+Error típico:
+```py
+coleccion.insert_one
+```
+Verás esto: un InsertOneResult.  
+Por qué funciona: crea un nuevo documento.  
+Lo típico que sale mal: olvidar paréntesis; insertar datos sin validar.
+
+4) `insert_many()`  
+Qué hace: inserta varios documentos.  
+Así se escribe:
+```py
+coleccion.insert_many([{"nombre": "Ana"}, {"nombre": "Luis"}])
+```
+Error típico:
+```py
+coleccion.insert_many({"nombre": "Ana"})
+```
+Verás esto: InsertManyResult.  
+Por qué funciona: espera una lista de dicts.  
+Lo típico que sale mal: pasar un dict; documentos sin campos requeridos.
+
+5) `update_one()` ⭐  
+Qué hace: actualiza un documento.  
+Así se escribe:
+```py
+coleccion.update_one({"nombre": "Ana"}, {"$set": {"activo": True}})
+```
+Error típico:
+```py
+coleccion.update_one({"nombre": "Ana"}, {"activo": True})
+```
+Verás esto: UpdateResult.  
+Por qué funciona: usa operadores como `$set`.  
+Lo típico que sale mal: olvidar `$set`; sobrescribir documento completo.
+
+6) `delete_one()` ⭐  
+Qué hace: elimina un documento.  
+Así se escribe:
+```py
+coleccion.delete_one({"nombre": "Ana"})
+```
+Error típico:
+```py
+coleccion.delete_one
+```
+Verás esto: DeleteResult.  
+Por qué funciona: borra el primer match.  
+Lo típico que sale mal: filtros demasiado amplios; borrar sin confirmación.
+
+7) `aggregate()`  
+Qué hace: pipeline de agregación.  
+Así se escribe:
+```py
+coleccion.aggregate([{"$group": {"_id": "$region", "total": {"$sum": 1}}}])
+```
+Error típico:
+```py
+coleccion.aggregate
+```
+Verás esto: cursor con resultados.  
+Por qué funciona: aplica etapas de agregación.  
+Lo típico que sale mal: pipeline mal formado; no indexar campos usados.
+
+8) `count_documents()`  
+Qué hace: cuenta documentos con filtro.  
+Así se escribe:
+```py
+total = coleccion.count_documents({"activo": True})
+```
+Error típico:
+```py
+total = coleccion.count_documents
+```
+Verás esto: un número.  
+Por qué funciona: ejecuta un conteo en el servidor.  
+Lo típico que sale mal: contar sin filtros; usar `count()` obsoleto.
+
 ## ¿Qué es NoSQL?
 NoSQL agrupa bases de datos que no usan tablas tradicionales.
 MongoDB almacena **documentos** (parecidos a dicts de Python).

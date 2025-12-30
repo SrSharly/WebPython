@@ -35,6 +35,106 @@ TL;DR: Pandas usa NaN/NA para faltantes; detecta con isna y decide si imputar o 
 - SettingWithCopy puede aparecer al encadenar filtros.
 - Documenta la estrategia de imputación para reproducibilidad.
 
+## Operaciones y métodos más útiles
+### DataFrame / Series (faltantes)
+1) `isna()` ⭐  
+Qué hace: detecta faltantes.  
+Así se escribe:
+```py
+df.isna()
+```
+Error típico:
+```py
+df.isna
+```
+Verás esto: máscara booleana.  
+Por qué funciona: marca NaN/NA como True.  
+Lo típico que sale mal: olvidar paréntesis; comparar con `== None`.
+
+2) `notna()`  
+Qué hace: detecta valores presentes.  
+Así se escribe:
+```py
+df.notna()
+```
+Error típico:
+```py
+df.notna
+```
+Verás esto: máscara booleana inversa.  
+Por qué funciona: invierte la lógica de `isna`.  
+Lo típico que sale mal: confundir con `not`; olvidar paréntesis.
+
+3) `fillna()` ⭐  
+Qué hace: rellena faltantes.  
+Así se escribe:
+```py
+df.fillna(0)
+```
+Error típico:
+```py
+df.fillna()
+```
+Verás esto: NaN reemplazados.  
+Por qué funciona: asigna un valor por defecto.  
+Lo típico que sale mal: olvidar el valor; mezclar tipos.
+
+4) `dropna()` ⭐  
+Qué hace: elimina filas con faltantes.  
+Así se escribe:
+```py
+df.dropna()
+```
+Error típico:
+```py
+df.dropna(axis="filas")
+```
+Verás esto: menos filas.  
+Por qué funciona: elimina según el eje.  
+Lo típico que sale mal: usar axis inválido; borrar demasiados datos.
+
+5) `dropna(axis=1)`  
+Qué hace: elimina columnas con faltantes.  
+Así se escribe:
+```py
+df.dropna(axis=1)
+```
+Error típico:
+```py
+df.dropna(axis=2)
+```
+Verás esto: menos columnas.  
+Por qué funciona: axis 1 apunta a columnas.  
+Lo típico que sale mal: usar axis incorrecto; perder columnas útiles.
+
+6) `isna().sum()` ⭐  
+Qué hace: cuenta faltantes por columna.  
+Así se escribe:
+```py
+df.isna().sum()
+```
+Error típico:
+```py
+df.isna.sum()
+```
+Verás esto: conteo por columna.  
+Por qué funciona: suma True como 1.  
+Lo típico que sale mal: olvidar paréntesis; aplicar en eje equivocado.
+
+7) `astype()`  
+Qué hace: ajusta tipos para NA.  
+Así se escribe:
+```py
+df["edad"] = df["edad"].astype("Int64")
+```
+Error típico:
+```py
+df["edad"] = df["edad"].astype("int")
+```
+Verás esto: permite NA en enteros.  
+Por qué funciona: tipos extendidos aceptan NA.  
+Lo típico que sale mal: perder NA con int nativo; tipos incompatibles.
+
 
 ## Micro-ejemplo incremental: DataFrame en contexto
 

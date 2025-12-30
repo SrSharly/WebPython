@@ -61,6 +61,106 @@ line.returnPressed.connect(lambda: print(line.text()))
 line.setEchoMode(QLineEdit.Password)
 ```
 
+## Operaciones y métodos más útiles
+### QLineEdit
+1) `setText()` ⭐  
+Qué hace: coloca texto en el input.  
+Así se escribe:
+```py
+line.setText("Ana")
+```
+Error típico:
+```py
+line.setText
+```
+Verás esto: el campo con "Ana".  
+Por qué funciona: asigna el contenido.  
+Lo típico que sale mal: olvidar paréntesis; pasar tipos no string sin convertir.
+
+2) `text()` ⭐  
+Qué hace: lee el texto actual.  
+Así se escribe:
+```py
+valor = line.text()
+```
+Error típico:
+```py
+valor = line.text
+```
+Verás esto: el texto del input.  
+Por qué funciona: devuelve el estado interno.  
+Lo típico que sale mal: olvidar paréntesis; leer antes de que el usuario escriba.
+
+3) `setPlaceholderText()` ⭐  
+Qué hace: muestra un hint.  
+Así se escribe:
+```py
+line.setPlaceholderText("Nombre")
+```
+Error típico:
+```py
+line.setPlaceholderText
+```
+Verás esto: placeholder visible.  
+Por qué funciona: establece el texto guía.  
+Lo típico que sale mal: olvidar paréntesis; creer que es el valor real.
+
+4) `textChanged.connect()` ⭐  
+Qué hace: reacciona a cambios de texto.  
+Así se escribe:
+```py
+line.textChanged.connect(lambda t: print(t))
+```
+Error típico:
+```py
+line.textChanged.connect(print())
+```
+Verás esto: se imprime en cada cambio.  
+Por qué funciona: conecta la señal al slot.  
+Lo típico que sale mal: llamar la función en vez de pasarla; olvidar argumentos.
+
+5) `returnPressed.connect()`  
+Qué hace: captura Enter.  
+Así se escribe:
+```py
+line.returnPressed.connect(lambda: print(line.text()))
+```
+Error típico:
+```py
+line.returnPressed.connect(lambda: print(line.text))
+```
+Verás esto: se dispara al pulsar Enter.  
+Por qué funciona: señal del teclado.  
+Lo típico que sale mal: olvidar paréntesis en `text()`; no manejar foco.
+
+6) `setEchoMode()` ⭐  
+Qué hace: cambia cómo se ve el texto.  
+Así se escribe:
+```py
+line.setEchoMode(QLineEdit.Password)
+```
+Error típico:
+```py
+line.setEchoMode("Password")
+```
+Verás esto: texto oculto.  
+Por qué funciona: usa enums de QLineEdit.  
+Lo típico que sale mal: usar string; olvidar importar QLineEdit.
+
+7) `setMaxLength()`  
+Qué hace: limita la longitud.  
+Así se escribe:
+```py
+line.setMaxLength(20)
+```
+Error típico:
+```py
+line.setMaxLength("20")
+```
+Verás esto: límite aplicado.  
+Por qué funciona: espera entero.  
+Lo típico que sale mal: pasar string; limitar sin avisar al usuario.
+
 ## Mini-reto
 Mini-reto 1: Deshabilita un botón hasta que el usuario escriba 5 caracteres.
 Solución:

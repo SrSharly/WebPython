@@ -62,6 +62,96 @@ TL;DR: Conecta señales a slots para reaccionar a eventos sin acoplar widgets.
 - Usa Qt.QueuedConnection para hilos (avanzado).
 - Documenta qué emite cada señal custom.
 
+## Operaciones y métodos más útiles
+### Señales y slots (PySide6)
+1) `signal.connect()` ⭐  
+Qué hace: conecta señal con función.  
+Así se escribe:
+```py
+btn.clicked.connect(lambda: print("click"))
+```
+Error típico:
+```py
+btn.clicked.connect(print())
+```
+Verás esto: acción al emitir la señal.  
+Por qué funciona: `connect` registra el slot.  
+Lo típico que sale mal: ejecutar la función al conectar; olvidar argumentos.
+
+2) `signal.disconnect()`  
+Qué hace: desconecta un slot.  
+Así se escribe:
+```py
+btn.clicked.disconnect()
+```
+Error típico:
+```py
+btn.clicked.disconnect
+```
+Verás esto: el slot deja de ejecutarse.  
+Por qué funciona: remueve conexiones.  
+Lo típico que sale mal: olvidar paréntesis; desconectar cuando no hay conexiones.
+
+3) `signal.emit()` ⭐  
+Qué hace: emite una señal custom.  
+Así se escribe:
+```py
+emisor.cambio.emit(3)
+```
+Error típico:
+```py
+emisor.cambio.emit
+```
+Verás esto: slots se ejecutan.  
+Por qué funciona: dispara la señal con argumentos.  
+Lo típico que sale mal: olvidar paréntesis; pasar tipo incorrecto.
+
+4) `Signal(...)` ⭐  
+Qué hace: declara una señal custom.  
+Así se escribe:
+```py
+class Emisor(QObject):
+    cambio = Signal(int)
+```
+Error típico:
+```py
+class Emisor(QObject):
+    cambio = Signal()
+```
+Verás esto: señal sin argumentos o con tipos.  
+Por qué funciona: define la firma de la señal.  
+Lo típico que sale mal: cambiar firma luego; usar tipos no compatibles.
+
+5) `blockSignals()`  
+Qué hace: bloquea emisiones temporalmente.  
+Así se escribe:
+```py
+widget.blockSignals(True)
+```
+Error típico:
+```py
+widget.blockSignals("True")
+```
+Verás esto: señales no se emiten.  
+Por qué funciona: desactiva emisión en el objeto.  
+Lo típico que sale mal: pasar string; olvidar reactivar.
+
+6) `QObject` (herencia)  
+Qué hace: base para señales custom.  
+Así se escribe:
+```py
+class Emisor(QObject):
+    cambio = Signal(int)
+```
+Error típico:
+```py
+class Emisor:
+    cambio = Signal(int)
+```
+Verás esto: señales funcionan correctamente.  
+Por qué funciona: Qt necesita QObject para meta-objetos.  
+Lo típico que sale mal: no heredar; perder el ciclo de vida.
+
 
 ## Micro-ejemplo incremental: widgets y ciclo de eventos
 

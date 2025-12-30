@@ -113,6 +113,143 @@ No obtienes un string, sino una referencia al método. Luego fallará si intenta
 **Cómo se arregla**
 Llama al método con paréntesis: `texto.upper()`.
 
+## Operaciones y métodos más útiles
+### Strings (`str`)
+1) `upper()` ⭐  
+Qué hace: devuelve una versión en mayúsculas.  
+Así se escribe:
+```py
+texto = "hola"
+resultado = texto.upper()
+```
+Error típico:
+```py
+resultado = texto.upper
+```
+Verás esto: `"HOLA"`.  
+Por qué funciona: los strings son inmutables y el método crea otro texto.  
+Lo típico que sale mal: no reasignar el resultado; llamar el método sobre `None`.
+
+2) `lower()` ⭐  
+Qué hace: devuelve el texto en minúsculas.  
+Así se escribe:
+```py
+texto = "HoLa"
+resultado = texto.lower()
+```
+Error típico:
+```py
+resultado = texto.lower
+```
+Verás esto: `"hola"`.  
+Por qué funciona: normaliza el texto para comparar.  
+Lo típico que sale mal: creer que cambia el original; comparar sin normalizar ambos lados.
+
+3) `strip()` ⭐  
+Qué hace: elimina espacios al inicio y al final.  
+Así se escribe:
+```py
+texto = "  hola  "
+resultado = texto.strip()
+```
+Error típico:
+```py
+resultado = texto.strip
+```
+Verás esto: `"hola"`.  
+Por qué funciona: recorta whitespace según reglas estándar.  
+Lo típico que sale mal: esperar que quite espacios internos; olvidar reasignar.
+
+4) `replace()` ⭐  
+Qué hace: reemplaza subcadenas por otra.  
+Así se escribe:
+```py
+texto = "hola mundo"
+resultado = texto.replace("mundo", "Python")
+```
+Error típico:
+```py
+resultado = texto.replace("mundo")
+```
+Verás esto: `"hola Python"`.  
+Por qué funciona: genera un nuevo texto con el reemplazo.  
+Lo típico que sale mal: olvidar el segundo argumento; asumir que modifica el original.
+
+5) `split()` ⭐  
+Qué hace: separa el texto en una lista.  
+Así se escribe:
+```py
+texto = "a,b,c"
+partes = texto.split(",")
+```
+Error típico:
+```py
+partes = texto.split
+```
+Verás esto: `["a", "b", "c"]`.  
+Por qué funciona: divide por el separador y devuelve lista.  
+Lo típico que sale mal: confundir split con slicing; usar separador incorrecto.
+
+6) `join()`  
+Qué hace: une una lista de textos con un separador.  
+Así se escribe:
+```py
+partes = ["a", "b", "c"]
+resultado = ",".join(partes)
+```
+Error típico:
+```py
+resultado = partes.join(",")
+```
+Verás esto: `"a,b,c"`.  
+Por qué funciona: `join` es método del separador.  
+Lo típico que sale mal: pasar elementos no string; invertir el orden.
+
+7) `startswith()`  
+Qué hace: comprueba si empieza con un prefijo.  
+Así se escribe:
+```py
+texto = "admin_01"
+es_admin = texto.startswith("admin_")
+```
+Error típico:
+```py
+es_admin = texto.startswith["admin_"]
+```
+Verás esto: `True`.  
+Por qué funciona: compara prefijo sin modificar el texto.  
+Lo típico que sale mal: usar corchetes; no normalizar mayúsculas/minúsculas.
+
+8) `endswith()`  
+Qué hace: comprueba si termina con un sufijo.  
+Así se escribe:
+```py
+archivo = "reporte.csv"
+es_csv = archivo.endswith(".csv")
+```
+Error típico:
+```py
+es_csv = archivo.endswith(".CSV")
+```
+Verás esto: `True` o `False` según el texto.  
+Por qué funciona: revisa el final de la cadena.  
+Lo típico que sale mal: no igualar mayúsculas/minúsculas; asumir que valida el contenido.
+
+9) `format()` / f-string ⭐  
+Qué hace: inserta variables en un texto con formato.  
+Así se escribe:
+```py
+nombre = "Ana"
+mensaje = f"Hola {nombre}"
+```
+Error típico:
+```py
+mensaje = "Hola {nombre}"
+```
+Verás esto: `"Hola Ana"`.  
+Por qué funciona: f-string evalúa expresiones entre llaves.  
+Lo típico que sale mal: olvidar la `f`; usar una variable no definida.
+
 ## Paso 5: f-strings para insertar variables
 Las f-strings son la forma más clara de construir textos con variables.
 

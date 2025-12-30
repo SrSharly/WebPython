@@ -43,6 +43,162 @@ df = pd.DataFrame(data)
 print(df.head())
 ```
 
+## Operaciones y métodos más útiles
+### DataFrame / Series
+1) `head()` ⭐  
+Qué hace: muestra las primeras filas.  
+Así se escribe:
+```py
+df.head(3)
+```
+Error típico:
+```py
+df.head
+```
+Verás esto: 3 filas iniciales.  
+Por qué funciona: `head` crea una vista rápida.  
+Lo típico que sale mal: olvidar paréntesis; asumir que modifica el DataFrame.
+
+2) `info()` ⭐  
+Qué hace: resumen de columnas y tipos.  
+Así se escribe:
+```py
+df.info()
+```
+Error típico:
+```py
+info = df.info
+```
+Verás esto: tipos, nulos y memoria.  
+Por qué funciona: inspecciona estructura.  
+Lo típico que sale mal: confundir con `describe`; olvidar paréntesis.
+
+3) `describe()` ⭐  
+Qué hace: estadísticos descriptivos.  
+Así se escribe:
+```py
+df.describe()
+```
+Error típico:
+```py
+df.describe
+```
+Verás esto: media, percentiles, etc.  
+Por qué funciona: calcula estadísticas numéricas.  
+Lo típico que sale mal: esperar columnas no numéricas; olvidar paréntesis.
+
+4) `loc` ⭐  
+Qué hace: selección por etiquetas.  
+Así se escribe:
+```py
+df.loc[df["edad"] > 25, "edad"]
+```
+Error típico:
+```py
+df.loc[df["edad"] > 25]["edad"] = 99
+```
+Verás esto: columna filtrada.  
+Por qué funciona: `loc` selecciona y asigna seguro.  
+Lo típico que sale mal: asignación encadenada; confundir filas/columnas.
+
+5) `iloc` ⭐  
+Qué hace: selección por posición.  
+Así se escribe:
+```py
+df.iloc[0, 1]
+```
+Error típico:
+```py
+df.iloc["0", "1"]
+```
+Verás esto: un valor puntual.  
+Por qué funciona: usa índices enteros.  
+Lo típico que sale mal: usar strings; salir de rango.
+
+6) `groupby()` ⭐  
+Qué hace: agrupa para agregaciones.  
+Así se escribe:
+```py
+df.groupby("nombre")["edad"].mean()
+```
+Error típico:
+```py
+df.groupby("nombre").mean["edad"]
+```
+Verás esto: promedio por grupo.  
+Por qué funciona: crea grupos y aplica agregaciones.  
+Lo típico que sale mal: olvidar `()` en `mean`; agrupar por columna inexistente.
+
+7) `merge()` ⭐  
+Qué hace: une tablas por claves.  
+Así se escribe:
+```py
+df.merge(otros, on="id")
+```
+Error típico:
+```py
+df.merge(otros)
+```
+Verás esto: DataFrame combinado.  
+Por qué funciona: alinea por clave.  
+Lo típico que sale mal: duplicar columnas; claves con tipos distintos.
+
+8) `concat()`  
+Qué hace: concatena filas o columnas.  
+Así se escribe:
+```py
+pd.concat([df1, df2], axis=0)
+```
+Error típico:
+```py
+df1.concat(df2)
+```
+Verás esto: DataFrame unido.  
+Por qué funciona: `concat` es función de pandas.  
+Lo típico que sale mal: usar método inexistente; índices desalineados.
+
+9) `dropna()` ⭐  
+Qué hace: elimina filas/columnas con NaN.  
+Así se escribe:
+```py
+df.dropna()
+```
+Error típico:
+```py
+df.dropna(axis="filas")
+```
+Verás esto: DataFrame sin nulos.  
+Por qué funciona: descarta NaN según el eje.  
+Lo típico que sale mal: usar axis inválido; borrar datos sin copia.
+
+10) `fillna()` ⭐  
+Qué hace: rellena NaN con un valor.  
+Así se escribe:
+```py
+df.fillna(0)
+```
+Error típico:
+```py
+df.fillna()
+```
+Verás esto: NaN reemplazados.  
+Por qué funciona: asigna un valor por defecto.  
+Lo típico que sale mal: olvidar el valor; mezclar tipos.
+
+11) `astype()`  
+Qué hace: convierte tipos de columnas.  
+Así se escribe:
+```py
+df["edad"] = df["edad"].astype(int)
+```
+Error típico:
+```py
+df["edad"] = df["edad"].astype("numero")
+```
+Verás esto: columna convertida.  
+Por qué funciona: `astype` cambia dtype.  
+Lo típico que sale mal: tipos inválidos; valores no convertibles.
+
 ## Paso 3: Seleccionar columnas y filas
 ```
 print(df["edad"])  # Columna

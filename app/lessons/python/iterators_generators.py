@@ -31,6 +31,9 @@ for fruta in frutas:  # recorremos elemento por elemento
     print(fruta)  # print muestra cada valor
 ```
 
+Nota rápida: en los ejemplos aparece `.strip()`. Si necesitas repasar métodos de `str`, ver "Strings y f-strings" →
+"Operaciones y métodos más útiles".
+
 ## ¿Qué es un iterador?
 Un **iterador** es el objeto que recuerda en qué posición va el recorrido. Lo obtienes con `iter()`
 y avanzas con `next()`.

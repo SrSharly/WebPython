@@ -39,6 +39,106 @@ class LayoutsBasicosLesson(Lesson):
 - Evita posiciones absolutas; los layouts son responsivos.
 - QSpacerItem añade espacios fijos o expansibles.
 
+## Operaciones y métodos más útiles
+### Layouts (QVBoxLayout / QHBoxLayout)
+1) `addWidget()` ⭐  
+Qué hace: añade un widget al layout.  
+Así se escribe:
+```py
+layout.addWidget(QLabel("Hola"))
+```
+Error típico:
+```py
+layout.addWidget
+```
+Verás esto: widget visible en el layout.  
+Por qué funciona: el layout toma control del widget.  
+Lo típico que sale mal: olvidar paréntesis; añadir widgets sin parent.
+
+2) `addLayout()`  
+Qué hace: anida otro layout.  
+Así se escribe:
+```py
+layout.addLayout(QHBoxLayout())
+```
+Error típico:
+```py
+layout.addLayout
+```
+Verás esto: layouts anidados.  
+Por qué funciona: permite composiciones complejas.  
+Lo típico que sale mal: olvidar paréntesis; anidar sin claridad.
+
+3) `addStretch()` ⭐  
+Qué hace: añade espacio flexible.  
+Así se escribe:
+```py
+layout.addStretch()
+```
+Error típico:
+```py
+layout.addStretch
+```
+Verás esto: espacio que empuja widgets.  
+Por qué funciona: inserta un stretch factor.  
+Lo típico que sale mal: olvidar paréntesis; usarlo sin entender el orden.
+
+4) `setContentsMargins()`  
+Qué hace: ajusta márgenes internos.  
+Así se escribe:
+```py
+layout.setContentsMargins(10, 10, 10, 10)
+```
+Error típico:
+```py
+layout.setContentsMargins(10)
+```
+Verás esto: márgenes aplicados.  
+Por qué funciona: define los 4 lados.  
+Lo típico que sale mal: pasar pocos argumentos; olvidar consistencia entre layouts.
+
+5) `setSpacing()`  
+Qué hace: controla separación entre widgets.  
+Así se escribe:
+```py
+layout.setSpacing(8)
+```
+Error típico:
+```py
+layout.setSpacing("8")
+```
+Verás esto: espacio uniforme.  
+Por qué funciona: espera entero.  
+Lo típico que sale mal: pasar string; confiar en el valor por defecto.
+
+6) `setAlignment()`  
+Qué hace: alinea elementos dentro del layout.  
+Así se escribe:
+```py
+layout.setAlignment(Qt.AlignTop)
+```
+Error típico:
+```py
+layout.setAlignment("top")
+```
+Verás esto: widgets alineados arriba.  
+Por qué funciona: usa flags de Qt.  
+Lo típico que sale mal: usar string; olvidar importar Qt.
+
+7) `setLayout()` ⭐  
+Qué hace: asigna el layout a un widget.  
+Así se escribe:
+```py
+widget.setLayout(layout)
+```
+Error típico:
+```py
+widget.setLayout
+```
+Verás esto: layout activo en el widget.  
+Por qué funciona: el widget adopta el layout.  
+Lo típico que sale mal: olvidar paréntesis; reusar layout en varios widgets.
+
 
 ## Micro-ejemplo incremental: widgets y ciclo de eventos
 

@@ -112,7 +112,7 @@ app = typer.Typer()
 
 @app.command()
 def calcular(total: float, personas: int = typer.Argument(..., min=1)):
-    """Divide un total entre personas con validación mínima."""
+    '''Divide un total entre personas con validación mínima.'''
     resultado = total / personas
     typer.echo(f"Total por persona: {resultado:.2f}")
 

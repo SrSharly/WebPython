@@ -429,6 +429,7 @@ def resolve_mention_index(glossary: dict[str, dict[str, object]]) -> ResolvedMen
                 "definition_parts": {
                     "que_es": "Pendiente de documentar.",
                     "para_que": "Pendiente de documentar.",
+                    "sintaxis": "Pendiente de documentar.",
                     "ejemplo": "Pendiente de documentar.",
                     "error_tipico": "Pendiente de documentar.",
                 },
@@ -490,6 +491,12 @@ def get_lesson_owner_terms(lesson: Lesson) -> dict[str, set[str]]:
     return _RESOLVED_INDEX.lesson_owner_terms.get(_lesson_id(lesson), {})
 
 
+def get_lesson_terms(lesson: Lesson) -> set[str]:
+    if _RESOLVED_INDEX is None:
+        return set()
+    return set(_RESOLVED_INDEX.lesson_terms.get(_lesson_id(lesson), set()))
+
+
 def get_lesson_types(lesson: Lesson) -> set[str]:
     if _RESOLVED_INDEX is None:
         return set()
@@ -500,6 +507,12 @@ def get_term_label(term_id: str) -> str:
     if _RESOLVED_INDEX is None:
         return term_id
     return _RESOLVED_INDEX.term_labels.get(term_id, term_id)
+
+
+def get_term_meta(term_id: str) -> dict[str, str | None]:
+    if _RESOLVED_INDEX is None:
+        return {}
+    return dict(_RESOLVED_INDEX.term_meta.get(term_id, {}))
 
 
 def get_related_terms(term_id: str) -> list[str]:

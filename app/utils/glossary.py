@@ -269,6 +269,16 @@ GLOSSARY = {
             "matiz": "No modifica la colección; solo devuelve un número.",
         },
     },
+    "sum": {
+        "tooltip": "Función que suma elementos de un iterable.",
+        "definition_parts": {
+            "que_es": "Función incorporada que suma números en una lista o iterable.",
+            "para_que": "Calcular totales de forma rápida y legible.",
+            "sintaxis": "total = sum([1, 2, 3])",
+            "ejemplo": "sum([2, 3, 4]) devuelve 9.",
+            "matiz": "Si hay strings u otros tipos, puede lanzar TypeError.",
+        },
+    },
     "range": {
         "tooltip": "Función que genera una secuencia de enteros.",
         "definition_parts": {
@@ -291,6 +301,100 @@ GLOSSARY = {
             "sintaxis": "archivo = open('ruta.txt', 'r')",
             "ejemplo": "with open('datos.txt') as f: ...",
             "matiz": "Usa `with` para asegurar el cierre automático.",
+        },
+    },
+    "read": {
+        "tooltip": "Método que lee el contenido completo de un archivo.",
+        "definition_parts": {
+            "que_es": "Método de archivos que devuelve todo el contenido como texto.",
+            "para_que": "Cargar el archivo completo en memoria cuando es pequeño.",
+            "sintaxis": "contenido = archivo.read()",
+            "ejemplo": "with open('datos.txt') as f: texto = f.read().",
+            "matiz": "Si el archivo es grande, lee por líneas en lugar de todo.",
+        },
+    },
+    "write": {
+        "tooltip": "Método que escribe texto en un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método de archivos que añade o sobrescribe contenido.",
+            "para_que": "Guardar texto en un archivo de forma controlada.",
+            "sintaxis": "archivo.write('línea')",
+            "ejemplo": "with open('log.txt', 'a') as f: f.write('ok\\n').",
+            "matiz": "Devuelve el número de caracteres escritos.",
+        },
+    },
+    "splitlines": {
+        "tooltip": "Método que separa un string en líneas.",
+        "definition_parts": {
+            "que_es": "Convierte un texto con saltos de línea en una lista de líneas.",
+            "para_que": "Procesar archivos de texto línea por línea.",
+            "sintaxis": "lineas = texto.splitlines()",
+            "ejemplo": "'a\\n b'.splitlines() -> ['a', ' b'].",
+            "matiz": "Elimina los saltos de línea en los resultados.",
+        },
+    },
+    "pathlib": {
+        "tooltip": "Módulo para manejar rutas de forma multiplataforma.",
+        "definition_parts": {
+            "que_es": (
+                "Biblioteca estándar que provee la clase Path para rutas."
+            ),
+            "para_que": "Construir rutas seguras sin concatenar strings.",
+            "sintaxis": "from pathlib import Path",
+            "ejemplo": "ruta = Path('datos') / 'archivo.txt'.",
+            "matiz": "Funciona igual en Windows, macOS y Linux.",
+        },
+    },
+    "path": {
+        "tooltip": "Objeto que representa la ubicación de un archivo o carpeta.",
+        "definition_parts": {
+            "que_es": (
+                "Ruta absoluta o relativa que apunta a un recurso del disco."
+            ),
+            "para_que": "Localizar archivos, crear carpetas y validar existencia.",
+            "sintaxis": "ruta = Path('carpeta') / 'archivo.txt'",
+            "ejemplo": "ruta.exists() devuelve True si el archivo existe.",
+            "matiz": "Las rutas pueden ser relativas al directorio actual.",
+        },
+    },
+    "read_text": {
+        "tooltip": "Método de Path que lee un archivo como texto.",
+        "definition_parts": {
+            "que_es": "Lee el contenido completo de un archivo como string.",
+            "para_que": "Cargar archivos pequeños rápidamente con pathlib.",
+            "sintaxis": "texto = ruta.read_text(encoding='utf-8')",
+            "ejemplo": "Path('datos.txt').read_text(encoding='utf-8').",
+            "matiz": "Usa encoding para evitar caracteres corruptos.",
+        },
+    },
+    "write_text": {
+        "tooltip": "Método de Path que escribe texto en un archivo.",
+        "definition_parts": {
+            "que_es": "Escribe un string en un archivo (crea o sobrescribe).",
+            "para_que": "Guardar texto sin abrir manualmente el archivo.",
+            "sintaxis": "ruta.write_text('hola', encoding='utf-8')",
+            "ejemplo": "Path('salida.txt').write_text('ok\\n').",
+            "matiz": "Sobrescribe el archivo si ya existe.",
+        },
+    },
+    "exists": {
+        "tooltip": "Método de Path que indica si un archivo o carpeta existe.",
+        "definition_parts": {
+            "que_es": "Devuelve True si la ruta apunta a algo real en disco.",
+            "para_que": "Evitar FileNotFoundError al leer archivos.",
+            "sintaxis": "ruta.exists()",
+            "ejemplo": "if ruta.exists(): ...",
+            "matiz": "No crea nada; solo verifica existencia.",
+        },
+    },
+    "mkdir": {
+        "tooltip": "Método de Path que crea carpetas.",
+        "definition_parts": {
+            "que_es": "Crea el directorio indicado por la ruta.",
+            "para_que": "Preparar carpetas de salida antes de escribir archivos.",
+            "sintaxis": "ruta.mkdir(parents=True, exist_ok=True)",
+            "ejemplo": "Path('salidas').mkdir(parents=True, exist_ok=True).",
+            "matiz": "parents=True crea carpetas intermedias.",
         },
     },
     "str": {

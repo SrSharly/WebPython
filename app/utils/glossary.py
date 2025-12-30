@@ -126,6 +126,156 @@ GLOSSARY = {
             "matiz": "en Python clásico necesita un __init__.py para ser importable como paquete.",
         },
     },
+    "import": {
+        "tooltip": "Instrucción que carga un módulo para poder usarlo.",
+        "definition_parts": {
+            "que_es": (
+                "import le dice a Python que cargue un módulo y exponga sus nombres."
+            ),
+            "para_que": (
+                "Permite reutilizar código estándar o propio sin copiarlo en cada archivo."
+            ),
+            "sintaxis": "import modulo",
+            "ejemplo": "import math habilita math.sqrt.",
+            "matiz": (
+                "Si el módulo no existe en sys.path, verás ModuleNotFoundError."
+            ),
+            "error_tipico": (
+                "usar funciones del módulo sin importarlo primero."
+            ),
+        },
+    },
+    "from import": {
+        "tooltip": "Forma de importar nombres específicos desde un módulo.",
+        "definition_parts": {
+            "que_es": (
+                "Una variante de import que trae solo los nombres indicados."
+            ),
+            "para_que": (
+                "Evitar escribir el prefijo del módulo cuando necesitas pocos elementos."
+            ),
+            "sintaxis": "from modulo import nombre",
+            "ejemplo": "from math import sqrt permite usar sqrt(9).",
+            "matiz": (
+                "Si el nombre no existe en el módulo, se lanza ImportError."
+            ),
+            "error_tipico": (
+                "importar un nombre mal escrito y obtener ImportError."
+            ),
+        },
+    },
+    "alias": {
+        "tooltip": "Nombre alternativo para un módulo o función importada.",
+        "definition_parts": {
+            "que_es": (
+                "Un alias es un nombre corto creado con la palabra clave as."
+            ),
+            "para_que": (
+                "Facilitar la lectura o evitar conflictos de nombres."
+            ),
+            "sintaxis": "import modulo as alias",
+            "ejemplo": "import numpy as np.",
+            "matiz": (
+                "Después de usar el alias, el nombre original no se usa en ese archivo."
+            ),
+        },
+    },
+    "__init__.py": {
+        "tooltip": "Archivo que marca un directorio como paquete y define su API.",
+        "definition_parts": {
+            "que_es": (
+                "__init__.py se ejecuta cuando se importa un paquete."
+            ),
+            "para_que": (
+                "Permite agrupar importaciones y definir qué expone el paquete."
+            ),
+            "sintaxis": "mi_paquete/__init__.py",
+            "ejemplo": "from .util import helper dentro de __init__.py.",
+            "matiz": (
+                "Puede estar vacío si solo necesitas declarar el paquete."
+            ),
+        },
+    },
+    "importerror": {
+        "tooltip": "Excepción cuando falla una importación de nombre.",
+        "definition_parts": {
+            "que_es": (
+                "ImportError aparece cuando un nombre solicitado no existe en el módulo."
+            ),
+            "para_que": (
+                "Indica que la importación fue parcial o incorrecta."
+            ),
+            "sintaxis": "from modulo import NombreInexistente",
+            "ejemplo": "ImportError: cannot import name 'x' from 'modulo'.",
+            "matiz": (
+                "Diferente de ModuleNotFoundError, que indica que el módulo no existe."
+            ),
+        },
+    },
+    "modulenotfounderror": {
+        "tooltip": "Excepción cuando el módulo no se encuentra en sys.path.",
+        "definition_parts": {
+            "que_es": (
+                "ModuleNotFoundError ocurre cuando Python no puede localizar el módulo."
+            ),
+            "para_que": (
+                "Señala rutas incorrectas, paquetes no instalados o nombres mal escritos."
+            ),
+            "sintaxis": "import modulo_inexistente",
+            "ejemplo": "ModuleNotFoundError: No module named 'mi_paquete'.",
+            "matiz": (
+                "Verifica el entorno activo, la carpeta actual y el nombre del módulo."
+            ),
+        },
+    },
+    "sys.path": {
+        "tooltip": "Lista de rutas donde Python busca módulos para importar.",
+        "definition_parts": {
+            "que_es": (
+                "sys.path es una lista de directorios que el intérprete recorre al importar."
+            ),
+            "para_que": (
+                "Define dónde buscar módulos propios o instalados en el entorno."
+            ),
+            "sintaxis": "import sys\nsys.path",
+            "ejemplo": "sys.path[0] suele ser la carpeta del script actual.",
+            "matiz": (
+                "Modificarla puede resolver imports, pero debe hacerse con cuidado."
+            ),
+        },
+    },
+    "sqrt": {
+        "tooltip": "Función matemática que devuelve la raíz cuadrada.",
+        "definition_parts": {
+            "que_es": (
+                "sqrt es una función del módulo math que calcula la raíz cuadrada."
+            ),
+            "para_que": (
+                "Resolver cálculos comunes de geometría y estadísticas."
+            ),
+            "sintaxis": "from math import sqrt\nsqrt(9)",
+            "ejemplo": "sqrt(16) devuelve 4.0.",
+            "matiz": (
+                "Si pasas un valor negativo obtendrás un ValueError."
+            ),
+        },
+    },
+    "total_con_impuesto": {
+        "tooltip": "Función de ejemplo para sumar un impuesto a un precio.",
+        "definition_parts": {
+            "que_es": (
+                "Una función definida en el ejemplo de módulos y paquetes."
+            ),
+            "para_que": (
+                "Ilustrar cómo exponer una función desde un paquete."
+            ),
+            "sintaxis": "total_con_impuesto(precio, tasa)",
+            "ejemplo": "total_con_impuesto(100, 0.19) devuelve 119.0.",
+            "matiz": (
+                "Pendiente de ampliar con validaciones y redondeo."
+            ),
+        },
+    },
     "parámetro": {
         "tooltip": "Nombre definido en la función para recibir valores.",
         "definition_parts": {

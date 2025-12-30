@@ -408,6 +408,37 @@ SyntaxError: expected 'except' or 'finally' block
 
 Corrección: `else` solo existe si antes declaraste `except` o `finally`.
 
+## Paso 3.1: Capturar el detalle con `as`
+Si quieres mostrar el mensaje real del error, captura la excepción en una variable.
+
+Micro-ejemplo correcto:
+```py
+try:
+    int("x")
+except ValueError as exc:
+    print("Detalle:", exc)
+```
+
+Verás esto:
+```
+Detalle: invalid literal for int() with base 10: 'x'
+```
+
+Micro-ejemplo incorrecto:
+```py
+try:
+    int("x")
+except ValueError as:
+    print("Detalle:", "falló")
+```
+
+Error real:
+```
+SyntaxError: invalid syntax
+```
+
+Corrección: después de `as` debes colocar un nombre de variable, por ejemplo `exc`.
+
 ## Paso 4: Lanzar errores propios con raise
 Si detectas un dato inválido, puedes lanzar una excepción con `raise`.
 ```
@@ -574,6 +605,13 @@ TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
 ```
 
 Explicación breve: valida `None` con `is None` antes de usarlo.
+
+## Checklist final (rápida)
+- Usa `try` solo alrededor de la línea que puede fallar.
+- Captura errores específicos (`ValueError`, `ZeroDivisionError`) antes que genéricos.
+- Usa `else` para el flujo correcto sin errores.
+- Usa `finally` para limpiar, o `with` si aplica.
+- Relanza con `raise` cuando no puedas recuperar el flujo.
 
 """.strip()
 

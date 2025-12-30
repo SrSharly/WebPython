@@ -14,8 +14,8 @@ class VariablesTiposLesson(Lesson):
 
     def summary(self) -> str:
         return (
-            "Aprende desde cero qué es una variable, cómo funcionan los tipos, y por qué "
-            "la mutabilidad, las copias y las conversiones importan en tu día a día."
+            "Aprende desde cero qué es una variable, cómo reconocer tipos, y cómo evitar errores "
+            "al convertir datos, copiar listas y trabajar con valores ausentes."
         )
 
     def guide(self) -> str:
@@ -23,514 +23,366 @@ class VariablesTiposLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: variables y tipos como base de todo
-Una variable es el nombre que le damos a un dato para reutilizarlo. Los tipos nos dicen **qué clase de dato es** y cómo
-se comporta: no es lo mismo sumar enteros, concatenar textos o modificar una lista. Si entiendes esto, evitas errores
-clásicos como mezclar números con texto, perder cambios en listas o confundir `None` con un valor real. La idea aquí es
-ir paso a paso, con un patrón repetible, para que puedas explicar y depurar tu propio código sin adivinar.
+## Introducción: por qué variables y tipos importan desde el primer día
+Una variable es un nombre que apunta a un dato. Esa idea tan simple es la base de todo lo que harás en Python. Si lo
+piensas como una etiqueta, entiendes por qué al cambiar el contenido la etiqueta sigue siendo la misma y por qué dos
+etiquetas pueden apuntar al mismo dato sin que te des cuenta. Los tipos, en cambio, describen la forma del dato y lo que
+puedes hacer con él. Un número se suma, un texto se concatena, una lista se modifica en sitio. Mezclar estos comportamientos
+sin entenderlos es lo que produce los errores más comunes al empezar.
 
-## Paso 1: Nombrar datos con intención
-Nombrar bien las variables es la primera práctica de claridad: el nombre explica el propósito antes de leer el código.
+En este tutorial vas a construir esa base paso a paso. Aprenderás a nombrar variables con intención, a reconocer tipos
+básicos, a convertir datos cuando vienen como texto, y a distinguir entre objetos mutables e inmutables. También verás cómo
+detectar alias, hacer copias correctas y trabajar con `None` sin confundirlo con un valor real. Al final tendrás un mapa claro
+para leer y escribir código sin adivinar.
 
-**Aprende esto**
-- Aprenderás a crear variables con significado y a reutilizarlas en mensajes.
-- Verás que una variable es una etiqueta, no un contenedor mágico.
+### Buenas prácticas (CalloutBox: best_practice)
+Nombrar tus variables con intención evita comentarios innecesarios. Un nombre bien elegido explica el propósito, y eso te
+ayuda a ti y a cualquier otra persona que lea tu código a entender el flujo sin suposiciones.
 
-**Haz esto**
-print("ok")  # Confirmamos
-```
-nombre = "Ana"  # Guardamos un nombre en texto
-apellido = "López"  # Guardamos el apellido en texto
-separador = " "  # Definimos un espacio para unir textos
-nombre_completo = nombre + separador + apellido  # Construimos el nombre completo
-rol = "Cliente"  # Definimos el rol que queremos mostrar
-mensaje = rol + ": " + nombre_completo  # Creamos el mensaje final
-longitud = len(mensaje)  # Medimos cuántos caracteres tiene
-print(mensaje)  # Mostramos el mensaje
-print(longitud)  # Mostramos la longitud
-print("ok")  # Confirmamos
-```
+## Paso 1: nombrar datos con intención
+Cuando le das nombre a un dato, estás documentando una decisión. Si el nombre es claro, la línea se entiende sin contexto.
+Si el nombre es confuso, el código se vuelve frágil. La meta es que cada variable te cuente qué guarda y para qué la usas.
 
-**Verás esto**
-Verás un texto como `Cliente: Ana López` y un número con la longitud del mensaje.
+Piensa en una variable como una nota adhesiva: la nota dice “precio_total” y el objeto real es el número. Si cambias el
+número, la nota sigue diciendo lo mismo. Esa idea te ayudará también cuando trabajes con listas y diccionarios.
 
-**Por qué funciona**
-Cada variable apunta a un texto distinto y el operador `+` concatena esos textos en orden. `len()` cuenta caracteres y
-confirma que tu mensaje no es vacío.
+## Paso 2: reconocer tipos básicos
+Python tiene tipos básicos como `int`, `float`, `str` y `bool`. Reconocerlos te permite escoger operaciones seguras. Un
+`int` se suma, un `str` se concatena, un `bool` se usa para decidir. Cuando el tipo no está claro, es mejor inspeccionarlo con
+`type()` o con una impresión controlada antes de avanzar.
 
-**Lo típico que sale mal**
-- Usar nombres genéricos como `x` o `tmp` y perder el significado del dato.
-- Olvidar espacios al concatenar y obtener textos pegados.
+Este paso también te enseña a ser explícito al mezclar datos. Si necesitas unir texto y número, conviertes el número a texto.
+Si necesitas sumar dos cosas, aseguras que ambas sean números. Este hábito te ahorra errores en tiempo de ejecución.
 
-## Paso 2: Reconocer tipos básicos
-Python tiene tipos básicos como `int`, `float`, `str` y `bool`. Saberlos evita operaciones inválidas.
+### Nota (CalloutBox: note)
+Python es dinámico: puedes reasignar una variable con otro tipo. Eso no significa que sea buena idea. Mantener el tipo
+consistente hace que el código sea más fácil de seguir y de depurar.
 
-**Aprende esto**
-- Aprenderás a identificar el tipo con `type()` y a decidir qué operaciones son válidas.
-- Verás cómo convertir un número a texto para mostrarlo con claridad.
+## Paso 3: conversiones explícitas cuando el dato viene como texto
+Muchos datos llegan como texto: entradas de usuario, archivos, respuestas de red. Antes de hacer cálculos necesitas convertir
+ese texto a un número. Una conversión explícita también te permite atrapar errores, porque si el texto no es numérico,
+Python te lo dirá inmediatamente.
 
-**Haz esto**
-print("ok")  # Confirmamos
-```
-edad = 20  # int: número entero
-altura = 1.72  # float: número decimal
-activo = True  # bool: estado lógico
-texto_edad = str(edad)  # Convertimos int a str para unir con texto
-resumen = "Edad: " + texto_edad  # Construimos un resumen
-print(resumen)  # Mostramos el resumen
-print(type(altura))  # Mostramos el tipo de altura
-print(activo)  # Mostramos el booleano
-print("ok")  # Confirmamos
-```
+La regla práctica es: primero conviertes, luego calculas, y al final presentas el resultado como texto. Separar esas fases
+te ayuda a verificar cada paso en lugar de hacerlo todo en una sola línea y perder visibilidad.
 
-**Verás esto**
-Verás `Edad: 20`, el tipo `<class 'float'>` y el valor `True`.
+## Paso 4: mutabilidad e inmutabilidad en la práctica
+Los textos (`str`) son inmutables: cada cambio crea un texto nuevo. Las listas, en cambio, son mutables: puedes agregar,
+quitar o cambiar elementos sin crear una nueva lista. Esto afecta cómo lees resultados y por qué una función puede alterar
+la lista que le pasaste.
 
-**Por qué funciona**
-`str()` convierte el entero en texto y `type()` revela el tipo real. Con eso puedes decidir si sumar, concatenar o
-comparar correctamente.
+Cuando usas métodos como `append`, modificas el mismo objeto. Cuando usas métodos de texto como `upper`, obtienes una copia
+nueva. Aprender esa diferencia evita sorpresas al revisar tu salida.
 
-**Lo típico que sale mal**
-- Concatenar texto y número sin `str()` y provocar un error de tipo.
-- Usar coma en lugar de punto para decimales (Python necesita punto).
+### Advertencia (CalloutBox: warning)
+Si dos variables apuntan a la misma lista, cualquier modificación se verá en ambas. Esa es la raíz de muchos bugs en código
+inicial.
 
-## Paso 3: Conversiones explícitas y datos de entrada
-Cuando el dato viene como texto (por ejemplo, de un archivo), necesitas convertirlo antes de operar.
+## Paso 5: alias y copias, el origen de los cambios “misteriosos”
+Cuando haces `b = a`, no creas una copia: solo creas una segunda etiqueta. Eso se llama alias. Si quieres una lista nueva
+con los mismos valores, debes copiarla. Para listas simples puedes usar `copy()` o slicing. Para estructuras anidadas
+necesitarás copias más profundas, pero por ahora la idea clave es: alias y copia no son lo mismo.
 
-**Aprende esto**
-- Aprenderás a convertir texto numérico a entero y a validar el resultado.
-- Verás cómo separar la conversión del cálculo para depurar más fácil.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-texto = "42"  # Texto numérico proveniente de entrada
-numero = int(texto)  # Convertimos el texto a entero
-incremento = 8  # Definimos cuánto vamos a sumar
-resultado = numero + incremento  # Sumamos el entero con el incremento
-etiqueta = "Total"  # Definimos una etiqueta descriptiva
-mensaje = etiqueta + ": " + str(resultado)  # Convertimos para mostrar
-print(mensaje)  # Mostramos el mensaje
-print(resultado)  # Mostramos el número final
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás un mensaje como `Total: 50` y el número `50`.
-
-**Por qué funciona**
-Primero conviertes el texto a entero con `int()`, luego haces el cálculo y solo al final lo conviertes a texto para
-mostrar. Así se separan transformación y presentación.
-
-**Lo típico que sale mal**
-- Intentar sumar un string con un int sin convertir.
-- Convertir sin validar y fallar si el texto no es numérico.
-
-## Paso 4: Mutabilidad (listas) vs inmutabilidad (strings)
-Algunos objetos cambian en el mismo lugar (mutables) y otros no (inmutables). Esto afecta cómo interpretas resultados.
-
-**Aprende esto**
-- Aprenderás que las listas se modifican en el mismo objeto.
-- Verás que los strings crean un nuevo valor cuando se transforman.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-compras = ["pan", "leche"]  # Lista inicial
-compras.append("café")  # Agregamos un elemento en sitio
-compras.append("azúcar")  # Agregamos otro elemento
-texto = "hola"  # Texto original
-texto_mayus = texto.upper()  # Creamos un nuevo texto en mayúsculas
-resumen = texto + " -> " + texto_mayus  # Resumimos el cambio
-print(compras)  # Mostramos la lista modificada
-print(resumen)  # Mostramos el resumen
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás la lista con cuatro elementos y un resumen como `hola -> HOLA`.
-
-**Por qué funciona**
-`append()` modifica la lista original, pero `upper()` devuelve un nuevo string porque los textos son inmutables.
-
-**Lo típico que sale mal**
-- Esperar que `upper()` cambie el texto sin reasignarlo.
-- Creer que `append()` devuelve una lista nueva (no lo hace).
-
-## Paso 5: Alias y copias
-Asignar una lista a otra variable crea un alias. Para una copia real necesitas duplicar la lista.
-
-**Aprende esto**
-- Aprenderás a distinguir alias de copia superficial.
-- Verás cómo evitar cambios involuntarios en datos compartidos.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-original = [1, 2]  # Lista original
-alias = original  # Alias al mismo objeto
-alias.append(3)  # Modificamos la lista original
-copia = original.copy()  # Copia superficial independiente
-copia.append(99)  # Solo cambia la copia
-estado_original = str(original)  # Convertimos la lista original a texto
-estado_copia = str(copia)  # Convertimos la copia a texto
-print(estado_original)  # Mostramos la lista original
-print(estado_copia)  # Mostramos la copia
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás que `original` es `[1, 2, 3]` y `copia` es `[1, 2, 3, 99]`.
-
-**Por qué funciona**
-`alias` apunta al mismo objeto, por eso `append()` afecta a ambos. `copy()` crea una lista nueva con los mismos valores.
-
-**Lo típico que sale mal**
-- Usar `b = a` pensando que es una copia.
-- Modificar un alias y luego buscar “el error” en otro lugar.
+Esta distinción también te prepara para entender por qué algunas funciones parecen “modificar” cosas sin devolver nada:
+cuando reciben un objeto mutable, pueden cambiarlo directamente.
 
 ## Paso 6: None y valores booleanos
-`None` representa ausencia de valor. No es igual a 0 ni a una cadena vacía.
+`None` significa “no hay valor”. No es 0, no es una cadena vacía. Es un marcador explícito para indicar que algo aún no se
+ha calculado o no existe. Por eso se compara con `is None`, que verifica identidad, no igualdad de valor.
 
-**Aprende esto**
-- Aprenderás a usar `None` como marcador de “aún no calculado”.
-- Verás cómo comprobarlo con `is` de forma segura.
+Los booleanos (`True` y `False`) son otro tipo básico. Usarlos con claridad te permite escribir condiciones que se leen como
+frases: “si está activo”, “si hay saldo”, “si hay elementos”. Evita comparar con `True` directamente si no lo necesitas.
 
-**Haz esto**
-print("ok")  # Confirmamos
-```
-resultado = None  # Aún no hay resultado
-texto = "5"  # Texto de entrada
-numero = int(texto)  # Convertimos a entero
-resultado = numero * 2  # Calculamos el doble
-hay_resultado = resultado is not None  # Verificamos si existe resultado
-print(hay_resultado)  # Mostramos True si existe
-print(resultado)  # Mostramos el resultado numérico
-print("ok")  # Confirmamos
-```
+## Paso 7: resumen mental para evitar errores
+Piensa en tres preguntas antes de escribir una línea: ¿qué tipo es?, ¿es mutable?, ¿necesito convertir? Si respondes esas
+preguntas, puedes evitar la mayoría de errores típicos del inicio. Cuando tengas dudas, imprime el valor y su tipo. No es un
+truco de novatos, es una técnica útil incluso para personas con experiencia.
 
-**Verás esto**
-Verás `True` y el número `10`.
+## Más allá (nivel pro)
+Cuando tu código crece, las variables no solo guardan datos: también cuentan historias. Las decisiones de tipo y mutabilidad
+impactan el diseño entero de tus funciones y estructuras. En lugar de adivinar, puedes apoyarte en patrones simples para
+mantener claridad.
 
-**Por qué funciona**
-`is` comprueba identidad con el singleton `None`. Al actualizar `resultado`, la condición cambia y lo confirmas con el
-booleano.
-
-**Lo típico que sale mal**
-- Usar `== None` en lugar de `is None`.
-- Asumir que `None` significa 0 o un texto vacío.
-
-## Más allá (nivel pro): copias profundas e identidad
-En proyectos reales hay listas anidadas y comparaciones sutiles. Entender identidad y copias profundas evita bugs.
-
-**Aprende esto**
-- Aprenderás por qué una copia superficial no duplica listas internas.
-- Verás cómo `is` se usa para identidad y no para comparar valores.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-matriz = [[1], [2]]  # Lista con listas internas
-copia_superficial = matriz.copy()  # Copia la lista externa
-copia_superficial[0].append(9)  # Modifica la sublista compartida
-es_el_mismo = matriz[0] is copia_superficial[0]  # Comprobamos identidad
-valor = 10  # Número para comparar
-mismo_valor = valor == 10  # Comparamos valores
-print(matriz)  # Mostramos la matriz afectada
-print(es_el_mismo)  # True: misma sublista interna
-print(mismo_valor)  # True: mismo valor
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás que la primera sublista queda como `[1, 9]`, y que `is` confirma identidad mientras `==` compara valores.
-
-**Por qué funciona**
-La copia superficial solo duplica la lista externa. Las listas internas siguen siendo las mismas referencias, por eso se
-modifican juntas. `is` compara identidad (mismo objeto), mientras `==` compara contenido.
-
-**Lo típico que sale mal**
-- Pensar que `copy()` también copia listas internas.
-- Usar `is` para comparar números o textos y obtener resultados inconsistentes.
+### Consejos pro
+- Usa nombres que indiquen unidades: `precio_eur`, `edad_anios`, `duracion_seg`. Te ayuda a detectar mezclas peligrosas.
+- Separa datos “crudos” de datos “procesados”, por ejemplo `texto_entrada` y `edad_int`.
+- Prefiere `None` como marcador y evita valores mágicos como `-1` si eso no está documentado.
+- Cuando compartas listas entre funciones, documenta si se modifican en sitio o no.
+- Si necesitas copiar estructuras anidadas, considera `copy.deepcopy` y explica por qué.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
                 "Confundir alias con copia",
-                "Asignar b = a en listas no copia, solo crea un alias. Usa a.copy() si quieres independencia.",
+                "Asignar `b = a` solo crea otra referencia. Si modificas `b`, también cambias `a`. Usa `copy()` cuando quieras independencia.",
             ),
             (
-                "Mezclar tipos en operaciones",
-                "\"3\" + 4 falla porque str e int no se combinan sin convertir.",
+                "Concatenar texto y número",
+                "`\"Edad: \" + 30` falla porque str e int no se suman. Convierte con `str(30)` antes de unir.",
             ),
             (
-                "Cambiar de tipo sin avisar",
-                "Reusar la misma variable con tipos distintos vuelve confuso el código.",
+                "Cambiar el tipo sin intención",
+                "Reutilizar la misma variable para un int y luego un str confunde la lectura. Mantén un tipo claro por variable.",
             ),
             (
-                "Usar == en vez de is con None",
-                "Para comprobar ausencia de valor usa `is None`.",
+                "Usar `is` para comparar números",
+                "`is` compara identidad, no valor. Para números y textos usa `==` y reserva `is` para `None`.",
             ),
             (
-                "Mutables como default en funciones",
-                "Listas o dicts como valores por defecto se comparten entre llamadas.",
+                "Asumir que `upper()` modifica el string",
+                "Los strings son inmutables. `texto.upper()` devuelve otro texto; si no lo reasignas, pierdes el cambio.",
             ),
             (
-                "Crear listas con *",
-                "[[0]] * 3 repite referencias: modificar un elemento afecta a todos.",
+                "Modificar listas pensando que son copias",
+                "Si pasas una lista a una función y la modificas, el cambio vive fuera. Documenta si la función muta datos.",
             ),
             (
-                "Olvidar que str es inmutable",
-                "Métodos como upper devuelven un nuevo texto; no modifican el original.",
+                "Confundir `None` con 0",
+                "`None` significa ausencia. Compararlo con números provoca errores lógicos y condiciones engañosas.",
             ),
             (
-                "Nombrar variables como list o dict",
-                "Sobrescribes funciones útiles del lenguaje y pierdes acceso a ellas.",
+                "Usar nombres reservados",
+                "Nombrar una variable `list` o `dict` pisa funciones del lenguaje y rompe llamadas posteriores.",
             ),
             (
-                "Confundir 0 con None",
-                "0 puede ser un valor válido; None indica ausencia de valor.",
+                "Creer que `copy()` es profundo",
+                "`copy()` solo copia el primer nivel. Si hay listas dentro, siguen compartidas.",
             ),
             (
-                "No convertir antes de concatenar",
-                "Concatenar texto y números sin str() produce errores de tipo.",
+                "Operar con texto numérico sin convertir",
+                "`""10"" + ""5""` concatena, no suma. Convierte a int si quieres cálculo real.",
             ),
             (
-                "Asumir que copy() duplica todo",
-                "copy() no copia listas internas; usa copy profundo cuando haya anidaciones.",
+                "Usar `bool` como número sin querer",
+                "`True` y `False` también son 1 y 0. Eso puede colarse en sumas si no eres explícito.",
             ),
             (
-                "Comparar objetos por identidad",
-                "is solo sirve para identidad, no para comparar valores numéricos o texto.",
+                "Depurar sin imprimir el tipo",
+                "Cuando algo falla, imprime el valor y su tipo. Evitas suposiciones y detectas conversiones fallidas.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "Nombres claros para variables",
+                "Variables con intención",
                 """# Aprende esto
-# Aprenderás a nombrar variables con claridad.
-# Verás cómo reutilizarlas para formar mensajes.
-# Entenderás que el nombre documenta la intención.
+# Aprenderás a nombrar variables para que expliquen el propósito.
+# Verás cómo reutilizarlas en un mensaje legible.
+# Entenderás que el nombre documenta el dato.
 #
 # Haz esto
-nombre = \"Ana\"  # Definimos el nombre
-apellido = \"López\"  # Definimos el apellido
-separador = \" \"  # Guardamos un separador
-nombre_completo = nombre + separador + apellido  # Unimos textos
-rol = \"Cliente\"  # Definimos un rol
+nombre = "Ana"  # Guardamos el nombre
+apellido = "López"  # Guardamos el apellido
+separador = " "  # Definimos un espacio
+nombre_completo = nombre + separador + apellido  # Unimos el nombre
+rol = "Cliente"  # Definimos el rol
 mensaje = rol + ": " + nombre_completo  # Construimos el mensaje
 longitud = len(mensaje)  # Contamos caracteres
 print(mensaje)  # Mostramos el mensaje
 print(longitud)  # Mostramos la longitud
 #
 # Verás esto
-# Verás "Cliente: Ana López" y la longitud del texto.
+# Verás "Cliente: Ana López" y el número de caracteres.
 #
 # Por qué funciona
-# Cada variable apunta a un string y len cuenta caracteres.
+# Cada variable apunta a un string y len cuenta su longitud.
 #
 # Lo típico que sale mal
-# - Usar nombres genéricos y perder contexto.
-# - Olvidar espacios en la concatenación.
+# - Usar nombres genéricos como x y perder contexto.
+# - Olvidar espacios y obtener textos pegados.
 """,
             ),
             (
-                "Identificar tipos con type",
+                "Inspeccionar tipos básicos",
                 """# Aprende esto
-# Aprenderás a inspeccionar el tipo de un dato.
-# Verás cómo afecta las operaciones disponibles.
-# Mantendrás claridad al depurar errores de tipo.
+# Aprenderás a identificar tipos con type().
+# Verás cómo varían las operaciones según el tipo.
+# Entenderás cuándo convertir para mostrar.
 #
 # Haz esto
 edad = 28  # Guardamos un entero
-altura = 1.65  # Guardamos un decimal
-activo = False  # Guardamos un booleano
+altura = 1.68  # Guardamos un decimal
+activo = True  # Guardamos un booleano
 print(type(edad))  # Mostramos el tipo de edad
 print(type(altura))  # Mostramos el tipo de altura
 print(type(activo))  # Mostramos el tipo de activo
-texto_edad = str(edad)  # Convertimos para mostrar
-print(\"Edad: \" + texto_edad)  # Mostramos el mensaje
+texto_edad = str(edad)  # Convertimos a texto
+print("Edad: " + texto_edad)  # Mostramos el mensaje
 #
 # Verás esto
 # Verás <class 'int'>, <class 'float'> y <class 'bool'>.
 #
 # Por qué funciona
-# type() revela la clase y str() permite concatenar textos.
+# type() revela el tipo real y str() permite concatenar.
 #
 # Lo típico que sale mal
-# - Concatenar texto con int sin convertir.
-# - Asumir que 1 y True son lo mismo en operaciones.
+# - Concatenar texto y número sin str().
+# - Asumir que todos los números son int.
 """,
             ),
             (
-                "Conversión de texto a número",
+                "Convertir texto a número",
                 """# Aprende esto
 # Aprenderás a convertir texto numérico a int.
 # Verás cómo separar conversión y cálculo.
-# Evitarás mezclar tipos en el mismo paso.
+# Entenderás cuándo presentar el resultado.
 #
 # Haz esto
-texto = \"100\"  # Texto numérico de entrada
+texto = "42"  # Texto numérico de entrada
 numero = int(texto)  # Convertimos a entero
-bono = 25  # Definimos un bono
-total = numero + bono  # Sumamos valores numéricos
-mensaje = \"Total: \" + str(total)  # Convertimos para mostrar
+incremento = 8  # Definimos un incremento
+resultado = numero + incremento  # Sumamos los enteros
+etiqueta = "Total"  # Definimos una etiqueta
+mensaje = etiqueta + ": " + str(resultado)  # Convertimos para mostrar
 print(mensaje)  # Mostramos el mensaje
-print(total)  # Mostramos el total numérico
-print(type(total))  # Confirmamos el tipo final
+print(resultado)  # Mostramos el número final
 #
 # Verás esto
-# Verás "Total: 125", el número 125 y el tipo int.
+# Verás "Total: 50" y el número 50.
 #
 # Por qué funciona
-# int() transforma el texto y luego operas como número.
+# int() transforma el texto y la suma ya es numérica.
 #
 # Lo típico que sale mal
-# - Convertir sin validar y fallar con texto no numérico.
-# - Concatenar sin str() al final.
+# - Sumar sin convertir y obtener error de tipo.
+# - Convertir texto no numérico y fallar.
 """,
             ),
             (
-                "Booleanos y condiciones simples",
+                "Mutabilidad: lista vs string",
                 """# Aprende esto
-# Aprenderás a trabajar con bool en decisiones.
-# Verás cómo comparar valores para obtener True o False.
-# Podrás usar esos booleanos en lógicas futuras.
+# Aprenderás que las listas se modifican en sitio.
+# Verás que los strings generan un valor nuevo.
+# Entenderás por qué necesitas reasignar textos.
 #
 # Haz esto
-stock = 5  # Guardamos unidades disponibles
-umbral = 3  # Definimos un mínimo aceptable
-hay_stock = stock > umbral  # Comparamos para obtener un booleano
-mensaje = \"Stock suficiente\"  # Texto base
-print(hay_stock)  # Mostramos el booleano
-print(mensaje)  # Mostramos el texto base
-print(type(hay_stock))  # Confirmamos el tipo booleano
-print(stock == 5)  # Comparamos igualdad exacta
-#
-# Verás esto
-# Verás True, el mensaje y el tipo bool.
-#
-# Por qué funciona
-# Las comparaciones devuelven bool y puedes inspeccionarlas con type().
-#
-# Lo típico que sale mal
-# - Confundir = con == en comparaciones.
-# - Usar números como si fueran booleanos sin claridad.
-""",
-            ),
-            (
-                "Mutabilidad en listas",
-                """# Aprende esto
-# Aprenderás que append modifica la lista original.
-# Verás cómo cambia la lista sin crear otra.
-# Confirmarás el tamaño con len.
-#
-# Haz esto
-compras = [\"pan\", \"leche\"]  # Lista inicial
-compras.append(\"café\")  # Agregamos un elemento
-compras.append(\"azúcar\")  # Agregamos otro elemento
-cantidad = len(compras)  # Contamos elementos
-resumen = \"Items: \" + str(cantidad)  # Creamos un resumen
+compras = ["pan", "leche"]  # Lista inicial
+compras.append("café")  # Agregamos un producto
+compras.append("azúcar")  # Agregamos otro producto
+texto = "hola"  # Texto original
+texto_mayus = texto.upper()  # Creamos texto en mayúsculas
+resumen = texto + " -> " + texto_mayus  # Resumimos el cambio
 print(compras)  # Mostramos la lista
 print(resumen)  # Mostramos el resumen
-print(compras[0])  # Accedemos al primer elemento
 #
 # Verás esto
-# Verás la lista con cuatro elementos y un resumen "Items: 4".
+# Verás la lista con 4 elementos y "hola -> HOLA".
 #
 # Por qué funciona
-# append modifica la lista y len cuenta los elementos actuales.
+# append() muta la lista; upper() devuelve otro string.
 #
 # Lo típico que sale mal
-# - Creer que append devuelve una nueva lista.
-# - Olvidar que la lista se modifica en sitio.
+# - Esperar que upper() cambie el texto original.
+# - Creer que append() devuelve una lista nueva.
 """,
             ),
             (
-                "Inmutabilidad en strings",
+                "Alias y copias",
                 """# Aprende esto
-# Aprenderás que los strings no cambian en sitio.
-# Verás cómo guardar el resultado en otra variable.
-# Evitarás perder transformaciones por no reasignar.
+# Aprenderás a distinguir alias de copia.
+# Verás cómo afecta modificar una lista compartida.
+# Entenderás cuándo usar copy().
 #
 # Haz esto
-texto = \" hola \"  # Texto con espacios
-texto_limpio = texto.strip()  # Creamos un nuevo texto sin espacios
-texto_mayus = texto_limpio.upper()  # Creamos un nuevo texto en mayúsculas
-resumen = texto + \"->\" + texto_mayus  # Creamos un resumen
-print(texto)  # Mostramos el original
-print(texto_limpio)  # Mostramos el texto limpio
-print(texto_mayus)  # Mostramos el texto en mayúsculas
-print(resumen)  # Mostramos el resumen
-#
-# Verás esto
-# Verás el texto original con espacios y la versión limpia en mayúsculas.
-#
-# Por qué funciona
-# strip() y upper() devuelven nuevos strings porque son inmutables.
-#
-# Lo típico que sale mal
-# - Esperar que el original cambie sin reasignar.
-# - Encadenar sin guardar el resultado intermedio.
-""",
-            ),
-            (
-                "Alias vs copia en listas",
-                """# Aprende esto
-# Aprenderás a distinguir alias y copia real.
-# Verás cómo una copia evita cambios inesperados.
-# Entenderás por qué copy() es importante.
-#
-# Haz esto
-original = [1, 2]  # Lista original
-alias = original  # Alias a la misma lista
+original = [1, 2]  # Lista base
+alias = original  # Alias al mismo objeto
 alias.append(3)  # Modificamos la lista original
-copia = original.copy()  # Creamos una copia
+copia = original.copy()  # Copia superficial
 copia.append(99)  # Modificamos solo la copia
 print(original)  # Mostramos la original
 print(copia)  # Mostramos la copia
-print(alias is original)  # Comprobamos identidad
 #
 # Verás esto
-# Verás [1, 2, 3] en original y [1, 2, 3, 99] en copia.
+# Verás [1, 2, 3] y [1, 2, 3, 99].
 #
 # Por qué funciona
-# alias apunta al mismo objeto, copy() crea uno nuevo.
+# alias apunta al mismo objeto; copy() crea otra lista.
 #
 # Lo típico que sale mal
-# - Usar b = a cuando se espera una copia.
-# - Modificar alias y buscar el fallo en otro lado.
+# - Pensar que b = a crea copia.
+# - Asumir que copy() clona listas internas.
 """,
             ),
             (
-                "Uso de None como marcador",
+                "None como ausencia",
                 """# Aprende esto
-# Aprenderás a usar None para indicar ausencia de valor.
-# Verás cómo comprobarlo con is de forma segura.
-# Evitarás confundir None con 0.
+# Aprenderás a usar None como marcador.
+# Verás cómo comprobarlo con is.
+# Entenderás la diferencia con cero.
 #
 # Haz esto
-resultado = None  # Aún no hay resultado
-texto = \"7\"  # Texto de entrada
-numero = int(texto)  # Convertimos el texto
-resultado = numero * 3  # Calculamos un valor
-hay_resultado = resultado is not None  # Verificamos existencia
-print(hay_resultado)  # Mostramos el booleano
-print(resultado)  # Mostramos el resultado
-print(resultado == 0)  # Comprobamos si es cero
+resultado = None  # Aún no calculamos
+calculo_listo = False  # Estado inicial
+if resultado is None:  # Comprobamos ausencia
+    resultado = 10  # Asignamos un valor
+    calculo_listo = True  # Marcamos como listo
+print(resultado)  # Mostramos el valor
+print(calculo_listo)  # Mostramos el estado
 #
 # Verás esto
-# Verás True, el número 21 y False para la comparación con 0.
+# Verás 10 y True después del cálculo.
 #
 # Por qué funciona
-# None representa ausencia y is compara identidad con None.
+# is None valida ausencia real; luego asignamos valor.
 #
 # Lo típico que sale mal
-# - Usar == None en lugar de is None.
-# - Suponer que None es equivalente a 0.
+# - Comparar con == y confundir identidad.
+# - Tratar None como si fuera 0.
+""",
+            ),
+            (
+                "Reasignación con tipo consistente",
+                """# Aprende esto
+# Aprenderás a mantener el tipo consistente.
+# Verás cómo ayuda a leer el flujo.
+# Entenderás por qué separar etapas.
+#
+# Haz esto
+precio = 12.5  # Precio numérico
+cantidad = 3  # Cantidad entera
+total = precio * cantidad  # Calculamos total
+total_texto = str(total)  # Convertimos para mostrar
+mensaje = "Total: " + total_texto  # Construimos el mensaje
+print(mensaje)  # Mostramos el mensaje
+print(type(total))  # Mostramos el tipo del total
+#
+# Verás esto
+# Verás "Total: 37.5" y <class 'float'>.
+#
+# Por qué funciona
+# Mantienes números como números y conviertes al final.
+#
+# Lo típico que sale mal
+# - Reusar total como texto y luego intentar sumar.
+# - Mezclar tipos en una sola línea.
+""",
+            ),
+            (
+                "Comparar valores correctamente",
+                """# Aprende esto
+# Aprenderás a comparar valores con ==.
+# Verás que is es para identidad.
+# Entenderás cuándo usar cada uno.
+#
+# Haz esto
+a = 5  # Guardamos un número
+b = 5  # Guardamos otro número
+mismo_valor = a == b  # Comparamos valores
+mismo_objeto = a is b  # Comparamos identidad
+print(mismo_valor)  # Mostramos comparación de valor
+print(mismo_objeto)  # Mostramos comparación de identidad
+#
+# Verás esto
+# Verás True y probablemente True por optimización.
+#
+# Por qué funciona
+# == compara contenido; is compara el objeto.
+#
+# Lo típico que sale mal
+# - Usar is para comparar strings o números.
+# - Confiar en resultados de identidad como regla.
 """,
             ),
         ]
@@ -538,39 +390,49 @@ print(resultado == 0)  # Comprobamos si es cero
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Crea una variable llamada ciudad con el valor 'Lima' y muéstrala.",
-                "hints": ["Usa print"],
-                "solution": "ciudad = 'Lima'\nprint(ciudad)",
+                "question": "Crea dos variables: `nombre` y `edad`. Construye un mensaje como 'Ana tiene 30 años'.",
+                "hints": ["Convierte `edad` a texto con str().", "Usa concatenación con +."],
+                "solution": """nombre = "Ana"
+edad = 30
+mensaje = nombre + " tiene " + str(edad) + " años"
+print(mensaje)""",
             },
             {
-                "question": "Convierte la cadena '3.14' a float y súmale 1.",
-                "hints": ["Usa float()"],
-                "solution": "valor = float('3.14')\nprint(valor + 1)",
+                "question": "Convierte el texto '7' a int, súmale 5 y muestra el resultado.",
+                "hints": ["Usa int() para convertir.", "Guarda el resultado en una variable."],
+                "solution": """texto = "7"
+numero = int(texto)
+resultado = numero + 5
+print(resultado)""",
             },
             {
-                "question": "Crea una lista con tres frutas y agrega una cuarta con append.",
-                "hints": ["Lista con []", "append agrega al final"],
-                "solution": "frutas = ['manzana', 'pera', 'uva']\nfrutas.append('naranja')\nprint(frutas)",
+                "question": "Crea una lista con dos frutas y agrega una tercera usando append().",
+                "hints": ["Las listas son mutables.", "append modifica en sitio."],
+                "solution": """frutas = ["manzana", "pera"]
+frutas.append("uva")
+print(frutas)""",
             },
             {
-                "question": "Demuestra que una copia de lista no cambia al modificar la copia.",
-                "hints": ["Usa copy()"],
-                "solution": "original = [1, 2]\ncopia = original.copy()\ncopia.append(3)\nprint(original)",
+                "question": "Demuestra que `b = a` no es copia: crea una lista, asigna b = a, agrega un elemento y muestra ambas.",
+                "hints": ["Imprime las dos listas.", "Observa que cambian igual."],
+                "solution": """a = [1, 2]
+b = a
+b.append(3)
+print(a)
+print(b)""",
             },
             {
-                "question": "Guarda None en una variable llamada resultado y compruébalo con is.",
-                "hints": ["Usa if"],
-                "solution": "resultado = None\nif resultado is None:\n    print('Sin resultado')",
+                "question": "Usa None como marcador inicial y luego asigna un valor si está vacío.",
+                "hints": ["Comprueba con `is None`.", "Asigna dentro del if."],
+                "solution": """valor = None
+if valor is None:
+    valor = 10
+print(valor)""",
             },
             {
-                "question": "Convierte un entero a texto y concaténalo en un mensaje.",
-                "hints": ["Usa str()"],
-                "solution": "edad = 30\nmensaje = 'Edad: ' + str(edad)\nprint(mensaje)",
+                "question": "Imprime el tipo de una variable float y explica con un comentario qué es.",
+                "hints": ["Usa type().", "Crea una variable con decimal."],
+                "solution": """altura = 1.75
+print(type(altura))  # Es un float (decimal)""",
             },
         ]
-
-    def build_demo(self) -> QWidget | None:
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Esta lección es conceptual y no requiere demo interactiva."))
-        return widget

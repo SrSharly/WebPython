@@ -10,12 +10,12 @@ class StringsFStringsLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["strings", "f-strings", "formato", "texto"]
+    TAGS = ["strings", "f-strings", "format", "texto"]
 
     def summary(self) -> str:
         return (
-            "Aprende desde cero cómo trabajar con texto en Python: crear strings, "
-            "limpiarlos, cortarlos y formatearlos con f-strings de forma clara y segura."
+            "Domina los textos en Python: creación, concatenación, f-strings, escapes y formato seguro para "
+            "mensajes claros y legibles."
         )
 
     def guide(self) -> str:
@@ -23,505 +23,341 @@ class StringsFStringsLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: el texto es dato, no solo un mensaje
-Los strings están en todas partes: nombres, rutas, etiquetas, mensajes, archivos y datos de usuario. Saber manipularlos
-significa saber limpiar, formatear y presentar información con precisión. En esta lección aprenderás a crear strings,
-recortar, buscar, reemplazar y usar f-strings para construir mensajes legibles con datos dinámicos.
+## Introducción: los textos son tu interfaz con el mundo
+En Python, los textos (`str`) aparecen en todas partes: mensajes en pantalla, nombres, rutas de archivo, respuestas de una API
+o el contenido de un formulario. Aprender a manejarlos bien es lo que convierte un script que “funciona” en uno que se puede
+leer, mantener y explicar. Además, los textos son inmutables: cada vez que “modificas” un texto en realidad creas uno nuevo.
+Entender esto te ayuda a escribir código más claro y eficiente.
 
-## Paso 1: Crear strings y concatenar
-Crear strings es simple, pero la claridad importa desde la primera línea.
+En esta lección vas a aprender desde cero cómo crear textos, cómo unirlos, cómo insertar valores usando f-strings y cómo
+formatear resultados de manera legible. También aprenderás a trabajar con saltos de línea, comillas y escapes sin romper el
+programa. Al final tendrás un conjunto de patrones para construir mensajes precisos sin adivinar.
 
-**Aprende esto**
-- Aprenderás a definir strings y a concatenarlos con intención.
-- Verás cómo usar `str()` cuando quieres unir texto con números.
+### Nota (CalloutBox: note)
+Los textos en Python siempre son inmutables. Eso significa que métodos como `replace` o `upper` devuelven un texto nuevo en
+lugar de cambiar el original. Si quieres conservar el cambio, debes reasignarlo.
 
-**Haz esto**
-print("ok")  # Confirmamos
-```
-nombre = "Ana"  # Texto base
-apellido = "López"  # Texto adicional
-separador = " "  # Espacio entre palabras
-nombre_completo = nombre + separador + apellido  # Concatenamos
-edad = 30  # Número entero
-mensaje = "Nombre: " + nombre_completo + ", Edad: " + str(edad)  # Mensaje
-print(mensaje)  # Mostramos el mensaje
-print(len(nombre_completo))  # Mostramos la longitud
-print("ok")  # Confirmamos
-```
+## Paso 1: crear textos y elegir comillas
+Puedes crear textos con comillas simples o dobles. Lo importante es ser consistente y escoger la que te permita escribir
+sin escapar demasiado. Si tu texto contiene comillas simples, usa dobles y viceversa. Esto evita caracteres extraños y mejora
+la legibilidad.
 
-**Verás esto**
-Verás un mensaje completo y la longitud del nombre.
+Cuando necesitas un texto largo o con saltos de línea, usa triple comilla. Es útil para mensajes largos, descripciones o
+plantillas donde la forma importa.
 
-**Por qué funciona**
-El operador `+` concatena strings y `str()` convierte números para que puedan unirse a texto.
+## Paso 2: concatenación básica y lectura clara
+Concatenar es unir textos. Puedes usar `+` para unir dos strings, pero debes cuidar los espacios. Este enfoque es directo,
+pero se vuelve difícil de leer cuando agregas números o demasiados fragmentos. Por eso es importante saber cuándo pasar a un
+formato más claro como f-strings.
 
-**Lo típico que sale mal**
-- Concatenar texto y números sin `str()`.
-- Olvidar espacios entre palabras al unir strings.
+## Paso 3: f-strings para insertar variables con precisión
+Las f-strings son la forma más clara de construir textos en Python moderno. Pones una `f` antes del texto y luego insertas
+variables con `{}`. Esto mantiene la frase completa visible, sin interrupciones por operadores `+`.
 
-## Paso 2: Indexar y cortar strings
-Los strings son secuencias, por lo tanto admiten índices y cortes.
+Además, las f-strings permiten formatear números: puedes controlar decimales, alineación y relleno. Este detalle es clave
+cuando quieres resultados consistentes en reportes o logs.
 
-**Aprende esto**
-- Aprenderás a acceder a caracteres individuales.
-- Verás cómo extraer partes con slicing.
+### Buenas prácticas (CalloutBox: best_practice)
+Si un mensaje tiene variables, prioriza f-strings. Son más legibles, evitan errores de concatenación y hacen el código más
+explicativo.
 
-**Haz esto**
-print("ok")  # Confirmamos
-```
-texto = "Python"  # String base
-primera = texto[0]  # Primer carácter
-ultima = texto[-1]  # Último carácter
-subtexto = texto[0:3]  # Primeros tres caracteres
-longitud = len(texto)  # Longitud total
-resumen = primera + "-" + ultima + "-" + subtexto  # Resumen
-print(texto)  # Mostramos el texto
-print(resumen)  # Mostramos el resumen
-print(longitud)  # Mostramos la longitud
-print("ok")  # Confirmamos
-```
+## Paso 4: saltos de línea y textos multilínea
+Los saltos de línea (`\\n`) te permiten construir mensajes con varias líneas dentro de un solo texto. También puedes usar
+triple comilla para mantener la forma original. Elige el método según el tipo de texto: `\\n` es útil para mensajes cortos,
+la triple comilla es ideal para plantillas largas.
 
-**Verás esto**
-Verás `Python`, un resumen como `P-n-Pyt` y el número 6.
+## Paso 5: escapes y caracteres especiales
+Si necesitas escribir comillas dentro de un texto, usa el escape `\\`. Por ejemplo, `\"` o `\\'`. También puedes escribir
+caracteres especiales como tabulaciones con `\\t`. Usar escapes te permite mantener la sintaxis correcta sin romper el código.
 
-**Por qué funciona**
-Los índices positivos y negativos acceden a caracteres y el slicing crea un nuevo string con el rango solicitado.
+## Paso 6: formateo numérico y alineación
+En reportes o interfaces es común alinear números, controlar decimales o rellenar con ceros. Las f-strings permiten esto con
+formatos como `{valor:.2f}` para dos decimales o `{numero:03d}` para rellenar con ceros. Estos detalles hacen que tu salida
+sea profesional y consistente.
 
-**Lo típico que sale mal**
-- Pedir un índice fuera de rango y causar error.
-- Confundir slicing con índices únicos.
+## Paso 7: resumen para escribir textos confiables
+Cuando construyas un texto, piensa en tres cosas: qué valores insertarás, cómo quieres que se vea y cómo evitar errores de
+concatenación. Si el texto es simple, `+` puede bastar; si tiene variables, usa f-strings; si tiene formato, agrega un
+especificador. Esa regla simple te cubre casi todo.
 
-## Paso 3: Limpiar y transformar texto
-Los métodos de string te ayudan a limpiar datos que vienen con espacios o formato inconsistente.
+## Más allá (nivel pro)
+Conforme tu código crece, los textos se convierten en parte del diseño. La claridad en los mensajes facilita depuración,
+pruebas y soporte. Un texto bien construido puede ser la diferencia entre un bug difícil y una solución inmediata.
 
-**Aprende esto**
-- Aprenderás a usar `strip()`, `lower()` y `upper()`.
-- Verás cómo encadenar transformaciones guardando resultados.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-texto = "  Hola Mundo  "  # Texto con espacios
-texto_limpio = texto.strip()  # Quitamos espacios extremos
-texto_minus = texto_limpio.lower()  # Convertimos a minúsculas
-texto_mayus = texto_limpio.upper()  # Convertimos a mayúsculas
-resumen = texto_minus + " | " + texto_mayus  # Resumen
-print(texto)  # Mostramos el texto original
-print(texto_limpio)  # Mostramos el texto limpio
-print(resumen)  # Mostramos el resumen
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás el texto original con espacios, el texto limpio y el resumen con minúsculas y mayúsculas.
-
-**Por qué funciona**
-`strip()` devuelve un string nuevo sin espacios y los métodos de cambio de caso también devuelven nuevos strings.
-
-**Lo típico que sale mal**
-- Esperar que `strip()` modifique el texto original.
-- Olvidar guardar el resultado de un método.
-
-## Paso 4: Buscar y reemplazar
-Buscar y reemplazar es básico para limpiar datos provenientes de usuarios o archivos.
-
-**Aprende esto**
-- Aprenderás a usar `in` y `replace()` con seguridad.
-- Verás cómo construir un mensaje con el resultado.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-frase = "Precio: $100"  # Frase de ejemplo
-hay_signo = "$" in frase  # Verificamos si aparece el símbolo
-frase_limpia = frase.replace("$", "")  # Quitamos el símbolo
-monto = frase_limpia.split(": ")[1]  # Tomamos la parte del monto
-mensaje = "Monto encontrado: " + monto  # Construimos el mensaje
-print(hay_signo)  # Mostramos el booleano
-print(frase_limpia)  # Mostramos la frase limpia
-print(mensaje)  # Mostramos el mensaje
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás `True`, la frase sin `$` y el mensaje con el monto.
-
-**Por qué funciona**
-`in` verifica presencia, `replace()` genera un nuevo string y `split()` divide por un separador.
-
-**Lo típico que sale mal**
-- Usar `split()` sin verificar que el separador existe.
-- Reemplazar más de lo esperado por usar un patrón demasiado amplio.
-
-## Paso 5: Formatear con f-strings
-Las f-strings son la forma más clara de inyectar variables en texto.
-
-**Aprende esto**
-- Aprenderás a usar f-strings para construir mensajes dinámicos.
-- Verás cómo formatear números con precisión.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-producto = "Café"  # Nombre del producto
-precio = 3.5  # Precio base
-cantidad = 2  # Unidades
-subtotal = precio * cantidad  # Calculamos el subtotal
-mensaje = f"Producto: {producto} | Subtotal: {subtotal:.2f}"  # Formateo
-print(mensaje)  # Mostramos el mensaje
-print(type(mensaje))  # Confirmamos el tipo
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás un mensaje con el subtotal en dos decimales, por ejemplo `Subtotal: 7.00`.
-
-**Por qué funciona**
-Las f-strings evalúan expresiones dentro de `{}` y permiten formatear números con especificadores como `.2f`.
-
-**Lo típico que sale mal**
-- Olvidar la `f` antes de las comillas y ver los `{}` sin evaluar.
-- Formatear números sin controlar decimales.
-
-## Paso 6: Strings multilínea y escape
-Cuando necesitas texto largo, puedes usar strings multilínea y caracteres de escape.
-
-**Aprende esto**
-- Aprenderás a usar comillas triples para texto largo.
-- Verás cómo incluir saltos de línea y comillas dentro del texto.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-linea1 = "Primera línea"  # Texto base
-linea2 = "Segunda línea"  # Texto base
-texto = linea1 + "\n" + linea2  # Unimos con salto de línea
-titulo = "\"Reporte\""  # Texto con comillas escapadas
-resumen = titulo + "\n" + texto  # Construimos el texto final
-print(resumen)  # Mostramos el texto
-print(len(resumen))  # Mostramos la longitud
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás un texto con salto de línea y un título con comillas.
-
-**Por qué funciona**
-`\n` crea un salto de línea dentro del string y `\"` permite insertar comillas dobles en texto.
-
-**Lo típico que sale mal**
-- Olvidar escapar comillas y romper la cadena.
-- Contar mal los saltos de línea al calcular longitudes.
-
-## Más allá (nivel pro): plantillas y limpieza robusta
-En proyectos reales, formatear textos suele incluir datos opcionales y limpieza consistente.
-
-**Aprende esto**
-- Aprenderás a construir plantillas con valores opcionales.
-- Verás cómo asegurar formatos consistentes en reportes.
-
-**Haz esto**
-print("ok")  # Confirmamos
-```
-cliente = "Ana"  # Nombre del cliente
-ciudad = "Lima"  # Ciudad del cliente
-saldo = 1520.5  # Saldo numérico
-plantilla = f"Cliente: {cliente} | Ciudad: {ciudad}"  # Plantilla base
-detalle = f"Saldo: {saldo:,.2f}"  # Formato con separador de miles
-reporte = plantilla + "\n" + detalle  # Reporte final
-print(reporte)  # Mostramos el reporte
-print("ok")  # Confirmamos
-```
-
-**Verás esto**
-Verás un reporte con dos líneas y el saldo formateado con separador de miles.
-
-**Por qué funciona**
-Las f-strings permiten insertar variables y aplicar formatos numéricos avanzados, manteniendo el texto legible.
-
-**Lo típico que sale mal**
-- Mezclar concatenación y f-strings sin necesidad.
-- No estandarizar el formato y generar reportes inconsistentes.
+### Consejos pro
+- Prefiere f-strings para mensajes que incluyan variables: son más rápidos y legibles.
+- Usa nombres descriptivos en las variables insertadas para que la frase se entienda sola.
+- Si el texto será traducido o reutilizado, guárdalo en una plantilla y luego inserta valores.
+- Para reportes numéricos, fija decimales y alineación para que la salida sea estable.
+- Cuando una cadena crece demasiado, considera dividirla en partes y documentar la intención.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
             (
-                "Concatenar sin str()",
-                "Intentar unir texto y números sin convertir causa error.",
+                "Concatenar texto con número",
+                "`""Total: "" + 10` falla. Convierte el número con `str(10)` o usa f-strings.",
             ),
             (
-                "Índices fuera de rango",
-                "Acceder a posiciones inexistentes en un string provoca IndexError.",
+                "Olvidar espacios en concatenación",
+                "Unir `""Hola"" + ""Mundo""` produce `HolaMundo`. Agrega el espacio manualmente o usa f-strings.",
             ),
             (
-                "Olvidar reasignar",
-                "Métodos como strip o lower devuelven un nuevo string.",
+                "Asumir que upper() modifica el texto",
+                "Los strings son inmutables. `texto.upper()` devuelve uno nuevo; si no lo reasignas, no cambia.",
             ),
             (
-                "Olvidar la f en f-strings",
-                "Sin la f, las variables no se evalúan.",
+                "Escapar comillas incorrectamente",
+                "Si usas comillas dobles dentro de un texto con dobles, debes escaparlas o cambiar de comillas.",
             ),
             (
-                "Reemplazar demasiado",
-                "replace() sustituye todas las coincidencias si no limitas.",
+                "Mezclar \n con triple comilla sin intención",
+                "Cuando mezclas ambos puedes obtener saltos de línea duplicados. Elige un método consistente.",
             ),
             (
-                "Usar split sin validar",
-                "split() puede devolver menos partes si el separador no existe.",
+                "Formatear decimales sin redondear",
+                "Mostrar un float sin formato puede dar muchos decimales. Usa `{valor:.2f}` para control.",
             ),
             (
-                "Confundir slicing con índice",
-                "texto[0:3] devuelve tres caracteres, texto[3] uno solo.",
+                "Usar f-strings sin la letra f",
+                "Olvidar la `f` convierte `{nombre}` en texto literal. Revisa siempre el prefijo.",
             ),
             (
-                "No limpiar espacios",
-                "Olvidar strip() deja espacios que rompen comparaciones.",
+                "Concatenar muchas partes con +",
+                "Muchas concatenaciones reducen legibilidad. Usa f-strings o `"".join`.",
             ),
             (
-                "Comparar sin normalizar",
-                "Comparar textos sin lower() produce resultados inesperados.",
+                "Confundir \t con espacios",
+                "Un tabulador cambia el ancho según el entorno. Úsalo solo si controlas el formato final.",
             ),
             (
-                "Escapar comillas mal",
-                "Olvidar el escape rompe la cadena de texto.",
+                "Esperar que format() sea mágico",
+                "Si no das formato explícito, `format` no alinea ni redondea como esperas. Define el especificador.",
             ),
             (
-                "Ignorar encoding",
-                "Al leer archivos, un encoding incorrecto da caracteres raros.",
+                "Reusar variables con otro tipo",
+                "Si una variable era texto y luego se vuelve número, las f-strings se vuelven confusas.",
             ),
             (
-                "Crear mensajes ambiguos",
-                "Concatenar sin separadores genera textos difíciles de leer.",
+                "No validar entradas de usuario",
+                "Si un valor viene como texto, conviértelo antes y maneja el error si no es numérico.",
             ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "Concatenación básica",
+                "Crear textos con comillas",
                 """# Aprende esto
-# Aprenderás a concatenar strings con claridad.
-# Verás cómo convertir números a texto.
-# Construirás mensajes legibles.
+# Aprenderás a crear strings con comillas simples y dobles.
+# Verás cómo evitar escapes innecesarios.
+# Entenderás la importancia de la consistencia.
 #
 # Haz esto
-nombre = "Ana"  # Nombre
-apellido = "López"  # Apellido
-nombre_completo = nombre + " " + apellido  # Concatenamos
-edad = 30  # Número entero
-mensaje = "Nombre: " + nombre_completo + ", Edad: " + str(edad)  # Mensaje
+saludo = "Hola"  # Texto con comillas dobles
+nombre = 'Ana'  # Texto con comillas simples
+mensaje = saludo + " " + nombre  # Unimos con espacio
 print(mensaje)  # Mostramos el mensaje
-print(len(nombre_completo))  # Longitud
-print(type(mensaje))  # Tipo del mensaje
+frase = "Ella dijo: 'sí'"  # Comillas simples dentro de dobles
+print(frase)  # Mostramos la frase
 #
 # Verás esto
-# Verás el mensaje completo y la longitud del nombre.
+# Verás "Hola Ana" y "Ella dijo: 'sí'".
 #
 # Por qué funciona
-# str() permite unir números con texto y + concatena strings.
+# Las comillas externas delimitan el string sin conflicto.
 #
 # Lo típico que sale mal
-# - Olvidar str() al concatenar.
-# - No incluir espacios.
+# - Usar el mismo tipo de comillas y olvidar escapes.
+# - Mezclar estilos sin una regla clara.
 """,
             ),
             (
-                "Indexar caracteres",
+                "Concatenar con +",
                 """# Aprende esto
-# Aprenderás a acceder a caracteres con índices.
-# Verás el primer y último carácter.
-# Entenderás índices positivos y negativos.
+# Aprenderás a concatenar strings simples.
+# Verás la importancia de los espacios.
+# Entenderás cuándo cambiar a f-strings.
 #
 # Haz esto
-texto = "Python"  # String base
-primera = texto[0]  # Primer carácter
-ultima = texto[-1]  # Último carácter
-subtexto = texto[0:3]  # Substring
-resumen = primera + "-" + ultima + "-" + subtexto  # Resumen
-print(texto)  # Mostramos el texto
-print(resumen)  # Mostramos el resumen
-print(len(texto))  # Longitud
-#
-# Verás esto
-# Verás P-n-Pyt y la longitud 6.
-#
-# Por qué funciona
-# Los strings son secuencias y permiten slicing.
-#
-# Lo típico que sale mal
-# - Pedir un índice fuera de rango.
-# - Confundir slicing con un solo índice.
-""",
-            ),
-            (
-                "Limpiar con strip",
-                """# Aprende esto
-# Aprenderás a quitar espacios al inicio y fin.
-# Verás cómo guardar el resultado limpio.
-# Evitarás comparar con espacios ocultos.
-#
-# Haz esto
-texto = "  Hola Mundo  "  # Texto con espacios
-texto_limpio = texto.strip()  # Quitamos espacios
-texto_mayus = texto_limpio.upper()  # Mayúsculas
-resumen = texto_limpio + " | " + texto_mayus  # Resumen
-print(texto)  # Original
-print(texto_limpio)  # Limpio
-print(resumen)  # Resumen
-print(texto == texto_limpio)  # Comparación
-#
-# Verás esto
-# Verás el texto limpio y False en la comparación.
-#
-# Por qué funciona
-# strip() devuelve un nuevo string sin espacios.
-#
-# Lo típico que sale mal
-# - Esperar que el original cambie.
-# - Olvidar guardar el resultado.
-""",
-            ),
-            (
-                "Buscar y reemplazar",
-                """# Aprende esto
-# Aprenderás a buscar texto con in.
-# Verás cómo reemplazar caracteres.
-# Limpiarás un valor para usarlo como número.
-#
-# Haz esto
-frase = "Precio: $100"  # Frase con símbolo
-hay_signo = "$" in frase  # Verificamos presencia
-frase_limpia = frase.replace("$", "")  # Quitamos símbolo
-monto = frase_limpia.split(": ")[1]  # Extraemos monto
-mensaje = "Monto: " + monto  # Mensaje final
-print(hay_signo)  # Mostramos booleano
-print(frase_limpia)  # Mostramos limpio
-print(mensaje)  # Mostramos mensaje
-#
-# Verás esto
-# Verás True, la frase sin $ y el monto extraído.
-#
-# Por qué funciona
-# replace() y split() devuelven nuevos strings.
-#
-# Lo típico que sale mal
-# - No verificar separador antes de split.
-# - Reemplazar más texto del necesario.
-""",
-            ),
-            (
-                "f-strings básicos",
-                """# Aprende esto
-# Aprenderás a usar f-strings para insertar variables.
-# Verás cómo formatear un número con decimales.
-# Harás el texto más legible.
-#
-# Haz esto
-producto = "Café"  # Producto
-precio = 3.5  # Precio base
-cantidad = 2  # Unidades
-subtotal = precio * cantidad  # Subtotal
-mensaje = f"Producto: {producto} | Subtotal: {subtotal:.2f}"  # f-string
+ciudad = "Lima"  # Guardamos una ciudad
+pais = "Perú"  # Guardamos un país
+ubicacion = ciudad + ", " + pais  # Unimos con coma y espacio
+print(ubicacion)  # Mostramos la ubicación
+prefijo = "Ciudad: "  # Definimos un prefijo
+mensaje = prefijo + ubicacion  # Unimos todo
 print(mensaje)  # Mostramos el mensaje
-print(type(mensaje))  # Tipo
-print(subtotal)  # Subtotal numérico
 #
 # Verás esto
-# Verás el subtotal con dos decimales.
+# Verás "Lima, Perú" y "Ciudad: Lima, Perú".
 #
 # Por qué funciona
-# Las f-strings evalúan expresiones dentro de {}.
+# El operador + une strings en orden.
 #
 # Lo típico que sale mal
-# - Olvidar la f en la cadena.
-# - No controlar decimales.
+# - Olvidar la coma o el espacio.
+# - Concatenar números sin convertir.
 """,
             ),
             (
-                "Saltos de línea",
+                "F-strings para insertar variables",
                 """# Aprende esto
-# Aprenderás a usar \n para saltos de línea.
-# Verás cómo unir líneas en un mismo texto.
-# Mantendrás claridad en mensajes largos.
+# Aprenderás a insertar variables con f-strings.
+# Verás cómo mejora la legibilidad.
+# Entenderás que no necesitas +.
 #
 # Haz esto
-linea1 = "Primera línea"  # Línea 1
-linea2 = "Segunda línea"  # Línea 2
-texto = linea1 + "\n" + linea2  # Unimos con salto
-titulo = "\"Reporte\""  # Texto con comillas
-reporte = titulo + "\n" + texto  # Reporte final
-print(reporte)  # Mostramos reporte
-print(len(reporte))  # Longitud
-print("\n" in reporte)  # Verificamos salto
+producto = "Café"  # Guardamos un producto
+precio = 3.5  # Guardamos un precio
+mensaje = f"Producto: {producto}, precio: {precio}"  # Insertamos variables
+print(mensaje)  # Mostramos el mensaje
+stock = 12  # Guardamos un stock
+mensaje_stock = f"Stock disponible: {stock}"  # Insertamos el stock
+print(mensaje_stock)  # Mostramos el mensaje
 #
 # Verás esto
-# Verás un texto con saltos y True en la verificación.
+# Verás textos con las variables insertadas.
 #
 # Por qué funciona
-# \n crea un salto de línea dentro del string.
+# f-strings evalúan expresiones dentro de {}.
 #
 # Lo típico que sale mal
-# - Olvidar escapar comillas.
-# - Contar mal caracteres por saltos.
+# - Olvidar la letra f.
+# - Escribir mal el nombre de la variable.
 """,
             ),
             (
-                "Formateo con separador de miles",
+                "Formato de decimales",
                 """# Aprende esto
-# Aprenderás a formatear números grandes.
-# Verás separadores de miles y decimales.
-# Harás reportes más legibles.
+# Aprenderás a controlar decimales con f-strings.
+# Verás cómo redondear para reportes.
+# Entenderás por qué es útil en salidas.
 #
 # Haz esto
-cliente = "Ana"  # Nombre
-saldo = 1520.5  # Saldo base
-saldo_formateado = f"{saldo:,.2f}"  # Formato con miles
-mensaje = f"Cliente: {cliente} | Saldo: {saldo_formateado}"  # Mensaje
-longitud = len(mensaje)  # Longitud del mensaje
-print(mensaje)  # Mostramos mensaje
-print(type(saldo_formateado))  # Tipo
-print(saldo_formateado)  # Mostramos saldo
-print(longitud)  # Mostramos longitud
+precio = 19.9876  # Precio original
+precio_redondeado = f"{precio:.2f}"  # Formato con 2 decimales
+print(precio_redondeado)  # Mostramos el precio
+impuesto = 1.2345  # Impuesto original
+impuesto_redondeado = f"{impuesto:.1f}"  # Formato con 1 decimal
+print(impuesto_redondeado)  # Mostramos el impuesto
 #
 # Verás esto
-# Verás el saldo con separador de miles y dos decimales.
+# Verás 19.99 y 1.2.
 #
 # Por qué funciona
-# El especificador :,.2f agrega coma de miles y decimales.
+# El especificador .2f define dos decimales.
 #
 # Lo típico que sale mal
-# - Usar formato incorrecto y perder decimales.
-# - Mezclar formatos con strings normales.
+# - Mostrar demasiados decimales sin querer.
+# - Usar formato incorrecto para enteros.
 """,
             ),
             (
-                "Normalizar texto para comparación",
+                "Textos multilínea",
                 """# Aprende esto
-# Aprenderás a normalizar texto para comparar.
-# Verás cómo usar lower() y strip().
-# Evitarás falsos negativos en comparaciones.
+# Aprenderás a crear textos con saltos de línea.
+# Verás el uso de \\n y triple comilla.
+# Entenderás cuándo usar cada uno.
 #
 # Haz esto
-entrada = "  Sí  "  # Texto con espacios y mayúsculas
-normalizado = entrada.strip().lower()  # Normalizamos
-es_si = normalizado == "sí"  # Comparamos
-mensaje = "Respuesta válida" if es_si else "Respuesta inválida"  # Mensaje
-longitud = len(normalizado)  # Longitud del texto
-print(normalizado)  # Mostramos normalizado
-print(es_si)  # Mostramos booleano
-print(mensaje)  # Mostramos mensaje
-print(longitud)  # Mostramos longitud
+linea1 = "Línea uno"  # Primera línea
+linea2 = "Línea dos"  # Segunda línea
+mensaje = linea1 + "\\n" + linea2  # Unimos con salto de línea
+print(mensaje)  # Mostramos el mensaje
+bloque = \"\"\"Bloque A\nBloque B\"\"\"  # Texto con triple comilla
+print(bloque)  # Mostramos el bloque
 #
 # Verás esto
-# Verás "sí", True y el mensaje de respuesta válida.
+# Verás dos líneas separadas en pantalla.
 #
 # Por qué funciona
-# strip() elimina espacios y lower() uniforma el caso.
+# \\n crea salto de línea; triple comilla mantiene formato.
 #
 # Lo típico que sale mal
-# - Comparar sin normalizar.
-# - Olvidar que los acentos importan.
+# - Mezclar \\n y triple comilla sin intención.
+# - Esperar que los espacios se mantengan igual.
+""",
+            ),
+            (
+                "Escapar comillas",
+                """# Aprende esto
+# Aprenderás a escribir comillas dentro de textos.
+# Verás el uso del escape \" y \\\'.
+# Entenderás cómo evitar errores de sintaxis.
+#
+# Haz esto
+frase = "Ella dijo: \"hola\""  # Comillas dobles escapadas
+print(frase)  # Mostramos la frase
+otra = 'Él respondió: \'sí\''  # Comillas simples escapadas
+print(otra)  # Mostramos la frase
+mensaje = frase + " | " + otra  # Unimos textos
+print(mensaje)  # Mostramos el mensaje
+#
+# Verás esto
+# Verás las frases con comillas visibles.
+#
+# Por qué funciona
+# El backslash evita que la comilla cierre el string.
+#
+# Lo típico que sale mal
+# - Olvidar el escape y romper la cadena.
+# - Usar el escape en exceso sin necesidad.
+""",
+            ),
+            (
+                "Alineación simple",
+                """# Aprende esto
+# Aprenderás a alinear textos con formato.
+# Verás cómo rellenar con espacios.
+# Entenderás la utilidad en reportes.
+#
+# Haz esto
+producto = "Pan"  # Producto
+cantidad = 4  # Cantidad
+linea = f"{producto:<10} {cantidad:>3}"  # Alineamos izquierda y derecha
+print(linea)  # Mostramos la línea
+producto2 = "Leche"  # Segundo producto
+cantidad2 = 12  # Segunda cantidad
+linea2 = f"{producto2:<10} {cantidad2:>3}"  # Alineamos
+print(linea2)  # Mostramos la línea
+#
+# Verás esto
+# Verás columnas alineadas para producto y cantidad.
+#
+# Por qué funciona
+# Los especificadores < y > controlan la alineación.
+#
+# Lo típico que sale mal
+# - Usar anchos distintos y perder alineación.
+# - Mezclar tipos sin formatear.
+""",
+            ),
+            (
+                "Insertar expresiones simples",
+                """# Aprende esto
+# Aprenderás a usar expresiones dentro de f-strings.
+# Verás cómo calcular dentro del texto.
+# Entenderás cuándo mantenerlo simple.
+#
+# Haz esto
+precio = 5  # Precio unitario
+cantidad = 3  # Cantidad
+total = precio * cantidad  # Calculamos total
+mensaje = f"Total: {total} (3 x 5)"  # Insertamos el total
+print(mensaje)  # Mostramos el mensaje
+ahorro = total - 2  # Calculamos un ahorro
+mensaje_ahorro = f"Con descuento: {ahorro}"  # Insertamos el ahorro
+print(mensaje_ahorro)  # Mostramos el mensaje
+#
+# Verás esto
+# Verás el total y el total con descuento.
+#
+# Por qué funciona
+# f-strings evalúan variables ya calculadas.
+#
+# Lo típico que sale mal
+# - Poner expresiones complejas dentro del texto.
+# - Olvidar calcular antes y perder claridad.
 """,
             ),
         ]
@@ -529,39 +365,43 @@ print(longitud)  # Mostramos longitud
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Concatena tu nombre y apellido con un espacio entre ellos.",
-                "hints": ["Usa + y un espacio"],
-                "solution": "nombre = 'Ana'\napellido = 'López'\nprint(nombre + ' ' + apellido)",
+                "question": "Crea dos variables `nombre` y `ciudad` y muestra un saludo con f-string.",
+                "hints": ["Usa f\"Hola {nombre} de {ciudad}\".", "Asegúrate de escribir la letra f."],
+                "solution": """nombre = "Luis"
+ciudad = "Quito"
+print(f"Hola {nombre} de {ciudad}")""",
             },
             {
-                "question": "Obtén el primer y último carácter de la palabra 'Python'.",
-                "hints": ["Usa índices 0 y -1"],
-                "solution": "texto = 'Python'\nprint(texto[0])\nprint(texto[-1])",
+                "question": "Convierte el número 12.345 a texto con 1 decimal usando f-strings.",
+                "hints": ["Usa {valor:.1f}.", "Guarda el resultado en una variable."],
+                "solution": """valor = 12.345
+texto = f"{valor:.1f}"
+print(texto)""",
             },
             {
-                "question": "Limpia los espacios de un texto usando strip().",
-                "hints": ["texto.strip()"],
-                "solution": "texto = '  Hola  '\nprint(texto.strip())",
+                "question": "Construye un texto multilínea con triple comilla que tenga dos líneas.",
+                "hints": ["Usa triple comilla."],
+                "solution": """mensaje = \"\"\"Línea uno\nLínea dos\"\"\"\nprint(mensaje)""",
             },
             {
-                "question": "Reemplaza el símbolo '$' en 'Precio: $50'.",
-                "hints": ["Usa replace"],
-                "solution": "frase = 'Precio: $50'\nprint(frase.replace('$', ''))",
+                "question": "Muestra una frase con comillas dobles internas usando escape.",
+                "hints": ["Usa \\\\ dentro del string."],
+                "solution": """frase = "Ella dijo: \"hola\""
+print(frase)""",
             },
             {
-                "question": "Crea un f-string que muestre un precio con dos decimales.",
-                "hints": ["Usa {precio:.2f}"],
-                "solution": "precio = 3.5\nmensaje = f'Precio: {precio:.2f}'\nprint(mensaje)",
+                "question": "Alinea a la derecha una cantidad en un espacio de 4 caracteres.",
+                "hints": ["Usa {cantidad:>4}."],
+                "solution": """cantidad = 7
+linea = f"Cantidad: {cantidad:>4}"
+print(linea)""",
             },
             {
-                "question": "Normaliza la respuesta '  SI  ' para compararla con 'si'.",
-                "hints": ["Usa strip().lower()"],
-                "solution": "respuesta = '  SI  '\nnormalizada = respuesta.strip().lower()\nprint(normalizada == 'si')",
+                "question": "Concatena dos palabras con un espacio usando +.",
+                "hints": ["Agrega el espacio manualmente."],
+                "solution": """palabra1 = "Hola"
+palabra2 = "mundo"
+texto = palabra1 + " " + palabra2
+print(texto)""",
             },
         ]
-
-    def build_demo(self) -> QWidget | None:
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.addWidget(QLabel("Esta lección es conceptual y no requiere demo interactiva."))
-        return widget

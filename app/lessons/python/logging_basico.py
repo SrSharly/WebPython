@@ -199,6 +199,38 @@ Los mensajes DEBUG no aparecen porque el primer basicConfig ya fijó el nivel.
 
 Cómo se arregla: define la configuración una sola vez.
 
+## Registrar logs en archivo (sin perderlos en consola)
+Si quieres que los mensajes queden guardados, configura un archivo de salida.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    encoding="utf-8",
+)
+logger = logging.getLogger("app")
+logger.info("Este mensaje queda en app.log")
+```
+
+Micro-ejemplo incorrecto:
+```py
+import logging
+
+logging.basicConfig(filename="logs/app.log", level=logging.INFO)
+logger = logging.getLogger("app")
+logger.info("Mensaje")
+```
+
+Error real:
+```py
+FileNotFoundError: [Errno 2] No such file or directory: 'logs/app.log'
+```
+
+Cómo se arregla: crea la carpeta antes o usa una ruta existente.
+
 ## Handlers: consola vs archivo (y por qué importa)
 Un handler decide **a dónde** se envía el log. Lo típico es consola + archivo.
 

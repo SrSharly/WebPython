@@ -3708,6 +3708,136 @@ GLOSSARY = {
             "matiz": "se pasa como flag a las funciones re.",
         },
     },
+    "pip": {
+        "tooltip": "Gestor de paquetes estándar de Python.",
+        "definition_parts": {
+            "que_es": "Herramienta que instala, actualiza y desinstala paquetes desde PyPI.",
+            "para_que": "para gestionar dependencias de proyectos de Python.",
+            "sintaxis": "python -m pip install paquete",
+            "ejemplo": "python -m pip install requests",
+            "matiz": "usar python -m pip asegura usar el pip del entorno activo.",
+        },
+    },
+    "pypi": {
+        "tooltip": "Repositorio oficial de paquetes de Python.",
+        "definition_parts": {
+            "que_es": "Python Package Index, el repositorio público de paquetes.",
+            "para_que": "para encontrar e instalar librerías con pip.",
+            "sintaxis": "python -m pip install paquete",
+            "ejemplo": "pip instala paquetes desde PyPI por defecto.",
+            "matiz": "también existen índices privados para empresas.",
+        },
+    },
+    "python -m pip": {
+        "tooltip": "Ejecuta pip usando el intérprete activo.",
+        "definition_parts": {
+            "que_es": "Forma recomendada de invocar pip con el Python correcto.",
+            "para_que": "para evitar instalar en el Python equivocado.",
+            "sintaxis": "python -m pip <comando>",
+            "ejemplo": "python -m pip list",
+            "matiz": "funciona igual en Windows, macOS y Linux.",
+        },
+    },
+    "pip install": {
+        "tooltip": "Instala un paquete desde PyPI.",
+        "definition_parts": {
+            "que_es": "Subcomando que descarga e instala paquetes.",
+            "para_que": "para agregar dependencias al entorno actual.",
+            "sintaxis": "python -m pip install paquete",
+            "ejemplo": "python -m pip install pandas",
+            "matiz": "puedes fijar versiones con ==, >= o <=.",
+        },
+    },
+    "requests": {
+        "tooltip": "Librería popular para hacer requests HTTP.",
+        "definition_parts": {
+            "que_es": "Biblioteca que simplifica solicitudes HTTP en Python.",
+            "para_que": "para consumir APIs y descargar recursos web.",
+            "sintaxis": "import requests; requests.get('https://api.example.com')",
+            "ejemplo": "requests.get('https://httpbin.org/get')",
+            "matiz": "en producción conviene manejar timeouts y errores de red.",
+        },
+    },
+    "pip install -r": {
+        "tooltip": "Instala dependencias desde un archivo requirements.",
+        "definition_parts": {
+            "que_es": "Subcomando que lee un archivo de requisitos.",
+            "para_que": "para recrear un entorno con las mismas versiones.",
+            "sintaxis": "python -m pip install -r requirements.txt",
+            "ejemplo": "python -m pip install -r requirements.txt",
+            "matiz": "fallará si el archivo no existe o la ruta es incorrecta.",
+        },
+    },
+    "pip install --upgrade": {
+        "tooltip": "Actualiza un paquete a una versión más reciente.",
+        "definition_parts": {
+            "que_es": "Bandera para instalar o actualizar paquetes.",
+            "para_que": "para mejorar la versión de una dependencia.",
+            "sintaxis": "python -m pip install --upgrade paquete",
+            "ejemplo": "python -m pip install --upgrade pip",
+            "matiz": "útil cuando pip está desactualizado en el entorno.",
+        },
+    },
+    "pip list": {
+        "tooltip": "Lista los paquetes instalados en el entorno.",
+        "definition_parts": {
+            "que_es": "Subcomando que muestra paquetes y versiones.",
+            "para_que": "para inspeccionar el estado actual del entorno.",
+            "sintaxis": "python -m pip list",
+            "ejemplo": "python -m pip list",
+            "matiz": "útil para verificar si una dependencia está instalada.",
+        },
+    },
+    "pip freeze": {
+        "tooltip": "Exporta dependencias con versiones exactas.",
+        "definition_parts": {
+            "que_es": "Subcomando que genera una lista reproducible.",
+            "para_que": "para crear un requirements.txt.",
+            "sintaxis": "python -m pip freeze > requirements.txt",
+            "ejemplo": "python -m pip freeze > requirements.txt",
+            "matiz": "incluye paquetes instalados de forma indirecta.",
+        },
+    },
+    "requirements.txt": {
+        "tooltip": "Archivo estándar de dependencias para pip.",
+        "definition_parts": {
+            "que_es": "Archivo de texto con paquetes y versiones.",
+            "para_que": "para instalar dependencias de forma reproducible.",
+            "sintaxis": "python -m pip install -r requirements.txt",
+            "ejemplo": "requests==2.32.3",
+            "matiz": "se suele regenerar con pip freeze cuando cambia el entorno.",
+        },
+    },
+    "entorno virtual": {
+        "tooltip": "Carpeta aislada con su propio Python y paquetes.",
+        "definition_parts": {
+            "que_es": "Un entorno independiente con dependencias propias.",
+            "para_que": "para evitar conflictos entre proyectos.",
+            "sintaxis": "python -m venv .venv",
+            "ejemplo": "source .venv/bin/activate",
+            "matiz": "debe activarse para que pip instale dentro del entorno.",
+        },
+    },
+    "venv": {
+        "tooltip": "Módulo estándar para crear entornos virtuales.",
+        "definition_parts": {
+            "que_es": "Módulo incluido con Python para crear entornos aislados.",
+            "para_que": "para gestionar dependencias por proyecto.",
+            "sintaxis": "python -m venv .venv",
+            "ejemplo": "python -m venv .venv",
+            "matiz": "crea la carpeta del entorno con su propio pip.",
+        },
+    },
+    "python -m venv": {
+        "tooltip": "Comando para crear un entorno virtual.",
+        "definition_parts": {
+            "que_es": "Invocación del módulo venv desde la terminal.",
+            "para_que": "para crear un entorno aislado dentro del proyecto.",
+            "sintaxis": "python -m venv nombre_entorno",
+            "ejemplo": "python -m venv .venv",
+            "matiz": "requiere indicar la carpeta de destino.",
+        },
+    },
 }
 
 def definition_text(data: dict[str, object]) -> str:

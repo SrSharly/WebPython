@@ -5,6 +5,7 @@ import logging
 import re
 import sys
 from dataclasses import dataclass
+from urllib.parse import quote
 
 from PySide6.QtCore import QEvent, QObject, QPoint, QRect, QSettings, Qt
 from PySide6.QtGui import QGuiApplication, QKeySequence, QShortcut
@@ -37,7 +38,15 @@ from app.registry import discover_lessons, get_load_errors
 from app.ui.glossary_view import GlossaryView
 from app.ui.library_reference_view import LibraryReferenceView
 from app.utils.code_runner import SnippetRunner
-from app.utils.glossary import GLOSSARY, definition_text
+from app.utils.glossary import GLOSSARY, definition_text, register_auto_terms
+from app.utils.mention_indexer import (
+    build_mention_index,
+    get_lesson_owner_terms,
+    get_lesson_types,
+    get_term_label,
+    get_related_terms,
+    resolve_mention_index,
+)
 from app.utils.theme import apply_theme, toggle_theme
 from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
@@ -134,6 +143,7 @@ class MainWindow(QMainWindow):
         self.demo_scroll.setWidget(self.demo_container)
 
         self.glossary_view = GlossaryView()
+        self.glossary_view.termSelected.connect(self._on_term_pinned)
         self.library_reference_view = LibraryReferenceView()
 
         self.tabs.addTab(self.guide_scroll, "Tutorial")
@@ -300,6 +310,17 @@ class MainWindow(QMainWindow):
                 search_text=search_text,
             )
             self.lesson_entries.append(entry)
+
+        if self.lesson_entries:
+            build_mention_index([entry.instance for entry in self.lesson_entries])
+            resolved = resolve_mention_index(GLOSSARY)
+            register_auto_terms(resolved.auto_terms)
+            self.glossary_view.load_terms(
+                GLOSSARY,
+                resolved.term_meta,
+                resolved.term_labels,
+                resolved.term_related,
+            )
 
         categories: dict[str, QTreeWidgetItem] = {}
         subcategories: dict[tuple[str, str], QTreeWidgetItem] = {}
@@ -619,6 +640,8 @@ class MainWindow(QMainWindow):
         else:
             sections_html = f"<h1>Tutorial paso a paso</h1>{self._guide_html_from_text(lesson.tutorial())}"
 
+        mentioned_html = self._mentioned_methods_html(lesson)
+
         examples = lesson.code_examples()
         if examples:
             resumen = examples[:2]
@@ -864,22 +887,82 @@ class MainWindow(QMainWindow):
             .summary-card .card-body {{
                 background: {summary_bg};
             }}
+            details.mentioned-methods {{
+                border: 1px dashed {divider};
+                border-radius: 10px;
+                padding: 10px 12px;
+                margin: 16px 0;
+                background: {card_bg};
+            }}
+            details.mentioned-methods summary {{
+                cursor: pointer;
+                font-weight: 600;
+                color: {heading_color};
+                margin-bottom: 8px;
+            }}
+            .mentioned-owner {{
+                margin-top: 8px;
+            }}
+            .mentioned-owner h3 {{
+                margin: 10px 0 6px;
+                font-size: 15px;
+            }}
         </style>
         </head>
         <body class="{theme_class}">
             <div class="content">
                 {summary_html}
                 {sections_html}
+                {mentioned_html}
                 {resumen_html}
             </div>
         </body>
         </html>
         """
-        html_content = tooltipify_html(html_content)
+        html_content = tooltipify_html(html_content, lesson)
         self.guide_text.setHtml(html_content)
         self.guide_text.document().setTextWidth(self.guide_text.viewport().width())
         content_height = int(self.guide_text.document().size().height())
         self.guide_text.setMinimumHeight(content_height + 40)
+
+    def _mentioned_methods_html(self, lesson: Lesson) -> str:
+        lesson_types = get_lesson_types(lesson)
+        if not lesson_types:
+            return ""
+        owner_terms = get_lesson_owner_terms(lesson)
+        if not owner_terms:
+            return ""
+
+        sections: list[str] = []
+        for owner in sorted(owner_terms):
+            if owner not in lesson_types:
+                continue
+            term_ids = owner_terms.get(owner, set())
+            if not term_ids:
+                continue
+            items = []
+            for term_id in sorted(term_ids, key=lambda tid: get_term_label(tid).lower()):
+                label = get_term_label(term_id)
+                items.append(
+                    f'<li><a href="tip:{quote(term_id)}" class="kw">{html.escape(label)}</a></li>'
+                )
+            if items:
+                sections.append(
+                    f"<div class=\"mentioned-owner\">"
+                    f"<h3>{html.escape(owner)}</h3>"
+                    f"<ul>{''.join(items)}</ul>"
+                    "</div>"
+                )
+
+        if not sections:
+            return ""
+
+        return (
+            "<details class=\"mentioned-methods\">"
+            "<summary>Métodos mencionados en esta lección (expandir)</summary>"
+            + "".join(sections)
+            + "</details>"
+        )
 
     def _render_pitfalls(self, lesson: Lesson) -> None:
         self.pitfalls_list.clear()
@@ -1056,6 +1139,15 @@ class MainWindow(QMainWindow):
             definition_text_raw = str(data.get("definition", "")).strip()
             sections_html = self._render_definition_paragraphs(definition_text_raw)
 
+        related = get_related_terms(term_id)
+        related_html = ""
+        if related:
+            links = " ".join(
+                f'<a href="tip:{quote(related_id)}" class="kw">{html.escape(get_term_label(related_id))}</a>'
+                for related_id in related
+            )
+            related_html = f"<div class=\"related\"><strong>Relacionado con:</strong> {links}</div>"
+
         return f"""
         <html>
         <head>
@@ -1110,12 +1202,17 @@ class MainWindow(QMainWindow):
                 margin: 0;
                 white-space: pre-wrap;
             }}
+            .related {{
+                margin-top: 12px;
+                font-size: 13px;
+            }}
         </style>
         </head>
         <body>
             <div class="definition-card">
                 <div class="def-chip">{html.escape(term_id)}</div>
                 {sections_html}
+                {related_html}
             </div>
         </body>
         </html>

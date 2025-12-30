@@ -3020,5 +3020,30 @@ def definition_text(data: dict[str, object]) -> str:
     return "\n".join(lines).strip()
 
 
+def glossary_tooltip(term: str, data: dict[str, object]) -> str:
+    if isinstance(data.get("tooltip"), str) and data.get("tooltip"):
+        return str(data["tooltip"]).strip()
+    definition = definition_text(data)
+    if definition:
+        return definition.splitlines()[0]
+    return term
+
+
+def merge_glossary(auto_terms: dict[str, dict[str, object]]) -> dict[str, dict[str, object]]:
+    merged = dict(GLOSSARY)
+    for term, data in auto_terms.items():
+        if term not in merged:
+            merged[term] = data
+    return merged
+
+
+def register_auto_terms(auto_terms: dict[str, dict[str, object]]) -> None:
+    for term, data in auto_terms.items():
+        if term not in GLOSSARY:
+            GLOSSARY[term] = data
+    for term, data in auto_terms.items():
+        TERMS.setdefault(term, definition_text(GLOSSARY[term]))
+
+
 TERMS = {term: definition_text(data) for term, data in GLOSSARY.items()}
-KEYWORDS = list(GLOSSARY.keys())
+KEYWORDS: list[str] = list(GLOSSARY.keys())

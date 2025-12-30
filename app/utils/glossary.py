@@ -259,6 +259,26 @@ GLOSSARY = {
             "matiz": "Siempre devuelve un `str`, incluso si el usuario escribe números.",
         },
     },
+    "type": {
+        "tooltip": "Función que devuelve el tipo de un objeto.",
+        "definition_parts": {
+            "que_es": "Función incorporada que revela la clase de un valor.",
+            "para_que": "Inspeccionar el tipo real de un dato durante depuración.",
+            "sintaxis": "type(valor)",
+            "ejemplo": "type(3.14) devuelve <class 'float'>.",
+            "matiz": "Úsala para diagnóstico; para validación usa isinstance().",
+        },
+    },
+    "isinstance": {
+        "tooltip": "Función que verifica si un valor es de un tipo.",
+        "definition_parts": {
+            "que_es": "Función incorporada que comprueba tipo o herencia.",
+            "para_que": "Validar datos antes de operar o convertir.",
+            "sintaxis": "isinstance(valor, tipo) o isinstance(valor, (tipo1, tipo2))",
+            "ejemplo": "isinstance('hola', str) devuelve True.",
+            "matiz": "El segundo argumento debe ser un tipo o tupla de tipos.",
+        },
+    },
     "len": {
         "tooltip": "Función que devuelve la longitud de una colección.",
         "definition_parts": {

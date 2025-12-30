@@ -91,6 +91,7 @@ class MainWindow(QMainWindow):
         self.summary_view = QTextEdit()
         self.summary_view.setReadOnly(True)
         self.guide_text = QTextBrowser()
+        self.guide_text.setLineWrapMode(QTextEdit.WidgetWidth)
         self.guide_text.setOpenExternalLinks(False)
         self.guide_text.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.guide_text.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -435,7 +436,9 @@ class MainWindow(QMainWindow):
         callout_list_items: list[str] = []
         section_index = 0
         callout_index = 0
+        subsection_index = 0
         list_mode = "default"
+        paragraph_lines: list[str] = []
 
         callout_pattern = re.compile(
             r"^(?P<title>.+?)\s*\(CalloutBox:\s*(?P<variant>[a-z_]+)\s*\)$",
@@ -469,16 +472,25 @@ class MainWindow(QMainWindow):
 
         def render_code_card(code: str) -> str:
             return (
-                "<div class=\"card code-card\">"
-                "<div class=\"card-header\">"
-                "<span class=\"card-icon\">💻</span>"
-                "<span class=\"card-title\">Código</span>"
-                "</div>"
-                "<div class=\"card-body\">"
-                f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
-                "</div>"
+                "<div class=\"code-card\">"
+                "<div class=\"code-head\">Código</div>"
+                f"<pre class=\"code-body\">{html.escape(code)}</pre>"
                 "</div>"
             )
+
+        def flush_paragraph() -> None:
+            nonlocal paragraph_lines
+            if not paragraph_lines:
+                return
+            text_content = " ".join(part.strip() for part in paragraph_lines if part.strip())
+            if text_content:
+                if callout is not None:
+                    body = callout.setdefault("body", [])
+                    if isinstance(body, list):
+                        body.append(f"<p>{html.escape(text_content)}</p>")
+                else:
+                    chunks.append(f"<p>{html.escape(text_content)}</p>")
+            paragraph_lines = []
 
         def flush_list_items() -> None:
             nonlocal list_items
@@ -525,6 +537,7 @@ class MainWindow(QMainWindow):
                     code_lines = []
                     in_code_block = False
                 else:
+                    flush_paragraph()
                     if callout is not None:
                         flush_callout()
                     flush_list_items()
@@ -534,9 +547,13 @@ class MainWindow(QMainWindow):
                 code_lines.append(line)
                 continue
             if stripped.startswith("### "):
+                flush_paragraph()
                 flush_list_items()
                 if callout is not None:
                     flush_callout()
+                if subsection_index > 0:
+                    chunks.append("<div class=\"subsection-divider\"></div>")
+                subsection_index += 1
                 title = stripped[4:].strip()
                 list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
                 match = callout_pattern.match(title)
@@ -558,17 +575,20 @@ class MainWindow(QMainWindow):
                         chunks.append(f"<h3>{html.escape(title)}</h3>")
                 continue
             if stripped.startswith("## "):
+                flush_paragraph()
                 flush_list_items()
                 if callout is not None:
                     flush_callout()
                 if section_index > 0:
                     chunks.append("<div class=\"section-divider\"></div>")
                 section_index += 1
+                subsection_index = 0
                 title = stripped[3:].strip()
                 list_mode = "pro" if "consejo" in title.lower() and "pro" in title.lower() else "default"
                 chunks.append(f"<h2>{html.escape(title)}</h2>")
                 continue
             if stripped.startswith(("-", "*")):
+                flush_paragraph()
                 if callout is not None:
                     callout_list_items.append(html.escape(stripped[1:].strip()))
                 else:
@@ -576,15 +596,12 @@ class MainWindow(QMainWindow):
                 continue
             flush_list_items()
             if stripped:
-                if callout is not None:
-                    flush_callout_list()
-                    body = callout.setdefault("body", [])
-                    if isinstance(body, list):
-                        body.append(f"<p>{html.escape(stripped)}</p>")
-                else:
-                    chunks.append(f"<p>{html.escape(stripped)}</p>")
+                paragraph_lines.append(stripped)
+            else:
+                flush_paragraph()
         if list_items:
             flush_list_items()
+        flush_paragraph()
         if callout is not None:
             flush_callout()
         if code_lines:
@@ -607,14 +624,9 @@ class MainWindow(QMainWindow):
             resumen = examples[:2]
             resumen_html = "<h2>Resumen de ejemplos</h2>" + "".join(
                 f"<h3>{html.escape(title)}</h3>"
-                f"<div class=\"card code-card\">"
-                "<div class=\"card-header\">"
-                "<span class=\"card-icon\">💻</span>"
-                "<span class=\"card-title\">Código</span>"
-                "</div>"
-                "<div class=\"card-body\">"
-                f"<pre class=\"codebox\"><code>{html.escape(code)}</code></pre>"
-                "</div>"
+                f"<div class=\"code-card\">"
+                "<div class=\"code-head\">Código</div>"
+                f"<pre class=\"code-body\">{html.escape(code)}</pre>"
                 "</div>"
                 for title, code in resumen
             )
@@ -732,6 +744,11 @@ class MainWindow(QMainWindow):
                 border-top: 1px solid {divider};
                 margin: 18px 0 8px;
             }}
+            .subsection-divider {{
+                border-top: 1px solid {divider};
+                margin: 14px 0 6px;
+                opacity: 0.7;
+            }}
             .card {{
                 border-radius: 12px;
                 padding: 0;
@@ -759,7 +776,30 @@ class MainWindow(QMainWindow):
                 font-size: 14px;
             }}
             .code-card {{
-                border-left: 4px solid {accent_code};
+                max-width: clamp(520px, 60%, 900px);
+                margin: 14px auto;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid {code_border};
+                background: {card_bg};
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            }}
+            .code-head {{
+                padding: 10px 12px;
+                font-weight: 600;
+                background: {card_header};
+                border-bottom: 1px solid {code_border};
+                color: {heading_color};
+            }}
+            .code-body {{
+                margin: 0;
+                padding: 12px 14px;
+                font-family: "Consolas";
+                font-size: 12px;
+                white-space: pre;
+                overflow-x: auto;
+                background: {code_background};
+                color: {code_text};
             }}
             .callout.best {{
                 border-left: 4px solid {accent_best};
@@ -780,18 +820,6 @@ class MainWindow(QMainWindow):
             .callout.alt {{
                 border-left: none;
                 border-right: 4px solid {accent_note};
-            }}
-            .codebox {{
-                background: {code_background};
-                color: {code_text};
-                padding: 12px;
-                border-radius: 10px;
-                border: 1px solid {code_border};
-                font-family: "Consolas";
-                font-size: 12px;
-                margin: 0;
-                white-space: pre-wrap;
-                overflow-x: auto;
             }}
             code {{ font-family: "Consolas"; }}
             a.kw {{

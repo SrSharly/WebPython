@@ -280,6 +280,30 @@ Los mensajes DEBUG no aparecen porque el primer basicConfig ya fijó el nivel.
 
 Cómo se arregla: define la configuración una sola vez.
 
+## Usa getLogger(__name__) para identificar el módulo
+Este patrón agrega el nombre del módulo automáticamente y facilita rastrear de dónde sale
+cada mensaje.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logger = logging.getLogger(__name__)
+logger.info("Log con nombre del módulo")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logger = getLogger(__name__)
+```
+
+Error real:
+```py
+NameError: name 'getLogger' is not defined
+```
+
+Cómo se arregla: usa `logging.getLogger(...)` con el prefijo del módulo.
+
 ## Usa un logger por módulo (y evita prints en librerías)
 En módulos reutilizables, crea un logger con nombre y deja que la app principal
 decida el nivel y el formato.

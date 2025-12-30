@@ -111,6 +111,7 @@ def discover_lessons() -> list[LessonInfo]:
         "Funciones",
         "Iteradores y generadores",
         "Context managers",
+        "Async y await",
         "Excepciones",
         "Jupyter (Notebook): cuándo y por qué usarlo",
     ]

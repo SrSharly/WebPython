@@ -1559,6 +1559,86 @@ GLOSSARY = {
             "error_tipico": "usar tareas largas sin hilos y congelar la UI.",
         },
     },
+    "async": {
+        "tooltip": "Palabra clave que declara una corutina en Python.",
+        "definition_parts": {
+            "que_es": "Marca una función como corutina para usarla con await.",
+            "para_que": "para escribir tareas cooperativas sin bloquear el event loop.",
+            "sintaxis": "async def mi_corutina(): ...",
+            "ejemplo": "async def esperar(): await asyncio.sleep(1)",
+            "matiz": "async no crea hilos: solo permite pausar y reanudar.",
+        },
+    },
+    "async def": {
+        "tooltip": "Sintaxis para definir una corutina.",
+        "definition_parts": {
+            "que_es": "Encabezado que define una función async.",
+            "para_que": "para poder usar await dentro de la función.",
+            "sintaxis": "async def nombre(parametros): ...",
+            "ejemplo": "async def main(): return 1",
+            "matiz": "si no usas await dentro, sigue siendo una corutina.",
+        },
+    },
+    "await": {
+        "tooltip": "Palabra clave que espera una operación async.",
+        "definition_parts": {
+            "que_es": "Suspende la corutina hasta que termina otra operación async.",
+            "para_que": "para ceder control al event loop mientras se espera.",
+            "sintaxis": "await corutina()",
+            "ejemplo": "await asyncio.sleep(0.5)",
+            "matiz": "solo se usa dentro de async def.",
+        },
+    },
+    "corutina": {
+        "tooltip": "Función async que puede pausar y reanudar su ejecución.",
+        "definition_parts": {
+            "que_es": "Una función declarada con async def.",
+            "para_que": "para ejecutar tareas cooperativas y no bloqueantes.",
+            "sintaxis": "async def tarea(): ...",
+            "ejemplo": "async def cargar(): return \"ok\"",
+            "matiz": "al llamarla devuelve un objeto corutina que debes await.",
+        },
+    },
+    "asyncio": {
+        "tooltip": "Librería estándar para programación async en Python.",
+        "definition_parts": {
+            "que_es": "Módulo que provee event loop, tareas y utilidades async.",
+            "para_que": "para coordinar corutinas sin bloquear el hilo principal.",
+            "sintaxis": "import asyncio",
+            "ejemplo": "asyncio.run(main())",
+            "matiz": "usa await para no bloquear el loop.",
+        },
+    },
+    "asyncio.run": {
+        "tooltip": "Ejecuta la corutina principal y gestiona el event loop.",
+        "definition_parts": {
+            "que_es": "Función que crea un loop, ejecuta una corutina y lo cierra.",
+            "para_que": "para iniciar programas async desde código síncrono.",
+            "sintaxis": "asyncio.run(main())",
+            "ejemplo": "asyncio.run(main())",
+            "matiz": "no se puede llamar dentro de un loop ya activo.",
+        },
+    },
+    "asyncio.sleep": {
+        "tooltip": "Espera async sin bloquear el event loop.",
+        "definition_parts": {
+            "que_es": "Corutina que duerme por un tiempo dado.",
+            "para_que": "para simular espera o temporizadores en async.",
+            "sintaxis": "await asyncio.sleep(1)",
+            "ejemplo": "await asyncio.sleep(0.2)",
+            "matiz": "no bloquea el hilo, solo pausa la corutina.",
+        },
+    },
+    "time.sleep": {
+        "tooltip": "Pausa síncrona que bloquea el hilo actual.",
+        "definition_parts": {
+            "que_es": "Función de time que detiene el hilo por un tiempo.",
+            "para_que": "para esperar en código síncrono.",
+            "sintaxis": "time.sleep(1)",
+            "ejemplo": "time.sleep(0.5)",
+            "matiz": "bloquea el event loop si se usa dentro de async.",
+        },
+    },
     "qthread": {
         "tooltip": "Clase de Qt para ejecutar tareas en un hilo separado.",
         "definition_parts": {

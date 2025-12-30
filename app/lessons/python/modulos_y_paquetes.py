@@ -123,6 +123,30 @@ NameError: name 'math' is not defined
 **Cómo se arregla**
 Usa siempre el alias (`m`) una vez definido.
 
+## Paso 4.5: importaciones relativas dentro de un paquete
+Cuando un módulo está dentro de un paquete, lo más estable es usar imports relativos con `.`.
+Esto evita errores cuando ejecutas el proyecto desde la raíz.
+
+**Micro-ejemplo correcto**
+```py
+# mi_app/ventas.py
+from .calculos import total_con_impuesto
+```
+
+**Micro-ejemplo incorrecto**
+```py
+# mi_app/ventas.py
+from calculos import total_con_impuesto
+```
+
+**Error real**
+```py
+ModuleNotFoundError: No module named 'calculos'
+```
+
+**Cómo se arregla**
+Usa `from .calculos import total_con_impuesto` y ejecuta el paquete desde la raíz.
+
 ## Ejemplo principal: un mini-paquete bien organizado
 ### 1) Aprende esto
 Separar lógica en módulos y exponer una API simple desde el paquete.

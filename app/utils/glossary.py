@@ -2048,6 +2048,62 @@ GLOSSARY = {
             ),
         },
     },
+    "seaborn": {
+        "tooltip": "Librería de visualización estadística basada en matplotlib.",
+        "definition_parts": {
+            "que_es": (
+                "Seaborn ofrece una API para graficar datos con enfoque estadístico."
+            ),
+            "para_que": (
+                "Crear visualizaciones claras a partir de DataFrames de pandas."
+            ),
+            "sintaxis": "import seaborn as sns",
+            "ejemplo": "sns.scatterplot(data=df, x='edad', y='salario')",
+            "matiz": (
+                "Se integra con matplotlib, por lo que puedes usar plt.title o plt.show."
+            ),
+        },
+    },
+    "set_theme": {
+        "tooltip": "Función de seaborn para definir el estilo global.",
+        "definition_parts": {
+            "que_es": "Configura temas y estilos antes de crear gráficas.",
+            "para_que": "Mantener coherencia visual en varias figuras.",
+            "sintaxis": "sns.set_theme(style='whitegrid')",
+            "ejemplo": "sns.set_theme(style='dark')",
+            "matiz": "Debe llamarse antes de graficar para afectar todo el estilo.",
+        },
+    },
+    "scatterplot": {
+        "tooltip": "Gráfico de dispersión para comparar dos variables.",
+        "definition_parts": {
+            "que_es": "Función de seaborn que dibuja puntos x/y.",
+            "para_que": "Detectar relaciones o tendencias entre variables.",
+            "sintaxis": "sns.scatterplot(data=df, x='x', y='y')",
+            "ejemplo": "sns.scatterplot(data=ventas, x='mes', y='unidades')",
+            "matiz": "Los nombres de columnas deben existir en el DataFrame.",
+        },
+    },
+    "histplot": {
+        "tooltip": "Histograma para visualizar distribuciones.",
+        "definition_parts": {
+            "que_es": "Función de seaborn que agrupa valores en bins.",
+            "para_que": "Ver la forma de una distribución y detectar sesgos.",
+            "sintaxis": "sns.histplot(data=valores, bins=10)",
+            "ejemplo": "sns.histplot(data=[1, 2, 2, 3], bins=3)",
+            "matiz": "El argumento correcto es bins, no bin.",
+        },
+    },
+    "lineplot": {
+        "tooltip": "Gráfico de líneas para series ordenadas.",
+        "definition_parts": {
+            "que_es": "Función de seaborn que conecta valores en el eje x/y.",
+            "para_que": "Visualizar tendencias en el tiempo o secuencias.",
+            "sintaxis": "sns.lineplot(data=df, x='mes', y='ventas')",
+            "ejemplo": "sns.lineplot(data=clientes, x='mes', y='visitas')",
+            "matiz": "Si x no está ordenado, la línea puede verse irregular.",
+        },
+    },
     "pyplot": {
         "tooltip": "Submódulo de Matplotlib con una API simple para graficar.",
         "definition_parts": {

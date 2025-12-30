@@ -293,6 +293,71 @@ GLOSSARY = {
             "matiz": "Usa `with` para asegurar el cierre automático.",
         },
     },
+    "read": {
+        "tooltip": "Método que lee el contenido completo de un archivo.",
+        "definition_parts": {
+            "que_es": "Método del objeto archivo que devuelve todo el contenido.",
+            "para_que": "Leer archivos pequeños de una sola vez.",
+            "sintaxis": "contenido = archivo.read()",
+            "ejemplo": "texto = archivo.read().",
+            "matiz": "Para archivos grandes, conviene leer por líneas.",
+            "error_tipico": "llamar read() después de cerrar el archivo.",
+        },
+    },
+    "readline": {
+        "tooltip": "Método que lee una línea del archivo.",
+        "definition_parts": {
+            "que_es": "Método que devuelve la siguiente línea del archivo.",
+            "para_que": "Procesar archivos línea por línea sin cargar todo en memoria.",
+            "sintaxis": "linea = archivo.readline()",
+            "ejemplo": "primera = archivo.readline().",
+            "matiz": "Incluye el salto de línea al final si existe.",
+            "error_tipico": "olvidar los paréntesis y obtener la referencia al método.",
+        },
+    },
+    "readlines": {
+        "tooltip": "Método que devuelve todas las líneas como lista.",
+        "definition_parts": {
+            "que_es": "Método que devuelve una lista con cada línea del archivo.",
+            "para_que": "Procesar varias líneas de golpe.",
+            "sintaxis": "lineas = archivo.readlines()",
+            "ejemplo": "lineas = archivo.readlines().",
+            "matiz": "Puede consumir mucha memoria en archivos grandes.",
+            "error_tipico": "asumir que elimina los saltos de línea automáticamente.",
+        },
+    },
+    "write": {
+        "tooltip": "Método que escribe texto en un archivo.",
+        "definition_parts": {
+            "que_es": "Método que agrega texto al archivo abierto en modo escritura.",
+            "para_que": "Guardar datos o generar reportes.",
+            "sintaxis": "archivo.write('texto')",
+            "ejemplo": "archivo.write('Hola\\n').",
+            "matiz": "No agrega saltos de línea; debes incluirlos tú.",
+            "error_tipico": "escribir con el archivo abierto en modo lectura.",
+        },
+    },
+    "close": {
+        "tooltip": "Método que cierra un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método que libera el recurso asociado al archivo.",
+            "para_que": "Evitar archivos abiertos y asegurar que los datos se guarden.",
+            "sintaxis": "archivo.close()",
+            "ejemplo": "archivo.close().",
+            "matiz": "Usa `with` para evitar olvidar el cierre.",
+            "error_tipico": "intentar leer después de cerrar el archivo.",
+        },
+    },
+    "FileNotFoundError": {
+        "tooltip": "Excepción cuando una ruta no existe.",
+        "definition_parts": {
+            "que_es": "Error que ocurre al intentar abrir un archivo inexistente.",
+            "para_que": "Identificar fallos de ruta o archivos faltantes.",
+            "sintaxis": "try: open('ruta') except FileNotFoundError: ...",
+            "ejemplo": "open('no_existe.txt', 'r') lanza FileNotFoundError.",
+            "matiz": "Verifica rutas y permisos antes de abrir.",
+        },
+    },
     "str": {
         "tooltip": "Tipo de texto (cadena de caracteres).",
         "definition_parts": {

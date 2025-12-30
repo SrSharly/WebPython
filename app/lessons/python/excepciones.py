@@ -10,6 +10,7 @@ class ExcepcionesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Intermedio"
+    BADGES = ["⭐", "🧠"]
     TAGS = ["errores", "try/except", "raise", "finally"]
 
     def summary(self) -> str:
@@ -33,6 +34,47 @@ edad = int(edad_texto)  # int intenta convertir y lanza ValueError
 ## ¿Por qué existen?
 Sirven para separar el **flujo normal** del **flujo de error**. Así tu programa puede reaccionar
 sin detenerse de golpe.
+
+## Ejemplo grande con contexto (Aprende esto → Haz esto → Verás esto)
+**Aprende esto:** cómo validar datos con `try/except/else`, reportar errores claros y no perder
+el flujo principal del programa.
+
+**Haz esto (ejemplo completo con contexto):**
+```py
+entradas = ["18", "x", "-2", "21"]
+edades_validas = []
+
+for texto in entradas:
+    try:
+        edad = int(texto)
+        if edad < 0:
+            raise ValueError("Edad negativa")
+    except ValueError:
+        print(f"Entrada inválida: {texto}")
+    else:
+        edades_validas.append(edad)
+
+print("Edades válidas:", edades_validas)
+```
+
+**Verás esto (salida real):**
+```
+Entrada inválida: x
+Entrada inválida: -2
+Edades válidas: [18, 21]
+```
+
+**Por qué funciona:** `try` encapsula la conversión; `raise` fuerza un error cuando detectas un
+valor inválido; `except` captura el error y `else` solo se ejecuta si todo fue correcto.
+
+**Lo típico que sale mal (con error real):**
+```py
+edad = int("x")
+```
+```
+ValueError: invalid literal for int() with base 10: 'x'
+```
+Solución: captura `ValueError` y muestra un mensaje claro con el texto fallido.
 
 ## Conceptos previos (sin asumir nada)
 - **función**: bloque reutilizable de código.
@@ -341,6 +383,31 @@ finally:  # siempre
     print("Cerrar recursos")  # limpieza final
 ```
 
+Micro-ejemplo correcto:
+```py
+try:
+    numero = int("7")
+except ValueError:
+    print("No válido")
+else:
+    print("Convertido:", numero)
+```
+
+Micro-ejemplo incorrecto:
+```py
+try:
+    numero = int("7")
+else:
+    print("Convertido:", numero)
+```
+
+Error real:
+```
+SyntaxError: expected 'except' or 'finally' block
+```
+
+Corrección: `else` solo existe si antes declaraste `except` o `finally`.
+
 ## Paso 4: Lanzar errores propios con raise
 Si detectas un dato inválido, puedes lanzar una excepción con `raise`.
 ```
@@ -348,6 +415,25 @@ def validar_edad(edad):  # función de validación
     if edad < 0:  # condición inválida
         raise ValueError("Edad inválida")  # lanzamos error
 ```
+
+Micro-ejemplo correcto:
+```py
+saldo = -10
+if saldo < 0:
+    raise ValueError("Saldo negativo")
+```
+
+Micro-ejemplo incorrecto:
+```py
+raise "Saldo negativo"
+```
+
+Error real:
+```
+TypeError: exceptions must derive from BaseException
+```
+
+Corrección: lanza una clase de excepción (por ejemplo, `ValueError`), no un string.
 
 ## Paso 5: Excepciones personalizadas
 Creas tus propios errores cuando quieres un mensaje más claro.

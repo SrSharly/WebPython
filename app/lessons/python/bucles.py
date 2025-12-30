@@ -10,6 +10,7 @@ class BuclesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
+    BADGES = ["⭐"]
     TAGS = ["bucles", "for", "while", "range", "break", "continue"]
 
     def summary(self) -> str:
@@ -50,6 +51,89 @@ for i in range(3)
 
 **Cómo se arregla**
 Agrega `:` y mantén la indentación del bloque.
+
+## Paso extra: enumerate para índice + valor
+Cuando necesitas el índice y el valor a la vez, usa `enumerate`. Así evitas manejar el contador a mano.
+
+**Así se escribe**
+```py
+frutas = ["manzana", "pera", "uva"]
+for indice, fruta in enumerate(frutas):
+    print(indice, fruta)
+```
+
+**Error típico (❌)**
+```py
+frutas = ["manzana", "pera", "uva"]
+for indice, fruta in frutas:
+    print(indice, fruta)
+```
+
+**Qué significa el error**
+```py
+ValueError: not enough values to unpack (expected 2, got 1)
+```
+
+**Cómo se arregla**
+Usa `enumerate(frutas)` o itera con una sola variable si no necesitas el índice.
+
+## Paso extra: zip para recorrer dos listas a la vez
+`zip` combina elementos de dos (o más) listas en parejas. Es ideal para recorrer columnas en paralelo.
+
+**Así se escribe**
+```py
+nombres = ["Ana", "Luis"]
+edades = [30, 25]
+for nombre, edad in zip(nombres, edades):
+    print(nombre, edad)
+```
+
+**Error típico (❌)**
+```py
+nombres = ["Ana", "Luis"]
+for nombre, edad in zip(nombres):
+    print(nombre, edad)
+```
+
+**Qué significa el error**
+```py
+ValueError: not enough values to unpack (expected 2, got 1)
+```
+
+**Cómo se arregla**
+Pasa todas las listas que vas a combinar: `zip(nombres, edades)`.
+
+## Ejemplo ampliado con contexto (Aprende esto → Haz esto → Verás esto)
+**Aprende esto:** combinar `enumerate` y `zip` para mostrar un reporte numerado con estado.
+
+**Haz esto (ejemplo completo con contexto):**
+```py
+tareas = ["respaldar", "limpiar", "actualizar"]
+estados = ["ok", "pendiente", "ok"]
+
+for indice, (tarea, estado) in enumerate(zip(tareas, estados), start=1):
+    etiqueta = "✔" if estado == "ok" else "⚠"
+    print(f"{indice}. {tarea} -> {etiqueta}")
+```
+
+**Verás esto (salida real):**
+```
+1. respaldar -> ✔
+2. limpiar -> ⚠
+3. actualizar -> ✔
+```
+
+**Por qué funciona:** `zip` produce pares `(tarea, estado)` y `enumerate` agrega un índice visible.
+
+**Lo típico que sale mal (con error real):**
+```py
+for indice, tarea, estado in enumerate(zip(tareas, estados), start=1):
+    print(indice, tarea, estado)
+```
+```
+ValueError: not enough values to unpack (expected 3, got 2)
+```
+Solución: desempaqueta dos valores del `zip` y luego el índice por separado.
 
 ## Paso 2: while con condición
 `while` repite mientras una condición sea True. Necesitas actualizar la variable para evitar bucles infinitos.

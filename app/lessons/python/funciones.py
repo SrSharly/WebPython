@@ -24,72 +24,84 @@ class FuncionesLesson(Lesson):
     def tutorial(self) -> str:
         return """
 ## Introducción: por qué las funciones cambian tu forma de programar
-Una función es un bloque de código con nombre que encapsula una tarea. Te permite **reutilizar lógica**, reducir errores
-por copia y separar problemas grandes en partes pequeñas. Cuando entiendes funciones, tu código se vuelve más claro,
-más fácil de probar y más fácil de mantener.
+Una función es un bloque de código con nombre que encapsula una tarea. Su propósito es **reutilizar lógica**, reducir
+errores por copia y separar problemas grandes en partes pequeñas. Cuando entiendes funciones, tu código se vuelve más
+claro, más fácil de probar y más fácil de mantener. En este tutorial aprenderás a definir funciones, pasar argumentos,
+usar valores por defecto, controlar el alcance y escribir funciones que otras personas entienden sin tener que leer todo.
 
 ## Paso 1: Definir una función con un objetivo claro
-Definir una función es darle un nombre y un conjunto de pasos.
+Definir una función es darle un nombre a una tarea y decidir qué valor devolverá.
 
 **Aprende esto**
-- Aprenderás a crear funciones que resuelven una tarea concreta.
-- Verás cómo `return` devuelve un resultado al llamador.
+- Aprenderás a crear funciones que devuelven un resultado útil.
+- Verás cómo `return` conecta la función con el resto del programa.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def saludar(nombre):  # Definimos la función con un parámetro
     mensaje = "Hola " + nombre  # Construimos el texto de saludo
-    return mensaje  # Devolvemos el texto al llamar a la función
+    cierre = "¡Bienvenida!"  # Definimos un cierre amigable
+    saludo_completo = mensaje + " " + cierre  # Unimos las partes
+    return saludo_completo  # Devolvemos el saludo
 
 saludo = saludar("Ana")  # Llamamos a la función con un argumento
 print(saludo)  # Mostramos el resultado
+print(len(saludo))  # Mostramos la longitud del saludo
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Hola Ana` como salida.
+Verás un texto como `Hola Ana ¡Bienvenida!` y un número con la longitud.
 
 **Por qué funciona**
-`return` entrega el valor al punto donde se llamó la función. La variable `saludo` recibe ese valor.
+`return` devuelve el valor al punto donde se llamó la función, y puedes reutilizarlo como cualquier otra variable.
 
 **Lo típico que sale mal**
-- Olvidar `return` y obtener `None` cuando esperabas un texto.
-- Nombrar la función con algo genérico y perder claridad.
+- Olvidar `return` y recibir `None` aunque se haya construido un mensaje.
+- Nombrar la función con algo genérico que no describe su propósito.
 
 ## Paso 2: Parámetros y argumentos
 Un **parámetro** es el nombre dentro de la función; un **argumento** es el valor real que pasas.
 
 **Aprende esto**
 - Aprenderás a definir parámetros para que la función sea flexible.
-- Verás cómo pasar argumentos de forma ordenada.
+- Verás cómo el orden de argumentos impacta el resultado.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def sumar(a, b):  # Parámetros a y b
     resultado = a + b  # Sumamos los valores recibidos
-    return resultado  # Devolvemos el resultado
+    etiqueta = "Resultado"  # Definimos una etiqueta
+    mensaje = etiqueta + ": " + str(resultado)  # Construimos el mensaje
+    return mensaje  # Devolvemos el mensaje
 
-suma = sumar(3, 5)  # 3 y 5 son argumentos
-print(suma)  # Mostramos la suma
+salida = sumar(3, 5)  # 3 y 5 son argumentos
+print(salida)  # Mostramos el mensaje
+print(type(salida))  # Confirmamos el tipo de salida
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `8` como salida.
+Verás `Resultado: 8` y el tipo `<class 'str'>`.
 
 **Por qué funciona**
-Los valores 3 y 5 se asignan a `a` y `b`, y la función devuelve la suma.
+Los argumentos se asignan a `a` y `b`, se calcula la suma y el texto final se devuelve para mostrarlo.
 
 **Lo típico que sale mal**
 - Cambiar el orden de los argumentos y obtener un resultado incorrecto.
-- Usar parámetros con nombres confusos.
+- Mezclar tipos sin convertir y fallar en la concatenación.
 
 ## Paso 3: Valores por defecto
-Puedes definir un valor por defecto para parámetros que no siempre cambian.
+Los defaults evitan repetir argumentos cuando el valor suele ser el mismo.
 
 **Aprende esto**
-- Aprenderás a definir defaults para simplificar llamadas.
+- Aprenderás a definir valores por defecto de forma segura.
 - Verás cómo sobrescribirlos cuando sea necesario.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def potencia(base, exponente=2):  # Default en exponente
     resultado = base ** exponente  # Calculamos la potencia
@@ -97,48 +109,53 @@ def potencia(base, exponente=2):  # Default en exponente
 
 cuadrado = potencia(4)  # Usa exponente 2
 cubo = potencia(4, 3)  # Cambiamos el exponente
-print(cuadrado)  # Mostramos 16
-print(cubo)  # Mostramos 64
+mensaje = "Potencias: " + str(cuadrado) + ", " + str(cubo)  # Creamos un resumen
+print(mensaje)  # Mostramos el resumen
+print(type(cuadrado))  # Confirmamos el tipo
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `16` y `64` en líneas separadas.
+Verás `Potencias: 16, 64` y el tipo `<class 'int'>`.
 
 **Por qué funciona**
-Si no envías `exponente`, Python usa el valor por defecto. Si lo envías, reemplaza ese valor.
+Si no envías `exponente`, Python usa el valor por defecto. Si lo envías, reemplaza ese valor en esa llamada.
 
 **Lo típico que sale mal**
-- Usar listas o diccionarios como default y compartirlos sin querer.
+- Usar listas o dicts como default y compartirlos entre llamadas.
 - Olvidar que los defaults se evalúan una sola vez.
 
-## Paso 4: Scope y variables locales
-Las variables dentro de una función no afectan automáticamente a las de afuera.
+## Paso 4: Alcance (scope) y variables locales
+Las variables dentro de una función son locales; no modifican las de afuera a menos que tú lo decidas.
 
 **Aprende esto**
 - Aprenderás a distinguir variables locales y globales.
-- Verás cómo una función puede usar datos sin modificar el exterior.
+- Verás cómo actualizar una variable externa con el retorno.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 contador = 0  # Variable global
 
 def sumar_uno(valor):  # Recibimos un número
     nuevo_valor = valor + 1  # Calculamos un nuevo valor
-    return nuevo_valor  # Devolvemos el nuevo valor
+    return nuevo_valor  # Devolvemos el resultado
 
 contador = sumar_uno(contador)  # Actualizamos con el retorno
 print(contador)  # Mostramos el contador actualizado
+print(type(contador))  # Verificamos el tipo
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `1` como salida.
+Verás `1` y el tipo `<class 'int'>`.
 
 **Por qué funciona**
-La función trabaja con una copia del valor y devuelve el resultado. Tú decides cuándo actualizar la variable externa.
+La función trabaja con un valor local y devuelve el resultado. Tú decides si reasignas la variable externa.
 
 **Lo típico que sale mal**
-- Esperar que la función cambie una variable global automáticamente.
-- Usar `global` sin necesidad y perder claridad.
+- Esperar que la función cambie la variable global sin reasignar.
+- Usar `global` sin necesidad y volver el código difícil de seguir.
 
 ## Paso 5: *args y **kwargs
 Estas herramientas sirven para recibir muchos argumentos sin definirlos uno por uno.
@@ -148,81 +165,90 @@ Estas herramientas sirven para recibir muchos argumentos sin definirlos uno por 
 - Verás cómo `**kwargs` captura argumentos con nombre.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def resumen(*args, **kwargs):  # Recibimos muchos datos
     total = sum(args)  # Sumamos los valores posicionales
     etiqueta = kwargs.get("etiqueta", "Total")  # Leemos un nombre opcional
-    mensaje = etiqueta + ": " + str(total)  # Construimos el mensaje
+    moneda = kwargs.get("moneda", "")  # Leemos moneda opcional
+    mensaje = etiqueta + ": " + str(total) + " " + moneda  # Construimos el mensaje
     return mensaje  # Devolvemos el texto final
 
-print(resumen(1, 2, 3, etiqueta="Suma"))  # Llamamos con etiqueta
+print(resumen(1, 2, 3, etiqueta="Suma", moneda="USD"))  # Llamamos con etiqueta
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `Suma: 6`.
+Verás `Suma: 6 USD`.
 
 **Por qué funciona**
-`*args` llega como tupla y `**kwargs` como diccionario; ambos se pueden leer dentro de la función.
+`*args` llega como tupla y `**kwargs` como diccionario. Ambos se pueden leer y combinar dentro de la función.
 
 **Lo típico que sale mal**
 - Olvidar que `args` es una tupla y no admite `append`.
-- Usar `kwargs['clave']` sin verificar si la clave existe.
+- Acceder a `kwargs['clave']` sin verificar si la clave existe.
 
-## Paso 6: Docstrings y claridad
+## Paso 6: Documentar con docstrings
 Una docstring explica la intención de la función para quien lee el código.
 
 **Aprende esto**
-- Aprenderás a describir tu función dentro de ella misma.
-- Verás cómo mejorar la comprensión sin leer el cuerpo completo.
+- Aprenderás a describir qué hace la función y qué espera.
+- Verás cómo eso mejora la comunicación en equipo.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def promedio(valores):  # Función de ejemplo
-    """Calcula el promedio de una lista de números."""  # Docstring corta
+    '''Calcula el promedio de una lista de números.'''  # Docstring corta
     total = sum(valores)  # Sumamos los valores
     cantidad = len(valores)  # Contamos cuántos hay
-    return total / cantidad  # Devolvemos el promedio
+    resultado = total / cantidad  # Calculamos el promedio
+    return resultado  # Devolvemos el promedio
 
 print(promedio([10, 20, 30]))  # Llamamos a la función
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
 Verás `20.0` como salida.
 
 **Por qué funciona**
-`sum` y `len` calculan el total y la cantidad; el resultado es su división.
+`sum` y `len` calculan el total y la cantidad; el promedio es la división entre ambos.
 
 **Lo típico que sale mal**
 - No explicar qué recibe y qué devuelve la función.
-- Usar docstrings vagas como “hace cosas”.
+- Usar docstrings vagas que no aportan información real.
 
-## Más allá (nivel pro)
-Las funciones también se benefician de pequeñas mejoras que facilitan el trabajo en equipo.
+## Más allá (nivel pro): type hints y retornos múltiples
+En equipos grandes, los type hints y retornos múltiples hacen más legible el código.
 
 **Aprende esto**
 - Aprenderás a usar type hints para comunicar expectativas.
-- Verás cómo devolver múltiples valores con una tupla.
+- Verás cómo devolver múltiples valores y desempaquetarlos.
 
 **Haz esto**
+print("ok")  # Confirmamos
 ```
 def dividir(a: float, b: float) -> tuple[float, float]:  # Indicamos tipos
     cociente = a // b  # División entera
-    resto = a % b  # Resto de la división
+    resto = a % b  # Calculamos el resto
     return cociente, resto  # Devolvemos dos valores
 
 q, r = dividir(10, 3)  # Desempaquetamos la tupla
-print(q, r)  # Mostramos cociente y resto
+mensaje = "Cociente: " + str(q) + ", Resto: " + str(r)  # Construimos mensaje
+print(mensaje)  # Mostramos el mensaje
+print("ok")  # Confirmamos
 ```
 
 **Verás esto**
-Verás `3 1`.
+Verás `Cociente: 3, Resto: 1`.
 
 **Por qué funciona**
-La función devuelve una tupla y Python permite desempaquetarla en dos variables.
+La función devuelve una tupla y Python permite desempaquetarla en variables separadas, manteniendo el orden.
 
 **Lo típico que sale mal**
-- Olvidar el orden de la tupla y confundir cociente con resto.
-- Asumir que los type hints validan en tiempo de ejecución (no lo hacen).
+- Confundir el orden de la tupla y mezclar cociente con resto.
+- Pensar que los type hints validan en tiempo de ejecución (no lo hacen).
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
@@ -271,6 +297,10 @@ La función devuelve una tupla y Python permite desempaquetarla en dos variables
                 "Retornar múltiples tipos",
                 "Devolver a veces un número y a veces texto complica el uso posterior.",
             ),
+            (
+                "Abusar de *args y **kwargs",
+                "Usarlos sin criterio oculta la firma real y dificulta el mantenimiento.",
+            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
@@ -280,20 +310,24 @@ La función devuelve una tupla y Python permite desempaquetarla en dos variables
                 """# Aprende esto
 # Aprenderás a definir una función con return.
 # Verás cómo reutilizar el resultado al llamar.
+# Entenderás la relación entre entrada y salida.
 #
 # Haz esto
 def saludar(nombre):  # Definimos una función con parámetro
     mensaje = "Hola " + nombre  # Construimos el saludo
-    return mensaje  # Devolvemos el texto
+    cierre = "¡Bienvenida!"  # Agregamos un cierre
+    saludo_completo = mensaje + " " + cierre  # Unimos el saludo
+    return saludo_completo  # Devolvemos el texto
 
 saludo = saludar("Ana")  # Llamamos con un argumento
 print(saludo)  # Mostramos el resultado
+print(len(saludo))  # Mostramos la longitud
 #
 # Verás esto
-# Verás "Hola Ana" como salida.
+# Verás "Hola Ana ¡Bienvenida!" y la longitud del texto.
 #
 # Por qué funciona
-# return envía el valor de vuelta a la línea que llamó la función.
+# return envía el valor a la línea que llamó la función.
 #
 # Lo típico que sale mal
 # - Olvidar return y recibir None.
@@ -305,24 +339,28 @@ print(saludo)  # Mostramos el resultado
                 """# Aprende esto
 # Aprenderás a usar parámetros para sumar valores.
 # Verás cómo los argumentos se asignan a esos parámetros.
+# Practicarás el orden correcto de envío.
 #
 # Haz esto
 def sumar(a, b):  # Parámetros a y b
     resultado = a + b  # Sumamos
-    return resultado  # Devolvemos la suma
+    etiqueta = "Resultado"  # Definimos una etiqueta
+    mensaje = etiqueta + ": " + str(resultado)  # Construimos el mensaje
+    return mensaje  # Devolvemos la salida
 
 suma = sumar(3, 5)  # Argumentos 3 y 5
 print(suma)  # Mostramos el resultado
+print(type(suma))  # Mostramos el tipo
 #
 # Verás esto
-# Verás 8 como salida.
+# Verás "Resultado: 8" y el tipo str.
 #
 # Por qué funciona
 # a y b reciben los valores enviados y la función devuelve a + b.
 #
 # Lo típico que sale mal
 # - Cambiar el orden de argumentos.
-# - Usar nombres de parámetros confusos.
+# - Enviar strings sin convertir a números.
 """,
             ),
             (
@@ -330,17 +368,21 @@ print(suma)  # Mostramos el resultado
                 """# Aprende esto
 # Aprenderás a definir un parámetro con valor por defecto.
 # Verás cómo sobrescribirlo cuando lo necesites.
+# Evitarás repetir argumentos en llamadas comunes.
 #
 # Haz esto
 def potencia(base, exponente=2):  # Default en exponente
     resultado = base ** exponente  # Calculamos potencia
     return resultado  # Devolvemos el resultado
 
-print(potencia(4))  # Usa exponente 2
-print(potencia(4, 3))  # Cambia el exponente
+cuadrado = potencia(4)  # Usa exponente 2
+cubo = potencia(4, 3)  # Cambia el exponente
+print(cuadrado)  # Mostramos 16
+print(cubo)  # Mostramos 64
+print(type(cuadrado))  # Confirmamos el tipo
 #
 # Verás esto
-# Verás 16 y 64 como salida.
+# Verás 16, 64 y el tipo int.
 #
 # Por qué funciona
 # Si no envías el argumento, se usa el valor por defecto.
@@ -355,9 +397,11 @@ print(potencia(4, 3))  # Cambia el exponente
                 """# Aprende esto
 # Aprenderás a trabajar con variables locales.
 # Verás cómo actualizar una global con el retorno.
+# Evitarás efectos secundarios inesperados.
 #
 # Haz esto
 contador = 0  # Variable global
+valor_inicial = contador  # Guardamos el valor inicial
 
 def sumar_uno(valor):  # Recibimos un valor
     nuevo_valor = valor + 1  # Incrementamos
@@ -365,9 +409,11 @@ def sumar_uno(valor):  # Recibimos un valor
 
 contador = sumar_uno(contador)  # Actualizamos desde fuera
 print(contador)  # Mostramos el contador
+print(valor_inicial)  # Mostramos el valor inicial
+print(type(contador))  # Confirmamos el tipo
 #
 # Verás esto
-# Verás 1 como salida.
+# Verás 1 y el tipo int.
 #
 # Por qué funciona
 # La función devuelve el nuevo valor y tú decides asignarlo.
@@ -381,19 +427,22 @@ print(contador)  # Mostramos el contador
                 "*args y **kwargs",
                 """# Aprende esto
 # Aprenderás a recibir muchos argumentos.
-# Verás cómo combinar args con un nombre opcional.
+# Verás cómo combinar args con nombres opcionales.
+# Harás un resumen sin conocer la cantidad exacta de datos.
 #
 # Haz esto
 def resumen(*args, **kwargs):  # Recibimos valores
     total = sum(args)  # Sumamos los posicionales
+    total_texto = str(total)  # Convertimos el total a texto
     etiqueta = kwargs.get("etiqueta", "Total")  # Leemos la etiqueta
-    mensaje = etiqueta + ": " + str(total)  # Construimos el mensaje
+    moneda = kwargs.get("moneda", "")  # Leemos moneda opcional
+    mensaje = etiqueta + ": " + total_texto + " " + moneda  # Mensaje final
     return mensaje  # Devolvemos el mensaje
 
-print(resumen(1, 2, 3, etiqueta="Suma"))  # Llamamos
+print(resumen(1, 2, 3, etiqueta="Suma", moneda="USD"))  # Llamamos
 #
 # Verás esto
-# Verás "Suma: 6".
+# Verás "Suma: 6 USD".
 #
 # Por qué funciona
 # args llega como tupla y kwargs como diccionario.
@@ -408,18 +457,21 @@ print(resumen(1, 2, 3, etiqueta="Suma"))  # Llamamos
                 """# Aprende esto
 # Aprenderás a documentar tu función.
 # Verás cómo la docstring explica su objetivo.
+# Mejorarás la comunicación con otros desarrolladores.
 #
 # Haz esto
 def promedio(valores):  # Función de ejemplo
-    """Calcula el promedio de una lista de números."""  # Docstring
+    '''Calcula el promedio de una lista de números.'''  # Docstring
     total = sum(valores)  # Sumamos
     cantidad = len(valores)  # Contamos
     return total / cantidad  # Dividimos
 
-print(promedio([10, 20, 30]))  # Llamamos
+resultado = promedio([10, 20, 30])  # Llamamos
+print(resultado)  # Mostramos el promedio
+print(type(resultado))  # Confirmamos el tipo
 #
 # Verás esto
-# Verás 20.0 como salida.
+# Verás 20.0 y el tipo float.
 #
 # Por qué funciona
 # sum y len dan total y cantidad para el promedio.
@@ -434,6 +486,7 @@ print(promedio([10, 20, 30]))  # Llamamos
                 """# Aprende esto
 # Aprenderás a indicar tipos de entrada y salida.
 # Verás que ayudan a leer la intención.
+# No confundirás hints con validación real.
 #
 # Haz esto
 def area_cuadrado(lado: float) -> float:  # Indicamos tipo
@@ -441,10 +494,13 @@ def area_cuadrado(lado: float) -> float:  # Indicamos tipo
     return area  # Devolvemos el resultado
 
 resultado = area_cuadrado(3.0)  # Llamamos a la función
+doble = resultado * 2  # Calculamos el doble
 print(resultado)  # Mostramos el área
+print(doble)  # Mostramos el doble
+print(type(resultado))  # Confirmamos el tipo
 #
 # Verás esto
-# Verás 9.0 como salida.
+# Verás 9.0 y el tipo float.
 #
 # Por qué funciona
 # Los hints describen el tipo y la operación es un producto simple.
@@ -459,6 +515,7 @@ print(resultado)  # Mostramos el área
                 """# Aprende esto
 # Aprenderás a devolver dos valores en una tupla.
 # Verás cómo desempaquetarlos correctamente.
+# Evitarás perder el orden de los datos.
 #
 # Haz esto
 def dividir(a, b):  # Recibimos dos números
@@ -467,10 +524,13 @@ def dividir(a, b):  # Recibimos dos números
     return cociente, resto  # Devolvemos ambos
 
 q, r = dividir(10, 3)  # Desempaquetamos la tupla
-print(q, r)  # Mostramos los valores
+total = q + r  # Sumamos los resultados
+mensaje = "Cociente: " + str(q) + ", Resto: " + str(r)  # Resumen
+print(mensaje)  # Mostramos el mensaje
+print(total)  # Mostramos la suma
 #
 # Verás esto
-# Verás 3 1 como salida.
+# Verás "Cociente: 3, Resto: 1".
 #
 # Por qué funciona
 # La función devuelve una tupla y Python permite desempaquetarla.
@@ -512,7 +572,7 @@ print(q, r)  # Mostramos los valores
             {
                 "question": "Crea una función con docstring que explique su propósito.",
                 "hints": ["Incluye triple comillas"],
-                "solution": "def area(lado):\n    \"\"\"Calcula el área de un cuadrado.\"\"\"\n    return lado * lado\n\nprint(area(5))",
+                "solution": "def area(lado):\n    '''Calcula el área de un cuadrado.'''\n    return lado * lado\n\nprint(area(5))",
             },
         ]
 

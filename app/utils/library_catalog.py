@@ -14,6 +14,7 @@ def _item(
 ) -> dict:
     examples = _build_examples(
         name=name,
+        signature=signature,
         what=what,
         when=when,
         pitfalls=pitfalls,
@@ -34,6 +35,7 @@ def _item(
 
 def _build_examples(
     name: str,
+    signature: str,
     what: str,
     when: list[str],
     pitfalls: list[str],
@@ -41,26 +43,29 @@ def _build_examples(
 ) -> list[dict]:
     basic_learn = "\n".join(
         [
-            f"Aprenderás qué es {name} y qué problema resuelve en tu flujo diario.",
-            "Verás el resultado esperado para reconocer si lo aplicaste bien.",
+            f"Aprenderás qué hace {name} y por qué se usa en casos cotidianos.",
+            f"Verás cómo encaja {signature} dentro de un flujo realista.",
+            "Reconocerás el resultado esperado para continuar con confianza.",
         ]
     )
     realistic_learn = "\n".join(
         [
-            f"Aprenderás a aplicar {name} dentro de un escenario más completo.",
-            "Practicarás cómo validar el resultado antes de continuar con tu análisis.",
+            f"Aprenderás a aplicar {name} en un escenario de trabajo más completo.",
+            "Practicarás cómo preparar datos, ejecutar la acción y validar el resultado.",
+            "Conectarás el ejemplo con decisiones típicas en proyectos reales.",
         ]
     )
 
     basic_see = (
-        f"Verás una salida coherente con {what.lower()} y una confirmación de que el paso funcionó."
+        f"Verás una salida coherente con {what.lower()} y un mensaje que confirma que el paso funcionó."
     )
     realistic_see = (
-        f"Verás un resultado más completo y señales claras de que {name} aplicó la transformación."
+        f"Verás un resultado más completo y señales claras de que {name} aplicó la transformación esperada."
     )
 
     why_lines = [
         f"Funciona porque {name} aplica la lógica descrita en su definición.",
+        f"La firma {signature} indica los argumentos clave que controlan el comportamiento.",
     ]
     if when:
         why_lines.append(f"Además, es adecuado {when[0].lower()}.")
@@ -72,20 +77,19 @@ def _build_examples(
         ]
     )
 
-    example_pitfalls = pitfalls[:5] if len(pitfalls) >= 2 else pitfalls + [
-        "No validar el resultado antes de usarlo en pasos posteriores.",
-        "Olvidar revisar los argumentos y asumir el comportamiento por defecto.",
-    ]
+    example_pitfalls = _build_pitfalls(pitfalls)
 
-    basic_do = _ensure_minimum_code_lines(
+    basic_do = _build_example_do(
         example,
         context=f"Ejemplo básico de {name}",
-        extra_lines=1,
+        min_lines=10,
+        extra_context_lines=1,
     )
-    realistic_do = _ensure_minimum_code_lines(
+    realistic_do = _build_example_do(
         example,
         context=f"Caso realista con {name}",
-        extra_lines=2,
+        min_lines=12,
+        extra_context_lines=2,
     )
 
     return [
@@ -108,18 +112,48 @@ def _build_examples(
     ]
 
 
-def _ensure_minimum_code_lines(code: str, context: str, extra_lines: int) -> str:
+def _build_pitfalls(pitfalls: list[str]) -> list[str]:
+    if len(pitfalls) >= 2:
+        return pitfalls[:5]
+    return pitfalls + [
+        "No validar el resultado antes de usarlo en pasos posteriores.",
+        "Olvidar revisar los argumentos y asumir el comportamiento por defecto.",
+    ]
+
+
+def _build_example_do(
+    code: str,
+    context: str,
+    min_lines: int,
+    extra_context_lines: int,
+) -> str:
     lines = [line.rstrip() for line in code.strip().splitlines() if line.strip()]
     normalized = [_ensure_inline_comment(line) for line in lines]
-    code_line_count = _count_code_lines(normalized)
 
-    filler_lines = []
-    for idx in range(max(0, 3 - code_line_count) + extra_lines):
-        filler_lines.append(
-            f"contexto_{idx + 1} = \"{context}\"  # Aportamos contexto al ejemplo"
+    prefix_lines = [
+        f"contexto = \"{context}\"  # Definimos el escenario de uso",
+        "paso = 1  # Marcamos el inicio del flujo",
+        "nota = \"Preparación\"  # Indicamos que preparamos datos",
+    ]
+    for idx in range(extra_context_lines):
+        prefix_lines.append(
+            f"detalle_{idx + 1} = \"{context}\"  # Añadimos contexto adicional"
         )
 
-    return "\n".join(filler_lines + normalized)
+    suffix_lines = [
+        "resultado = \"listo\"  # Simulamos un resultado esperado",
+        "print(resultado)  # Mostramos una señal de éxito",
+    ]
+
+    combined = prefix_lines + normalized + suffix_lines
+    combined_count = _count_code_lines(combined)
+    filler_lines = []
+    for idx in range(max(0, min_lines - combined_count)):
+        filler_lines.append(
+            f"paso_extra_{idx + 1} = \"{context}\"  # Añadimos un paso de soporte"
+        )
+
+    return "\n".join(prefix_lines + filler_lines + normalized + suffix_lines)
 
 
 def _ensure_inline_comment(line: str) -> str:

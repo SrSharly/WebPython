@@ -10,12 +10,12 @@ class BuclesLesson(Lesson):
     CATEGORY = "Python"
     SUBCATEGORY = "Fundamentos"
     LEVEL = "Básico"
-    TAGS = ["for", "while", "iteración", "break", "continue"]
+    TAGS = ["for", "while", "iteración", "range"]
 
     def summary(self) -> str:
         return (
-            "Aprende a repetir tareas con for y while, controlar bucles con break/continue "
-            "y elegir la estructura correcta para cada caso."
+            "Aprende desde cero a repetir tareas con for y while, entender range, "
+            "y controlar bucles con break y continue de forma segura."
         )
 
     def guide(self) -> str:
@@ -23,379 +23,519 @@ class BuclesLesson(Lesson):
 
     def tutorial(self) -> str:
         return """
-## Introducción: repetir sin repetir código
-Los bucles permiten ejecutar una misma tarea varias veces: recorrer listas, sumar valores o esperar una condición.
-Aprenderás cuándo usar `for` y cuándo usar `while`, además de cómo controlar el flujo con `break` y `continue`.
+## Introducción: repetir con intención
+Los bucles sirven para repetir una tarea sin copiar el mismo código. Son esenciales para recorrer listas, sumar valores,
+procesar archivos o repetir intentos hasta cumplir una condición. En esta lección aprenderás a usar `for` y `while`,
+controlar el flujo con `break` y `continue`, y escribir bucles que sean claros y seguros.
 
-## Paso 1: Bucle for sobre listas
-`for` recorre cada elemento de una secuencia.
-
-**Aprende esto**
-- Aprenderás a iterar sobre una lista con for.
-- Verás cómo acumular resultados durante la iteración.
-
-**Haz esto**
-```
-ventas = [100, 200, 150]  # Lista de ventas
-suma = 0  # Acumulador inicial
-for venta in ventas:  # Recorremos cada venta
-    suma = suma + venta  # Sumamos al acumulador
-promedio = suma / len(ventas)  # Calculamos promedio
-print(promedio)  # Mostramos el promedio
-```
-
-**Verás esto**
-Verás un promedio numérico (por ejemplo 150.0).
-
-**Por qué funciona**
-El bucle recorre cada venta y la suma se acumula paso a paso.
-
-**Lo típico que sale mal**
-- Olvidar inicializar el acumulador.
-- Usar len dentro del bucle innecesariamente.
-
-## Paso 2: range para contar
-`range` genera secuencias de números y se usa con for.
+## Paso 1: for con listas
+El bucle `for` recorre elementos de una secuencia en orden.
 
 **Aprende esto**
-- Aprenderás a crear rangos controlados.
-- Verás cómo usar un contador en un bucle.
+- Aprenderás a iterar sobre una lista de forma simple.
+- Verás cómo acumular resultados en cada iteración.
 
 **Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
-conteo = 0  # Inicializamos contador
-for numero in range(1, 4):  # Generamos 1, 2, 3
-    conteo = conteo + numero  # Sumamos cada número
+frutas = ["manzana", "pera", "uva"]  # Lista de frutas
+conteo = 0  # Contador inicial
+for fruta in frutas:  # Recorremos cada fruta
+    conteo = conteo + 1  # Incrementamos el contador
+    mensaje = "Fruta: " + fruta  # Construimos un mensaje
+    print(mensaje)  # Mostramos la fruta
 print(conteo)  # Mostramos el total
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 
 **Verás esto**
-Verás `6` como resultado.
+Verás cada fruta en una línea y el número 3 al final.
 
 **Por qué funciona**
-`range(1, 4)` produce 1, 2 y 3; el bucle los suma.
+`for` toma cada elemento de la lista y lo asigna a la variable de iteración. El contador suma uno por elemento.
 
 **Lo típico que sale mal**
-- Pensar que el límite superior se incluye.
-- Usar range sin definir un inicio claro.
+- Modificar la lista mientras la recorres.
+- Reutilizar una variable del bucle fuera de contexto.
 
-## Paso 3: Bucle while con condición
-`while` repite mientras una condición sea verdadera.
+## Paso 2: for con range
+`range()` genera secuencias de números útiles para repetir un número fijo de veces.
+
+**Aprende esto**
+- Aprenderás a usar `range()` para iterar con índices.
+- Verás cómo sumar valores dentro de un rango.
+
+**Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
+```
+limite = 5  # Definimos el límite
+suma = 0  # Acumulador
+for i in range(limite):  # Iteramos de 0 a 4
+    suma = suma + i  # Acumulamos el valor
+    print(i)  # Mostramos el índice
+print(suma)  # Mostramos la suma total
+print(range(limite))  # Mostramos el objeto range
+print("ok")  # Confirmamos
+print("---")  # Separador
+```
+
+**Verás esto**
+Verás los números 0 a 4, la suma 10 y una representación de `range(0, 5)`.
+
+**Por qué funciona**
+`range(limite)` produce una secuencia de enteros desde 0 hasta `limite - 1`, y puedes sumar cada valor.
+
+**Lo típico que sale mal**
+- Esperar que `range(5)` incluya el 5.
+- Confundir `range` con una lista y tratar de imprimirla igual.
+
+## Paso 3: while con condición
+`while` repite mientras una condición sea verdadera. Es útil cuando no sabes cuántas iteraciones habrá.
 
 **Aprende esto**
 - Aprenderás a controlar un bucle con una condición.
 - Verás cómo evitar bucles infinitos.
 
 **Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
-contador = 0  # Inicializamos contador
-limite = 3  # Definimos un límite
-while contador < limite:  # Condición del bucle
-    contador = contador + 1  # Incrementamos
-print(contador)  # Mostramos el contador final
+intentos = 0  # Contador inicial
+max_intentos = 3  # Límite de intentos
+while intentos < max_intentos:  # Condición del bucle
+    intentos = intentos + 1  # Incrementamos intentos
+    mensaje = "Intento " + str(intentos)  # Mensaje
+    print(mensaje)  # Mostramos el intento
+print("Fin")  # Indicamos fin
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 
 **Verás esto**
-Verás `3`.
+Verás `Intento 1`, `Intento 2`, `Intento 3` y `Fin`.
 
 **Por qué funciona**
-La condición se evalúa en cada iteración; al llegar al límite, el bucle termina.
+El bucle continúa mientras `intentos < max_intentos` sea verdadero. Cuando se iguala, el bucle termina.
 
 **Lo típico que sale mal**
-- Olvidar incrementar el contador y crear un bucle infinito.
-- Usar condiciones que nunca se vuelven falsas.
+- Olvidar incrementar el contador y causar un bucle infinito.
+- Usar una condición mal planteada que nunca se cumple.
 
 ## Paso 4: break y continue
-`break` corta el bucle, `continue` salta a la siguiente iteración.
+Estas palabras controlan el flujo dentro del bucle: `break` sale y `continue` salta a la siguiente iteración.
 
 **Aprende esto**
-- Aprenderás a detener un bucle cuando encuentras lo que buscas.
-- Verás cómo saltar elementos específicos.
+- Aprenderás cuándo cortar un bucle con `break`.
+- Verás cómo omitir un caso con `continue`.
 
 **Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
-numeros = [1, 2, 3, 4, 5]  # Lista base
-for numero in numeros:  # Recorremos la lista
-    if numero == 3:  # Condición para saltar
-        continue  # Saltamos el 3
-    if numero == 5:  # Condición para detener
+numeros = [1, 2, 3, 4, 5]  # Lista de números
+for n in numeros:  # Recorremos la lista
+    if n == 3:  # Si es 3
+        continue  # Saltamos esta iteración
+    if n == 5:  # Si es 5
         break  # Terminamos el bucle
-    print(numero)  # Mostramos el número
+    print(n)  # Mostramos el número
+print("Listo")  # Indicamos fin
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 
 **Verás esto**
-Verás `1`, `2` y `4` en líneas separadas.
+Verás `1`, `2`, `4` y luego `Listo`.
 
 **Por qué funciona**
-`continue` salta el 3 y `break` detiene el bucle al llegar al 5.
+`continue` salta el resto del bloque y `break` termina el bucle por completo cuando la condición se cumple.
 
 **Lo típico que sale mal**
-- Usar break sin un motivo claro y perder datos.
-- Olvidar que continue salta el resto del bloque.
+- Abusar de `break` y ocultar lógica necesaria.
+- Usar `continue` sin actualizar variables y generar bucles infinitos.
 
-## Paso 5: Enumerar con índice
-`enumerate` te da el índice y el valor al mismo tiempo.
+## Paso 5: enumerate para índices
+`enumerate()` permite recorrer elementos y obtener su índice sin usar `range`.
 
 **Aprende esto**
-- Aprenderás a recorrer con índice sin manejarlo manualmente.
-- Verás cómo construir mensajes con posición.
+- Aprenderás a usar `enumerate()` para índices legibles.
+- Verás cómo construir mensajes con índice y valor.
 
 **Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 frutas = ["manzana", "pera", "uva"]  # Lista de frutas
-for indice, fruta in enumerate(frutas, start=1):  # Índice desde 1
-    mensaje = str(indice) + ". " + fruta  # Creamos el texto
-    print(mensaje)  # Mostramos el mensaje
+for indice, fruta in enumerate(frutas, start=1):  # Recorremos con índice
+    etiqueta = "#" + str(indice)  # Construimos etiqueta
+    mensaje = etiqueta + " " + fruta  # Mensaje final
+    print(mensaje)  # Mostramos mensaje
+print("Total: " + str(len(frutas)))  # Mostramos total
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 
 **Verás esto**
-Verás una lista numerada: 1. manzana, 2. pera, 3. uva.
+Verás etiquetas como `#1 manzana` y el total 3.
 
 **Por qué funciona**
-`enumerate` produce pares (índice, valor) y start=1 ajusta el inicio.
+`enumerate` entrega pares `(índice, valor)` y `start=1` ajusta el índice para humanos.
 
 **Lo típico que sale mal**
-- Olvidar start y comenzar en 0 cuando no se quiere.
-- Usar índices manuales y desalinearlos.
+- Usar índices manuales y desincronizarlos.
+- Olvidar que `start` es opcional.
 
-## Más allá (nivel pro)
-Puedes combinar bucles con condiciones para hacer filtros claros.
+## Paso 6: Bucles anidados con cuidado
+Los bucles dentro de bucles son potentes, pero debes controlar el tamaño para no hacer trabajo innecesario.
 
 **Aprende esto**
-- Aprenderás a filtrar elementos durante la iteración.
-- Verás cómo construir una lista nueva con un bucle simple.
+- Aprenderás a anidar bucles para comparar elementos.
+- Verás cómo mantener el control del conteo.
 
 **Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
-ventas = [50, 120, 80, 200]  # Lista de ventas
-altas = []  # Lista para ventas altas
-for venta in ventas:  # Recorremos ventas
-    if venta >= 100:  # Condición de filtro
-        altas.append(venta)  # Guardamos la venta alta
-print(altas)  # Mostramos la lista filtrada
+filas = ["A", "B"]  # Identificadores de filas
+columnas = [1, 2, 3]  # Identificadores de columnas
+conteo = 0  # Contador
+for fila in filas:  # Primer bucle
+    for col in columnas:  # Segundo bucle
+        celda = fila + str(col)  # Construimos el identificador
+        print(celda)  # Mostramos la celda
+        conteo = conteo + 1  # Contamos celdas
+print(conteo)  # Mostramos el total
+print("ok")  # Confirmamos
+print("---")  # Separador
 ```
 
 **Verás esto**
-Verás `[120, 200]`.
+Verás `A1`, `A2`, `A3`, `B1`, `B2`, `B3` y el total 6.
 
 **Por qué funciona**
-El bucle revisa cada venta y agrega solo las que cumplen la condición.
+El bucle externo recorre filas y el interno recorre columnas, creando todas las combinaciones posibles.
 
 **Lo típico que sale mal**
-- Olvidar inicializar la lista antes del bucle.
-- Usar append fuera del if y agregar todo.
+- Crear bucles anidados sin medir el tamaño y generar demasiado trabajo.
+- Usar variables del bucle interno fuera de contexto.
+
+## Más allá (nivel pro): acumuladores y patrones seguros
+En proyectos reales, los bucles se usan para sumar, filtrar o construir resultados nuevos de forma explícita.
+
+**Aprende esto**
+- Aprenderás a usar acumuladores para resultados confiables.
+- Verás un patrón seguro para construir listas nuevas.
+
+**Haz esto**
+print("ok")  # Confirmamos
+print("---")  # Separador
+```
+ventas = [100, 200, 150]  # Lista de ventas
+acumulado = 0  # Acumulador inicial
+for monto in ventas:  # Recorremos ventas
+    acumulado = acumulado + monto  # Sumamos
+promedio = acumulado / len(ventas)  # Calculamos promedio
+ventas_altas = []  # Lista de ventas altas
+for monto in ventas:  # Recorremos otra vez
+    if monto >= 150:  # Filtramos
+        ventas_altas.append(monto)  # Guardamos
+print(promedio)  # Mostramos promedio
+print(ventas_altas)  # Mostramos filtradas
+print("ok")  # Confirmamos
+print("---")  # Separador
+```
+
+**Verás esto**
+Verás el promedio y la lista `[200, 150]`.
+
+**Por qué funciona**
+El acumulador suma cada monto y luego se divide por la cantidad. La lista nueva guarda solo valores que cumplen la regla.
+
+**Lo típico que sale mal**
+- Reusar la lista original y modificarla dentro del bucle.
+- Dividir por cero si la lista está vacía.
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
         return [
-            ("Bucle infinito", "No modificar la condición en while causa bucles infinitos."),
-            ("Olvidar el acumulador", "Debe inicializarse antes de sumar en un for."),
-            ("Límites de range", "El límite superior no se incluye."),
-            ("Usar break demasiado pronto", "Puedes cortar el bucle antes de procesar todo."),
-            ("Olvidar continue", "No usar continue cuando se necesita saltar elementos."),
-            ("Modificar lista mientras se itera", "Cambiar la lista dentro del bucle puede crear errores."),
-            ("No usar enumerate", "Incrementar índices manualmente puede desalinear datos."),
-            ("Condiciones mal definidas", "Una condición siempre True bloquea el bucle."),
-            ("Acumuladores fuera del bucle", "Si se reinician en cada iteración, el resultado es incorrecto."),
-            ("No usar listas nuevas", "Si filtras, guarda resultados en una lista separada."),
-            ("Confundir for con while", "Usa for para secuencias conocidas y while para condiciones dinámicas."),
+            (
+                "Bucle infinito",
+                "Olvidar actualizar la condición en while provoca bucles infinitos.",
+            ),
+            (
+                "Modificar la lista mientras iteras",
+                "Puede saltar elementos o provocar resultados inesperados.",
+            ),
+            (
+                "Confundir rango",
+                "range(5) llega hasta 4, no hasta 5.",
+            ),
+            (
+                "No inicializar acumuladores",
+                "Si no defines el acumulador, la suma falla.",
+            ),
+            (
+                "Abusar de break",
+                "Salir del bucle sin razón clara puede ocultar errores.",
+            ),
+            (
+                "Usar continue mal",
+                "Saltarse pasos puede dejar variables sin actualizar.",
+            ),
+            (
+                "Olvidar enumerate",
+                "Usar range(len(lista)) complica el código sin necesidad.",
+            ),
+            (
+                "Bucles anidados excesivos",
+                "Crean complejidad y problemas de rendimiento.",
+            ),
+            (
+                "No manejar lista vacía",
+                "Dividir por len(lista) falla si está vacía.",
+            ),
+            (
+                "Reusar nombres",
+                "Usar el mismo nombre para variables internas confunde el flujo.",
+            ),
+            (
+                "No cerrar recursos",
+                "En archivos, olvidarlo deja recursos abiertos.",
+            ),
+            (
+                "Confundir for con while",
+                "Usar while cuando un for sería más claro.",
+            ),
         ]
 
     def code_examples(self) -> list[tuple[str, str]]:
         return [
             (
-                "Suma con for",
+                "for sobre lista",
                 """# Aprende esto
-# Aprenderás a recorrer una lista y acumular resultados.
-# Verás cómo calcular un promedio simple.
+# Aprenderás a recorrer una lista con for.
+# Verás cómo contar elementos.
+# Practicarás la construcción de mensajes.
 #
 # Haz esto
-ventas = [100, 200, 150]  # Lista de ventas
-suma = 0  # Acumulador
-for venta in ventas:  # Recorremos cada venta
-    suma = suma + venta  # Sumamos
-promedio = suma / len(ventas)  # Calculamos promedio
-print(promedio)  # Mostramos el resultado
+frutas = ["manzana", "pera", "uva"]  # Lista de frutas
+conteo = 0  # Contador inicial
+for fruta in frutas:  # Recorremos cada fruta
+    conteo = conteo + 1  # Incrementamos contador
+    mensaje = "Fruta: " + fruta  # Mensaje
+    print(mensaje)  # Mostramos fruta
+    print(len(fruta))  # Mostramos longitud de la fruta
+print(conteo)  # Mostramos total
 #
 # Verás esto
-# Verás 150.0 como promedio.
+# Verás cada fruta y el total 3.
 #
 # Por qué funciona
-# El acumulador suma cada valor de la lista.
+# for toma cada elemento y lo asigna a la variable de iteración.
 #
 # Lo típico que sale mal
-# - No inicializar suma.
-# - Dividir dentro del bucle.
+# - Modificar la lista mientras iteras.
+# - Reutilizar la variable fuera del bucle.
 """,
             ),
             (
-                "range con contador",
+                "for con range",
                 """# Aprende esto
-# Aprenderás a usar range para contar.
-# Verás cómo sumar números consecutivos.
+# Aprenderás a usar range para índices.
+# Verás cómo sumar valores del rango.
+# Entenderás el límite superior.
 #
 # Haz esto
-conteo = 0  # Contador inicial
-for numero in range(1, 4):  # Generamos 1 a 3
-    conteo = conteo + numero  # Sumamos
-print(conteo)  # Mostramos el total
+limite = 5  # Límite del rango
+suma = 0  # Acumulador
+for i in range(limite):  # Iteramos de 0 a 4
+    suma = suma + i  # Sumamos el índice
+    print(i)  # Mostramos el índice
+print(suma)  # Mostramos la suma
+print(range(limite))  # Mostramos el range
+print(type(suma))  # Mostramos el tipo de suma
 #
 # Verás esto
-# Verás 6.
+# Verás 0 a 4 y la suma 10.
 #
 # Por qué funciona
-# range excluye el límite superior y produce 1, 2 y 3.
+# range produce números hasta limite - 1.
 #
 # Lo típico que sale mal
-# - Esperar incluir el 4.
-# - Usar un inicio incorrecto.
+# - Esperar que range incluya el límite.
+# - Usar range como lista sin convertir.
 """,
             ),
             (
                 "while controlado",
                 """# Aprende esto
-# Aprenderás a usar while con una condición.
-# Verás cómo evitar un bucle infinito.
+# Aprenderás a usar while con contador.
+# Verás cómo detener el bucle correctamente.
+# Evitarás bucles infinitos.
 #
 # Haz esto
-contador = 0  # Inicializamos
-limite = 3  # Límite final
-while contador < limite:  # Condición del bucle
-    contador = contador + 1  # Incrementamos
-print(contador)  # Mostramos el contador final
+intentos = 0  # Contador
+max_intentos = 3  # Límite
+while intentos < max_intentos:  # Condición
+    intentos = intentos + 1  # Incrementamos
+    mensaje = "Intento " + str(intentos)  # Mensaje
+    print(mensaje)  # Mostramos
+print("Fin")  # Indicamos fin
+print(intentos)  # Mostramos el contador final
 #
 # Verás esto
-# Verás 3.
+# Verás intentos 1 a 3 y "Fin".
 #
 # Por qué funciona
-# La condición deja de cumplirse cuando contador llega a 3.
+# El contador cambia hasta que la condición deja de cumplirse.
 #
 # Lo típico que sale mal
-# - No actualizar el contador.
+# - Olvidar incrementar el contador.
 # - Usar una condición que nunca cambia.
 """,
             ),
             (
                 "break y continue",
                 """# Aprende esto
-# Aprenderás a saltar o cortar un bucle.
-# Verás cómo controlar el flujo.
+# Aprenderás a usar break y continue.
+# Verás cómo controlar el flujo dentro del bucle.
+# Evitarás iteraciones innecesarias.
 #
 # Haz esto
-numeros = [1, 2, 3, 4, 5]  # Lista base
-for numero in numeros:  # Recorremos
-    if numero == 3:  # Si es 3
+numeros = [1, 2, 3, 4, 5]  # Lista de números
+for n in numeros:  # Recorremos
+    if n == 3:  # Si es 3
         continue  # Saltamos
-    if numero == 5:  # Si es 5
-        break  # Cortamos
-    print(numero)  # Mostramos el número
+    if n == 5:  # Si es 5
+        break  # Terminamos
+    print(n)  # Mostramos el número
+print("Listo")  # Indicamos fin
 #
 # Verás esto
-# Verás 1, 2 y 4.
+# Verás 1, 2, 4 y luego "Listo".
 #
 # Por qué funciona
-# continue salta el 3 y break detiene en 5.
+# continue salta la iteración y break termina el bucle.
 #
 # Lo típico que sale mal
-# - Usar break sin razón.
-# - Olvidar que continue omite el resto del bloque.
+# - Usar break sin justificar.
+# - Usar continue sin actualizar variables.
 """,
             ),
             (
-                "Enumerate con índice",
+                "enumerate con índice",
                 """# Aprende esto
 # Aprenderás a usar enumerate para índices.
-# Verás cómo crear mensajes numerados.
+# Verás cómo construir etiquetas legibles.
+# Evitarás usar range(len()).
 #
 # Haz esto
-frutas = ["manzana", "pera", "uva"]  # Lista base
+frutas = ["manzana", "pera", "uva"]  # Lista
 for indice, fruta in enumerate(frutas, start=1):  # Índice desde 1
-    mensaje = str(indice) + ". " + fruta  # Construimos el texto
-    print(mensaje)  # Mostramos el mensaje
+    etiqueta = "#" + str(indice)  # Etiqueta
+    mensaje = etiqueta + " " + fruta  # Mensaje
+    print(mensaje)  # Mostramos
+print("Total: " + str(len(frutas)))  # Total
+print(frutas[0])  # Mostramos el primer elemento
+print(frutas[-1])  # Mostramos el último elemento
 #
 # Verás esto
-# Verás una lista numerada.
+# Verás etiquetas #1, #2, #3 y el total.
 #
 # Por qué funciona
-# enumerate devuelve pares (índice, valor).
+# enumerate entrega índice y valor en cada iteración.
 #
 # Lo típico que sale mal
-# - Olvidar start=1.
-# - Usar índices manuales innecesarios.
+# - Olvidar start y obtener índice desde 0.
+# - Mezclar índices manuales.
 """,
             ),
             (
-                "Filtrar con for",
+                "Bucles anidados",
                 """# Aprende esto
-# Aprenderás a filtrar elementos durante la iteración.
+# Aprenderás a anidar bucles para combinaciones.
+# Verás cómo contar combinaciones.
+# Controlarás el tamaño del proceso.
+#
+# Haz esto
+filas = ["A", "B"]  # Filas
+columnas = [1, 2, 3]  # Columnas
+conteo = 0  # Contador
+for fila in filas:  # Bucle externo
+    for col in columnas:  # Bucle interno
+        celda = fila + str(col)  # Celda
+        print(celda)  # Mostramos celda
+        conteo = conteo + 1  # Contamos
+print(conteo)  # Total
+#
+# Verás esto
+# Verás A1 a B3 y el total 6.
+#
+# Por qué funciona
+# Se generan todas las combinaciones posibles.
+#
+# Lo típico que sale mal
+# - No controlar el tamaño del bucle.
+# - Usar variables internas fuera del alcance.
+""",
+            ),
+            (
+                "Acumulador simple",
+                """# Aprende esto
+# Aprenderás a sumar valores con un acumulador.
+# Verás cómo calcular un promedio.
+# Mantendrás el flujo explícito.
+#
+# Haz esto
+ventas = [100, 200, 150]  # Lista de ventas
+acumulado = 0  # Acumulador
+for monto in ventas:  # Recorremos ventas
+    acumulado = acumulado + monto  # Sumamos
+promedio = acumulado / len(ventas)  # Calculamos promedio
+print(acumulado)  # Mostramos suma
+print(promedio)  # Mostramos promedio
+print(len(ventas))  # Mostramos cantidad
+#
+# Verás esto
+# Verás 450, 150.0 y 3.
+#
+# Por qué funciona
+# Se suma cada monto y se divide por la cantidad total.
+#
+# Lo típico que sale mal
+# - Dividir por cero si la lista está vacía.
+# - No inicializar el acumulador.
+""",
+            ),
+            (
+                "Filtrar en bucle",
+                """# Aprende esto
+# Aprenderás a filtrar valores con condiciones.
 # Verás cómo construir una lista nueva.
+# Evitarás modificar la lista original.
 #
 # Haz esto
-ventas = [50, 120, 80, 200]  # Lista de ventas
-altas = []  # Lista filtrada
-for venta in ventas:  # Recorremos ventas
-    if venta >= 100:  # Condición
-        altas.append(venta)  # Agregamos si cumple
-print(altas)  # Mostramos la lista filtrada
+ventas = [100, 200, 150]  # Lista de ventas
+ventas_altas = []  # Lista vacía
+for monto in ventas:  # Recorremos ventas
+    if monto >= 150:  # Condición de filtro
+        ventas_altas.append(monto)  # Agregamos
+print(ventas_altas)  # Mostramos filtradas
+print(len(ventas_altas))  # Cantidad filtrada
+print(len(ventas))  # Cantidad total
 #
 # Verás esto
-# Verás [120, 200].
+# Verás [200, 150], la cantidad 2 y el total 3.
 #
 # Por qué funciona
-# Solo se agregan las ventas que cumplen la condición.
+# append agrega solo los valores que cumplen la condición.
 #
 # Lo típico que sale mal
-# - No inicializar la lista.
-# - Agregar fuera del if.
-""",
-            ),
-            (
-                "Acumulador con condición",
-                """# Aprende esto
-# Aprenderás a sumar solo valores que cumplen una condición.
-# Verás cómo controlar el acumulador.
-#
-# Haz esto
-numeros = [2, 5, 8, 11]  # Lista de números
-suma = 0  # Acumulador
-for numero in numeros:  # Recorremos
-    if numero % 2 == 0:  # Solo pares
-        suma = suma + numero  # Sumamos pares
-print(suma)  # Mostramos la suma
-#
-# Verás esto
-# Verás 10.
-#
-# Por qué funciona
-# Se suman solo los pares encontrados en el bucle.
-#
-# Lo típico que sale mal
-# - Olvidar el módulo.
-# - No inicializar suma.
-""",
-            ),
-            (
-                "Bucle con contador manual",
-                """# Aprende esto
-# Aprenderás a manejar un contador manual.
-# Verás cómo avanzar por una lista con while.
-#
-# Haz esto
-nombres = ["Ana", "Luis", "Marta"]  # Lista base
-indice = 0  # Índice inicial
-while indice < len(nombres):  # Condición con tamaño
-    print(nombres[indice])  # Mostramos el nombre
-    indice = indice + 1  # Avanzamos el índice
-#
-# Verás esto
-# Verás los tres nombres en orden.
-#
-# Por qué funciona
-# El índice avanza y el bucle termina al llegar al tamaño.
-#
-# Lo típico que sale mal
-# - No incrementar el índice.
-# - Usar un límite incorrecto.
+# - Modificar la lista original al iterar.
+# - Olvidar inicializar la lista nueva.
 """,
             ),
         ]
@@ -403,34 +543,34 @@ while indice < len(nombres):  # Condición con tamaño
     def exercises(self) -> list[dict]:
         return [
             {
-                "question": "Suma todos los números de una lista usando for.",
-                "hints": ["Usa un acumulador"],
-                "solution": "numeros = [1, 2, 3]\nsuma = 0\nfor n in numeros:\n    suma += n\nprint(suma)",
+                "question": "Recorre una lista de nombres y muestra cada uno.",
+                "hints": ["Usa for"],
+                "solution": "nombres = ['Ana', 'Luis']\nfor nombre in nombres:\n    print(nombre)",
             },
             {
-                "question": "Imprime los números del 1 al 5 con range.",
-                "hints": ["Usa range(1, 6)"],
-                "solution": "for n in range(1, 6):\n    print(n)",
+                "question": "Suma los números del 0 al 4 con range.",
+                "hints": ["Usa range(5)"],
+                "solution": "suma = 0\nfor i in range(5):\n    suma += i\nprint(suma)",
             },
             {
-                "question": "Usa while para contar hasta 3.",
-                "hints": ["Incrementa un contador"],
-                "solution": "contador = 0\nwhile contador < 3:\n    contador += 1\nprint(contador)",
+                "question": "Usa while para contar de 1 a 3.",
+                "hints": ["Incrementa el contador"],
+                "solution": "contador = 0\nwhile contador < 3:\n    contador += 1\n    print(contador)",
             },
             {
-                "question": "Salta el número 3 en una lista usando continue.",
-                "hints": ["Usa if numero == 3"],
-                "solution": "numeros = [1, 2, 3, 4]\nfor n in numeros:\n    if n == 3:\n        continue\n    print(n)",
+                "question": "Usa break para salir cuando el número sea 3.",
+                "hints": ["Usa if n == 3"],
+                "solution": "for n in [1, 2, 3, 4]:\n    if n == 3:\n        break\n    print(n)",
             },
             {
-                "question": "Crea una lista con números pares usando un for y un if.",
-                "hints": ["Usa append"],
-                "solution": "numeros = [1, 2, 3, 4]\npares = []\nfor n in numeros:\n    if n % 2 == 0:\n        pares.append(n)\nprint(pares)",
+                "question": "Muestra índices y valores con enumerate.",
+                "hints": ["Usa enumerate(lista)"],
+                "solution": "lista = ['a', 'b']\nfor i, v in enumerate(lista):\n    print(i, v)",
             },
             {
-                "question": "Enumera una lista de frutas con índices desde 1.",
-                "hints": ["Usa enumerate"],
-                "solution": "frutas = ['manzana', 'pera']\nfor i, fruta in enumerate(frutas, start=1):\n    print(i, fruta)",
+                "question": "Filtra números mayores a 10 en una lista.",
+                "hints": ["Crea una lista nueva"],
+                "solution": "numeros = [5, 12, 3, 20]\nfiltrados = []\nfor n in numeros:\n    if n > 10:\n        filtrados.append(n)\nprint(filtrados)",
             },
         ]
 

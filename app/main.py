@@ -43,6 +43,7 @@ from app.utils.tooltip_controller import InstantTooltipController
 from app.utils.tooltipify import tooltipify_html
 from app.utils.ui_components import CodeCard
 from app.utils.ui_helpers import badge
+from app.utils.validators import warn_if_short_example
 
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -872,6 +873,7 @@ class MainWindow(QMainWindow):
     def _render_examples(self, lesson: Lesson) -> None:
         self._clear_layout(self.examples_layout)
         for title, code in lesson.code_examples():
+            warn_if_short_example(code, f"Lesson: {lesson.TITLE} - {title}")
             can_run, reason = self.runner.can_run(code)
             callback = self._run_snippet if can_run else None
             card = CodeCard(title, code, show_run=True, run_callback=callback)

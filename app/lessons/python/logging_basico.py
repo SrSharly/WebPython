@@ -120,6 +120,34 @@ NameError: name 'logger' is not defined
 
 Cómo se arregla: define el logger y usa el formato perezoso con `%s`.
 
+## Logging a archivo con `basicConfig`
+Puedes registrar en un archivo sin crear handlers manuales usando `filename`.
+
+Micro-ejemplo correcto:
+```py
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    filename="app.log",
+    encoding="utf-8",
+)
+logger = logging.getLogger("app")
+logger.info("Evento guardado en archivo")
+```
+
+Micro-ejemplo incorrecto:
+```py
+logging.basicConfig(filename=app.log)
+```
+
+Error real:
+```py
+NameError: name 'app' is not defined
+```
+
+Cómo se arregla: pasa el nombre del archivo como string `"app.log"`.
+
 ## Ejemplo principal: configurar y registrar eventos reales
 ### 1) Aprende esto
 Registrar eventos útiles y coherentes para entender qué pasó sin leer el código.

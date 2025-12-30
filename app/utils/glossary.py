@@ -3538,6 +3538,46 @@ GLOSSARY = {
             "matiz": "pendiente de ampliar.",
         },
     },
+    "logger.addhandler": {
+        "tooltip": "Añade un handler al logger.",
+        "definition_parts": {
+            "que_es": "Método que agrega un handler para decidir el destino del log.",
+            "para_que": "para enviar mensajes a consola, archivo u otros destinos.",
+            "sintaxis": "logger.addHandler(handler)",
+            "ejemplo": "logger.addHandler(logging.StreamHandler())",
+            "matiz": "si agregas el mismo handler varias veces, duplicas mensajes.",
+        },
+    },
+    "logger.setlevel": {
+        "tooltip": "Configura el nivel mínimo del logger.",
+        "definition_parts": {
+            "que_es": "Método que define el nivel de severidad que el logger acepta.",
+            "para_que": "para filtrar mensajes por nivel (DEBUG, INFO, etc.).",
+            "sintaxis": "logger.setLevel(logging.DEBUG)",
+            "ejemplo": "logger.setLevel(logging.INFO)",
+            "matiz": "el nivel del logger afecta a todos sus handlers.",
+        },
+    },
+    "handler.setlevel": {
+        "tooltip": "Define el nivel de un handler.",
+        "definition_parts": {
+            "que_es": "Método que define qué mensajes procesa un handler específico.",
+            "para_que": "para filtrar por destino (consola, archivo, etc.).",
+            "sintaxis": "handler.setLevel(logging.INFO)",
+            "ejemplo": "archivo.setLevel(logging.DEBUG)",
+            "matiz": "si el logger es más restrictivo, el handler no recibe mensajes.",
+        },
+    },
+    "handler.setformatter": {
+        "tooltip": "Asigna un formatter a un handler.",
+        "definition_parts": {
+            "que_es": "Método que define el formato de salida del handler.",
+            "para_que": "para controlar nivel, nombre y mensaje del log.",
+            "sintaxis": "handler.setFormatter(logging.Formatter('...'))",
+            "ejemplo": "consola.setFormatter(formato)",
+            "matiz": "requiere una instancia de Formatter, no la clase.",
+        },
+    },
     "logging.filehandler": {
         "tooltip": "Handler que escribe logs en un archivo.",
         "definition_parts": {

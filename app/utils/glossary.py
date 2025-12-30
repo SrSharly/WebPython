@@ -293,6 +293,108 @@ GLOSSARY = {
             "matiz": "Usa `with` para asegurar el cierre automático.",
         },
     },
+    "read": {
+        "tooltip": "Método que lee el contenido de un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método de un manejador de archivo que devuelve el contenido.",
+            "para_que": "Obtener todo el texto de un archivo en una sola operación.",
+            "sintaxis": "contenido = archivo.read()",
+            "ejemplo": "contenido = archivo.read().",
+            "matiz": "Devuelve un string; para archivos grandes, considera leer por partes.",
+        },
+    },
+    "write": {
+        "tooltip": "Método que escribe texto en un archivo abierto.",
+        "definition_parts": {
+            "que_es": "Método que envía texto al archivo en modo escritura.",
+            "para_que": "Guardar líneas de texto o construir un archivo desde cero.",
+            "sintaxis": "archivo.write('línea')",
+            "ejemplo": "archivo.write('hola\\n').",
+            "matiz": "Solo acepta strings; convierte números con str().",
+        },
+    },
+    "encoding": {
+        "tooltip": "Parámetro que define la codificación de texto.",
+        "definition_parts": {
+            "que_es": (
+                "Especifica cómo se transforman los bytes en texto y viceversa."
+            ),
+            "para_que": "Evitar caracteres raros al leer o escribir archivos.",
+            "sintaxis": "open('archivo.txt', encoding='utf-8')",
+            "ejemplo": "ruta.read_text(encoding='utf-8').",
+            "matiz": "UTF-8 es el estándar recomendado para texto moderno.",
+        },
+    },
+    "ruta relativa": {
+        "tooltip": "Ruta que depende del directorio de ejecución actual.",
+        "definition_parts": {
+            "que_es": "Dirección de un archivo sin incluir la raíz del sistema.",
+            "para_que": "Trabajar con proyectos portables sin rutas absolutas.",
+            "sintaxis": "datos/usuarios.txt",
+            "ejemplo": "ruta = 'datos/usuarios.txt'.",
+            "matiz": "Se interpreta desde la carpeta actual (working directory).",
+        },
+    },
+    "ruta absoluta": {
+        "tooltip": "Ruta completa desde la raíz del sistema.",
+        "definition_parts": {
+            "que_es": "Dirección que incluye la raíz y todas las carpetas.",
+            "para_que": "Ubicar archivos sin depender del directorio actual.",
+            "sintaxis": "/home/ana/proyecto/datos.txt o C:\\\\Datos\\\\datos.txt",
+            "ejemplo": "ruta = '/home/ana/proyecto/datos.txt'.",
+            "matiz": "Es más explícita pero menos portable entre equipos.",
+        },
+    },
+    "pathlib": {
+        "tooltip": "Módulo estándar para manejar rutas como objetos.",
+        "definition_parts": {
+            "que_es": "Módulo de la librería estándar para rutas con objetos.",
+            "para_que": "Construir rutas de forma segura y legible.",
+            "sintaxis": "from pathlib import Path",
+            "ejemplo": "ruta = Path('datos') / 'usuarios.txt'.",
+            "matiz": "Evita errores de separadores entre sistemas operativos.",
+        },
+    },
+    "Path": {
+        "tooltip": "Clase principal de pathlib para representar rutas.",
+        "definition_parts": {
+            "que_es": "Objeto que representa un camino en el sistema de archivos.",
+            "para_que": "Manipular rutas con métodos como exists(), read_text().",
+            "sintaxis": "ruta = Path('archivo.txt')",
+            "ejemplo": "ruta = Path('notas.txt').",
+            "matiz": "Se puede combinar con / para unir carpetas.",
+        },
+    },
+    "exists": {
+        "tooltip": "Método de Path que verifica si la ruta existe.",
+        "definition_parts": {
+            "que_es": "Método booleano para saber si un archivo o carpeta existe.",
+            "para_que": "Evitar errores al leer rutas inexistentes.",
+            "sintaxis": "ruta.exists()",
+            "ejemplo": "if ruta.exists(): ...",
+            "matiz": "Devuelve True o False sin lanzar excepciones.",
+        },
+    },
+    "read_text": {
+        "tooltip": "Método de Path que lee un archivo y devuelve texto.",
+        "definition_parts": {
+            "que_es": "Método que abre, lee y cierra un archivo de texto.",
+            "para_que": "Leer contenido sin usar open() directamente.",
+            "sintaxis": "texto = ruta.read_text(encoding='utf-8')",
+            "ejemplo": "contenido = ruta.read_text(encoding='utf-8').",
+            "matiz": "Lanza FileNotFoundError si la ruta no existe.",
+        },
+    },
+    "write_text": {
+        "tooltip": "Método de Path que escribe texto en un archivo.",
+        "definition_parts": {
+            "que_es": "Método que abre, escribe y cierra un archivo de texto.",
+            "para_que": "Guardar texto con una sola línea.",
+            "sintaxis": "ruta.write_text('hola', encoding='utf-8')",
+            "ejemplo": "ruta.write_text('hola', encoding='utf-8').",
+            "matiz": "Sobrescribe el archivo si ya existe.",
+        },
+    },
     "str": {
         "tooltip": "Tipo de texto (cadena de caracteres).",
         "definition_parts": {

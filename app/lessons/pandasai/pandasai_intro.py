@@ -33,6 +33,50 @@ class PandasAILesson(Lesson):
 - Documenta las consultas para auditoría.
 - Limita el acceso a columnas sensibles.
 - Combina con filtros previos en pandas.
+
+
+## Micro-ejemplo incremental: consulta guiada con PandasAI
+
+### Así se escribe
+```py
+import pandas as pd
+from pandasai import SmartDataframe
+
+ventas = pd.DataFrame({"mes": ["ene", "feb"], "total": [100, 140]})
+sdf = SmartDataframe(ventas)
+respuesta = sdf.chat("¿Cuál es el total mayor?")
+print(respuesta)
+```
+
+### Error típico: pasar algo que no es DataFrame
+```py
+from pandasai import SmartDataframe
+
+sdf = SmartDataframe([1, 2, 3])
+```
+
+```py
+ValueError: data must be a pandas DataFrame
+```
+
+Explicación breve: `SmartDataframe` requiere un `pd.DataFrame` real.
+
+### Error típico: columna mencionada que no existe
+```py
+import pandas as pd
+from pandasai import SmartDataframe
+
+ventas = pd.DataFrame({"mes": ["ene", "feb"], "total": [100, 140]})
+sdf = SmartDataframe(ventas)
+print(sdf.chat("Promedio de precio"))
+```
+
+```py
+KeyError: 'precio'
+```
+
+Explicación breve: el modelo consulta sobre las columnas disponibles.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

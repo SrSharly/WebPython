@@ -41,6 +41,43 @@ TL;DR: Usa QMessageBox y QFileDialog para comunicar y pedir confirmación al usu
 - Preferir diálogos modales para decisiones críticas.
 - No asumas permisos de escritura/lectura sin validar.
 - Mantén los diálogos simples y enfocados.
+
+
+## Micro-ejemplo incremental: widgets y ciclo de eventos
+
+### Así se escribe
+```py
+app = QApplication([])
+label = QLabel("Hola Qt")
+label.show()
+app.exec()
+```
+
+### Error típico: crear un widget antes de QApplication
+```py
+label = QLabel("Hola Qt")
+app = QApplication([])
+```
+
+```py
+QWidget: Must construct a QApplication before a QWidget
+```
+
+Explicación breve: el motor de Qt necesita `QApplication` antes de cualquier widget.
+
+### Error típico: olvidar mostrar el widget
+```py
+app = QApplication([])
+label = QLabel("Hola Qt")
+app.exec()
+```
+
+```py
+(no window appears)
+```
+
+Explicación breve: si no llamas a `show()`, el widget no se pinta en pantalla.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

@@ -96,6 +96,30 @@ edad = 30
 altura = 1.75
 ```
 
+### Así se escribe: crear y combinar tipos básicos
+```py
+entero = 4
+decimal = 2.5
+texto = "Total"
+activo = True
+vacio = None
+resultado = entero + decimal  # float
+mensaje = texto + ": " + str(resultado)
+division = entero / 2  # cambia a float
+```
+
+### Error típico: mezclar tipos sin convertir
+```py
+entero = 4
+mensaje = "Total: " + entero
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: la suma de `str` con `int` no es válida. Convierte con `str()` o usa f-strings.
+
 **Error típico (❌)**
 ```py
 altura = 1,75
@@ -127,6 +151,24 @@ mensaje = "Edad: " + edad
 
 **Cómo se arregla**
 Convierte el número a texto con `str()` o usa f-strings.
+
+### Así se escribe: print e input en variables iniciales
+```py
+nombre = input("¿Cómo te llamas? ")
+print("Hola", nombre)
+```
+
+### Error típico: asumir que input devuelve número
+```py
+edad = input("Edad: ")
+edad_en_10 = edad + 10
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: `input()` siempre devuelve `str`. Convierte con `int()` si necesitas sumar.
 
 ## Paso 5: mutabilidad rápida: listas vs strings
 Las listas se pueden modificar en sitio; los strings no. Esa diferencia afecta cómo copias y cómo reasignas.
@@ -179,6 +221,60 @@ reduces la mayoría de errores de inicio.
 ## Más allá (nivel pro)
 Los tipos influyen en cómo diseñas funciones y estructuras. Ser explícito con nombres, conversiones y mutabilidad ayuda a
 que tu código escale sin sorpresas.
+
+
+
+## Micro-ejemplo incremental: sintaxis y errores reales
+
+### Así se escribe
+```py
+numero = 6
+resultado = numero * 2
+mensaje = "Doble: " + str(resultado)
+print(mensaje)
+
+estado = True
+valor = None
+if valor is None and estado:
+    valor = 0
+```
+
+### Error típico: concatenar texto y número
+```py
+numero = 6
+mensaje = "Doble: " + numero
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: convierte el número con `str()` o usa f-strings.
+
+### Error típico: operar con texto como número
+```py
+numero = "6"
+resultado = numero / 2
+```
+
+```py
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+```
+
+Explicación breve: convierte el texto a `int` o `float` antes de dividir.
+
+### Error típico: operar con None
+```py
+valor = None
+resultado = valor + 1
+```
+
+```py
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+```
+
+Explicación breve: valida `None` con `is None` antes de usarlo.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

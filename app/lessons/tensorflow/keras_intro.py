@@ -33,6 +33,50 @@ class KerasIntroLesson(Lesson):
 - Ajusta epochs y batch_size.
 - Guarda modelos con model.save().
 - Usa TensorBoard para monitoreo.
+
+
+## Micro-ejemplo incremental: modelo y compilación
+
+### Así se escribe
+```py
+from tensorflow import keras
+
+model = keras.Sequential([
+    keras.layers.Dense(1, input_shape=(1,)),
+])
+model.compile(optimizer="adam", loss="mse")
+model.fit([1, 2, 3], [2, 4, 6], epochs=1)
+```
+
+### Error típico: entrenar sin compilar
+```py
+from tensorflow import keras
+
+model = keras.Sequential([keras.layers.Dense(1, input_shape=(1,))])
+model.fit([1, 2, 3], [2, 4, 6], epochs=1)
+```
+
+```py
+RuntimeError: You must compile your model before training/testing. Use model.compile(optimizer, loss).
+```
+
+Explicación breve: `compile()` es obligatorio antes de `fit()`.
+
+### Error típico: forma de entrada incorrecta
+```py
+from tensorflow import keras
+
+model = keras.Sequential([keras.layers.Dense(1, input_shape=(1,))])
+model.compile(optimizer="adam", loss="mse")
+model.fit([[1, 2]], [2, 4], epochs=1)
+```
+
+```py
+ValueError: Data cardinality is ambiguous
+```
+
+Explicación breve: la cantidad de muestras en X e y debe coincidir.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

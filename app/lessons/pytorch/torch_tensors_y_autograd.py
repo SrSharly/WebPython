@@ -33,6 +33,50 @@ class TorchTensorsAutogradLesson(Lesson):
 - Los tensores pueden estar en CPU o GPU.
 - Usa torch.cuda.is_available() para comprobar GPU.
 - autograd construye un grafo dinámico en cada forward.
+
+
+## Micro-ejemplo incremental: tensores y gradientes
+
+### Así se escribe
+```py
+import torch
+
+x = torch.tensor([2.0], requires_grad=True)
+y = x * 3
+z = y.sum()
+z.backward()
+print(x.grad)
+```
+
+### Error típico: backward en tensor no escalar
+```py
+import torch
+
+x = torch.tensor([1.0, 2.0], requires_grad=True)
+y = x * 2
+y.backward()
+```
+
+```py
+RuntimeError: grad can be implicitly created only for scalar outputs
+```
+
+Explicación breve: usa `y.sum()` o pasa `gradient` a `backward()`.
+
+### Error típico: mezclar tipos sin convertir
+```py
+import torch
+
+t = torch.tensor([1, 2])
+resultado = t + 0.5
+```
+
+```py
+RuntimeError: expected scalar type Float but found Long
+```
+
+Explicación breve: convierte a `float()` antes de operar con decimales.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

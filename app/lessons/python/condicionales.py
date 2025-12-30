@@ -53,6 +53,26 @@ if edad >= 18
 **Cómo se arregla**
 Agrega `:` y mantén la indentación del bloque.
 
+### Así se escribe: decidir con input (recuerda que devuelve str)
+```py
+respuesta = input("¿Eres mayor de edad? (s/n) ")
+if respuesta == "s":
+    print("Puedes entrar")
+```
+
+### Error típico: comparar input con número
+```py
+edad = input("Edad: ")
+if edad >= 18:
+    print("Mayor de edad")
+```
+
+```py
+TypeError: '>=' not supported between instances of 'str' and 'int'
+```
+
+Explicación breve: `input()` devuelve `str`. Convierte con `int(edad)` antes de comparar.
+
 ## Paso 2: elif y else para más casos
 `elif` permite evaluar otra condición si la anterior no se cumplió, y `else` cubre el caso final.
 
@@ -154,6 +174,60 @@ Deja que Python evalúe la verdad del valor con `if saldo:`.
 ## Paso 6: resumen para decidir sin errores
 Recuerda: `if` requiere `:`, la indentación es parte de la sintaxis y la comparación se hace con `==`. Con eso evitas la
 mayoría de errores al empezar.
+
+
+
+## Micro-ejemplo incremental: sintaxis y errores reales
+
+### Así se escribe
+```py
+numero = 6
+resultado = numero * 2
+mensaje = "Doble: " + str(resultado)
+print(mensaje)
+
+estado = True
+valor = None
+if valor is None and estado:
+    valor = 0
+```
+
+### Error típico: concatenar texto y número
+```py
+numero = 6
+mensaje = "Doble: " + numero
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: convierte el número con `str()` o usa f-strings.
+
+### Error típico: operar con texto como número
+```py
+numero = "6"
+resultado = numero / 2
+```
+
+```py
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+```
+
+Explicación breve: convierte el texto a `int` o `float` antes de dividir.
+
+### Error típico: operar con None
+```py
+valor = None
+resultado = valor + 1
+```
+
+```py
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+```
+
+Explicación breve: valida `None` con `is None` antes de usarlo.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

@@ -34,6 +34,51 @@ TL;DR: ColumnTransformer aplica transformaciones por tipo de columna y Pipeline 
 - Pipelines facilitan reproducibilidad y despliegue.
 - Usa predict_proba si necesitas probabilidades.
 - Documenta columnas y tipos usados en el modelo.
+
+
+## Micro-ejemplo incremental: entrenamiento y validación
+
+### Así se escribe
+```py
+from sklearn.linear_model import LinearRegression
+
+X = [[1], [2], [3]]
+y = [2, 4, 6]
+modelo = LinearRegression()
+modelo.fit(X, y)
+print(modelo.predict([[4]]))
+```
+
+### Error típico: predecir antes de ajustar
+```py
+from sklearn.linear_model import LinearRegression
+
+modelo = LinearRegression()
+modelo.predict([[4]])
+```
+
+```py
+NotFittedError: This LinearRegression instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+```
+
+Explicación breve: primero se llama a `fit`, luego `predict`.
+
+### Error típico: longitudes distintas en X e y
+```py
+from sklearn.linear_model import LinearRegression
+
+X = [[1], [2]]
+y = [2]
+modelo = LinearRegression()
+modelo.fit(X, y)
+```
+
+```py
+ValueError: Found input variables with inconsistent numbers of samples: [2, 1]
+```
+
+Explicación breve: X e y deben tener la misma cantidad de muestras.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

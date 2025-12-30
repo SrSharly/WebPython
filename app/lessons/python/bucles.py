@@ -75,6 +75,29 @@ No hay error de sintaxis, pero el bucle se vuelve infinito porque `contador` nun
 **Cómo se arregla**
 Actualiza la variable dentro del bucle: `contador += 1`.
 
+### Así se escribe: while con input y conversión
+```py
+intentos = 0
+limite = int(input("¿Cuántos intentos? "))
+while intentos < limite:
+    print("Intento", intentos)
+    intentos += 1
+```
+
+### Error típico: comparar input sin convertir
+```py
+limite = input("¿Cuántos intentos? ")
+intentos = 0
+while intentos < limite:
+    intentos += 1
+```
+
+```py
+TypeError: '<' not supported between instances of 'int' and 'str'
+```
+
+Explicación breve: `input()` devuelve `str`, así que debes convertir con `int()` antes de comparar.
+
 ## Paso 3: break para salir
 `break` corta el bucle cuando se cumple una condición específica.
 
@@ -127,6 +150,60 @@ Coloca `continue` antes de lo que quieres omitir y el resto fuera del bloque o d
 ## Paso 5: resumen para bucles seguros
 Usa `for` con `range` para conteos y `while` para condiciones abiertas. En `while`, actualiza la variable siempre. Usa
 `break` y `continue` con cuidado y buena indentación.
+
+
+
+## Micro-ejemplo incremental: sintaxis y errores reales
+
+### Así se escribe
+```py
+numero = 6
+resultado = numero * 2
+mensaje = "Doble: " + str(resultado)
+print(mensaje)
+
+estado = True
+valor = None
+if valor is None and estado:
+    valor = 0
+```
+
+### Error típico: concatenar texto y número
+```py
+numero = 6
+mensaje = "Doble: " + numero
+```
+
+```py
+TypeError: can only concatenate str (not "int") to str
+```
+
+Explicación breve: convierte el número con `str()` o usa f-strings.
+
+### Error típico: operar con texto como número
+```py
+numero = "6"
+resultado = numero / 2
+```
+
+```py
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+```
+
+Explicación breve: convierte el texto a `int` o `float` antes de dividir.
+
+### Error típico: operar con None
+```py
+valor = None
+resultado = valor + 1
+```
+
+```py
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+```
+
+Explicación breve: valida `None` con `is None` antes de usarlo.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

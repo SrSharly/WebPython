@@ -95,6 +95,38 @@ Soluciones concretas:
 ## Cierre
 Jupyter no es “peor que un IDE”: es un **laboratorio rápido** para pensar y mostrar.
 Si lo usas con disciplina, te ahorra tiempo y mejora cómo explicas tus análisis.
+
+
+## Micro-ejemplo incremental: celdas y comandos en Jupyter
+
+### Así se escribe
+```py
+resultado = 3 + 4
+resultado
+```
+
+### Error típico: ejecutar comandos de shell sin !
+```py
+pip install pandas
+```
+
+```py
+SyntaxError: invalid syntax
+```
+
+Explicación breve: en Jupyter, los comandos de shell requieren `!`.
+
+### Error típico: olvidar ejecutar la celda de import
+```py
+df = pd.DataFrame({"x": [1, 2]})
+```
+
+```py
+NameError: name 'pd' is not defined
+```
+
+Explicación breve: asegúrate de ejecutar la celda con `import pandas as pd` antes.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

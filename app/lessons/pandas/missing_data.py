@@ -34,6 +34,47 @@ TL;DR: Pandas usa NaN/NA para faltantes; detecta con isna y decide si imputar o 
 - Evita inplace=True; devuelve nuevos objetos más claros.
 - SettingWithCopy puede aparecer al encadenar filtros.
 - Documenta la estrategia de imputación para reproducibilidad.
+
+
+## Micro-ejemplo incremental: DataFrame en contexto
+
+### Así se escribe
+```py
+import pandas as pd
+
+df = pd.DataFrame({"producto": ["A", "B"], "precio": [10, 12]})
+bonificado = df["precio"] * 0.9
+print(bonificado)
+```
+
+### Error típico: acceder a una columna inexistente
+```py
+import pandas as pd
+
+df = pd.DataFrame({"producto": ["A", "B"], "precio": [10, 12]})
+print(df["coste"])
+```
+
+```py
+KeyError: 'coste'
+```
+
+Explicación breve: la columna debe existir o debes crearla antes de usarla.
+
+### Error típico: mezclar longitudes distintas
+```py
+import pandas as pd
+
+df = pd.DataFrame({"producto": ["A", "B"], "precio": [10, 12]})
+df["stock"] = [1, 2, 3]
+```
+
+```py
+ValueError: Length of values (3) does not match length of index (2)
+```
+
+Explicación breve: el tamaño de la nueva columna debe coincidir con el índice.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:

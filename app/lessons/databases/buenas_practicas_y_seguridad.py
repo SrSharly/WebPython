@@ -78,6 +78,51 @@ Crea una interfaz única para consultas; evita SQL repartido por todo el proyect
 - Usa herramientas de migración (Alembic, Flyway).
 - Implementa tests de integración para la capa de datos.
 - Monitorea tiempos de respuesta y consultas lentas.
+
+
+## Micro-ejemplo incremental: conexión y consulta segura
+
+### Así se escribe
+```py
+import sqlite3
+
+conn = sqlite3.connect(":memory:")
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE demo (id INTEGER)")
+cursor.execute("INSERT INTO demo (id) VALUES (?)", (1,))
+conn.commit()
+```
+
+### Error típico: pasar el placeholder incorrecto
+```py
+import sqlite3
+
+conn = sqlite3.connect(":memory:")
+cursor = conn.cursor()
+cursor.execute("INSERT INTO demo (id) VALUES (?)", 1)
+```
+
+```py
+ProgrammingError: Incorrect number of bindings supplied. The current statement uses 1, and there are 0 supplied.
+```
+
+Explicación breve: los parámetros van en tuplas, por ejemplo `(1,)`.
+
+### Error típico: usar conexión cerrada
+```py
+import sqlite3
+
+conn = sqlite3.connect(":memory:")
+conn.close()
+conn.execute("SELECT 1")
+```
+
+```py
+ProgrammingError: Cannot operate on a closed database.
+```
+
+Explicación breve: la conexión debe estar abierta antes de ejecutar consultas.
+
 """.strip()
 
     def common_pitfalls(self) -> list[tuple[str, str]]:
